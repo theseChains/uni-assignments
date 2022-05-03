@@ -1,0 +1,9 @@
+﻿  241.cpp
+  myfuncs.cpp
+C:\Users\sublunary\source\repos\241\myfuncs.cpp(110,9): warning C4189: numbers: локальная переменная инициализирована, но не использована
+C:\Users\sublunary\source\repos\241\myfuncs.cpp(123,9): warning C4189: sum: локальная переменная инициализирована, но не использована
+  Создание кода
+  Previous IPDB not found, fall back to full compilation.
+  All 168 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  Создание кода завершено
+  241.vcxproj -> C:\Users\sublunary\source\repos\241\x64\Release\241.exe

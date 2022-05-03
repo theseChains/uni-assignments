@@ -1,4 +1,4 @@
-﻿#include "myfuncs.h"
+#include "myfuncs.h"
 
 int main()
 {

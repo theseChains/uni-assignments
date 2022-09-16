@@ -1,22 +1,59 @@
 #include <SFML/Graphics.hpp>
 
+#include "util.h"
+
+#include "shapes/Circle.h"
+
 int main()
 {
-    sf::RenderWindow window(sf::VideoMode(1366, 768), "SFML works!");
-    sf::CircleShape shape(100.f);
-    shape.setFillColor(sf::Color::Green);
+    sf::RenderWindow window{ sf::VideoMode(util::windowWidth, util::windowHeight), "study" };
+    Circle defaultCircle{};
+    Circle firstConstructorCircle{ 120.0f, 40.0f, 90.0f, sf::Color::Yellow };
+    std::array<int, 4> secondCircleColorComponents{ 34, 65, 89, 200 };
+    Circle secondConstructorCircle{ 200.0f, 130.0f, 120.0f, secondCircleColorComponents };
+
+    std::vector<sf::CircleShape> shapesToRender{};
 
     while (window.isOpen())
     {
-        sf::Event event;
+        sf::Event event{};
         while (window.pollEvent(event))
         {
             if (event.type == sf::Event::Closed)
                 window.close();
+
+            if (event.type == sf::Event::KeyPressed)
+            {
+                if (event.key.code == sf::Keyboard::Escape)
+                {
+                    window.close();
+                }
+                if (event.key.code == sf::Keyboard::U)
+                {
+                    defaultCircle.changeRadius(100.0f);
+                }
+                if (event.key.code == sf::Keyboard::I)
+                {
+                    defaultCircle.moveTo(-8.0f, 155.0f);
+                }
+                if (event.key.code == sf::Keyboard::F && !(firstConstructorCircle.m_isShown))
+                {
+                    firstConstructorCircle.show(shapesToRender);
+                }
+                if (event.key.code == sf::Keyboard::S && !(secondConstructorCircle.m_isShown))
+                {
+                    secondConstructorCircle.show(shapesToRender);
+                }
+            }
         }
 
         window.clear();
-        window.draw(shape);
+
+        for (const auto& shape : shapesToRender)
+        {
+            window.draw(shape);
+        }
+
         window.display();
     }
 

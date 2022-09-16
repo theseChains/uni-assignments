@@ -30,28 +30,25 @@ Circle::Circle(float centerX, float centerY, float radius,
     initializeSfSprite(); 
 }
 
-void Circle::show(std::vector<sf::CircleShape>& shapesToRender)
+void Circle::show(std::vector<sf::CircleShape>& circlesToRender)
 {
-    shapesToRender.push_back(m_sprite);
+    circlesToRender.push_back(m_sprite);
     m_isShown = true;
 }
 
 void Circle::moveTo(float newCenterX, float newCenterY)
 {
-    if (newCenterX > util::windowWidth || newCenterY > util::windowHeight ||
-            newCenterX < 0 || newCenterY < 0)
-    {
-        std::cerr << "Improper coordinates. Permissive values: 0 < x < " << util::windowWidth <<
-            "; 0 < y < " << util::windowHeight << ".\n";
-        return;
-    }
+    m_centerX += newCenterX;
+    m_centerY += newCenterY;
 
-    m_sprite.setPosition(newCenterX, newCenterY);
+    updateSfSprite();
 }
 
 void Circle::changeRadius(float newRadius)
 {
-    m_sprite.setRadius(newRadius);
+    m_radius += newRadius;
+
+    updateSfSprite();
 }
 
 sf::CircleShape Circle::getSprite() const
@@ -63,5 +60,11 @@ void Circle::initializeSfSprite()
 {
     m_sprite.setPosition(m_centerX, m_centerY);
     m_sprite.setFillColor(m_color);
+    m_sprite.setRadius(m_radius);
+}
+
+void Circle::updateSfSprite()
+{
+    m_sprite.setPosition(m_centerX, m_centerY);
     m_sprite.setRadius(m_radius);
 }

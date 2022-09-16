@@ -45,12 +45,14 @@ void Rectangle::moveTo(float offsetX, float offsetY)
 void Rectangle::changeWidth(float newWidth)
 {
     m_width += newWidth;
+
     updateSfSprite();
 }
 
 void Rectangle::changeHeight(float newHeight)
 {
     m_height += newHeight;
+
     updateSfSprite();
 }
 

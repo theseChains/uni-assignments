@@ -1,5 +1,8 @@
 #include <SFML/Graphics.hpp>
 
+#include <functional>
+#include <memory>
+
 #include "util.h"
 
 #include "shapes/Circle.h"
@@ -14,13 +17,15 @@ int main()
     std::array<int, 4> secondCircleColorComponents{ 34, 65, 89, 200 };
     Circle secondConstructorCircle{ 200.0f, 130.0f, 120.0f, secondCircleColorComponents };
 
-    std::vector<sf::CircleShape> shapesToRender{};
+    std::vector<std::reference_wrapper<Circle>> circlesToRender{};
 
-    //shapesToRender.push_back(defaultCircle.getSprite());
-    
     Rectangle defaultRectangle{};
 
     Line defaultLine{};
+
+    // todo: make 3 boolean variables for circle, rectangle and line movement
+    // alternate between these 3 modes by pressing 3 different keys
+    // update show function so that with the second call it removes the sprite
 
     while (window.isOpen())
     {
@@ -36,55 +41,33 @@ int main()
                 {
                     window.close();
                 }
-                if (event.key.code == sf::Keyboard::U)
-                {
-                    defaultCircle.changeRadius(100.0f);
-                }
-                if (event.key.code == sf::Keyboard::I)
-                {
-                    defaultCircle.moveTo(8.0f, 15.0f);
-                }
                 if (event.key.code == sf::Keyboard::F && !(firstConstructorCircle.m_isShown))
                 {
-                    firstConstructorCircle.show(shapesToRender);
+                    firstConstructorCircle.show(circlesToRender);
                 }
                 if (event.key.code == sf::Keyboard::S && !(secondConstructorCircle.m_isShown))
                 {
-                    secondConstructorCircle.show(shapesToRender);
+                    secondConstructorCircle.show(circlesToRender);
                 }
-                if (event.key.code == sf::Keyboard::B)
+                if (event.key.code == sf::Keyboard::D)
                 {
-                    firstConstructorCircle.moveTo(-8.0f, 15.0f);
-                }
-                if (event.key.code == sf::Keyboard::R)
-                {
-                    defaultLine.rotate(2.0f);
-                }
-                if (event.key.code == sf::Keyboard::LControl && event.key.code == sf::Keyboard::R)
-                {
-                    defaultLine.rotate(-2.0f);
-                }
-                if (event.key.code == sf::Keyboard::P)
-                {
-                    defaultRectangle.changeWidth(3.0f);
-                }
-                if (event.key.code == sf::Keyboard::O)
-                {
-                    defaultRectangle.moveTo(2.0f, 2.0f);
+                    firstConstructorCircle.moveTo(5.0f, 5.0f); 
                 }
             }
         }
 
         window.clear();
 
-        for (auto& shape : shapesToRender)
+        // todo: fix being unable to change properties of these shapes
+        for (const auto& shape : circlesToRender)
         {
-            window.draw(shape);
+           window.draw(shape.get().getSprite());
         }
 
-        window.draw(defaultCircle.getSprite());
-        window.draw(defaultRectangle.getSprite());
-        window.draw(defaultLine.getSprite());
+        if (firstConstructorCircle.m_isShown)
+        {
+           // window.draw(firstConstructorCircle.getSprite());
+        }
 
         window.display();
     }

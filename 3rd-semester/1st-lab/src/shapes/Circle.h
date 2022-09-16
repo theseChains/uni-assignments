@@ -16,7 +16,7 @@ public:
     Circle(float centerX, float centerY, float radius, const sf::Color& color);
     Circle(float centerX, float centerY, float radius, const std::array<int, 4>& colorComponents);
 
-    void show(std::vector<sf::CircleShape>& circlesToRender);
+    void show(std::vector<std::reference_wrapper<Circle>>& circlesToRender);
 
     void moveTo(float newCenterX, float newCenterY);
 

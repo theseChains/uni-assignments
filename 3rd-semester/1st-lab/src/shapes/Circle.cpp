@@ -30,9 +30,9 @@ Circle::Circle(float centerX, float centerY, float radius,
     initializeSfSprite(); 
 }
 
-void Circle::show(std::vector<sf::CircleShape>& circlesToRender)
+void Circle::show(std::vector<std::reference_wrapper<Circle>>& circlesToRender)
 {
-    circlesToRender.push_back(m_sprite);
+    circlesToRender.push_back(*this);
     m_isShown = true;
 }
 

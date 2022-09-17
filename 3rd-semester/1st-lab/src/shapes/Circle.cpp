@@ -32,20 +32,25 @@ Circle::Circle(float centerX, float centerY, float radius,
 
 void Circle::show(std::vector<std::unique_ptr<Circle>>& circlesToRender)
 {
-    auto found{ std::ranges::find_if(circlesToRender, [this] (std::unique_ptr<Circle>& shapePtr)
+    //auto found{ std::ranges::find_if(circlesToRender, [this] (std::unique_ptr<Circle>& shapePtr)
+    //        {
+    //            return shapePtr.get() == this;
+    //        }) };
+    
+    // check if the element is already in the vector, remove it if it is:
+    auto erased{ std::erase_if(circlesToRender, [this] (std::unique_ptr<Circle>& shapePointer)
             {
-                return shapePtr.get() == this;
-            }) };
+                return *shapePointer.get() == *this;
+            }) }; 
 
-    // remove the element if it was found, create it otherwise
-    if (found != circlesToRender.end())
+    if (erased)
     {
-        // erase() calls the destructor of the object, unique_ptr will free memory automatically
-        circlesToRender.erase(found);
+        return;
     }
     else
     {
-        circlesToRender.push_back(std::move(std::make_unique<Circle>(*this)));
+        // it makes a new object every time here, i think that's the problem
+        circlesToRender.push_back(std::make_unique<Circle>(*this));
     }
 }
 

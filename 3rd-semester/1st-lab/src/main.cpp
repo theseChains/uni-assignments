@@ -35,10 +35,10 @@ void createCircleShape(std::vector<std::reference_wrapper<Circle>>& circlesToRen
 int main()
 {
     sf::RenderWindow window{ sf::VideoMode{ util::windowWidth, util::windowHeight }, "study" };
-    auto defaultCircle{ std::make_unique<Circle>() };
-    auto firstConstructorCircle{ std::make_unique<Circle>(120.0f, 40.0f, 90.0f, sf::Color::Yellow) };
+    Circle defaultCircle{};
+    Circle firstConstructorCircle{ 120.0f, 40.0f, 90.0f, sf::Color::Yellow };
     std::array<int, 4> secondCircleColorComponents{ 34, 65, 89, 200 };
-    auto secondConstructorCircle{ std::make_unique<Circle>(200.0f, 130.0f, 120.0f, secondCircleColorComponents) };
+    Circle secondConstructorCircle{ 200.0f, 130.0f, 120.0f, secondCircleColorComponents };
 
     std::vector<std::unique_ptr<Circle>> circlesToRender{};
 
@@ -66,19 +66,19 @@ int main()
                 }
                 if (event.key.code == sf::Keyboard::F)
                 {
-                    firstConstructorCircle->show(circlesToRender);
+                    firstConstructorCircle.show(circlesToRender);
                 }
                 if (event.key.code == sf::Keyboard::C)
                 {
-                    secondConstructorCircle->show(circlesToRender);
+                    secondConstructorCircle.show(circlesToRender);
                 }
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::V))
                 {
-                    defaultCircle->show(circlesToRender);
+                    defaultCircle.show(circlesToRender);
                 }
                 if (event.key.code == sf::Keyboard::D)
                 {
-                    firstConstructorCircle->moveTo(5.0f, 5.0f); 
+                    firstConstructorCircle.moveTo(5.0f, 5.0f); 
                 }
             }
         }

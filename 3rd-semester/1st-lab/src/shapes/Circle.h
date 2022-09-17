@@ -5,6 +5,7 @@
 
 #include <algorithm>
 #include <array>
+#include <ranges>
 #include <vector>
 
 #include "../util.h"
@@ -16,7 +17,7 @@ public:
     Circle(float centerX, float centerY, float radius, const sf::Color& color);
     Circle(float centerX, float centerY, float radius, const std::array<int, 4>& colorComponents);
 
-    void show(std::vector<std::reference_wrapper<Circle>>& circlesToRender);
+    void show(std::vector<std::unique_ptr<Circle>>& circlesToRender);
 
     void moveTo(float newCenterX, float newCenterY);
 
@@ -24,7 +25,7 @@ public:
 
     sf::CircleShape getSprite() const;
 
-    bool m_isShown{};
+    friend bool operator== (const Circle& first, const Circle& second);
 
 private:
     sf::CircleShape m_sprite{};

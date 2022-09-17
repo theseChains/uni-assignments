@@ -2,9 +2,9 @@
 
 // default constructor, initialized with arbitrary values
 Circle::Circle() 
-    : m_centerX{ util::windowWidth / 2.0f - 200.0f }, 
-    m_centerY{ util::windowHeight / 2.0f - 200.0f },
-    m_radius{ 200.0f }, 
+    : m_centerX{ util::windowWidth / 2.0f - 50.0f }, 
+    m_centerY{ util::windowHeight / 2.0f - 50.0f },
+    m_radius{ 50.0f }, 
     m_color{ sf::Color::Magenta }
 {
     initializeSfSprite(); 
@@ -30,10 +30,23 @@ Circle::Circle(float centerX, float centerY, float radius,
     initializeSfSprite(); 
 }
 
-void Circle::show(std::vector<std::reference_wrapper<Circle>>& circlesToRender)
+void Circle::show(std::vector<std::unique_ptr<Circle>>& circlesToRender)
 {
-    circlesToRender.push_back(*this);
-    m_isShown = true;
+    auto found{ std::ranges::find_if(circlesToRender, [this] (std::unique_ptr<Circle>& shapePtr)
+            {
+                return shapePtr.get() == this;
+            }) };
+
+    // remove the element if it was found, create it otherwise
+    if (found != circlesToRender.end())
+    {
+        // erase() calls the destructor of the object, unique_ptr will free memory automatically
+        circlesToRender.erase(found);
+    }
+    else
+    {
+        circlesToRender.push_back(std::move(std::make_unique<Circle>(*this)));
+    }
 }
 
 void Circle::moveTo(float newCenterX, float newCenterY)
@@ -54,6 +67,20 @@ void Circle::changeRadius(float newRadius)
 sf::CircleShape Circle::getSprite() const
 {
     return m_sprite;
+}
+
+// needed for the find function
+bool operator== (const Circle& first, const Circle& second)
+{
+    if (first.m_radius == second.m_radius && first.m_color == second.m_color
+            && first.m_centerX == second.m_centerX && first.m_centerY == second.m_centerY)
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
 }
 
 void Circle::initializeSfSprite()

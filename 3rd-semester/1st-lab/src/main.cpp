@@ -1,10 +1,29 @@
 #include <SFML/Graphics.hpp>
-
+#include <iostream>
 #include "util.h"
 
 #include "shapes/Circle.h"
 #include "shapes/Rectangle.h"
 #include "shapes/Line.h"
+
+void switchWorkspace(bool& workingWithCircles, bool& workingWithRectangles, bool& workingWithLines)
+{
+    if (workingWithCircles)
+    {
+        workingWithCircles = false;
+        workingWithRectangles = true;
+    }
+    else if (workingWithRectangles)
+    {
+        workingWithRectangles = false;
+        workingWithLines = true;
+    }
+    else
+    {
+        workingWithLines = false;
+        workingWithCircles = true;
+    }
+}
 
 void checkForCircleShapeCreation(std::vector<std::unique_ptr<Circle>>& circlesToRender)
 {
@@ -25,19 +44,37 @@ void checkForCircleShapeCreation(std::vector<std::unique_ptr<Circle>>& circlesTo
     }
 }
 
+void checkForRectangleShapeCreation(std::vector<std::unique_ptr<Rectangle>>& rectanglesToRender)
+{
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::F))
+    {
+        Rectangle defaultRectangle{};
+        defaultRectangle.show(rectanglesToRender);
+    }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::C))
+    {
+        Rectangle firstConstructorRectangle{ 55.0f, 95.0f, 100.0f, 80.0f, sf::Color::Green };
+        firstConstructorRectangle.show(rectanglesToRender);
+    }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::V))
+    {
+        Rectangle secondConstructorRectangle{ 300.0f, 200.0f, 70.0f, 130.0f, util::secondRectangleColorComponents };
+        secondConstructorRectangle.show(rectanglesToRender);
+    }
+}
+
 int main()
 {
     sf::RenderWindow window{ sf::VideoMode{ util::windowWidth, util::windowHeight }, "study" };
 
     std::vector<std::unique_ptr<Circle>> circlesToRender{};
+    std::vector<std::unique_ptr<Rectangle>> rectanglesToRender{};
+    std::vector<std::unique_ptr<Line>> linesToRender{};
 
-    Rectangle defaultRectangle{};
-
-    Line defaultLine{};
-
-    // todo: make 3 boolean variables for circle, rectangle and line movement
-    // alternate between these 3 modes by pressing 3 different keys
-    // update show function so that with the second call it removes the sprite
+    // todo: namespace workspace
+    bool workingWithCircles{ true };
+    bool workingWithRectangles{ false };
+    bool workingWithLines{ false };
 
     while (window.isOpen())
     {
@@ -54,15 +91,36 @@ int main()
             
             if (event.type == event.KeyPressed)
             {
-                checkForCircleShapeCreation(circlesToRender);
+                if (sf::Keyboard::isKeyPressed(sf::Keyboard::M))
+                {
+                    switchWorkspace(workingWithCircles, workingWithRectangles, workingWithLines);
+                }
+                if (workingWithCircles)
+                {
+                    checkForCircleShapeCreation(circlesToRender);
+                }
+                if (workingWithRectangles)
+                {
+                    checkForRectangleShapeCreation(rectanglesToRender);
+                }
             }
         }
 
         window.clear();
 
-        for (const auto& shape : circlesToRender)
+        for (const auto& circle : circlesToRender)
         {
-           window.draw(shape.get()->getSprite());
+           window.draw(circle.get()->getSprite());
+        }
+
+        for (const auto& rectangle : rectanglesToRender)
+        {
+            window.draw(rectangle.get()->getSprite());
+        }
+
+        for (const auto& line : linesToRender)
+        {
+            window.draw(line.get()->getSprite());
         }
 
         window.display();

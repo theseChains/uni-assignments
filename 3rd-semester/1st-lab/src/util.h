@@ -10,6 +10,8 @@ namespace util
     inline constexpr int windowHeight{ 480 };
 
     inline constexpr std::array<int, 4> secondCircleColorComponents{ 34, 65, 89, 200 };
+    inline constexpr std::array<int, 4> secondRectangleColorComponents{ 0, 176, 179, 255 };
+    inline constexpr std::array<int, 4> secondLineColorComponents{ 55, 15, 0, 255 };
 }
 
 namespace component
@@ -25,6 +27,15 @@ namespace rnd
     inline std::mt19937 mt{ std::random_device{}() };
     
     int getNumber(int min, int max);
+}
+
+namespace workspace
+{
+    bool circles{ true };
+    bool rectangles{ false };
+    bool lines{ false };
+
+    void shift();
 }
 
 #endif

@@ -40,14 +40,17 @@ int main()
                 if (workspace::circles)
                 {
                     checkForCircleShapeCreation(circlesToRender);
+                    checkForCircleModification(circlesToRender);
                 }
                 else if (workspace::rectangles)
                 {
                     checkForRectangleShapeCreation(rectanglesToRender);
+                    checkForRectangleModification(rectanglesToRender);
                 }
                 else if (workspace::lines)
                 {
                     checkForLineShapeCreation(linesToRender);
+                    checkForLineModification(linesToRender);
                 }
             }
         }

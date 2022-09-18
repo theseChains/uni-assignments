@@ -13,4 +13,8 @@ void checkForCircleShapeCreation(std::vector<std::unique_ptr<Circle>>& circlesTo
 void checkForRectangleShapeCreation(std::vector<std::unique_ptr<Rectangle>>& rectanglesToRender);
 void checkForLineShapeCreation(std::vector<std::unique_ptr<Line>>& linesToRender);
 
+void checkForCircleModification(std::vector<std::unique_ptr<Circle>>& circlesToRender);
+void checkForRectangleModification(std::vector<std::unique_ptr<Rectangle>>& rectanglesToRender);
+void checkForLineModification(std::vector<std::unique_ptr<Line>>& linesToRender);
+
 #endif

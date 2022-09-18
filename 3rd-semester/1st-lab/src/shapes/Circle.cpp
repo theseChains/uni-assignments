@@ -1,5 +1,5 @@
 #include "Circle.h"
-
+#include <iostream>
 // default constructor, initialized with arbitrary values
 Circle::Circle() 
     : m_centerX{ util::windowWidth / 2.0f - 50.0f }, 
@@ -68,15 +68,7 @@ sf::CircleShape Circle::getSprite() const
 // needed for the find function
 bool operator== (const Circle& first, const Circle& second)
 {
-    if (first.m_radius == second.m_radius && first.m_color == second.m_color
-            && first.m_centerX == second.m_centerX && first.m_centerY == second.m_centerY)
-    {
-        return true;
-    }
-    else
-    {
-        return false;
-    }
+    return (first.m_color == second.m_color);
 }
 
 void Circle::initializeSfSprite()

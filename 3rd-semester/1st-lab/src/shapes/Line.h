@@ -15,7 +15,7 @@ public:
     Line(float mainPointX, float mainPointY, float length, const sf::Color& color);
     Line(float mainPointX, float mainPointY, float length, const std::array<int, 4>& colorComponents);
 
-    void show(std::vector<sf::VertexArray>& linesToRender);
+    void show(std::vector<std::unique_ptr<Line>>& linesToRender);
 
     void moveTo(float offsetX, float offsetY);
 
@@ -23,7 +23,7 @@ public:
 
     sf::RectangleShape getSprite() const;
 
-    bool m_isShown{};
+    friend bool operator== (const Line& first, const Line& second);
 
 private:
     sf::RectangleShape m_sprite{};
@@ -36,6 +36,7 @@ private:
     sf::Color m_color{};
 
     void initializeSfSprite();
+    void updateSfSprite();
 };
 
 #endif

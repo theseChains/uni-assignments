@@ -29,6 +29,27 @@ Line::Line(float mainPointX, float mainPointY, float length, const std::array<in
     initializeSfSprite();
 }
 
+void Line::show(std::vector<std::unique_ptr<Line>>& linesToRender)
+{
+    auto erased{ std::erase_if(linesToRender, [this] (std::unique_ptr<Line>& shapePtr)
+            {
+                return *shapePtr.get() == *this;
+            }) };
+
+    if (!erased)
+    {
+        linesToRender.push_back(std::make_unique<Line>(*this));
+    }
+}
+
+void Line::moveTo(float offsetX, float offsetY)
+{
+    m_mainPointX += offsetX;
+    m_mainPointY += offsetY;
+
+    updateSfSprite();
+}
+
 void Line::rotate(float angle)
 {
     m_sprite.rotate(angle);
@@ -39,9 +60,19 @@ sf::RectangleShape Line::getSprite() const
     return m_sprite;
 }
 
+bool operator== (const Line& first, const Line& second)
+{
+    return (first.m_color == second.m_color);
+}
+
 void Line::initializeSfSprite()
 {
     m_sprite.setPosition(m_mainPointX, m_mainPointY);
     m_sprite.setFillColor(m_color);
-    m_sprite.setSize(sf::Vector2f{ m_length, 2.0f });
+    m_sprite.setSize(sf::Vector2f{ m_length, util::lineWidth });
+}
+
+void Line::updateSfSprite()
+{
+    m_sprite.setPosition(m_mainPointX, m_mainPointY);
 }

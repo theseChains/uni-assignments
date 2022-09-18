@@ -41,16 +41,19 @@ int main()
                 {
                     checkForCircleShapeCreation(circlesToRender);
                     checkForCircleModification(circlesToRender);
+                    checkForShapeMovement(circlesToRender);
                 }
                 else if (workspace::rectangles)
                 {
                     checkForRectangleShapeCreation(rectanglesToRender);
                     checkForRectangleModification(rectanglesToRender);
+                    checkForShapeMovement(rectanglesToRender);
                 }
                 else if (workspace::lines)
                 {
                     checkForLineShapeCreation(linesToRender);
                     checkForLineModification(linesToRender);
+                    checkForShapeMovement(linesToRender);
                 }
             }
         }

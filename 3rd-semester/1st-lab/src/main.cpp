@@ -39,8 +39,27 @@ void checkForRectangleShapeCreation(std::vector<std::unique_ptr<Rectangle>>& rec
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::V))
     {
-        Rectangle secondConstructorRectangle{ 300.0f, 200.0f, 70.0f, 130.0f, util::secondRectangleColorComponents };
+        Rectangle secondConstructorRectangle{ 490.0f, 200.0f, 70.0f, 130.0f, util::secondRectangleColorComponents };
         secondConstructorRectangle.show(rectanglesToRender);
+    }
+}
+
+void checkForLineShapeCreation(std::vector<std::unique_ptr<Line>>& linesToRender)
+{
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::F))
+    {
+        Line defaultLine{};
+        defaultLine.show(linesToRender);
+    }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::C))
+    {
+        Line firstConstructorLine{ 380.0f, 300.0f, 85.0f, sf::Color::White };
+        firstConstructorLine.show(linesToRender);
+    }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::V))
+    {
+        Line secondConstructorLine{ 45.0f, 210.0f, 40.0f, util::secondLineColorComponents };
+        secondConstructorLine.show(linesToRender);
     }
 }
 
@@ -75,9 +94,13 @@ int main()
                 {
                     checkForCircleShapeCreation(circlesToRender);
                 }
-                if (workspace::rectangles)
+                else if (workspace::rectangles)
                 {
                     checkForRectangleShapeCreation(rectanglesToRender);
+                }
+                else
+                {
+                    checkForLineShapeCreation(linesToRender);
                 }
             }
         }

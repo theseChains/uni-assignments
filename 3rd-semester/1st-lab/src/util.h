@@ -31,9 +31,9 @@ namespace rnd
 
 namespace workspace
 {
-    bool circles{ true };
-    bool rectangles{ false };
-    bool lines{ false };
+    inline bool circles{ true };
+    inline bool rectangles{ false };
+    inline bool lines{ false };
 
     void shift();
 }

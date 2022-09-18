@@ -1,5 +1,5 @@
 #include "Circle.h"
-#include <iostream>
+
 // default constructor, initialized with arbitrary values
 Circle::Circle() 
     : m_centerX{ util::windowWidth / 2.0f - 50.0f }, 
@@ -33,9 +33,9 @@ Circle::Circle(float centerX, float centerY, float radius,
 void Circle::show(std::vector<std::unique_ptr<Circle>>& circlesToRender)
 {
     // check if the element is already in the vector, remove it if it is:
-    auto erased{ std::erase_if(circlesToRender, [this] (std::unique_ptr<Circle>& shapePointer)
+    auto erased{ std::erase_if(circlesToRender, [this] (std::unique_ptr<Circle>& shapePtr)
             {
-                return *shapePointer.get() == *this;
+                return *shapePtr.get() == *this;
             }) };
 
     // erase_if performs the erase-remove idiom and returns the amount of removed shapes
@@ -65,7 +65,7 @@ sf::CircleShape Circle::getSprite() const
     return m_sprite;
 }
 
-// needed for the find function
+// needed for the erase_if function
 bool operator== (const Circle& first, const Circle& second)
 {
     return (first.m_color == second.m_color);

@@ -1,29 +1,10 @@
 #include <SFML/Graphics.hpp>
-#include <iostream>
+
 #include "util.h"
 
 #include "shapes/Circle.h"
 #include "shapes/Rectangle.h"
 #include "shapes/Line.h"
-
-void switchWorkspace(bool& workingWithCircles, bool& workingWithRectangles, bool& workingWithLines)
-{
-    if (workingWithCircles)
-    {
-        workingWithCircles = false;
-        workingWithRectangles = true;
-    }
-    else if (workingWithRectangles)
-    {
-        workingWithRectangles = false;
-        workingWithLines = true;
-    }
-    else
-    {
-        workingWithLines = false;
-        workingWithCircles = true;
-    }
-}
 
 void checkForCircleShapeCreation(std::vector<std::unique_ptr<Circle>>& circlesToRender)
 {
@@ -71,11 +52,6 @@ int main()
     std::vector<std::unique_ptr<Rectangle>> rectanglesToRender{};
     std::vector<std::unique_ptr<Line>> linesToRender{};
 
-    // todo: namespace workspace
-    bool workingWithCircles{ true };
-    bool workingWithRectangles{ false };
-    bool workingWithLines{ false };
-
     while (window.isOpen())
     {
         sf::Event event{};
@@ -93,13 +69,13 @@ int main()
             {
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::M))
                 {
-                    switchWorkspace(workingWithCircles, workingWithRectangles, workingWithLines);
+                    workspace::shift();
                 }
-                if (workingWithCircles)
+                if (workspace::circles)
                 {
                     checkForCircleShapeCreation(circlesToRender);
                 }
-                if (workingWithRectangles)
+                if (workspace::rectangles)
                 {
                     checkForRectangleShapeCreation(rectanglesToRender);
                 }

@@ -1,18 +1,12 @@
 #include <SFML/Graphics.hpp>
 
-#include <algorithm>
-#include <functional>
-#include <memory>
-#include <ranges>
-
 #include "util.h"
 
 #include "shapes/Circle.h"
 #include "shapes/Rectangle.h"
 #include "shapes/Line.h"
 
-void createCircleShape(std::vector<std::unique_ptr<Circle>>& circlesToRender,
-        const sf::Event& event)
+void checkForCircleShapeCreation(std::vector<std::unique_ptr<Circle>>& circlesToRender)
 {
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::F))
     {
@@ -52,21 +46,15 @@ int main()
         {
             if (event.type == sf::Event::Closed)
                 window.close();
-
-            if (event.type == sf::Event::KeyPressed)
+            
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
             {
-                if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
-                {
-                    window.close();
-                }
-                createCircleShape(circlesToRender, event);
-                if (event.key.code == sf::Keyboard::D)
-                {
-                    for (auto& shape : circlesToRender)
-                    {
-                        shape->moveTo(5.0f, 5.0f);
-                    }
-                }
+                window.close();
+            }
+            
+            if (event.type == event.KeyPressed)
+            {
+                checkForCircleShapeCreation(circlesToRender);
             }
         }
 

@@ -3,7 +3,9 @@
 
 #include <SFML/Graphics.hpp>
 
+#include <algorithm>
 #include <array>
+#include <memory>
 #include <vector>
 
 #include "../util.h"
@@ -16,7 +18,7 @@ public:
     Rectangle(float topLeftX, float topLeftY, float width, float height,
             const std::array<int, 4>& colorComponents);
 
-    void show(std::vector<sf::RectangleShape>& rectanglesToRender);
+    void show(std::vector<std::unique_ptr<Rectangle>>& rectanglesToRender);
 
     void moveTo(float offsetX, float offsetY);
 
@@ -25,7 +27,7 @@ public:
     
     sf::RectangleShape getSprite() const;
 
-    bool m_isShown{};
+    friend bool operator== (const Rectangle& first, const Rectangle& second);
 
 private:
     sf::RectangleShape m_sprite{};

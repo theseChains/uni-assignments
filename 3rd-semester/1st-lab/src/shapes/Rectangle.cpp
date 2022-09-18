@@ -34,6 +34,19 @@ Rectangle::Rectangle(float topLeftX, float topLeftY, float width, float height,
     initializeSfSprite();
 }
 
+void Rectangle::show(std::vector<std::unique_ptr<Rectangle>> &rectanglesToRender)
+{
+    auto erased{ std::erase_if(rectanglesToRender, [this] (std::unique_ptr<Rectangle>& shapePtr)
+            {
+                return *shapePtr.get() == *this;
+            }) };
+
+    if (!erased)
+    {
+        rectanglesToRender.push_back(std::make_unique<Rectangle>(*this));
+    }
+}
+
 void Rectangle::moveTo(float offsetX, float offsetY)
 {
     m_topLeftX += offsetX;
@@ -59,6 +72,11 @@ void Rectangle::changeHeight(float newHeight)
 sf::RectangleShape Rectangle::getSprite() const
 {
     return m_sprite;
+}
+
+bool operator== (const Rectangle& first, const Rectangle& second)
+{
+    return (first.m_color == second.m_color);
 }
 
 void Rectangle::initializeSfSprite()

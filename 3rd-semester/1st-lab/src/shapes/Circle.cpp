@@ -45,10 +45,10 @@ void Circle::show(std::vector<std::unique_ptr<Circle>>& circlesToRender)
     }
 }
 
-void Circle::moveTo(float newCenterX, float newCenterY)
+void Circle::moveTo(float offsetX, float offsetY)
 {
-    m_centerX += newCenterX;
-    m_centerY += newCenterY;
+    m_centerX += offsetX;
+    m_centerY += offsetY;
 
     updateSfSprite();
 }

@@ -18,8 +18,8 @@ public:
     Circle(float centerX, float centerY, float radius, const std::array<int, 4>& colorComponents);
 
     void show(std::vector<std::unique_ptr<Circle>>& circlesToRender);
-
-    void moveTo(float newCenterX, float newCenterY);
+    
+    void moveTo(float offsetX, float offsetY);
 
     void changeRadius(float newRadius);
 

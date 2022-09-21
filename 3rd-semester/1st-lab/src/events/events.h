@@ -2,7 +2,6 @@
 #define EVENTS_UTILITY_FUNCTIONS
 
 #include <memory>
-#include <ranges>
 
 #include "../util.h"
 
@@ -18,37 +17,10 @@ void checkForCircleModification(std::vector<std::unique_ptr<Circle>>& circlesToR
 void checkForRectangleModification(std::vector<std::unique_ptr<Rectangle>>& rectanglesToRender);
 void checkForLineModification(std::vector<std::unique_ptr<Line>>& linesToRender);
 
-template <typename ShapeType>
-void checkForShapeMovement(std::vector<std::unique_ptr<ShapeType>>& shapesToRender)
+namespace Movement
 {
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
-    {
-        for (const auto& shape : shapesToRender)
-        {
-            shape->moveTo(0.0f, -2.0f);
-        }
-    }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
-    {
-        for (const auto& shape : shapesToRender)
-        {
-            shape->moveTo(-2.0f, 0.0f);
-        }
-    }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
-    {
-        for (const auto& shape : shapesToRender)
-        {
-            shape->moveTo(0.0f, 2.0f);
-        }
-    }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
-    {
-        for (const auto& shape : shapesToRender)
-        {
-            shape->moveTo(2.0f, 0.0f);
-        }
-    }
+    template <typename ShapeType>
+    void checkForShapeMovement(std::vector<std::unique_ptr<ShapeType>>& shapesToRender);
 }
 
 #endif

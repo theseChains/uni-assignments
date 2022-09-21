@@ -17,6 +17,10 @@ void checkForCircleShapeCreation(std::vector<std::unique_ptr<Circle>>& circlesTo
         Circle secondConstructorCircle{ 200.0f, 130.0f, 120.0f, util::secondCircleColorComponents };
         secondConstructorCircle.show(circlesToRender);
     }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::G))
+    {
+        
+    }
 }
 
 void checkForRectangleShapeCreation(std::vector<std::unique_ptr<Rectangle>>& rectanglesToRender)
@@ -124,3 +128,40 @@ void checkForLineModification(std::vector<std::unique_ptr<Line>>& linesToRender)
         }
     }
 }
+
+template <typename ShapeType>
+void Movement::checkForShapeMovement(std::vector<std::unique_ptr<ShapeType>>& shapesToRender)
+{
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
+    {
+        for (const auto& shape : shapesToRender)
+        {
+            shape->moveTo(0.0f, -2.0f);
+        }
+    }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+    {
+        for (const auto& shape : shapesToRender)
+        {
+            shape->moveTo(-2.0f, 0.0f);
+        }
+    }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+    {
+        for (const auto& shape : shapesToRender)
+        {
+            shape->moveTo(0.0f, 2.0f);
+        }
+    }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+    {
+        for (const auto& shape : shapesToRender)
+        {
+            shape->moveTo(2.0f, 0.0f);
+        }
+    }
+}
+
+template void Movement::checkForShapeMovement(std::vector<std::unique_ptr<Circle>>&);
+template void Movement::checkForShapeMovement(std::vector<std::unique_ptr<Rectangle>>&);
+template void Movement::checkForShapeMovement(std::vector<std::unique_ptr<Line>>&);

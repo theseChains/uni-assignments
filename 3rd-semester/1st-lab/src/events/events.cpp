@@ -153,6 +153,24 @@ void createAndShowFirstConstructorRectangle(std::unique_ptr<Rectangle>& newRecta
     newRectanglePtr = std::make_unique<Rectangle>(firstConstructorRectangle);
 }
 
+void createAndShowSecondConstructorRectangle(std::unique_ptr<Rectangle>& newRectanglePtr)
+{
+    float topLeftX{ rnd::getFloat(100, util::windowWidth - 100) };
+    float topLeftY{ rnd::getFloat(100, util::windowHeight - 100) };
+    float width{ rnd::getFloat(10, 100) };
+    float height{ rnd::getFloat(10, 100) };
+
+    Color rectangleColor{ createRandomColor() };
+    int alphaComponent{ rnd::getNumber(50, 255) };
+
+    Rectangle secondConstructorRectangle{ topLeftX, topLeftY, width, height, 
+        std::array<int, 4>{ rectangleColor.redComponent, rectangleColor.greenComponent,
+            rectangleColor.blueComponent, alphaComponent } };
+
+    secondConstructorRectangle.show();
+    newRectanglePtr = std::make_unique<Rectangle>(secondConstructorRectangle);
+}
+
 void checkForRectangleShapeCreation(std::array<std::unique_ptr<Rectangle>, 3>& rectanglesToRender)
 {
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::F))
@@ -181,6 +199,15 @@ void checkForRectangleShapeCreation(std::array<std::unique_ptr<Rectangle>, 3>& r
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::V))
     {
+        if (rectanglesToRender[util::secondConstructorShapeIndex] != nullptr)
+        {
+            hideAndDeleteRectangle(rectanglesToRender[util::secondConstructorShapeIndex]);
+            createAndShowSecondConstructorRectangle(rectanglesToRender[util::secondConstructorShapeIndex]);
+        }
+        else
+        {
+            createAndShowSecondConstructorRectangle(rectanglesToRender[util::secondConstructorShapeIndex]);
+        }
     }
 }
 

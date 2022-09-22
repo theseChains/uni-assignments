@@ -5,7 +5,8 @@ Line::Line()
     : m_mainPointX{ util::windowWidth / 2.0f - 200.0f },
     m_mainPointY{ util::windowHeight / 2.0f },
     m_length{ 100.0f },
-    m_color{ sf::Color::Magenta }
+    m_color{ sf::Color::Magenta },
+    m_isShown{ false }
 {
     initializeSfSprite();
 }
@@ -14,7 +15,8 @@ Line::Line(float mainPointX, float mainPointY, float length, const sf::Color& co
     : m_mainPointX{ mainPointX },
     m_mainPointY{ mainPointY },
     m_length{ length },
-    m_color{ color }
+    m_color{ color },
+    m_isShown{ false }
 {
     initializeSfSprite();
 }
@@ -24,21 +26,22 @@ Line::Line(float mainPointX, float mainPointY, float length, const std::array<in
     m_mainPointY{ mainPointY },
     m_length{ length },
     m_color{ sf::Color(colorComponents[component::red], colorComponents[component::green],
-            colorComponents[component::blue], colorComponents[component::alpha]) }
+            colorComponents[component::blue], colorComponents[component::alpha]) },
+    m_isShown{ false }
 {
     initializeSfSprite();
 }
 
-void Line::show(std::vector<std::unique_ptr<Line>>& linesToRender)
+void Line::show()
 {
-    auto erased{ std::erase_if(linesToRender, [this] (std::unique_ptr<Line>& shapePtr)
-            {
-                return *shapePtr.get() == *this;
-            }) };
-
-    if (!erased)
+    // hide if already shown
+    if (m_isShown)
     {
-        linesToRender.push_back(std::make_unique<Line>(*this));
+        m_isShown = false;
+    }
+    else
+    {
+        m_isShown = true;
     }
 }
 
@@ -58,6 +61,11 @@ void Line::rotate(float angle)
 sf::RectangleShape Line::getSprite() const
 {
     return m_sprite;
+}
+
+bool Line::isShown() const
+{
+    return m_isShown;
 }
 
 bool operator== (const Line& first, const Line& second)

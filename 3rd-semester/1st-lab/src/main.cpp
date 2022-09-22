@@ -1,5 +1,5 @@
 #include <SFML/Graphics.hpp>
-
+#include <iostream>
 #include "events/events.h"
 #include "util.h"
 
@@ -13,7 +13,7 @@ int main()
 
     std::vector<std::unique_ptr<Circle>> circlesToRender{};
     std::vector<std::unique_ptr<Rectangle>> rectanglesToRender{};
-    std::vector<std::unique_ptr<Line>> linesToRender{};
+    std::array<std::unique_ptr<Line>, 3> linesToRender{};
 
     while (window.isOpen())
     {
@@ -28,7 +28,6 @@ int main()
                 window.close();
             }
            
-            // todo: add the event handler function (maybe even a class?)
             if (event.type == event.KeyPressed)
             {
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::M))
@@ -36,7 +35,6 @@ int main()
                     workspace::shift();
                 }
                 
-                // todo: add changeProperty event handlers
                 if (workspace::circles)
                 {
                     checkForCircleShapeCreation(circlesToRender);
@@ -52,8 +50,8 @@ int main()
                 else if (workspace::lines)
                 {
                     checkForLineShapeCreation(linesToRender);
-                    checkForLineModification(linesToRender);
-                    Movement::checkForShapeMovement(linesToRender);
+                    //checkForLineModification(linesToRender);
+                    //Movement::checkForShapeMovement(linesToRender);
                 }
             }
         }
@@ -72,7 +70,13 @@ int main()
 
         for (const auto& line : linesToRender)
         {
-            window.draw(line.get()->getSprite());
+            if (line.get() != nullptr)
+            {
+                if (line.get()->isShown())
+                {
+                    window.draw(line.get()->getSprite());
+                }
+            }
         }
 
         window.display();

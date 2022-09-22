@@ -26,5 +26,6 @@ namespace Creation
     void createAndShowSecondConstructorShape(std::unique_ptr<ShapeType>& newShapePtr);
 }
 
+void checkForRectangleShapeCreation(std::array<std::unique_ptr<Rectangle>, 3>& rectanglesToRender);
 
 #endif

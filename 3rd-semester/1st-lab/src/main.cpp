@@ -2,6 +2,7 @@
 
 #include "events/events.h"
 #include "events/ShapeCreation.h"
+#include "events/ShapeMovement.h"
 
 #include "util.h"
 

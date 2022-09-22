@@ -1,24 +1,5 @@
 #include "events.h"
 
-void checkForCircleShapeCreation(std::vector<std::unique_ptr<Circle>>& circlesToRender)
-{
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::F))
-    {
-        Circle defaultCircle{};
-        defaultCircle.show(circlesToRender);
-    }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::C))
-    {
-        Circle firstConstructorCircle{ 120.0f, 40.0f, 90.0f, sf::Color::Yellow };
-        firstConstructorCircle.show(circlesToRender);
-    }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::V))
-    {
-        Circle secondConstructorCircle{ 200.0f, 130.0f, 120.0f, util::secondCircleColorComponents };
-        secondConstructorCircle.show(circlesToRender);
-    }
-}
-
 void checkForRectangleShapeCreation(std::vector<std::unique_ptr<Rectangle>>& rectanglesToRender)
 {
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::F))
@@ -105,7 +86,7 @@ void Creation::createAndShowSecondConstructorShape(std::unique_ptr<ShapeType>& n
 {
     Dimensions shapeDimensions{ createRandomDimensions() };
     Color shapeColor{ createRandomColor() };
-    int alphaComponent{ rnd::getNumber(100, 255) };
+    int alphaComponent{ rnd::getNumber(50, 255) };
 
     ShapeType secondConstructorShape{ shapeDimensions.mainPointX, shapeDimensions.mainPointY,
         shapeDimensions.size, std::array<int, 4>{ shapeColor.redComponent,
@@ -156,7 +137,8 @@ void Creation::checkForShapeCreation(std::array<std::unique_ptr<ShapeType>, 3>& 
     }
 }
 
-template void Creation::checkForShapeCreation(std::array<std::unique_ptr<Line>, 3>& shapesToRender);
+template void Creation::checkForShapeCreation(std::array<std::unique_ptr<Line>, 3>&);
+template void Creation::checkForShapeCreation(std::array<std::unique_ptr<Circle>, 3>&);
 
 void checkForCircleModification(std::vector<std::unique_ptr<Circle>>& circlesToRender)
 {

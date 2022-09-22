@@ -9,9 +9,7 @@ namespace util
     inline constexpr int windowWidth{ 640 };
     inline constexpr int windowHeight{ 480 };
 
-    inline constexpr std::array<int, 4> secondCircleColorComponents{ 34, 65, 89, 200 };
     inline constexpr std::array<int, 4> secondRectangleColorComponents{ 0, 176, 179, 255 };
-    inline constexpr std::array<int, 4> secondLineColorComponents{ 55, 15, 0, 255 };
 
     inline constexpr float lineWidth{ 2.0f };
 

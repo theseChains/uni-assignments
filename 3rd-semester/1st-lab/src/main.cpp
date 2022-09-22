@@ -1,5 +1,5 @@
 #include <SFML/Graphics.hpp>
-#include <iostream>
+
 #include "events/events.h"
 #include "util.h"
 
@@ -11,7 +11,7 @@ int main()
 {
     sf::RenderWindow window{ sf::VideoMode{ util::windowWidth, util::windowHeight }, "study" };
 
-    std::vector<std::unique_ptr<Circle>> circlesToRender{};
+    std::array<std::unique_ptr<Circle>, 3> circlesToRender{};
     std::vector<std::unique_ptr<Rectangle>> rectanglesToRender{};
     std::array<std::unique_ptr<Line>, 3> linesToRender{};
 
@@ -37,9 +37,9 @@ int main()
                 
                 if (workspace::circles)
                 {
-                    checkForCircleShapeCreation(circlesToRender);
-                    checkForCircleModification(circlesToRender);
-                    Movement::checkForShapeMovement(circlesToRender);
+                    Creation::checkForShapeCreation(circlesToRender);
+                    //checkForCircleModification(circlesToRender);
+                    //Movement::checkForShapeMovement(circlesToRender);
                 }
                 else if (workspace::rectangles)
                 {
@@ -60,7 +60,13 @@ int main()
 
         for (const auto& circle : circlesToRender)
         {
-           window.draw(circle.get()->getSprite());
+            if (circle.get() != nullptr)
+            {
+                if (circle.get()->isShown())
+                {
+                    window.draw(circle.get()->getSprite());
+                }
+            }
         }
 
         for (const auto& rectangle : rectanglesToRender)

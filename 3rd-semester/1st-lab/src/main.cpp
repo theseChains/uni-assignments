@@ -1,6 +1,8 @@
 #include <SFML/Graphics.hpp>
 
 #include "events/events.h"
+#include "events/ShapeCreation.h"
+
 #include "util.h"
 
 #include "shapes/Circle.h"

@@ -68,11 +68,6 @@ bool Line::isShown() const
     return m_isShown;
 }
 
-bool operator== (const Line& first, const Line& second)
-{
-    return (first.m_color == second.m_color);
-}
-
 void Line::initializeSfSprite()
 {
     m_sprite.setPosition(m_mainPointX, m_mainPointY);

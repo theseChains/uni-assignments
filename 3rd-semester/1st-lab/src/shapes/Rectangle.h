@@ -19,12 +19,10 @@ public:
 
     void moveTo(float offsetX, float offsetY);
 
-    void changeWidth(float newWidth);
-    void changeHeight(float newHeight);
+    void changeWidth(float widthOffset);
+    void changeHeight(float heightOffset);
     
     sf::RectangleShape getSprite() const;
-
-    friend bool operator== (const Rectangle& first, const Rectangle& second);
 
     bool isShown() const;
 

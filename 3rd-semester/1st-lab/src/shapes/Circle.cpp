@@ -53,9 +53,9 @@ void Circle::moveTo(float offsetX, float offsetY)
     updateSfSprite();
 }
 
-void Circle::changeRadius(float newRadius)
+void Circle::changeRadius(float radiusOffset)
 {
-    m_radius += newRadius;
+    m_radius += radiusOffset;
 
     updateSfSprite();
 }
@@ -63,12 +63,6 @@ void Circle::changeRadius(float newRadius)
 sf::CircleShape Circle::getSprite() const
 {
     return m_sprite;
-}
-
-// needed for the erase_if function
-bool operator== (const Circle& first, const Circle& second)
-{
-    return (first.m_color == second.m_color);
 }
 
 bool Circle::isShown() const

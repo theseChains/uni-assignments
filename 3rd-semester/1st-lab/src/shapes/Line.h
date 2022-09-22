@@ -25,8 +25,6 @@ public:
 
     bool isShown() const;
 
-    friend bool operator== (const Line& first, const Line& second);
-
 private:
     sf::RectangleShape m_sprite{};
 

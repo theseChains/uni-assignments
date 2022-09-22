@@ -18,11 +18,9 @@ public:
     
     void moveTo(float offsetX, float offsetY);
 
-    void changeRadius(float newRadius);
+    void changeRadius(float radiusOffset);
 
     sf::CircleShape getSprite() const;
-
-    friend bool operator== (const Circle& first, const Circle& second);
 
     bool isShown() const;
 

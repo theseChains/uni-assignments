@@ -3,7 +3,7 @@
 // default constructor, initialized with arbitrary values
 Rectangle::Rectangle()
     : m_topLeftX{ util::windowWidth / 2.0f - 75.0f },
-    m_topLeftY{ util::windowHeight / 2.0f - 50.0f },
+    m_topLeftY{ util::windowHeight / 2.0f - 150.0f },
     m_width{ 150.0f },
     m_height{ 100.0f },
     m_color{ sf::Color::Magenta },
@@ -57,16 +57,16 @@ void Rectangle::moveTo(float offsetX, float offsetY)
     updateSfSprite();
 }
 
-void Rectangle::changeWidth(float newWidth)
+void Rectangle::changeWidth(float widthOffset)
 {
-    m_width += newWidth;
+    m_width += widthOffset;
 
     updateSfSprite();
 }
 
-void Rectangle::changeHeight(float newHeight)
+void Rectangle::changeHeight(float heightOffset)
 {
-    m_height += newHeight;
+    m_height += heightOffset;
 
     updateSfSprite();
 }
@@ -74,11 +74,6 @@ void Rectangle::changeHeight(float newHeight)
 sf::RectangleShape Rectangle::getSprite() const
 {
     return m_sprite;
-}
-
-bool operator== (const Rectangle& first, const Rectangle& second)
-{
-    return (first.m_color == second.m_color);
 }
 
 bool Rectangle::isShown() const

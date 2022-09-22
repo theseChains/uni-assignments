@@ -25,39 +25,16 @@ int main()
         while (window.pollEvent(event))
         {
             if (event.type == sf::Event::Closed)
+            {
                 window.close();
+            }
             
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
             {
                 window.close();
             }
-           
-            if (event.type == event.KeyPressed)
-            {
-                if (sf::Keyboard::isKeyPressed(sf::Keyboard::M))
-                {
-                    workspace::shift();
-                }
-                
-                if (workspace::circles)
-                {
-                    Creation::checkForShapeCreation(circlesToRender);
-                    checkForCircleModification(circlesToRender);
-                    Movement::checkForShapeMovement(circlesToRender);
-                }
-                else if (workspace::rectangles)
-                {
-                    checkForRectangleShapeCreation(rectanglesToRender);
-                    checkForRectangleModification(rectanglesToRender);
-                    Movement::checkForShapeMovement(rectanglesToRender);
-                }
-                else if (workspace::lines)
-                {
-                    Creation::checkForShapeCreation(linesToRender);
-                    checkForLineModification(linesToRender);
-                    Movement::checkForShapeMovement(linesToRender);
-                }
-            }
+            
+            eventHandlerFunction(event, circlesToRender, rectanglesToRender, linesToRender);
         }
 
         window.clear();

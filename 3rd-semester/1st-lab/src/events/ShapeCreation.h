@@ -1,12 +1,16 @@
 #ifndef SHAPE_CREATION_H
 #define SHAPE_CREATION_H
 
+#include <array>
+#include <memory>
+
 #include "../util.h"
 
 #include "../shapes/Circle.h"
 #include "../shapes/Rectangle.h"
 #include "../shapes/Line.h"
 
+// for Line and Circle classes
 namespace Creation
 {
     template <typename ShapeType>
@@ -26,6 +30,7 @@ namespace Creation
     void createAndShowSecondConstructorShape(std::unique_ptr<ShapeType>& newShapePtr);
 }
 
+// for Rectangle class
 void checkForRectangleShapeCreation(std::array<std::unique_ptr<Rectangle>, 3>& rectanglesToRender);
 
 #endif

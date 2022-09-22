@@ -1,5 +1,4 @@
 #include "events.h"
-#include <iostream>
 
 void checkForCircleShapeCreation(std::vector<std::unique_ptr<Circle>>& circlesToRender)
 {
@@ -42,7 +41,7 @@ void checkForRectangleShapeCreation(std::vector<std::unique_ptr<Rectangle>>& rec
 template <typename ShapeType>
 void Creation::hideAndDelete(std::unique_ptr<ShapeType>& oldShapePtr)
 {
-    // hide the shape with another call to show()
+    // hide the shape with another call to show() (not really necessary)
     oldShapePtr.get()->show();
     oldShapePtr.reset();
 }
@@ -56,20 +55,48 @@ void Creation::createAndShowDefaultShape(std::unique_ptr<ShapeType>& newShapePtr
 }
 
 template <typename ShapeType>
+void Creation::createAndShowFirstConstructorShape(std::unique_ptr<ShapeType>& newShapePtr)
+{
+    // create random parameters
+    float mainPointX{ rnd::getFloat(100, 540) };
+    float mainPointY{ rnd::getFloat(100, 380) };
+    float size{ rnd::getFloat(10, 100) };
+    
+    int redComponent{ rnd::getNumber(0, 255) };
+    int greenComponent{ rnd::getNumber(0, 255) };
+    int blueComponent{ rnd::getNumber(0, 255) };
+    
+    ShapeType firstConstructorShape{ mainPointX, mainPointY, size, sf::Color(redComponent,
+            greenComponent, blueComponent) };
+    firstConstructorShape.show();
+    newShapePtr = std::make_unique<ShapeType>(firstConstructorShape);
+}
+
+template <typename ShapeType>
 void Creation::checkForShapeCreation(std::array<std::unique_ptr<ShapeType>, 3>& shapesToRender)
 {
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::F))
     {
         if (shapesToRender[util::defaultShapeIndex] != nullptr)
         {
-            std::cout << "default line was already created before, hiding, deleting, creating...\n";
             hideAndDelete(shapesToRender[util::defaultShapeIndex]);
             createAndShowDefaultShape(shapesToRender[util::defaultShapeIndex]);
         }
         else
         {
-            std::cout << "creating the shape for the first time!\n";
             createAndShowDefaultShape(shapesToRender[util::defaultShapeIndex]);
+        }
+    }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::C))
+    {
+        if (shapesToRender[util::firstConstructorShapeIndex] != nullptr)
+        {
+            hideAndDelete(shapesToRender[util::firstConstructorShapeIndex]);
+            createAndShowFirstConstructorShape(shapesToRender[util::firstConstructorShapeIndex]);
+        }
+        else
+        {
+            createAndShowFirstConstructorShape(shapesToRender[util::firstConstructorShapeIndex]);
         }
     }
 }

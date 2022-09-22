@@ -33,6 +33,9 @@ namespace rnd
     inline std::mt19937 mt{ std::random_device{}() };
     
     int getNumber(int min, int max);
+
+    // convenience function to avoid implicit conversions
+    float getFloat(int min, int max);
 }
 
 namespace workspace

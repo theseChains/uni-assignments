@@ -17,8 +17,8 @@ struct Color
 
 Dimensions createRandomDimensions()
 {
-    float mainPointX{ rnd::getFloat(100, 540) };
-    float mainPointY{ rnd::getFloat(100, 380) };
+    float mainPointX{ rnd::getFloat(100, util::windowWidth - 100) };
+    float mainPointY{ rnd::getFloat(100, util::windowHeight - 100) };
     float size{ rnd::getFloat(10, 100) };
 
     return { mainPointX, mainPointY, size };
@@ -137,6 +137,22 @@ void createAndShowDefaultRectangle(std::unique_ptr<Rectangle>& newRectanglePtr)
     newRectanglePtr = std::make_unique<Rectangle>(defaultRectangle);
 }
 
+void createAndShowFirstConstructorRectangle(std::unique_ptr<Rectangle>& newRectanglePtr)
+{
+    float topLeftX{ rnd::getFloat(100, util::windowWidth - 100) };
+    float topLeftY{ rnd::getFloat(100, util::windowHeight - 100) };
+    float width{ rnd::getFloat(10, 100) };
+    float height{ rnd::getFloat(10, 100) };
+
+    Color rectangleColor{ createRandomColor() };
+
+    Rectangle firstConstructorRectangle{ topLeftX, topLeftY, width, height,
+        sf::Color(rectangleColor.redComponent, rectangleColor.greenComponent, rectangleColor.blueComponent) };
+
+    firstConstructorRectangle.show();
+    newRectanglePtr = std::make_unique<Rectangle>(firstConstructorRectangle);
+}
+
 void checkForRectangleShapeCreation(std::array<std::unique_ptr<Rectangle>, 3>& rectanglesToRender)
 {
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::F))
@@ -153,6 +169,15 @@ void checkForRectangleShapeCreation(std::array<std::unique_ptr<Rectangle>, 3>& r
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::C))
     {
+        if (rectanglesToRender[util::firstConstructorShapeIndex] != nullptr)
+        {
+            hideAndDeleteRectangle(rectanglesToRender[util::firstConstructorShapeIndex]);
+            createAndShowFirstConstructorRectangle(rectanglesToRender[util::firstConstructorShapeIndex]); 
+        }
+        else
+        {
+            createAndShowFirstConstructorRectangle(rectanglesToRender[util::firstConstructorShapeIndex]);
+        }
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::V))
     {

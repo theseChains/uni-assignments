@@ -39,7 +39,7 @@ int main()
                 if (workspace::circles)
                 {
                     Creation::checkForShapeCreation(circlesToRender);
-                    //checkForCircleModification(circlesToRender);
+                    checkForCircleModification(circlesToRender);
                     Movement::checkForShapeMovement(circlesToRender);
                 }
                 else if (workspace::rectangles)

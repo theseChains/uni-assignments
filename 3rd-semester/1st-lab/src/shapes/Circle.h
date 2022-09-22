@@ -3,10 +3,7 @@
 
 #include <SFML/Graphics.hpp>
 
-#include <algorithm>
 #include <array>
-#include <ranges>
-#include <vector>
 
 #include "../util.h"
 
@@ -17,7 +14,7 @@ public:
     Circle(float centerX, float centerY, float radius, const sf::Color& color);
     Circle(float centerX, float centerY, float radius, const std::array<int, 4>& colorComponents);
 
-    void show(std::vector<std::unique_ptr<Circle>>& circlesToRender);
+    void show();
     
     void moveTo(float offsetX, float offsetY);
 
@@ -26,6 +23,8 @@ public:
     sf::CircleShape getSprite() const;
 
     friend bool operator== (const Circle& first, const Circle& second);
+
+    bool isShown() const;
 
 private:
     sf::CircleShape m_sprite{};
@@ -36,6 +35,8 @@ private:
     float m_radius{};
 
     sf::Color m_color{};
+
+    bool m_isShown{};
 
     void initializeSfSprite();
     void updateSfSprite();

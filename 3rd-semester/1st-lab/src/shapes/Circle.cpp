@@ -5,7 +5,8 @@ Circle::Circle()
     : m_centerX{ util::windowWidth / 2.0f - 50.0f }, 
     m_centerY{ util::windowHeight / 2.0f - 50.0f },
     m_radius{ 50.0f }, 
-    m_color{ sf::Color::Magenta }
+    m_color{ sf::Color::Magenta },
+    m_isShown{ false }
 {
     initializeSfSprite(); 
 }
@@ -14,7 +15,8 @@ Circle::Circle(float centerX, float centerY, float radius, const sf::Color& colo
     : m_centerX{ centerX },
     m_centerY{ centerY },
     m_radius{ radius },
-    m_color{ color }
+    m_color{ color },
+    m_isShown{ false }
 {
     initializeSfSprite();
 }
@@ -25,23 +27,21 @@ Circle::Circle(float centerX, float centerY, float radius,
     m_centerY{ centerY },
     m_radius{ radius },
     m_color{ sf::Color(colorComponents[component::red], colorComponents[component::green],
-            colorComponents[component::blue], colorComponents[component::alpha]) }
+            colorComponents[component::blue], colorComponents[component::alpha]) },
+    m_isShown{ false }
 {
     initializeSfSprite(); 
 }
 
-void Circle::show(std::vector<std::unique_ptr<Circle>>& circlesToRender)
+void Circle::show()
 {
-    // check if the element is already in the vector, remove it if it is:
-    auto erased{ std::erase_if(circlesToRender, [this] (std::unique_ptr<Circle>& shapePtr)
-            {
-                return *shapePtr.get() == *this;
-            }) };
-
-    // erase_if performs the erase-remove idiom and returns the amount of removed shapes
-    if (!erased)
+    if (m_isShown)
     {
-        circlesToRender.push_back(std::make_unique<Circle>(*this));
+        m_isShown = false;
+    }
+    else
+    {
+        m_isShown = true;
     }
 }
 
@@ -69,6 +69,11 @@ sf::CircleShape Circle::getSprite() const
 bool operator== (const Circle& first, const Circle& second)
 {
     return (first.m_color == second.m_color);
+}
+
+bool Circle::isShown() const
+{
+    return m_isShown;
 }
 
 void Circle::initializeSfSprite()

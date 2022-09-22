@@ -54,22 +54,65 @@ void Creation::createAndShowDefaultShape(std::unique_ptr<ShapeType>& newShapePtr
     newShapePtr = std::make_unique<ShapeType>(defaultShape);
 }
 
-template <typename ShapeType>
-void Creation::createAndShowFirstConstructorShape(std::unique_ptr<ShapeType>& newShapePtr)
+struct Dimensions
 {
-    // create random parameters
+    float mainPointX{};
+    float mainPointY{};
+    float size{};
+};
+
+struct Color
+{
+    int redComponent{};
+    int greenComponent{};
+    int blueComponent{};
+};
+
+Dimensions createRandomDimensions()
+{
     float mainPointX{ rnd::getFloat(100, 540) };
     float mainPointY{ rnd::getFloat(100, 380) };
     float size{ rnd::getFloat(10, 100) };
-    
+
+    return { mainPointX, mainPointY, size };
+}
+
+Color createRandomColor()
+{
     int redComponent{ rnd::getNumber(0, 255) };
     int greenComponent{ rnd::getNumber(0, 255) };
     int blueComponent{ rnd::getNumber(0, 255) };
+
+    return { redComponent, greenComponent, blueComponent };
+}
+
+template <typename ShapeType>
+void Creation::createAndShowFirstConstructorShape(std::unique_ptr<ShapeType>& newShapePtr)
+{
+    Dimensions shapeDimensions{ createRandomDimensions() };
+    Color shapeColor{ createRandomColor() };
     
-    ShapeType firstConstructorShape{ mainPointX, mainPointY, size, sf::Color(redComponent,
-            greenComponent, blueComponent) };
+    ShapeType firstConstructorShape{ shapeDimensions.mainPointX, shapeDimensions.mainPointY,
+        shapeDimensions.size, sf::Color(shapeColor.redComponent, shapeColor.greenComponent,
+        shapeColor.blueComponent) };
+
     firstConstructorShape.show();
     newShapePtr = std::make_unique<ShapeType>(firstConstructorShape);
+}
+
+template <typename ShapeType>
+void Creation::createAndShowSecondConstructorShape(std::unique_ptr<ShapeType>& newShapePtr)
+{
+    Dimensions shapeDimensions{ createRandomDimensions() };
+    Color shapeColor{ createRandomColor() };
+    int alphaComponent{ rnd::getNumber(100, 255) };
+
+    ShapeType secondConstructorShape{ shapeDimensions.mainPointX, shapeDimensions.mainPointY,
+        shapeDimensions.size, std::array<int, 4>{ shapeColor.redComponent,
+        shapeColor.greenComponent, shapeColor.blueComponent, alphaComponent } };
+
+    secondConstructorShape.show();
+    newShapePtr = std::make_unique<ShapeType>(secondConstructorShape);
 }
 
 template <typename ShapeType>
@@ -99,85 +142,21 @@ void Creation::checkForShapeCreation(std::array<std::unique_ptr<ShapeType>, 3>& 
             createAndShowFirstConstructorShape(shapesToRender[util::firstConstructorShapeIndex]);
         }
     }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::V))
+    {
+        if (shapesToRender[util::secondConstructorShapeIndex] != nullptr)
+        {
+            hideAndDelete(shapesToRender[util::secondConstructorShapeIndex]);
+            createAndShowSecondConstructorShape(shapesToRender[util::secondConstructorShapeIndex]);
+        }
+        else
+        {
+            createAndShowSecondConstructorShape(shapesToRender[util::secondConstructorShapeIndex]);
+        }
+    }
 }
 
 template void Creation::checkForShapeCreation(std::array<std::unique_ptr<Line>, 3>& shapesToRender);
-
-void checkForLineShapeCreation(std::array<std::unique_ptr<Line>, 3>& linesToRender)
-{
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::F))
-    {
-        if (linesToRender[0])
-        {
-            // hide if the object already exists
-            linesToRender[0].get()->show();
-            // remove the old object
-            linesToRender[0].reset();
-            // create the new object
-            Line defaultLine{};
-            defaultLine.show();
-            linesToRender[0] = std::make_unique<Line>(defaultLine);
-        }
-        else
-        {
-            Line defaultLine{};
-            defaultLine.show();
-            linesToRender[0] = std::make_unique<Line>(defaultLine);
-        }
-    }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::C))
-    {
-        if (linesToRender[1])
-        {
-            // hide if the object already exists
-            linesToRender[1].get()->show();
-            // remove the old object
-            Line* linePtr{ linesToRender[1].release() };
-            delete linePtr;
-            // create the new object       
-            Line firstConstructorLine{ 380.0f, 300.0f, 85.0f, sf::Color::White };
-            firstConstructorLine.show();
-            linesToRender[1] = std::make_unique<Line>(firstConstructorLine);
-        }
-        else
-        {
-            Line firstConstructorLine{ 380.0f, 300.0f, 85.0f, sf::Color::White };
-            firstConstructorLine.show();
-            linesToRender[1] = std::make_unique<Line>(firstConstructorLine);
-        }
-    }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::V))
-    {
-        if (linesToRender[2])
-        {
-            // hide if the object already exists
-            linesToRender[2].get()->show();
-            // remove the old object
-            Line* linePtr{ linesToRender[2].release() };
-            delete linePtr;
-            // create the new object
-            Line secondConstructorLine{ 45.0f, 210.0f, 40.0f, util::secondLineColorComponents };
-            secondConstructorLine.show();
-            linesToRender[2] = std::make_unique<Line>(secondConstructorLine);
-        }
-        else
-        {
-            Line secondConstructorLine{ 45.0f, 210.0f, 40.0f, util::secondLineColorComponents };
-            secondConstructorLine.show();
-            linesToRender[2] = std::make_unique<Line>(secondConstructorLine);
-        }
-    }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::H))
-    {
-        for (const auto& line : linesToRender)
-        {
-            if (line.get() != nullptr)
-            {
-                line.get()->show();
-            }
-        }
-    }
-}
 
 void checkForCircleModification(std::vector<std::unique_ptr<Circle>>& circlesToRender)
 {

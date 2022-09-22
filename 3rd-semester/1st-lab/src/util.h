@@ -14,6 +14,10 @@ namespace util
     inline constexpr std::array<int, 4> secondLineColorComponents{ 55, 15, 0, 255 };
 
     inline constexpr float lineWidth{ 2.0f };
+
+    inline constexpr int defaultShapeIndex{ 0 };
+    inline constexpr int firstConstructorShapeIndex{ 1 };
+    inline constexpr int secondConstructorShapeIndex{ 2 };
 }
 
 namespace component

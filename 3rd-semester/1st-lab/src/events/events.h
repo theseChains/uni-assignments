@@ -15,7 +15,19 @@ void checkForLineShapeCreation(std::array<std::unique_ptr<Line>, 3>& linesToRend
 
 void checkForCircleModification(std::vector<std::unique_ptr<Circle>>& circlesToRender);
 void checkForRectangleModification(std::vector<std::unique_ptr<Rectangle>>& rectanglesToRender);
-void checkForLineModification(std::vector<std::unique_ptr<Line>>& linesToRender);
+void checkForLineModification(std::array<std::unique_ptr<Line>, 3>& linesToRender);
+
+namespace Creation
+{
+    template <typename ShapeType>
+    void checkForShapeCreation(std::array<std::unique_ptr<ShapeType>, 3>& shapesToRender);
+
+    template <typename ShapeType>
+    void hideAndDelete(std::unique_ptr<ShapeType>& oldShapePtr);
+
+    template <typename ShapeType>
+    void createAndShowDefaultShape(std::unique_ptr<ShapeType>& newShapePtr);
+}
 
 namespace Movement
 {

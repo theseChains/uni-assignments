@@ -49,8 +49,8 @@ int main()
                 }
                 else if (workspace::lines)
                 {
-                    checkForLineShapeCreation(linesToRender);
-                    //checkForLineModification(linesToRender);
+                    Creation::checkForShapeCreation(linesToRender);
+                    checkForLineModification(linesToRender);
                     //Movement::checkForShapeMovement(linesToRender);
                 }
             }

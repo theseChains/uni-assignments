@@ -1,4 +1,5 @@
 #include "events.h"
+#include <iostream>
 
 void checkForCircleShapeCreation(std::vector<std::unique_ptr<Circle>>& circlesToRender)
 {
@@ -16,10 +17,6 @@ void checkForCircleShapeCreation(std::vector<std::unique_ptr<Circle>>& circlesTo
     {
         Circle secondConstructorCircle{ 200.0f, 130.0f, 120.0f, util::secondCircleColorComponents };
         secondConstructorCircle.show(circlesToRender);
-    }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::G))
-    {
-        
     }
 }
 
@@ -42,6 +39,43 @@ void checkForRectangleShapeCreation(std::vector<std::unique_ptr<Rectangle>>& rec
     }
 }
 
+template <typename ShapeType>
+void Creation::hideAndDelete(std::unique_ptr<ShapeType>& oldShapePtr)
+{
+    // hide the shape with another call to show()
+    oldShapePtr.get()->show();
+    oldShapePtr.reset();
+}
+
+template <typename ShapeType>
+void Creation::createAndShowDefaultShape(std::unique_ptr<ShapeType>& newShapePtr)
+{
+    ShapeType defaultShape{};
+    defaultShape.show();
+    newShapePtr = std::make_unique<ShapeType>(defaultShape);
+}
+
+template <typename ShapeType>
+void Creation::checkForShapeCreation(std::array<std::unique_ptr<ShapeType>, 3>& shapesToRender)
+{
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::F))
+    {
+        if (shapesToRender[util::defaultShapeIndex] != nullptr)
+        {
+            std::cout << "default line was already created before, hiding, deleting, creating...\n";
+            hideAndDelete(shapesToRender[util::defaultShapeIndex]);
+            createAndShowDefaultShape(shapesToRender[util::defaultShapeIndex]);
+        }
+        else
+        {
+            std::cout << "creating the shape for the first time!\n";
+            createAndShowDefaultShape(shapesToRender[util::defaultShapeIndex]);
+        }
+    }
+}
+
+template void Creation::checkForShapeCreation(std::array<std::unique_ptr<Line>, 3>& shapesToRender);
+
 void checkForLineShapeCreation(std::array<std::unique_ptr<Line>, 3>& linesToRender)
 {
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::F))
@@ -51,8 +85,7 @@ void checkForLineShapeCreation(std::array<std::unique_ptr<Line>, 3>& linesToRend
             // hide if the object already exists
             linesToRender[0].get()->show();
             // remove the old object
-            Line* linePtr{ linesToRender[0].release() }; 
-            delete linePtr;
+            linesToRender[0].reset();
             // create the new object
             Line defaultLine{};
             defaultLine.show();
@@ -107,8 +140,16 @@ void checkForLineShapeCreation(std::array<std::unique_ptr<Line>, 3>& linesToRend
             linesToRender[2] = std::make_unique<Line>(secondConstructorLine);
         }
     }
-    // i think i need to be able to create a random circle an infinite amount of times here..
-    // what i have right now seems to be working but it's not quite how i would like it to work
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::H))
+    {
+        for (const auto& line : linesToRender)
+        {
+            if (line.get() != nullptr)
+            {
+                line.get()->show();
+            }
+        }
+    }
 }
 
 void checkForCircleModification(std::vector<std::unique_ptr<Circle>>& circlesToRender)
@@ -161,7 +202,7 @@ void checkForRectangleModification(std::vector<std::unique_ptr<Rectangle>>& rect
     }
 }
 
-void checkForLineModification(std::vector<std::unique_ptr<Line>>& linesToRender)
+void checkForLineModification(std::array<std::unique_ptr<Line>, 3>& linesToRender)
 {
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::R))
     {

@@ -1,10 +1,11 @@
 #include <SFML/Graphics.hpp>
 
+#include "util.h"
+
 #include "events/Events.h"
 #include "events/ShapeCreation.h"
 #include "events/ShapeMovement.h"
-
-#include "util.h"
+#include "events/ShapeModification.h"
 
 #include "shapes/Circle.h"
 #include "shapes/Rectangle.h"

@@ -20,6 +20,10 @@ int main()
     std::array<std::unique_ptr<Rectangle>, 3> rectanglesToRender{};
     std::array<std::unique_ptr<Line>, 3> linesToRender{};
 
+    std::vector<std::array<Circle, 3>> circleArrays{};
+    std::vector<std::array<Rectangle, 3>> rectangleArrays{};
+    std::vector<std::array<Line, 3>> lineArrays{};
+
     while (window.isOpen())
     {
         sf::Event event{};
@@ -29,17 +33,28 @@ int main()
             {
                 window.close();
             }
-            
+
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
             {
                 window.close();
             }
-            
-            eventHandlerFunction(event, circlesToRender, rectanglesToRender, linesToRender);
+
+            if (event.type == event.KeyPressed)
+            {
+                if (sf::Keyboard::isKeyPressed(sf::Keyboard::M))
+                {
+                    workspace::shift();
+                }
+
+                circleEventHandlerFunction(circlesToRender);
+                rectangleEventHandlerFunction(rectanglesToRender);
+                lineEventHandlerFunction(linesToRender);
+            }
         }
 
         window.clear();
 
+        // i think i need a template function for rendering
         for (const auto& circle : circlesToRender)
         {
             if (circle.get() != nullptr && circle.get()->isShown())

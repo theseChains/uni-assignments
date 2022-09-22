@@ -11,9 +11,8 @@
 #include "../shapes/Rectangle.h"
 #include "../shapes/Line.h"
 
-void eventHandlerFunction(const sf::Event& event, 
-        std::array<std::unique_ptr<Circle>, 3>& circlesToRender,
-        std::array<std::unique_ptr<Rectangle>, 3>& rectanglesToRender,
-        std::array<std::unique_ptr<Line>, 3>& linesToRender);
+void circleEventHandlerFunction(std::array<std::unique_ptr<Circle>, 3>& circlesToRender);
+void rectangleEventHandlerFunction(std::array<std::unique_ptr<Rectangle>, 3>& rectanglesToRender);
+void lineEventHandlerFunction(std::array<std::unique_ptr<Line>, 3>& linesToRender);
 
 #endif

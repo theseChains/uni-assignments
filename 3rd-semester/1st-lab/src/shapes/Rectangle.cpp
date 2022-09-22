@@ -6,7 +6,8 @@ Rectangle::Rectangle()
     m_topLeftY{ util::windowHeight / 2.0f - 50.0f },
     m_width{ 150.0f },
     m_height{ 100.0f },
-    m_color{ sf::Color::Magenta }
+    m_color{ sf::Color::Magenta },
+    m_isShown{ false }
 {
     initializeSfSprite();
 }
@@ -17,7 +18,8 @@ Rectangle::Rectangle(float topLeftX, float topLeftY, float width, float height,
     m_topLeftY{ topLeftY },
     m_width{ width },
     m_height{ height },
-    m_color{ color }
+    m_color{ color },
+    m_isShown{ false }
 {
     initializeSfSprite();
 }
@@ -29,21 +31,21 @@ Rectangle::Rectangle(float topLeftX, float topLeftY, float width, float height,
     m_width{ width },
     m_height{ height },
     m_color{ sf::Color(colorComponents[component::red], colorComponents[component::green],
-            colorComponents[component::blue], colorComponents[component::alpha]) }
+            colorComponents[component::blue], colorComponents[component::alpha]) },
+    m_isShown{ false }
 {
     initializeSfSprite();
 }
 
-void Rectangle::show(std::vector<std::unique_ptr<Rectangle>> &rectanglesToRender)
+void Rectangle::show()
 {
-    auto erased{ std::erase_if(rectanglesToRender, [this] (std::unique_ptr<Rectangle>& shapePtr)
-            {
-                return *shapePtr.get() == *this;
-            }) };
-
-    if (!erased)
+    if (m_isShown)
     {
-        rectanglesToRender.push_back(std::make_unique<Rectangle>(*this));
+        m_isShown = false;
+    }
+    else
+    {
+        m_isShown = true;
     }
 }
 
@@ -77,6 +79,11 @@ sf::RectangleShape Rectangle::getSprite() const
 bool operator== (const Rectangle& first, const Rectangle& second)
 {
     return (first.m_color == second.m_color);
+}
+
+bool Rectangle::isShown() const
+{
+    return m_isShown;
 }
 
 void Rectangle::initializeSfSprite()

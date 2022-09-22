@@ -10,6 +10,7 @@
 int main()
 {
     sf::RenderWindow window{ sf::VideoMode{ util::windowWidth, util::windowHeight }, "study" };
+    window.setFramerateLimit(60);
 
     std::array<std::unique_ptr<Circle>, 3> circlesToRender{};
     std::array<std::unique_ptr<Rectangle>, 3> rectanglesToRender{};
@@ -39,19 +40,19 @@ int main()
                 {
                     Creation::checkForShapeCreation(circlesToRender);
                     //checkForCircleModification(circlesToRender);
-                    //Movement::checkForShapeMovement(circlesToRender);
+                    Movement::checkForShapeMovement(circlesToRender);
                 }
                 else if (workspace::rectangles)
                 {
                     checkForRectangleShapeCreation(rectanglesToRender);
                     checkForRectangleModification(rectanglesToRender);
-                    //Movement::checkForShapeMovement(rectanglesToRender);
+                    Movement::checkForShapeMovement(rectanglesToRender);
                 }
                 else if (workspace::lines)
                 {
                     Creation::checkForShapeCreation(linesToRender);
                     checkForLineModification(linesToRender);
-                    //Movement::checkForShapeMovement(linesToRender);
+                    Movement::checkForShapeMovement(linesToRender);
                 }
             }
         }
@@ -60,34 +61,25 @@ int main()
 
         for (const auto& circle : circlesToRender)
         {
-            if (circle.get() != nullptr)
+            if (circle.get() != nullptr && circle.get()->isShown())
             {
-                if (circle.get()->isShown())
-                {
-                    window.draw(circle.get()->getSprite());
-                }
+                window.draw(circle.get()->getSprite());
             }
         }
 
         for (const auto& rectangle : rectanglesToRender)
         {
-            if (rectangle.get() != nullptr)
+            if (rectangle.get() != nullptr && rectangle.get()->isShown())
             {
-                if (rectangle.get()->isShown())
-                {
-                    window.draw(rectangle.get()->getSprite());
-                }
+                window.draw(rectangle.get()->getSprite());
             }
         }
 
         for (const auto& line : linesToRender)
         {
-            if (line.get() != nullptr)
+            if (line.get() != nullptr && line.get()->isShown())
             {
-                if (line.get()->isShown())
-                {
-                    window.draw(line.get()->getSprite());
-                }
+                window.draw(line.get()->getSprite());
             }
         }
 

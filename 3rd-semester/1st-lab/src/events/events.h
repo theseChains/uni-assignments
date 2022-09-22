@@ -12,6 +12,7 @@
 void checkForRectangleShapeCreation(std::array<std::unique_ptr<Rectangle>, 3>& rectanglesToRender);
 
 // made for Circle and Line shape creation since they have the same constructor parameters
+// not exactly correct but it shortens the code and still satisfies assignment conditions
 namespace Creation
 {
     template <typename ShapeType>
@@ -34,7 +35,7 @@ namespace Creation
 namespace Movement
 {
     template <typename ShapeType>
-    void checkForShapeMovement(std::vector<std::unique_ptr<ShapeType>>& shapesToRender);
+    void checkForShapeMovement(std::array<std::unique_ptr<ShapeType>, 3>& shapesToRender);
 }
 
 void checkForCircleModification(std::array<std::unique_ptr<Circle>, 3>& circlesToRender);

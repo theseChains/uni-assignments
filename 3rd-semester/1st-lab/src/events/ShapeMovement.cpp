@@ -43,6 +43,19 @@ void Movement::checkForShapeMovement(std::array<std::unique_ptr<ShapeType>, 3>& 
             }
         }
     }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q))
+    {
+        for (const auto& shape : shapesToRender)
+        {
+            if (shape.get() != nullptr)
+            {
+                float randomOffsetX{ rnd::getFloat(-50, 50) };
+                float randomOffsetY{ rnd::getFloat(-50, 50) };
+                
+                shape->moveTo(randomOffsetX, randomOffsetY);
+            }
+        }
+    }
 }
 
 template void Movement::checkForShapeMovement(std::array<std::unique_ptr<Circle>, 3>&);

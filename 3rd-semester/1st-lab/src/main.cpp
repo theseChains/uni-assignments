@@ -1,6 +1,6 @@
 #include <SFML/Graphics.hpp>
 
-#include "events/events.h"
+#include "events/Events.h"
 #include "events/ShapeCreation.h"
 #include "events/ShapeMovement.h"
 

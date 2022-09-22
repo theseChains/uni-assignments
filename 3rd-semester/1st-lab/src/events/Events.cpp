@@ -1,4 +1,4 @@
-#include "events.h"
+#include "Events.h"
 
 // unique shape modifications
 void checkForCircleModification(std::array<std::unique_ptr<Circle>, 3>& circlesToRender)

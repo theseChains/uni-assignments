@@ -9,13 +9,7 @@
 #include "../shapes/Rectangle.h"
 #include "../shapes/Line.h"
 
-void checkForCircleShapeCreation(std::vector<std::unique_ptr<Circle>>& circlesToRender);
-void checkForRectangleShapeCreation(std::vector<std::unique_ptr<Rectangle>>& rectanglesToRender);
-void checkForLineShapeCreation(std::array<std::unique_ptr<Line>, 3>& linesToRender);
-
-void checkForCircleModification(std::vector<std::unique_ptr<Circle>>& circlesToRender);
-void checkForRectangleModification(std::vector<std::unique_ptr<Rectangle>>& rectanglesToRender);
-void checkForLineModification(std::array<std::unique_ptr<Line>, 3>& linesToRender);
+void checkForRectangleShapeCreation(std::array<std::unique_ptr<Rectangle>, 3>& rectanglesToRender);
 
 // made for Circle and Line shape creation since they have the same constructor parameters
 namespace Creation
@@ -42,5 +36,9 @@ namespace Movement
     template <typename ShapeType>
     void checkForShapeMovement(std::vector<std::unique_ptr<ShapeType>>& shapesToRender);
 }
+
+void checkForCircleModification(std::array<std::unique_ptr<Circle>, 3>& circlesToRender);
+void checkForRectangleModification(std::array<std::unique_ptr<Rectangle>, 3>& rectanglesToRender);
+void checkForLineModification(std::array<std::unique_ptr<Line>, 3>& linesToRender);
 
 #endif

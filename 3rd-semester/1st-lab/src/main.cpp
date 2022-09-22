@@ -12,7 +12,7 @@ int main()
     sf::RenderWindow window{ sf::VideoMode{ util::windowWidth, util::windowHeight }, "study" };
 
     std::array<std::unique_ptr<Circle>, 3> circlesToRender{};
-    std::vector<std::unique_ptr<Rectangle>> rectanglesToRender{};
+    std::array<std::unique_ptr<Rectangle>, 3> rectanglesToRender{};
     std::array<std::unique_ptr<Line>, 3> linesToRender{};
 
     while (window.isOpen())
@@ -45,7 +45,7 @@ int main()
                 {
                     checkForRectangleShapeCreation(rectanglesToRender);
                     checkForRectangleModification(rectanglesToRender);
-                    Movement::checkForShapeMovement(rectanglesToRender);
+                    //Movement::checkForShapeMovement(rectanglesToRender);
                 }
                 else if (workspace::lines)
                 {
@@ -71,7 +71,13 @@ int main()
 
         for (const auto& rectangle : rectanglesToRender)
         {
-            window.draw(rectangle.get()->getSprite());
+            if (rectangle.get() != nullptr)
+            {
+                if (rectangle.get()->isShown())
+                {
+                    window.draw(rectangle.get()->getSprite());
+                }
+            }
         }
 
         for (const auto& line : linesToRender)

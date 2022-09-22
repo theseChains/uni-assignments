@@ -1,40 +1,6 @@
 #include "events.h"
 
-void checkForRectangleShapeCreation(std::vector<std::unique_ptr<Rectangle>>& rectanglesToRender)
-{
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::F))
-    {
-        Rectangle defaultRectangle{};
-        defaultRectangle.show(rectanglesToRender);
-    }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::C))
-    {
-        Rectangle firstConstructorRectangle{ 55.0f, 95.0f, 100.0f, 80.0f, sf::Color::Green };
-        firstConstructorRectangle.show(rectanglesToRender);
-    }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::V))
-    {
-        Rectangle secondConstructorRectangle{ 490.0f, 200.0f, 70.0f, 130.0f, util::secondRectangleColorComponents };
-        secondConstructorRectangle.show(rectanglesToRender);
-    }
-}
-
-template <typename ShapeType>
-void Creation::hideAndDelete(std::unique_ptr<ShapeType>& oldShapePtr)
-{
-    // hide the shape with another call to show() (not really necessary)
-    oldShapePtr.get()->show();
-    oldShapePtr.reset();
-}
-
-template <typename ShapeType>
-void Creation::createAndShowDefaultShape(std::unique_ptr<ShapeType>& newShapePtr)
-{
-    ShapeType defaultShape{};
-    defaultShape.show();
-    newShapePtr = std::make_unique<ShapeType>(defaultShape);
-}
-
+// Line and Circle shape creation
 struct Dimensions
 {
     float mainPointX{};
@@ -65,6 +31,23 @@ Color createRandomColor()
     int blueComponent{ rnd::getNumber(0, 255) };
 
     return { redComponent, greenComponent, blueComponent };
+}
+
+template <typename ShapeType>
+void Creation::hideAndDelete(std::unique_ptr<ShapeType>& oldShapePtr)
+{
+    // hide the shape with another call to show() (not really necessary)
+    oldShapePtr.get()->show();
+    oldShapePtr.reset();
+}
+
+template <typename ShapeType>
+void Creation::createAndShowDefaultShape(std::unique_ptr<ShapeType>& newShapePtr)
+{
+    ShapeType defaultShape{};
+
+    defaultShape.show();
+    newShapePtr = std::make_unique<ShapeType>(defaultShape);
 }
 
 template <typename ShapeType>
@@ -140,7 +123,81 @@ void Creation::checkForShapeCreation(std::array<std::unique_ptr<ShapeType>, 3>& 
 template void Creation::checkForShapeCreation(std::array<std::unique_ptr<Line>, 3>&);
 template void Creation::checkForShapeCreation(std::array<std::unique_ptr<Circle>, 3>&);
 
-void checkForCircleModification(std::vector<std::unique_ptr<Circle>>& circlesToRender)
+void hideAndDeleteRectangle(std::unique_ptr<Rectangle>& oldRectanglePtr)
+{
+    oldRectanglePtr.get()->show();
+    oldRectanglePtr.reset();
+}
+
+void createAndShowDefaultRectangle(std::unique_ptr<Rectangle>& newRectanglePtr)
+{
+    Rectangle defaultRectangle{};
+    
+    defaultRectangle.show();
+    newRectanglePtr = std::make_unique<Rectangle>(defaultRectangle);
+}
+
+void checkForRectangleShapeCreation(std::array<std::unique_ptr<Rectangle>, 3>& rectanglesToRender)
+{
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::F))
+    {
+        if (rectanglesToRender[util::defaultShapeIndex] != nullptr)
+        {
+            hideAndDeleteRectangle(rectanglesToRender[util::defaultShapeIndex]);
+            createAndShowDefaultRectangle(rectanglesToRender[util::defaultShapeIndex]);
+        }
+        else
+        {
+            createAndShowDefaultRectangle(rectanglesToRender[util::defaultShapeIndex]);
+        }
+    }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::C))
+    {
+    }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::V))
+    {
+    }
+}
+
+template <typename ShapeType>
+void Movement::checkForShapeMovement(std::vector<std::unique_ptr<ShapeType>>& shapesToRender)
+{
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
+    {
+        for (const auto& shape : shapesToRender)
+        {
+            shape->moveTo(0.0f, -2.0f);
+        }
+    }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+    {
+        for (const auto& shape : shapesToRender)
+        {
+            shape->moveTo(-2.0f, 0.0f);
+        }
+    }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+    {
+        for (const auto& shape : shapesToRender)
+        {
+            shape->moveTo(0.0f, 2.0f);
+        }
+    }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+    {
+        for (const auto& shape : shapesToRender)
+        {
+            shape->moveTo(2.0f, 0.0f);
+        }
+    }
+}
+
+template void Movement::checkForShapeMovement(std::vector<std::unique_ptr<Circle>>&);
+template void Movement::checkForShapeMovement(std::vector<std::unique_ptr<Rectangle>>&);
+template void Movement::checkForShapeMovement(std::vector<std::unique_ptr<Line>>&);
+
+// unique shape modifications
+void checkForCircleModification(std::array<std::unique_ptr<Circle>, 3>& circlesToRender)
 {
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::O))
     {
@@ -158,7 +215,7 @@ void checkForCircleModification(std::vector<std::unique_ptr<Circle>>& circlesToR
     }
 }
 
-void checkForRectangleModification(std::vector<std::unique_ptr<Rectangle>>& rectanglesToRender)
+void checkForRectangleModification(std::array<std::unique_ptr<Rectangle>, 3>& rectanglesToRender)
 {
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
     {
@@ -207,40 +264,3 @@ void checkForLineModification(std::array<std::unique_ptr<Line>, 3>& linesToRende
         }
     }
 }
-
-template <typename ShapeType>
-void Movement::checkForShapeMovement(std::vector<std::unique_ptr<ShapeType>>& shapesToRender)
-{
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
-    {
-        for (const auto& shape : shapesToRender)
-        {
-            shape->moveTo(0.0f, -2.0f);
-        }
-    }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
-    {
-        for (const auto& shape : shapesToRender)
-        {
-            shape->moveTo(-2.0f, 0.0f);
-        }
-    }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
-    {
-        for (const auto& shape : shapesToRender)
-        {
-            shape->moveTo(0.0f, 2.0f);
-        }
-    }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
-    {
-        for (const auto& shape : shapesToRender)
-        {
-            shape->moveTo(2.0f, 0.0f);
-        }
-    }
-}
-
-template void Movement::checkForShapeMovement(std::vector<std::unique_ptr<Circle>>&);
-template void Movement::checkForShapeMovement(std::vector<std::unique_ptr<Rectangle>>&);
-template void Movement::checkForShapeMovement(std::vector<std::unique_ptr<Line>>&);

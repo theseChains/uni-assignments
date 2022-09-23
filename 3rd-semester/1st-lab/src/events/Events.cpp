@@ -1,6 +1,6 @@
 #include "Events.h"
 
-void circleEventHandlerFunction(std::array<std::unique_ptr<Circle>, 3>& circlesToRender)
+void handleCircleEvents(std::array<std::unique_ptr<Circle>, 3>& circlesToRender)
 {
     if (workspace::circles)
     {
@@ -10,7 +10,7 @@ void circleEventHandlerFunction(std::array<std::unique_ptr<Circle>, 3>& circlesT
     }
 }
 
-void rectangleEventHandlerFunction(std::array<std::unique_ptr<Rectangle>, 3>& rectanglesToRender)
+void handleRectangleEvents(std::array<std::unique_ptr<Rectangle>, 3>& rectanglesToRender)
 {
     if (workspace::rectangles)
     {
@@ -20,7 +20,7 @@ void rectangleEventHandlerFunction(std::array<std::unique_ptr<Rectangle>, 3>& re
     }
 }
 
-void lineEventHandlerFunction(std::array<std::unique_ptr<Line>, 3>& linesToRender)
+void handleLineEvents(std::array<std::unique_ptr<Line>, 3>& linesToRender)
 {
     if (workspace::lines)
     {

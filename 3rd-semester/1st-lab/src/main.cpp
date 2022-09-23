@@ -11,10 +11,14 @@
 #include "shapes/Rectangle.h"
 #include "shapes/Line.h"
 
+#include "render/Renderer.h"
+
 int main()
 {
     sf::RenderWindow window{ sf::VideoMode{ util::windowWidth, util::windowHeight }, "study" };
     window.setFramerateLimit(60);
+
+    Renderer renderer{ window };
 
     std::array<std::unique_ptr<Circle>, 3> circlesToRender{};
     std::array<std::unique_ptr<Rectangle>, 3> rectanglesToRender{};
@@ -46,38 +50,18 @@ int main()
                     workspace::shift();
                 }
 
-                circleEventHandlerFunction(circlesToRender);
-                rectangleEventHandlerFunction(rectanglesToRender);
-                lineEventHandlerFunction(linesToRender);
+                // todo: change function names to handleCircleEvents()
+                handleCircleEvents(circlesToRender);
+                handleRectangleEvents(rectanglesToRender);
+                handleLineEvents(linesToRender);
             }
         }
 
         window.clear();
 
-        // i think i need a template function for rendering
-        for (const auto& circle : circlesToRender)
-        {
-            if (circle.get() != nullptr && circle.get()->isShown())
-            {
-                window.draw(circle.get()->getSprite());
-            }
-        }
-
-        for (const auto& rectangle : rectanglesToRender)
-        {
-            if (rectangle.get() != nullptr && rectangle.get()->isShown())
-            {
-                window.draw(rectangle.get()->getSprite());
-            }
-        }
-
-        for (const auto& line : linesToRender)
-        {
-            if (line.get() != nullptr && line.get()->isShown())
-            {
-                window.draw(line.get()->getSprite());
-            }
-        }
+        renderer.renderShapes(circlesToRender);
+        renderer.renderShapes(rectanglesToRender);
+        renderer.renderShapes(linesToRender);
 
         window.display();
     }

@@ -34,6 +34,6 @@ void Renderer::renderShapeArrays(std::vector<std::array<std::unique_ptr<ShapeTyp
     }
 }
 
-template void Renderer::renderShapeArrays(vector_of_circle_arrays&);
-template void Renderer::renderShapeArrays(vector_of_rectangle_arrays&);
-template void Renderer::renderShapeArrays(vector_of_line_arrays&);
+template void Renderer::renderShapeArrays(VectorOfArrayOfCirclePtrs&);
+template void Renderer::renderShapeArrays(VectorOfArrayOfRectanglePtrs&);
+template void Renderer::renderShapeArrays(VectorOfArrayOfLinePtrs&);

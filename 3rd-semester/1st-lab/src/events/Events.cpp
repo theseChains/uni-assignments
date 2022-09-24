@@ -30,26 +30,29 @@ void handleLineEvents(std::array<std::unique_ptr<Line>, 3>& linesToRender)
     }
 }
 
-void handleCircleArrayEvents(vector_of_circle_arrays& circleArraysToRender)
+void handleCircleArrayEvents(VectorOfArrayOfCirclePtrs& circleArraysToRender)
 {
     if (workspace::circles)
     {
         ArrayCreation::checkForShapeArrayCreation(circleArraysToRender);
+        checkForCircleArrayModification(circleArraysToRender);
     }
 }
 
-void handleRectangleArrayEvents(vector_of_rectangle_arrays& rectangleArraysToRender)
+void handleRectangleArrayEvents(VectorOfArrayOfRectanglePtrs& rectangleArraysToRender)
 {
     if (workspace::rectangles)
     {
         checkForRectangleArrayCreation(rectangleArraysToRender);
+        checkForRectangleArrayModification(rectangleArraysToRender);
     }
 }
 
-void handleLineArrayEvents(vector_of_line_arrays& lineArraysToRender)
+void handleLineArrayEvents(VectorOfArrayOfLinePtrs& lineArraysToRender)
 {
     if (workspace::lines)
     {
         ArrayCreation::checkForShapeArrayCreation(lineArraysToRender);
+        checkForLineArrayModification(lineArraysToRender);
     }
 }

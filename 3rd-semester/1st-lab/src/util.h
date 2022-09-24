@@ -5,9 +5,6 @@
 #include <memory>
 #include <random>
 
-template <typename ShapeType>
-using vector_of_shape_arrays = std::vector<std::array<std::unique_ptr<ShapeType>, 3>>;
-
 namespace util
 {
     inline constexpr int windowWidth{ 640 };

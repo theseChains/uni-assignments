@@ -15,7 +15,7 @@ public:
     Circle(float centerX, float centerY, float radius, const std::array<int, 4>& colorComponents);
 
     void show();
-    
+
     void moveTo(float offsetX, float offsetY);
 
     void changeRadius(float radiusOffset);
@@ -29,7 +29,7 @@ private:
 
     float m_centerX{};
     float m_centerY{};
-    
+
     float m_radius{};
 
     sf::Color m_color{};

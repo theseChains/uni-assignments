@@ -1,10 +1,6 @@
 #ifndef SHAPE_ARRAY_CREATION_H
 #define SHAPE_ARRAY_CREATION_H
 
-#include <array>
-#include <memory>
-#include <vector>
-
 #include "../util.h"
 #include "../aliases.h"
 
@@ -17,9 +13,9 @@
 namespace ArrayCreation
 {
     template <typename ShapeType>
-    void checkForShapeArrayCreation(vector_of_shape_arrays<ShapeType>& arraysToRender);
+    void checkForShapeArrayCreation(VectorOfArrayOfShapePtrs<ShapeType>& arraysToRender);
 }
 
-void checkForRectangleArrayCreation(vector_of_rectangle_arrays& rectangleArraysToRender);
+void checkForRectangleArrayCreation(VectorOfArrayOfRectanglePtrs& rectangleArraysToRender);
 
 #endif

@@ -91,3 +91,27 @@ void checkForLineModification(std::array<std::unique_ptr<Line>, 3>& linesToRende
         }
     }
 }
+
+void checkForCircleArrayModification(VectorOfArrayOfCirclePtrs& circleArraysToRender)
+{
+    for (auto& circleArray : circleArraysToRender)
+    {
+        checkForCircleModification(circleArray);
+    }
+}
+
+void checkForRectangleArrayModification(VectorOfArrayOfRectanglePtrs& rectangleArraysToRender)
+{
+    for (auto& rectangleArray : rectangleArraysToRender)
+    {
+        checkForRectangleModification(rectangleArray);
+    }
+}
+
+void checkForLineArrayModification(VectorOfArrayOfLinePtrs& lineArraysToRender)
+{
+    for (auto& lineArray : lineArraysToRender)
+    {
+        checkForLineModification(lineArray);
+    }
+}

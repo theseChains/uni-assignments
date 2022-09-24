@@ -1,8 +1,7 @@
 #include "ShapeArrayCreation.h"
-#include "../aliases.h"
 
 template <typename ShapeType>
-void ArrayCreation::checkForShapeArrayCreation(vector_of_shape_arrays<ShapeType>& arraysToRender)
+void ArrayCreation::checkForShapeArrayCreation(VectorOfArrayOfShapePtrs<ShapeType>& arraysToRender)
 {
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::N))
     {
@@ -15,10 +14,10 @@ void ArrayCreation::checkForShapeArrayCreation(vector_of_shape_arrays<ShapeType>
         thirdShape.show();
 
         // i think i have to construct this in-place, otherwise std::construct_at fails
-        arraysToRender.push_back(std::array<std::unique_ptr<ShapeType>, 3>{ 
+        arraysToRender.push_back(std::array<std::unique_ptr<ShapeType>, 3>{
             std::make_unique<ShapeType>(firstShape),
-            std::make_unique<ShapeType>(secondShape), 
-            std::make_unique<ShapeType>(thirdShape) 
+            std::make_unique<ShapeType>(secondShape),
+            std::make_unique<ShapeType>(thirdShape)
         });
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::B))
@@ -34,10 +33,10 @@ void ArrayCreation::checkForShapeArrayCreation(vector_of_shape_arrays<ShapeType>
     }
 }
 
-template void ArrayCreation::checkForShapeArrayCreation(vector_of_circle_arrays&);
-template void ArrayCreation::checkForShapeArrayCreation(vector_of_line_arrays&);
+template void ArrayCreation::checkForShapeArrayCreation(VectorOfArrayOfCirclePtrs&);
+template void ArrayCreation::checkForShapeArrayCreation(VectorOfArrayOfLinePtrs&);
 
-void checkForRectangleArrayCreation(vector_of_rectangle_arrays& rectangleArraysToRender)
+void checkForRectangleArrayCreation(VectorOfArrayOfRectanglePtrs& rectangleArraysToRender)
 {
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::N))
     {

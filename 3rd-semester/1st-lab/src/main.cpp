@@ -26,12 +26,10 @@ int main()
     std::array<std::unique_ptr<Rectangle>, 3> rectanglesToRender{};
     std::array<std::unique_ptr<Line>, 3> linesToRender{};
 
-    // make a function to create an array of the desired shape with randomized shapes
-    // make a function to delete the last array in the vector, if the vector is not empty (pop_back function)
     // todo: declare using aliases in circle, rectangle and line class headers
-    vector_of_circle_arrays circleArrays{};
-    vector_of_rectangle_arrays rectangleArrays{};
-    vector_of_line_arrays lineArrays{};
+    VectorOfArrayOfCirclePtrs circleArrays{};
+    VectorOfArrayOfRectanglePtrs rectangleArrays{};
+    VectorOfArrayOfLinePtrs lineArrays{};
 
     while (window.isOpen())
     {

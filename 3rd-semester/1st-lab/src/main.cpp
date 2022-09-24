@@ -1,11 +1,13 @@
 #include <SFML/Graphics.hpp>
 
 #include "util.h"
+#include "aliases.h"
 
 #include "events/Events.h"
 #include "events/ShapeCreation.h"
 #include "events/ShapeMovement.h"
 #include "events/ShapeModification.h"
+#include "events/ShapeArrayCreation.h"
 
 #include "shapes/Circle.h"
 #include "shapes/Rectangle.h"
@@ -24,9 +26,11 @@ int main()
     std::array<std::unique_ptr<Rectangle>, 3> rectanglesToRender{};
     std::array<std::unique_ptr<Line>, 3> linesToRender{};
 
-    std::vector<std::array<Circle, 3>> circleArrays{};
-    std::vector<std::array<Rectangle, 3>> rectangleArrays{};
-    std::vector<std::array<Line, 3>> lineArrays{};
+    // make a function to create an array of the desired shape with randomized shapes
+    // make a function to delete the last array in the vector, if the vector is not empty (pop_back function)
+    vector_of_circle_arrays circleArrays{};
+    vector_of_rectangle_arrays rectangleArrays{};
+    vector_of_line_arrays lineArrays{};
 
     while (window.isOpen())
     {
@@ -50,10 +54,11 @@ int main()
                     workspace::shift();
                 }
 
-                // todo: change function names to handleCircleEvents()
                 handleCircleEvents(circlesToRender);
                 handleRectangleEvents(rectanglesToRender);
                 handleLineEvents(linesToRender);
+
+                handleCircleArrayEvents(circleArrays);
             }
         }
 
@@ -62,6 +67,10 @@ int main()
         renderer.renderShapes(circlesToRender);
         renderer.renderShapes(rectanglesToRender);
         renderer.renderShapes(linesToRender);
+
+        renderer.renderShapeArrays(circleArrays);
+        renderer.renderShapeArrays(rectangleArrays);
+        renderer.renderShapeArrays(lineArrays);
 
         window.display();
     }

@@ -9,6 +9,7 @@
 #include <vector>
 
 #include "../util.h"
+#include "../aliases.h"
 
 #include "../shapes/Circle.h"
 #include "../shapes/Rectangle.h"
@@ -26,7 +27,7 @@ public:
     void renderShapes(std::array<std::unique_ptr<ShapeType>, 3>& shapesToRender);
 
     template <typename ShapeType>
-    void renderShapeArrays(std::vector<std::array<ShapeType, 3>>& arraysToRender);
+    void renderShapeArrays(std::vector<std::array<std::unique_ptr<ShapeType>, 3>>& arraysToRender);
 };
 
 #endif

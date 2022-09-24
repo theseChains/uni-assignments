@@ -14,6 +14,12 @@ public:
     Circle(float centerX, float centerY, float radius, const sf::Color& color);
     Circle(float centerX, float centerY, float radius, const std::array<int, 4>& colorComponents);
 
+    // copy constructor
+    Circle(Circle& circle);
+    
+    // move constructor
+    Circle (Circle&& circle);
+
     void show();
     
     void moveTo(float offsetX, float offsetY);

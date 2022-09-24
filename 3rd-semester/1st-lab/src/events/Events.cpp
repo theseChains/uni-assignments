@@ -29,3 +29,11 @@ void handleLineEvents(std::array<std::unique_ptr<Line>, 3>& linesToRender)
         Movement::checkForShapeMovement(linesToRender);
     }
 }
+
+void handleCircleArrayEvents(vector_of_circle_arrays& circleArraysToRender)
+{
+    if (workspace::circles)
+    {
+        ArrayCreation::checkForShapeArrayCreation(circleArraysToRender);
+    }
+}

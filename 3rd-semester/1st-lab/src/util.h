@@ -2,7 +2,11 @@
 #define UTIL_FUNCTIONS_H
 
 #include <array>
+#include <memory>
 #include <random>
+
+template <typename ShapeType>
+using vector_of_shape_arrays = std::vector<std::array<std::unique_ptr<ShapeType>, 3>>;
 
 namespace util
 {
@@ -27,7 +31,7 @@ namespace component
 namespace rnd
 {
     inline std::mt19937 mt{ std::random_device{}() };
-    
+
     int getNumber(int min, int max);
 
     // convenience function to avoid implicit conversions

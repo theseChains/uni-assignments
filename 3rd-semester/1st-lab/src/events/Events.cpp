@@ -36,6 +36,7 @@ void handleCircleArrayEvents(VectorOfArrayOfCirclePtrs& circleArraysToRender)
     {
         ArrayCreation::checkForShapeArrayCreation(circleArraysToRender);
         checkForCircleArrayModification(circleArraysToRender);
+        Movement::checkForShapeArrayMovement(circleArraysToRender);
     }
 }
 
@@ -45,6 +46,7 @@ void handleRectangleArrayEvents(VectorOfArrayOfRectanglePtrs& rectangleArraysToR
     {
         checkForRectangleArrayCreation(rectangleArraysToRender);
         checkForRectangleArrayModification(rectangleArraysToRender);
+        Movement::checkForShapeArrayMovement(rectangleArraysToRender);
     }
 }
 
@@ -54,5 +56,6 @@ void handleLineArrayEvents(VectorOfArrayOfLinePtrs& lineArraysToRender)
     {
         ArrayCreation::checkForShapeArrayCreation(lineArraysToRender);
         checkForLineArrayModification(lineArraysToRender);
+        Movement::checkForShapeArrayMovement(lineArraysToRender);
     }
 }

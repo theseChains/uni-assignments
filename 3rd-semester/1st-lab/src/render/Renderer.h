@@ -27,7 +27,7 @@ public:
     void renderShapes(std::array<std::unique_ptr<ShapeType>, 3>& shapesToRender);
 
     template <typename ShapeType>
-    void renderShapeArrays(std::vector<std::array<std::unique_ptr<ShapeType>, 3>>& arraysToRender);
+    void renderShapeArrays(VectorOfArrayOfShapePtrs<ShapeType>& arraysToRender);
 };
 
 #endif

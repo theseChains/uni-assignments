@@ -20,7 +20,7 @@ template void Renderer::renderShapes(std::array<std::unique_ptr<Rectangle>, 3>&)
 template void Renderer::renderShapes(std::array<std::unique_ptr<Line>, 3>&);
 
 template <typename ShapeType>
-void Renderer::renderShapeArrays(std::vector<std::array<std::unique_ptr<ShapeType>, 3>>& arraysToRender)
+void Renderer::renderShapeArrays(VectorOfArrayOfShapePtrs<ShapeType>& arraysToRender)
 {
     for (const auto& shapeArray : arraysToRender)
     {

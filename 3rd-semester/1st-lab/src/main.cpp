@@ -26,7 +26,6 @@ int main()
     std::array<std::unique_ptr<Rectangle>, 3> rectanglesToRender{};
     std::array<std::unique_ptr<Line>, 3> linesToRender{};
 
-    // todo: declare using aliases in circle, rectangle and line class headers
     VectorOfArrayOfCirclePtrs circleArrays{};
     VectorOfArrayOfRectanglePtrs rectangleArrays{};
     VectorOfArrayOfLinePtrs lineArrays{};

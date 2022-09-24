@@ -37,3 +37,19 @@ void handleCircleArrayEvents(vector_of_circle_arrays& circleArraysToRender)
         ArrayCreation::checkForShapeArrayCreation(circleArraysToRender);
     }
 }
+
+void handleRectangleArrayEvents(vector_of_rectangle_arrays& rectangleArraysToRender)
+{
+    if (workspace::rectangles)
+    {
+        checkForRectangleArrayCreation(rectangleArraysToRender);
+    }
+}
+
+void handleLineArrayEvents(vector_of_line_arrays& lineArraysToRender)
+{
+    if (workspace::lines)
+    {
+        ArrayCreation::checkForShapeArrayCreation(lineArraysToRender);
+    }
+}

@@ -18,5 +18,7 @@ void handleRectangleEvents(std::array<std::unique_ptr<Rectangle>, 3>& rectangles
 void handleLineEvents(std::array<std::unique_ptr<Line>, 3>& linesToRender);
 
 void handleCircleArrayEvents(vector_of_circle_arrays& circleArraysToRender);
+void handleRectangleArrayEvents(vector_of_rectangle_arrays& rectangleArraysToRender);
+void handleLineArrayEvents(vector_of_line_arrays& lineArraysToRender);
 
 #endif

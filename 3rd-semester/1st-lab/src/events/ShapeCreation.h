@@ -33,4 +33,7 @@ namespace Creation
 // for Rectangle class
 void checkForRectangleShapeCreation(std::array<std::unique_ptr<Rectangle>, 3>& rectanglesToRender);
 
+Rectangle createFirstConstructorRectangle();
+Rectangle createSecondConstructorRectangle();
+
 #endif

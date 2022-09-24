@@ -60,6 +60,8 @@ int main()
                 handleLineEvents(linesToRender);
 
                 handleCircleArrayEvents(circleArrays);
+                handleRectangleArrayEvents(rectangleArrays);
+                handleLineArrayEvents(lineArrays);
             }
         }
 

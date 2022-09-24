@@ -36,3 +36,34 @@ void ArrayCreation::checkForShapeArrayCreation(vector_of_shape_arrays<ShapeType>
 
 template void ArrayCreation::checkForShapeArrayCreation(vector_of_circle_arrays&);
 template void ArrayCreation::checkForShapeArrayCreation(vector_of_line_arrays&);
+
+void checkForRectangleArrayCreation(vector_of_rectangle_arrays& rectangleArraysToRender)
+{
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::N))
+    {
+        Rectangle firstRectangle{};
+        Rectangle secondRectangle{ createFirstConstructorRectangle() };
+        Rectangle thirdRectangle{ createSecondConstructorRectangle() };
+
+        firstRectangle.show();
+        secondRectangle.show();
+        thirdRectangle.show();
+
+        rectangleArraysToRender.push_back(std::array<std::unique_ptr<Rectangle>, 3>{
+            std::make_unique<Rectangle>(firstRectangle),
+            std::make_unique<Rectangle>(secondRectangle),
+            std::make_unique<Rectangle>(thirdRectangle)
+        });
+    }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::B))
+    {
+        if (!rectangleArraysToRender.empty())
+        {
+            rectangleArraysToRender.pop_back();
+        }
+    }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+    {
+        rectangleArraysToRender.clear();
+    }
+}

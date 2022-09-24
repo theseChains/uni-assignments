@@ -1,5 +1,5 @@
 #include "Circle.h"
-#include <iostream>
+
 // default constructor, initialized with arbitrary values
 Circle::Circle() 
     : m_centerX{ util::windowWidth / 2.0f - rnd::getFloat(10, 200) }, 
@@ -8,7 +8,6 @@ Circle::Circle()
     m_color{ sf::Color::Magenta },
     m_isShown{ false }
 {
-    std::cout << "default circle constructor called\n";
     initializeSfSprite(); 
 }
 
@@ -32,33 +31,6 @@ Circle::Circle(float centerX, float centerY, float radius,
     m_isShown{ false }
 {
     initializeSfSprite(); 
-}
-
-// copy constructor
-Circle::Circle(Circle& circle)
-   : m_centerX{ circle.m_centerX },
-    m_centerY{ circle.m_centerY },
-    m_radius{ circle.m_radius },
-    m_color{ circle.m_color },
-    m_isShown{ circle.m_isShown },
-    m_sprite{ circle.m_sprite }
-{}
-
-// move constructor
-Circle::Circle(Circle&& circle)
-   : m_centerX{ circle.m_centerX },
-    m_centerY{ circle.m_centerY },
-    m_radius{ circle.m_radius },
-    m_color{ circle.m_color },
-    m_isShown{ circle.m_isShown },
-    m_sprite{ circle.m_sprite }
-{
-    m_centerX = 0.0f;
-    m_centerY = 0.0f;
-    m_radius = 0.0f;
-    m_color = sf::Color{};
-    m_isShown = false;
-    m_sprite = sf::CircleShape{};
 }
 
 void Circle::show()

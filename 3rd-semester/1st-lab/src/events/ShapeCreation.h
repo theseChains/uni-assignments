@@ -24,10 +24,10 @@ namespace Creation
     void createAndShowDefaultShape(std::unique_ptr<ShapeType>& newShapePtr);
 
     template <typename ShapeType>
-    void createAndShowFirstConstructorShape(std::unique_ptr<ShapeType>& newShapePtr);
+    ShapeType createFirstConstructorShape();
 
     template <typename ShapeType>
-    void createAndShowSecondConstructorShape(std::unique_ptr<ShapeType>& newShapePtr);
+    ShapeType createSecondConstructorShape();
 }
 
 // for Rectangle class

@@ -4,13 +4,11 @@
 template <typename ShapeType>
 void ArrayCreation::checkForShapeArrayCreation(vector_of_shape_arrays<ShapeType>& arraysToRender)
 {
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::B))
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::N))
     {
-        // i could probably split the create and show funciton in Creation namespace 
-        // to 2 functions so that i can easily create random shapes here
         ShapeType firstShape{};
-        ShapeType secondShape{};
-        ShapeType thirdShape{};
+        ShapeType secondShape{ Creation::createFirstConstructorShape<ShapeType>() };
+        ShapeType thirdShape{ Creation::createSecondConstructorShape<ShapeType>() };
 
         firstShape.show();
         secondShape.show();
@@ -23,12 +21,16 @@ void ArrayCreation::checkForShapeArrayCreation(vector_of_shape_arrays<ShapeType>
             std::make_unique<ShapeType>(thirdShape) 
         });
     }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::N))
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::B))
     {
         if (!arraysToRender.empty())
         {
             arraysToRender.pop_back();
         }
+    }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+    {
+        arraysToRender.clear();
     }
 }
 

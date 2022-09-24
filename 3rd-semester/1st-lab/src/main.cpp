@@ -28,6 +28,7 @@ int main()
 
     // make a function to create an array of the desired shape with randomized shapes
     // make a function to delete the last array in the vector, if the vector is not empty (pop_back function)
+    // todo: declare using aliases in circle, rectangle and line class headers
     vector_of_circle_arrays circleArrays{};
     vector_of_rectangle_arrays rectangleArrays{};
     vector_of_line_arrays lineArrays{};

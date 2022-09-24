@@ -51,7 +51,7 @@ void Creation::createAndShowDefaultShape(std::unique_ptr<ShapeType>& newShapePtr
 }
 
 template <typename ShapeType>
-void Creation::createAndShowFirstConstructorShape(std::unique_ptr<ShapeType>& newShapePtr)
+ShapeType Creation::createFirstConstructorShape()
 {
     Dimensions shapeDimensions{ createRandomDimensions() };
     Color shapeColor{ createRandomColor() };
@@ -60,12 +60,11 @@ void Creation::createAndShowFirstConstructorShape(std::unique_ptr<ShapeType>& ne
         shapeDimensions.size, sf::Color(shapeColor.redComponent, shapeColor.greenComponent,
         shapeColor.blueComponent) };
 
-    firstConstructorShape.show();
-    newShapePtr = std::make_unique<ShapeType>(firstConstructorShape);
+    return firstConstructorShape;
 }
 
 template <typename ShapeType>
-void Creation::createAndShowSecondConstructorShape(std::unique_ptr<ShapeType>& newShapePtr)
+ShapeType Creation::createSecondConstructorShape()
 {
     Dimensions shapeDimensions{ createRandomDimensions() };
     Color shapeColor{ createRandomColor() };
@@ -75,8 +74,7 @@ void Creation::createAndShowSecondConstructorShape(std::unique_ptr<ShapeType>& n
         shapeDimensions.size, std::array<int, 4>{ shapeColor.redComponent,
         shapeColor.greenComponent, shapeColor.blueComponent, alphaComponent } };
 
-    secondConstructorShape.show();
-    newShapePtr = std::make_unique<ShapeType>(secondConstructorShape);
+    return secondConstructorShape;
 }
 
 template <typename ShapeType>
@@ -99,11 +97,17 @@ void Creation::checkForShapeCreation(std::array<std::unique_ptr<ShapeType>, 3>& 
         if (shapesToRender[util::firstConstructorShapeIndex] != nullptr)
         {
             hideAndDelete(shapesToRender[util::firstConstructorShapeIndex]);
-            createAndShowFirstConstructorShape(shapesToRender[util::firstConstructorShapeIndex]);
+            ShapeType firstConstructorShape{ createFirstConstructorShape<ShapeType>() };
+            firstConstructorShape.show();
+            shapesToRender[util::firstConstructorShapeIndex] =
+                std::make_unique<ShapeType>(firstConstructorShape);
         }
         else
         {
-            createAndShowFirstConstructorShape(shapesToRender[util::firstConstructorShapeIndex]);
+            ShapeType firstConstructorShape{ createFirstConstructorShape<ShapeType>() };
+            firstConstructorShape.show();
+            shapesToRender[util::firstConstructorShapeIndex] =
+                std::make_unique<ShapeType>(firstConstructorShape);
         }
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::V))
@@ -111,11 +115,17 @@ void Creation::checkForShapeCreation(std::array<std::unique_ptr<ShapeType>, 3>& 
         if (shapesToRender[util::secondConstructorShapeIndex] != nullptr)
         {
             hideAndDelete(shapesToRender[util::secondConstructorShapeIndex]);
-            createAndShowSecondConstructorShape(shapesToRender[util::secondConstructorShapeIndex]);
+            ShapeType secondConstructorShape{ createSecondConstructorShape<ShapeType>() };
+            secondConstructorShape.show();
+            shapesToRender[util::secondConstructorShapeIndex] =
+                std::make_unique<ShapeType>(secondConstructorShape);
         }
         else
         {
-            createAndShowSecondConstructorShape(shapesToRender[util::secondConstructorShapeIndex]);
+            ShapeType secondConstructorShape{ createSecondConstructorShape<ShapeType>() };
+            secondConstructorShape.show();
+            shapesToRender[util::secondConstructorShapeIndex] =
+                std::make_unique<ShapeType>(secondConstructorShape);
         }
     }
 }

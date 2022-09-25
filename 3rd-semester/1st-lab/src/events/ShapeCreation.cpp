@@ -17,7 +17,7 @@ struct Color
 
 Dimensions createRandomDimensions()
 {
-    float mainPointX{ rnd::getFloat(0, util::windowWidth - 100) };
+    float mainPointX{ rnd::getFloat(util::guiWidth, util::windowWidth - 100) };
     float mainPointY{ rnd::getFloat(0, util::windowHeight - 100) };
     float size{ rnd::getFloat(10, 100) };
 
@@ -55,7 +55,7 @@ ShapeType Creation::createFirstConstructorShape()
 {
     Dimensions shapeDimensions{ createRandomDimensions() };
     Color shapeColor{ createRandomColor() };
-    
+
     ShapeType firstConstructorShape{ shapeDimensions.mainPointX, shapeDimensions.mainPointY,
         shapeDimensions.size, sf::Color(shapeColor.redComponent, shapeColor.greenComponent,
         shapeColor.blueComponent) };
@@ -78,55 +78,69 @@ ShapeType Creation::createSecondConstructorShape()
 }
 
 template <typename ShapeType>
+void Creation::handleDefaultShapeCreation(std::unique_ptr<ShapeType>& shapePtr)
+{
+    if (shapePtr != nullptr)
+    {
+        hideAndDelete(shapePtr);
+        createAndShowDefaultShape(shapePtr);
+    }
+    else
+    {
+        createAndShowDefaultShape(shapePtr);
+    }
+}
+
+template <typename ShapeType>
+void Creation::handleFirstConstructorShapeCreation(std::unique_ptr<ShapeType>& shapePtr)
+{
+    if (shapePtr != nullptr)
+    {
+        hideAndDelete(shapePtr);
+        ShapeType firstConstructorShape{ createFirstConstructorShape<ShapeType>() };
+        firstConstructorShape.show();
+        shapePtr = std::make_unique<ShapeType>(firstConstructorShape);
+    }
+    else
+    {
+        ShapeType firstConstructorShape{ createFirstConstructorShape<ShapeType>() };
+        firstConstructorShape.show();
+        shapePtr = std::make_unique<ShapeType>(firstConstructorShape);
+    }
+}
+
+template <typename ShapeType>
+void Creation::handleSecondConstructorShapeCreation(std::unique_ptr<ShapeType>& shapePtr)
+{
+    if (shapePtr != nullptr)
+    {
+        hideAndDelete(shapePtr);
+        ShapeType secondConstructorShape{ createSecondConstructorShape<ShapeType>() };
+        secondConstructorShape.show();
+        shapePtr = std::make_unique<ShapeType>(secondConstructorShape);
+    }
+    else
+    {
+        ShapeType secondConstructorShape{ createSecondConstructorShape<ShapeType>() };
+        secondConstructorShape.show();
+        shapePtr = std::make_unique<ShapeType>(secondConstructorShape);
+    }
+}
+
+template <typename ShapeType>
 void Creation::checkForShapeCreation(std::array<std::unique_ptr<ShapeType>, 3>& shapesToRender)
 {
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::F))
     {
-        if (shapesToRender[util::defaultShapeIndex] != nullptr)
-        {
-            hideAndDelete(shapesToRender[util::defaultShapeIndex]);
-            createAndShowDefaultShape(shapesToRender[util::defaultShapeIndex]);
-        }
-        else
-        {
-            createAndShowDefaultShape(shapesToRender[util::defaultShapeIndex]);
-        }
+        handleDefaultShapeCreation(shapesToRender[util::defaultShapeIndex]);
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::C))
     {
-        if (shapesToRender[util::firstConstructorShapeIndex] != nullptr)
-        {
-            hideAndDelete(shapesToRender[util::firstConstructorShapeIndex]);
-            ShapeType firstConstructorShape{ createFirstConstructorShape<ShapeType>() };
-            firstConstructorShape.show();
-            shapesToRender[util::firstConstructorShapeIndex] =
-                std::make_unique<ShapeType>(firstConstructorShape);
-        }
-        else
-        {
-            ShapeType firstConstructorShape{ createFirstConstructorShape<ShapeType>() };
-            firstConstructorShape.show();
-            shapesToRender[util::firstConstructorShapeIndex] =
-                std::make_unique<ShapeType>(firstConstructorShape);
-        }
+        handleFirstConstructorShapeCreation(shapesToRender[util::firstConstructorShapeIndex]);
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::V))
     {
-        if (shapesToRender[util::secondConstructorShapeIndex] != nullptr)
-        {
-            hideAndDelete(shapesToRender[util::secondConstructorShapeIndex]);
-            ShapeType secondConstructorShape{ createSecondConstructorShape<ShapeType>() };
-            secondConstructorShape.show();
-            shapesToRender[util::secondConstructorShapeIndex] =
-                std::make_unique<ShapeType>(secondConstructorShape);
-        }
-        else
-        {
-            ShapeType secondConstructorShape{ createSecondConstructorShape<ShapeType>() };
-            secondConstructorShape.show();
-            shapesToRender[util::secondConstructorShapeIndex] =
-                std::make_unique<ShapeType>(secondConstructorShape);
-        }
+        handleSecondConstructorShapeCreation(shapesToRender[util::secondConstructorShapeIndex]);
     }
 }
 
@@ -142,14 +156,14 @@ void hideAndDeleteRectangle(std::unique_ptr<Rectangle>& oldRectanglePtr)
 void createAndShowDefaultRectangle(std::unique_ptr<Rectangle>& newRectanglePtr)
 {
     Rectangle defaultRectangle{};
-    
+
     defaultRectangle.show();
     newRectanglePtr = std::make_unique<Rectangle>(defaultRectangle);
 }
 
 Rectangle createFirstConstructorRectangle()
 {
-    float topLeftX{ rnd::getFloat(0, util::windowWidth - 100) };
+    float topLeftX{ rnd::getFloat(util::guiWidth, util::windowWidth - 100) };
     float topLeftY{ rnd::getFloat(0, util::windowHeight - 100) };
     float width{ rnd::getFloat(10, 100) };
     float height{ rnd::getFloat(10, 100) };
@@ -157,7 +171,7 @@ Rectangle createFirstConstructorRectangle()
     Color rectangleColor{ createRandomColor() };
 
     Rectangle firstConstructorRectangle{ topLeftX, topLeftY, width, height,
-        sf::Color(rectangleColor.redComponent, rectangleColor.greenComponent, 
+        sf::Color(rectangleColor.redComponent, rectangleColor.greenComponent,
             rectangleColor.blueComponent) };
 
     return firstConstructorRectangle;
@@ -165,7 +179,7 @@ Rectangle createFirstConstructorRectangle()
 
 Rectangle createSecondConstructorRectangle()
 {
-    float topLeftX{ rnd::getFloat(0, util::windowWidth - 100) };
+    float topLeftX{ rnd::getFloat(util::guiWidth, util::windowWidth - 100) };
     float topLeftY{ rnd::getFloat(0, util::windowHeight - 100) };
     float width{ rnd::getFloat(10, 100) };
     float height{ rnd::getFloat(10, 100) };
@@ -173,61 +187,73 @@ Rectangle createSecondConstructorRectangle()
     Color rectangleColor{ createRandomColor() };
     int alphaComponent{ rnd::getNumber(50, 255) };
 
-    Rectangle secondConstructorRectangle{ topLeftX, topLeftY, width, height, 
+    Rectangle secondConstructorRectangle{ topLeftX, topLeftY, width, height,
         std::array<int, 4>{ rectangleColor.redComponent, rectangleColor.greenComponent,
             rectangleColor.blueComponent, alphaComponent } };
 
     return secondConstructorRectangle;
 }
 
+
+void handleDefaultRectangleCreation(std::unique_ptr<Rectangle>& rectanglePtr)
+{
+    if (rectanglePtr != nullptr)
+    {
+        hideAndDeleteRectangle(rectanglePtr);
+        createAndShowDefaultRectangle(rectanglePtr);
+    }
+    else
+    {
+        createAndShowDefaultRectangle(rectanglePtr);
+    }
+}
+
+void handleFirstConstructorRectangleCreation(std::unique_ptr<Rectangle>& rectanglePtr)
+{
+    if (rectanglePtr != nullptr)
+    {
+        hideAndDeleteRectangle(rectanglePtr);
+        Rectangle firstConstructorRectangle{ createFirstConstructorRectangle() };
+        firstConstructorRectangle.show();
+        rectanglePtr = std::make_unique<Rectangle>(firstConstructorRectangle);
+    }
+    else
+    {
+        Rectangle firstConstructorRectangle{ createFirstConstructorRectangle() };
+        firstConstructorRectangle.show();
+        rectanglePtr = std::make_unique<Rectangle>(firstConstructorRectangle);
+    }
+}
+
+void handleSecondConstructorRectangleCreation(std::unique_ptr<Rectangle>& rectanglePtr)
+{
+    if (rectanglePtr != nullptr)
+    {
+        hideAndDeleteRectangle(rectanglePtr);
+        Rectangle secondConstructorRectangle{ createSecondConstructorRectangle() };
+        secondConstructorRectangle.show();
+        rectanglePtr = std::make_unique<Rectangle>(secondConstructorRectangle);
+    }
+    else
+    {
+        Rectangle secondConstructorRectangle{ createSecondConstructorRectangle() };
+        secondConstructorRectangle.show();
+        rectanglePtr = std::make_unique<Rectangle>(secondConstructorRectangle);
+    }
+}
+
 void checkForRectangleShapeCreation(std::array<std::unique_ptr<Rectangle>, 3>& rectanglesToRender)
 {
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::F))
     {
-        if (rectanglesToRender[util::defaultShapeIndex] != nullptr)
-        {
-            hideAndDeleteRectangle(rectanglesToRender[util::defaultShapeIndex]);
-            createAndShowDefaultRectangle(rectanglesToRender[util::defaultShapeIndex]);
-        }
-        else
-        {
-            createAndShowDefaultRectangle(rectanglesToRender[util::defaultShapeIndex]);
-        }
+        handleDefaultRectangleCreation(rectanglesToRender[util::defaultShapeIndex]);
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::C))
     {
-        if (rectanglesToRender[util::firstConstructorShapeIndex] != nullptr)
-        {
-            hideAndDeleteRectangle(rectanglesToRender[util::firstConstructorShapeIndex]);
-            Rectangle firstConstructorRectangle{ createFirstConstructorRectangle() };
-            firstConstructorRectangle.show();
-            rectanglesToRender[util::firstConstructorShapeIndex] =
-                std::make_unique<Rectangle>(firstConstructorRectangle);
-        }
-        else
-        {
-            Rectangle firstConstructorRectangle{ createFirstConstructorRectangle() };
-            firstConstructorRectangle.show();
-            rectanglesToRender[util::firstConstructorShapeIndex] =
-                std::make_unique<Rectangle>(firstConstructorRectangle);
-        }
+        handleFirstConstructorRectangleCreation(rectanglesToRender[util::firstConstructorShapeIndex]);
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::V))
     {
-        if (rectanglesToRender[util::secondConstructorShapeIndex] != nullptr)
-        {
-            hideAndDeleteRectangle(rectanglesToRender[util::secondConstructorShapeIndex]);
-            Rectangle secondConstructorRectangle{ createSecondConstructorRectangle() };
-            secondConstructorRectangle.show();
-            rectanglesToRender[util::secondConstructorShapeIndex] =
-                std::make_unique<Rectangle>(secondConstructorRectangle);
-        }
-        else
-        {
-            Rectangle secondConstructorRectangle{ createSecondConstructorRectangle() };
-            secondConstructorRectangle.show();
-            rectanglesToRender[util::secondConstructorShapeIndex] =
-                std::make_unique<Rectangle>(secondConstructorRectangle);
-        }
+        handleSecondConstructorRectangleCreation(rectanglesToRender[util::secondConstructorShapeIndex]);
     }
 }

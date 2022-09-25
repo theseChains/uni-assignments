@@ -1,14 +1,12 @@
 #ifndef UTIL_FUNCTIONS_H
 #define UTIL_FUNCTIONS_H
 
-#include <array>
-#include <memory>
 #include <random>
 
 namespace util
 {
-    inline constexpr int windowWidth{ 640 };
-    inline constexpr int windowHeight{ 480 };
+    inline constexpr int windowWidth{ 1366 };
+    inline constexpr int windowHeight{ 768 };
 
     inline constexpr float lineWidth{ 2.0f };
 

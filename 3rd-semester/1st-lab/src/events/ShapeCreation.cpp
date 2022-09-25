@@ -17,8 +17,8 @@ struct Color
 
 Dimensions createRandomDimensions()
 {
-    float mainPointX{ rnd::getFloat(100, util::windowWidth - 100) };
-    float mainPointY{ rnd::getFloat(100, util::windowHeight - 100) };
+    float mainPointX{ rnd::getFloat(0, util::windowWidth - 100) };
+    float mainPointY{ rnd::getFloat(0, util::windowHeight - 100) };
     float size{ rnd::getFloat(10, 100) };
 
     return { mainPointX, mainPointY, size };
@@ -149,8 +149,8 @@ void createAndShowDefaultRectangle(std::unique_ptr<Rectangle>& newRectanglePtr)
 
 Rectangle createFirstConstructorRectangle()
 {
-    float topLeftX{ rnd::getFloat(100, util::windowWidth - 100) };
-    float topLeftY{ rnd::getFloat(100, util::windowHeight - 100) };
+    float topLeftX{ rnd::getFloat(0, util::windowWidth - 100) };
+    float topLeftY{ rnd::getFloat(0, util::windowHeight - 100) };
     float width{ rnd::getFloat(10, 100) };
     float height{ rnd::getFloat(10, 100) };
 
@@ -165,8 +165,8 @@ Rectangle createFirstConstructorRectangle()
 
 Rectangle createSecondConstructorRectangle()
 {
-    float topLeftX{ rnd::getFloat(100, util::windowWidth - 100) };
-    float topLeftY{ rnd::getFloat(100, util::windowHeight - 100) };
+    float topLeftX{ rnd::getFloat(0, util::windowWidth - 100) };
+    float topLeftY{ rnd::getFloat(0, util::windowHeight - 100) };
     float width{ rnd::getFloat(10, 100) };
     float height{ rnd::getFloat(10, 100) };
 

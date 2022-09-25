@@ -1,4 +1,9 @@
+#include "../include/imgui.h"
+#include "../include/imgui-SFML.h"
+
 #include <SFML/Graphics.hpp>
+
+#include <iostream>
 
 #include "util.h"
 #include "aliases.h"
@@ -20,6 +25,12 @@ int main()
     sf::RenderWindow window{ sf::VideoMode{ util::windowWidth, util::windowHeight }, "study" };
     window.setFramerateLimit(60);
 
+    if (!ImGui::SFML::Init(window))
+    {
+        std::cerr << "Unable to initialize ImGui\n";
+        return 1;
+    }
+
     Renderer renderer{ window };
 
     std::array<std::unique_ptr<Circle>, 3> circlesToRender{};
@@ -30,11 +41,14 @@ int main()
     VectorOfArrayOfRectanglePtrs rectangleArrays{};
     VectorOfArrayOfLinePtrs lineArrays{};
 
+    sf::Clock deltaClock{};
     while (window.isOpen())
     {
         sf::Event event{};
         while (window.pollEvent(event))
         {
+            ImGui::SFML::ProcessEvent(window, event);
+
             if (event.type == sf::Event::Closed)
             {
                 window.close();
@@ -62,6 +76,12 @@ int main()
             }
         }
 
+        ImGui::SFML::Update(window, deltaClock.restart());
+
+        ImGui::Begin("hello there");
+        ImGui::Button("a pretty button");
+        ImGui::End();
+
         window.clear();
 
         renderer.renderShapes(circlesToRender);
@@ -72,8 +92,12 @@ int main()
         renderer.renderShapeArrays(rectangleArrays);
         renderer.renderShapeArrays(lineArrays);
 
+        ImGui::SFML::Render(window);
+
         window.display();
     }
+
+    ImGui::SFML::Shutdown();
 
     return 0;
 }

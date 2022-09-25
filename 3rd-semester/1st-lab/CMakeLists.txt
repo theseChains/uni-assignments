@@ -5,8 +5,8 @@ set(CMAKE_BUILD_TYPE Debug)
 
 project(hello VERSION 1.0)
 
-file (GLOB_RECURSE project_SOURCES CONFIGURE_DEPENDS "src/*.cpp")
-file (GLOB_RECURSE project_HEADERS CONFIGURE_DEPENDS "src/*.h")
+file (GLOB_RECURSE project_SOURCES CONFIGURE_DEPENDS "src/*.cpp" "include/*.cpp")
+file (GLOB_RECURSE project_HEADERS CONFIGURE_DEPENDS "src/*.h" "include/*.h")
 
 set (project_INCLUDE_DIRS "")
 foreach (_headerFile ${project_HEADERS})
@@ -20,3 +20,6 @@ target_include_directories(app.exe PRIVATE ${project_INCLUDE_DIRS})
 
 target_include_directories(app.exe PUBLIC /usr/include/SFML)
 target_link_libraries(app.exe sfml-system sfml-window sfml-graphics)
+
+find_package(OpenGL REQUIRED)
+target_link_libraries(app.exe OpenGL::GL)

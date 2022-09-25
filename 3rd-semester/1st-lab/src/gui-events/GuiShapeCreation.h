@@ -15,7 +15,7 @@
 
 #include "../events/ShapeCreation.h"
 
-namespace Gui
+namespace GuiCreation
 {
     template <typename ShapeType>
     void checkForShapeCreation(std::array<std::unique_ptr<ShapeType>, 3>& shapesToRender);

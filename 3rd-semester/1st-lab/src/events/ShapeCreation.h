@@ -18,7 +18,7 @@ namespace Creation
 
     // auxiliary funcitons
     template <typename ShapeType>
-    void hideAndDelete(std::unique_ptr<ShapeType>& oldShapePtr);
+    void hideAndDeleteShape(std::unique_ptr<ShapeType>& oldShapePtr);
 
     template <typename ShapeType>
     void createAndShowDefaultShape(std::unique_ptr<ShapeType>& newShapePtr);
@@ -28,7 +28,7 @@ namespace Creation
 
     template <typename ShapeType>
     ShapeType createSecondConstructorShape();
-    
+
     template <typename ShapeType>
     void handleDefaultShapeCreation(std::unique_ptr<ShapeType>& shapePtr);
 
@@ -37,17 +37,18 @@ namespace Creation
 
     template <typename ShapeType>
     void handleSecondConstructorShapeCreation(std::unique_ptr<ShapeType>& shapePtr);
+
+    // for Rectangle class
+    void checkForRectangleShapeCreation(std::array<std::unique_ptr<Rectangle>, 3>& rectanglesToRender);
+
+    // auxiliary functions
+    void createAndShowDefaultRectangle(std::unique_ptr<Rectangle>& newRectanglePtr);
+    Rectangle createFirstConstructorRectangle();
+    Rectangle createSecondConstructorRectangle();
+
+    void handleDefaultRectangleCreation(std::unique_ptr<Rectangle>& rectanglePtr);
+    void handleFirstConstructorRectangleCreation(std::unique_ptr<Rectangle>& rectanglePtr);
+    void handleSecondConstructorRectangleCreation(std::unique_ptr<Rectangle>& rectanglePtr);
 }
-
-// for Rectangle class
-void checkForRectangleShapeCreation(std::array<std::unique_ptr<Rectangle>, 3>& rectanglesToRender);
-
-// auxiliary functions
-Rectangle createFirstConstructorRectangle();
-Rectangle createSecondConstructorRectangle();
-
-void handleDefaultRectangleCreation(std::unique_ptr<Rectangle>& rectanglePtr);
-void handleFirstConstructorRectangleCreation(std::unique_ptr<Rectangle>& rectanglePtr);
-void handleSecondConstructorRectangleCreation(std::unique_ptr<Rectangle>& rectanglePtr);
 
 #endif

@@ -4,7 +4,7 @@ void guiHandleCircleEvents(std::array<std::unique_ptr<Circle>, 3>& circlesToRend
 {
     if (mode::circles)
     {
-        Gui::checkForShapeCreation(circlesToRender);
+        GuiCreation::checkForShapeCreation(circlesToRender);
     }
 }
 
@@ -12,7 +12,7 @@ void guiHandleRectangleEvents(std::array<std::unique_ptr<Rectangle>, 3>& rectang
 {
     if (mode::rectangles)
     {
-        Gui::checkForRectangleCreation(rectanglesToRender);
+        GuiCreation::checkForRectangleCreation(rectanglesToRender);
     }
 }
 
@@ -20,7 +20,7 @@ void guiHandleLineEvents(std::array<std::unique_ptr<Line>, 3>& linesToRender)
 {
     if (mode::lines)
     {
-        Gui::checkForShapeCreation(linesToRender);
+        GuiCreation::checkForShapeCreation(linesToRender);
     }
 }
 

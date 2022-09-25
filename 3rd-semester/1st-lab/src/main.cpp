@@ -9,12 +9,8 @@
 #include "aliases.h"
 
 #include "events/Events.h"
-#include "events/ShapeCreation.h"
-#include "events/ShapeMovement.h"
-#include "events/ShapeModification.h"
-#include "events/ShapeArrayCreation.h"
 
-#include "gui/GuiEvents.h"
+#include "gui-events/GuiEvents.h"
 
 #include "shapes/Circle.h"
 #include "shapes/Rectangle.h"
@@ -77,6 +73,7 @@ int main()
                 handleRectangleEvents(rectanglesToRender);
                 handleLineEvents(linesToRender);
 
+                // todo: move rectangle creation in namespaces too
                 handleCircleArrayEvents(circleArrays);
                 handleRectangleArrayEvents(rectangleArrays);
                 handleLineArrayEvents(lineArrays);

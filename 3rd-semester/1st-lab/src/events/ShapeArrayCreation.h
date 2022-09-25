@@ -14,8 +14,8 @@ namespace ArrayCreation
 {
     template <typename ShapeType>
     void checkForShapeArrayCreation(VectorOfArrayOfShapePtrs<ShapeType>& arraysToRender);
-}
 
-void checkForRectangleArrayCreation(VectorOfArrayOfRectanglePtrs& rectangleArraysToRender);
+    void checkForRectangleArrayCreation(VectorOfArrayOfRectanglePtrs& rectangleArraysToRender);
+}
 
 #endif

@@ -14,7 +14,7 @@ void handleRectangleEvents(std::array<std::unique_ptr<Rectangle>, 3>& rectangles
 {
     if (mode::rectangles)
     {
-        checkForRectangleShapeCreation(rectanglesToRender);
+        Creation::checkForRectangleShapeCreation(rectanglesToRender);
         checkForRectangleModification(rectanglesToRender);
         Movement::checkForShapeMovement(rectanglesToRender);
     }
@@ -44,7 +44,7 @@ void handleRectangleArrayEvents(VectorOfArrayOfRectanglePtrs& rectangleArraysToR
 {
     if (mode::rectangles)
     {
-        checkForRectangleArrayCreation(rectangleArraysToRender);
+        ArrayCreation::checkForRectangleArrayCreation(rectangleArraysToRender);
         checkForRectangleArrayModification(rectangleArraysToRender);
         Movement::checkForShapeArrayMovement(rectangleArraysToRender);
     }

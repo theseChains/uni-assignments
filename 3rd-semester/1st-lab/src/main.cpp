@@ -73,8 +73,6 @@ int main()
                     mode::shift();
                 }
 
-                // maybe make these functions take 2 parameters, gui false and gui true
-                // then call these functions down there with gui true?
                 handleCircleEvents(circlesToRender);
                 handleRectangleEvents(rectanglesToRender);
                 handleLineEvents(linesToRender);
@@ -98,6 +96,12 @@ int main()
         }
 
         guiHandleCircleEvents(circlesToRender);
+        guiHandleRectangleEvents(rectanglesToRender);
+        guiHandleLineEvents(linesToRender);
+
+        guiHandleCircleArrayEvents(circleArrays);
+        guiHandleRectangleArrayEvents(rectangleArrays);
+        guiHandleLineArrayEvents(lineArrays);
 
         ImGui::End();
 

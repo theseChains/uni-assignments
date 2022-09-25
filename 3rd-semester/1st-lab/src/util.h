@@ -9,7 +9,7 @@ namespace util
     inline constexpr int windowWidth{ 1600 };
     inline constexpr int windowHeight{ 900 };
 
-    inline constexpr int guiWidth{ 400 };
+    inline constexpr int guiWidth{ 408 };
 
     inline constexpr float lineWidth{ 2.0f };
 

@@ -19,6 +19,8 @@ namespace Gui
 {
     template <typename ShapeType>
     void checkForShapeCreation(std::array<std::unique_ptr<ShapeType>, 3>& shapesToRender);
+
+    void checkForRectangleCreation(std::array<std::unique_ptr<Rectangle>, 3>& rectanglesToRender);
 }
 
 #endif

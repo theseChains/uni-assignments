@@ -1,0 +1,24 @@
+#ifndef GUI_SHAPE_CREATION_H
+#define GUI_SHAPE_CREATION_H
+
+#include <imgui.h>
+#include <imgui-SFML.h>
+
+#include <array>
+#include <memory>
+
+#include "../util.h"
+
+#include "../shapes/Circle.h"
+#include "../shapes/Rectangle.h"
+#include "../shapes/Line.h"
+
+#include "../events/ShapeCreation.h"
+
+namespace Gui
+{
+    template <typename ShapeType>
+    void checkForShapeCreation(std::array<std::unique_ptr<ShapeType>, 3>& shapesToRender);
+}
+
+#endif

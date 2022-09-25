@@ -2,7 +2,7 @@
 
 void handleCircleEvents(std::array<std::unique_ptr<Circle>, 3>& circlesToRender)
 {
-    if (workspace::circles)
+    if (mode::circles)
     {
         Creation::checkForShapeCreation(circlesToRender);
         checkForCircleModification(circlesToRender);
@@ -12,7 +12,7 @@ void handleCircleEvents(std::array<std::unique_ptr<Circle>, 3>& circlesToRender)
 
 void handleRectangleEvents(std::array<std::unique_ptr<Rectangle>, 3>& rectanglesToRender)
 {
-    if (workspace::rectangles)
+    if (mode::rectangles)
     {
         checkForRectangleShapeCreation(rectanglesToRender);
         checkForRectangleModification(rectanglesToRender);
@@ -22,7 +22,7 @@ void handleRectangleEvents(std::array<std::unique_ptr<Rectangle>, 3>& rectangles
 
 void handleLineEvents(std::array<std::unique_ptr<Line>, 3>& linesToRender)
 {
-    if (workspace::lines)
+    if (mode::lines)
     {
         Creation::checkForShapeCreation(linesToRender);
         checkForLineModification(linesToRender);
@@ -32,7 +32,7 @@ void handleLineEvents(std::array<std::unique_ptr<Line>, 3>& linesToRender)
 
 void handleCircleArrayEvents(VectorOfArrayOfCirclePtrs& circleArraysToRender)
 {
-    if (workspace::circles)
+    if (mode::circles)
     {
         ArrayCreation::checkForShapeArrayCreation(circleArraysToRender);
         checkForCircleArrayModification(circleArraysToRender);
@@ -42,7 +42,7 @@ void handleCircleArrayEvents(VectorOfArrayOfCirclePtrs& circleArraysToRender)
 
 void handleRectangleArrayEvents(VectorOfArrayOfRectanglePtrs& rectangleArraysToRender)
 {
-    if (workspace::rectangles)
+    if (mode::rectangles)
     {
         checkForRectangleArrayCreation(rectangleArraysToRender);
         checkForRectangleArrayModification(rectangleArraysToRender);
@@ -52,7 +52,7 @@ void handleRectangleArrayEvents(VectorOfArrayOfRectanglePtrs& rectangleArraysToR
 
 void handleLineArrayEvents(VectorOfArrayOfLinePtrs& lineArraysToRender)
 {
-    if (workspace::lines)
+    if (mode::lines)
     {
         ArrayCreation::checkForShapeArrayCreation(lineArraysToRender);
         checkForLineArrayModification(lineArraysToRender);

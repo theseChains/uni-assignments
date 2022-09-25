@@ -12,7 +12,7 @@ float rnd::getFloat(int min, int max)
     return static_cast<float>(range(mt));
 }
 
-void workspace::shift()
+void mode::shift()
 {
     if (circles)
     {
@@ -28,5 +28,21 @@ void workspace::shift()
     {
         lines = false;
         circles = true;
+    }
+}
+
+std::string mode::get()
+{
+    if (circles)
+    {
+        return "working with circles";
+    }
+    else if (rectangles)
+    {
+        return "working with rectangles";
+    }
+    else
+    {
+        return "working with lines";
     }
 }

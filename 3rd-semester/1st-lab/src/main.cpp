@@ -1,5 +1,5 @@
-#include "../include/imgui.h"
-#include "../include/imgui-SFML.h"
+#include <imgui.h>
+#include <imgui-SFML.h>
 
 #include <SFML/Graphics.hpp>
 
@@ -13,6 +13,8 @@
 #include "events/ShapeMovement.h"
 #include "events/ShapeModification.h"
 #include "events/ShapeArrayCreation.h"
+
+#include "gui/GuiEvents.h"
 
 #include "shapes/Circle.h"
 #include "shapes/Rectangle.h"
@@ -30,6 +32,11 @@ int main()
         std::cerr << "Unable to initialize ImGui\n";
         return 1;
     }
+
+    ImGui::GetStyle().ScaleAllSizes(1.2f);
+    ImGui::GetIO().FontGlobalScale = 2.0f;
+    ImGui::GetIO().ConfigWindowsResizeFromEdges = false;
+    ImGui::GetIO().ConfigWindowsMoveFromTitleBarOnly = true;
 
     Renderer renderer{ window };
 
@@ -63,9 +70,11 @@ int main()
             {
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::M))
                 {
-                    workspace::shift();
+                    mode::shift();
                 }
 
+                // maybe make these functions take 2 parameters, gui false and gui true
+                // then call these functions down there with gui true?
                 handleCircleEvents(circlesToRender);
                 handleRectangleEvents(rectanglesToRender);
                 handleLineEvents(linesToRender);
@@ -78,8 +87,18 @@ int main()
 
         ImGui::SFML::Update(window, deltaClock.restart());
 
-        ImGui::Begin("hello there");
-        ImGui::Button("a pretty button");
+        ImGui::Begin(mode::get().c_str());
+
+        ImGui::SetWindowSize(ImVec2(util::guiWidth, util::windowHeight));
+        ImGui::SetWindowPos(ImVec2(0, 0));
+
+        if (ImGui::Button("Change mode (M)"))
+        {
+            mode::shift();
+        }
+
+        guiHandleCircleEvents(circlesToRender);
+
         ImGui::End();
 
         window.clear();

@@ -2,11 +2,14 @@
 #define UTIL_FUNCTIONS_H
 
 #include <random>
+#include <string>
 
 namespace util
 {
-    inline constexpr int windowWidth{ 1366 };
-    inline constexpr int windowHeight{ 768 };
+    inline constexpr int windowWidth{ 1600 };
+    inline constexpr int windowHeight{ 900 };
+
+    inline constexpr int guiWidth{ 400 };
 
     inline constexpr float lineWidth{ 2.0f };
 
@@ -33,13 +36,15 @@ namespace rnd
     float getFloat(int min, int max);
 }
 
-namespace workspace
+namespace mode
 {
     inline bool circles{ true };
     inline bool rectangles{ false };
     inline bool lines{ false };
 
     void shift();
+
+    std::string get();
 }
 
 #endif

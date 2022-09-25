@@ -24,11 +24,11 @@ void guiHandleLineEvents(std::array<std::unique_ptr<Line>, 3>& linesToRender)
     }
 }
 
-void guiHandleCircleArrayEvents(VectorOfArrayOfCirclePtrs& circelArraysToRender)
+void guiHandleCircleArrayEvents(VectorOfArrayOfCirclePtrs& circleArraysToRender)
 {
     if (mode::circles)
     {
-
+        GuiArrayCreation::checkForShapeArrayCreation(circleArraysToRender);
     }
 }
 
@@ -36,7 +36,7 @@ void guiHandleRectangleArrayEvents(VectorOfArrayOfRectanglePtrs& rectangleArrays
 {
     if (mode::rectangles)
     {
-
+        GuiArrayCreation::checkForRectangleArrayCreation(rectangleArraysToRender);
     }
 }
 
@@ -44,6 +44,6 @@ void guiHandleLineArrayEvents(VectorOfArrayOfLinePtrs& lineArraysToRender)
 {
     if (mode::lines)
     {
-
+        GuiArrayCreation::checkForShapeArrayCreation(lineArraysToRender);
     }
 }

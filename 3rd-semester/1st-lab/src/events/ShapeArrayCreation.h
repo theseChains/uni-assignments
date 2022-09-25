@@ -12,10 +12,17 @@
 
 namespace ArrayCreation
 {
+    // line and circle arrays
     template <typename ShapeType>
     void checkForShapeArrayCreation(VectorOfArrayOfShapePtrs<ShapeType>& arraysToRender);
 
+    template <typename ShapeType>
+    void handleShapeArrayCreation(VectorOfArrayOfShapePtrs<ShapeType>& arraysToRender);
+
+    // rectangle arrays
     void checkForRectangleArrayCreation(VectorOfArrayOfRectanglePtrs& rectangleArraysToRender);
+
+    void handleRectangleArrayCreation(VectorOfArrayOfRectanglePtrs& rectangleArraysToRender); 
 }
 
 #endif

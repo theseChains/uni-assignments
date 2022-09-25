@@ -3,15 +3,15 @@
 template <typename ShapeType>
 void GuiCreation::checkForShapeCreation(std::array<std::unique_ptr<ShapeType>, 3>& shapesToRender)
 {
-    if (ImGui::Button("Create default circle (F)"))
+    if (ImGui::Button("Create default shape (F)"))
     {
         Creation::handleDefaultShapeCreation(shapesToRender[util::defaultShapeIndex]);
     }
-    if (ImGui::Button("Create first constructor\ncircle (C)"))
+    if (ImGui::Button("Create first constructor\nshape (C)"))
     {
         Creation::handleFirstConstructorShapeCreation(shapesToRender[util::firstConstructorShapeIndex]);
     }
-    if (ImGui::Button("Create second constructor\ncircle (V)"))
+    if (ImGui::Button("Create second constructor\nshape (V)"))
     {
         Creation::handleSecondConstructorShapeCreation(shapesToRender[util::secondConstructorShapeIndex]);
     }
@@ -22,15 +22,15 @@ template void GuiCreation::checkForShapeCreation(std::array<std::unique_ptr<Line
 
 void GuiCreation::checkForRectangleCreation(std::array<std::unique_ptr<Rectangle>, 3>& rectanglesToRender)
 {
-    if (ImGui::Button("Create default rectangle (F)"))
+    if (ImGui::Button("Create default shape (F)"))
     {
         Creation::handleDefaultRectangleCreation(rectanglesToRender[util::defaultShapeIndex]);
     }
-    if (ImGui::Button("Create first constructor\nrectangle (C)"))
+    if (ImGui::Button("Create first constructor\nshape (C)"))
     {
         Creation::handleFirstConstructorRectangleCreation(rectanglesToRender[util::firstConstructorShapeIndex]);
     }
-    if (ImGui::Button("Create second constructor\nrectangle (V)"))
+    if (ImGui::Button("Create second constructor\nshape (V)"))
     {
         Creation::handleSecondConstructorRectangleCreation(rectanglesToRender[util::secondConstructorShapeIndex]);
     }

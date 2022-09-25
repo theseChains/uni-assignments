@@ -18,6 +18,7 @@
 #include "../shapes/Line.h"
 
 #include "GuiShapeCreation.h"
+#include "GuiShapeArrayCreation.h"
 
 void guiHandleCircleEvents(std::array<std::unique_ptr<Circle>, 3>& circlesToRender);
 void guiHandleRectangleEvents(std::array<std::unique_ptr<Rectangle>, 3>& rectanglesToRender);

@@ -29,8 +29,8 @@ void guiHandleRectangleEvents(std::array<std::unique_ptr<Rectangle>, 3>& rectang
 void guiHandleLineEvents(std::array<std::unique_ptr<Line>, 3>& linesToRender,
         VectorOfArrayOfLinePtrs& lineArraysToRender);
 
-void guiHandleCircleArrayEvents(VectorOfArrayOfCirclePtrs& circelArraysToRender);
-void guiHandleRectangleArrayEvents(VectorOfArrayOfRectanglePtrs& rectangleArraysToRender);
-void guiHandleLineArrayEvents(VectorOfArrayOfLinePtrs& lineArraysToRender);
+void guiHandleCircleArrayCreation(VectorOfArrayOfCirclePtrs& circelArraysToRender);
+void guiHandleRectangleArrayCreation(VectorOfArrayOfRectanglePtrs& rectangleArraysToRender);
+void guiHandleLineArrayCreation(VectorOfArrayOfLinePtrs& lineArraysToRender);
 
 #endif

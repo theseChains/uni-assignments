@@ -95,9 +95,9 @@ int main()
         guiHandleRectangleEvents(rectanglesToRender, rectangleArrays);
         guiHandleLineEvents(linesToRender, lineArrays);
 
-        guiHandleCircleArrayEvents(circleArrays);
-        guiHandleRectangleArrayEvents(rectangleArrays);
-        guiHandleLineArrayEvents(lineArrays);
+        guiHandleCircleArrayCreation(circleArrays);
+        guiHandleRectangleArrayCreation(rectangleArrays);
+        guiHandleLineArrayCreation(lineArrays);
 
         ImGui::End();
 

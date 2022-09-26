@@ -61,12 +61,22 @@ void Rectangle::changeWidth(float widthOffset)
 {
     m_width += widthOffset;
 
+    if (m_width < 0.0f)
+    {
+        m_width = 0.0f;
+    }
+
     updateSfSprite();
 }
 
 void Rectangle::changeHeight(float heightOffset)
 {
     m_height += heightOffset;
+
+    if (m_height < 0.0f)
+    {
+        m_height = 0.0f;
+    }
 
     updateSfSprite();
 }

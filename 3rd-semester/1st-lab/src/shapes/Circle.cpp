@@ -57,6 +57,11 @@ void Circle::changeRadius(float radiusOffset)
 {
     m_radius += radiusOffset;
 
+    if (m_radius < 0.0f)
+    {
+        m_radius = 0.0f;
+    }
+
     updateSfSprite();
 }
 

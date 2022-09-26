@@ -18,6 +18,22 @@ namespace Movement
 
     template <typename ShapeType>
     void checkForShapeArrayMovement(VectorOfArrayOfShapePtrs<ShapeType>& shapeArraysToRender);
+
+    // auxiliary
+    template <typename ShapeType>
+    void moveShapeArrayUp(std::array<std::unique_ptr<ShapeType>, 3>& shapesToRender);
+
+    template <typename ShapeType>
+    void moveShapeArrayLeft(std::array<std::unique_ptr<ShapeType>, 3>& shapesToRender);
+
+    template <typename ShapeType>
+    void moveShapeArrayDown(std::array<std::unique_ptr<ShapeType>, 3>& shapesToRender);
+
+    template <typename ShapeType>
+    void moveShapeArrayRight(std::array<std::unique_ptr<ShapeType>, 3>& shapesToRender);
+
+    template <typename ShapeType>
+    void moveShapeArrayToRandomPoint(std::array<std::unique_ptr<ShapeType>, 3>& shapesToRender);
 }
 
 #endif

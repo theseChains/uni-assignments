@@ -7,6 +7,7 @@ void guiHandleCircleEvents(std::array<std::unique_ptr<Circle>, 3>& circlesToRend
     {
         GuiCreation::checkForShapeCreation(circlesToRender);
         guiCheckForCircleModification(circlesToRender, circleArraysToRender);
+        guiCheckForShapeMovement(circlesToRender, circleArraysToRender);
     }
 }
 
@@ -17,6 +18,7 @@ void guiHandleRectangleEvents(std::array<std::unique_ptr<Rectangle>, 3>& rectang
     {
         GuiCreation::checkForRectangleCreation(rectanglesToRender);
         guiCheckForRectangleModification(rectanglesToRender, rectangleArraysToRender);
+        guiCheckForShapeMovement(rectanglesToRender, rectangleArraysToRender);
     }
 }
 
@@ -27,6 +29,7 @@ void guiHandleLineEvents(std::array<std::unique_ptr<Line>, 3>& linesToRender,
     {
         GuiCreation::checkForShapeCreation(linesToRender);
         guiCheckForLineModification(linesToRender, lineArraysToRender);
+        guiCheckForShapeMovement(linesToRender, lineArraysToRender); 
     }
 }
 

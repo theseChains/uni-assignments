@@ -5,56 +5,23 @@ void Movement::checkForShapeMovement(std::array<std::unique_ptr<ShapeType>, 3>& 
 {
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
     {
-        for (const auto& shape : shapesToRender)
-        {
-            if (shape.get() != nullptr)
-            {
-                shape->moveTo(0.0f, -2.0f);
-            }
-        }
+        moveShapeArrayUp(shapesToRender);
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
     {
-        for (const auto& shape : shapesToRender)
-        {
-            if (shape.get() != nullptr)
-            {
-                shape->moveTo(-2.0f, 0.0f);
-            }
-        }
+        moveShapeArrayLeft(shapesToRender);
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
     {
-        for (const auto& shape : shapesToRender)
-        {
-            if (shape.get() != nullptr)
-            {
-                shape->moveTo(0.0f, 2.0f);
-            }
-        }
+        moveShapeArrayDown(shapesToRender);
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
     {
-        for (const auto& shape : shapesToRender)
-        {
-            if (shape.get() != nullptr)
-            {
-                shape->moveTo(2.0f, 0.0f);
-            }
-        }
+        moveShapeArrayRight(shapesToRender);
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q))
     {
-        for (const auto& shape : shapesToRender)
-        {
-            if (shape.get() != nullptr)
-            {
-                float randomOffsetX{ rnd::getFloat(-50, 50) };
-                float randomOffsetY{ rnd::getFloat(-50, 50) };
-                
-                shape->moveTo(randomOffsetX, randomOffsetY);
-            }
-        }
+        moveShapeArrayToRandomPoint(shapesToRender);
     }
 }
 
@@ -74,3 +41,66 @@ void Movement::checkForShapeArrayMovement(VectorOfArrayOfShapePtrs<ShapeType>& s
 template void Movement::checkForShapeArrayMovement(VectorOfArrayOfCirclePtrs&);
 template void Movement::checkForShapeArrayMovement(VectorOfArrayOfRectanglePtrs&);
 template void Movement::checkForShapeArrayMovement(VectorOfArrayOfLinePtrs&);
+
+template <typename ShapeType>
+void Movement::moveShapeArrayUp(std::array<std::unique_ptr<ShapeType>, 3>& shapesToRender)
+{
+    for (auto& shape : shapesToRender)
+    {
+        if (shape.get() != nullptr)
+        {
+            shape->moveTo(0.0f, -2.0f);
+        }
+    }
+}
+
+template <typename ShapeType>
+void Movement::moveShapeArrayLeft(std::array<std::unique_ptr<ShapeType>, 3>& shapesToRender)
+{
+    for (auto& shape : shapesToRender)
+    {
+        if (shape.get() != nullptr)
+        {
+            shape->moveTo(-2.0f, 0.0f);
+        }
+    }
+}
+
+template <typename ShapeType>
+void Movement::moveShapeArrayDown(std::array<std::unique_ptr<ShapeType>, 3>& shapesToRender)
+{
+    for (auto& shape : shapesToRender)
+    {
+        if (shape.get() != nullptr)
+        {
+            shape->moveTo(0.0f, 2.0f);
+        }
+    }
+}
+
+template <typename ShapeType>
+void Movement::moveShapeArrayRight(std::array<std::unique_ptr<ShapeType>, 3>& shapesToRender)
+{
+    for (auto& shape : shapesToRender)
+    {
+        if (shape.get() != nullptr)
+        {
+            shape->moveTo(2.0f, 0.0f);
+        }
+    }
+}
+
+template <typename ShapeType>
+void Movement::moveShapeArrayToRandomPoint(std::array<std::unique_ptr<ShapeType>, 3>& shapesToRender)
+{
+    for (const auto& shape : shapesToRender)
+    {
+        if (shape.get() != nullptr)
+        {
+            float randomOffsetX{ rnd::getFloat(-50, 50) };
+            float randomOffsetY{ rnd::getFloat(-50, 50) };
+
+            shape->moveTo(randomOffsetX, randomOffsetY);
+        }
+    }
+}

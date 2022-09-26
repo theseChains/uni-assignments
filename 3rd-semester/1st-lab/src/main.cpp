@@ -10,6 +10,7 @@
 
 #include "events/Events.h"
 
+#include "gui-events/GuiConfig.h"
 #include "gui-events/GuiEvents.h"
 
 #include "shapes/Circle.h"
@@ -29,10 +30,7 @@ int main()
         return 1;
     }
 
-    ImGui::GetStyle().ScaleAllSizes(1.2f);
-    ImGui::GetIO().FontGlobalScale = 2.0f;
-    ImGui::GetIO().ConfigWindowsResizeFromEdges = false;
-    ImGui::GetIO().ConfigWindowsMoveFromTitleBarOnly = true;
+    configureGui();
 
     Renderer renderer{ window };
 
@@ -81,23 +79,15 @@ int main()
 
         ImGui::SFML::Update(window, deltaClock.restart());
 
-        ImGui::Begin(mode::get().c_str());
-
-        ImGui::SetWindowSize(ImVec2(util::guiWidth, util::windowHeight));
-        ImGui::SetWindowPos(ImVec2(0, 0));
-
-        if (ImGui::Button("Change mode (M)"))
-        {
-            mode::shift();
-        }
-
-        guiHandleCircleEvents(circlesToRender, circleArrays);
-        guiHandleRectangleEvents(rectanglesToRender, rectangleArrays);
-        guiHandleLineEvents(linesToRender, lineArrays);
+        runGuiLoop();
 
         guiHandleCircleArrayCreation(circleArrays);
         guiHandleRectangleArrayCreation(rectangleArrays);
         guiHandleLineArrayCreation(lineArrays);
+
+        guiHandleCircleEvents(circlesToRender, circleArrays);
+        guiHandleRectangleEvents(rectanglesToRender, rectangleArrays);
+        guiHandleLineEvents(linesToRender, lineArrays);
 
         ImGui::End();
 

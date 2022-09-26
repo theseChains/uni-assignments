@@ -8,7 +8,7 @@ void configureGui()
     ImGui::GetIO().ConfigWindowsMoveFromTitleBarOnly = true;
 }
 
-void runGuiLoop()
+void startGuiLoop()
 {
     ImGui::Begin(mode::get().c_str());
 

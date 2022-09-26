@@ -7,6 +7,6 @@
 #include "../util.h"
 
 void configureGui();
-void runGuiLoop();
+void startGuiLoop();
 
 #endif

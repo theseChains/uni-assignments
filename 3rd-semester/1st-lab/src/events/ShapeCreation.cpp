@@ -1,6 +1,70 @@
 #include "ShapeCreation.h"
 
 // Line and Circle shape creation
+template <typename ShapeType>
+void Creation::checkForShapeCreation(std::array<std::unique_ptr<ShapeType>, 3>& shapesToRender)
+{
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::F))
+    {
+        handleDefaultShapeCreation(shapesToRender[util::defaultShapeIndex]);
+    }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::C))
+    {
+        handleFirstConstructorShapeCreation(shapesToRender[util::firstConstructorShapeIndex]);
+    }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::V))
+    {
+        handleSecondConstructorShapeCreation(shapesToRender[util::secondConstructorShapeIndex]);
+    }
+    // also put the deletion here, too lazy to move this somewhere else
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::G))
+    {
+        hideAndDeleteShape(shapesToRender[util::defaultShapeIndex]);
+    }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Y))
+    {
+        hideAndDeleteShape(shapesToRender[util::firstConstructorShapeIndex]);
+    }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::H))
+    {
+        hideAndDeleteShape(shapesToRender[util::secondConstructorShapeIndex]);
+    }
+}
+
+template void Creation::checkForShapeCreation(std::array<std::unique_ptr<Line>, 3>&);
+template void Creation::checkForShapeCreation(std::array<std::unique_ptr<Circle>, 3>&);
+
+// Rectangle shape creation
+void Creation::checkForRectangleShapeCreation(std::array<std::unique_ptr<Rectangle>, 3>& rectanglesToRender)
+{
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::F))
+    {
+        handleDefaultRectangleCreation(rectanglesToRender[util::defaultShapeIndex]);
+    }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::C))
+    {
+        handleFirstConstructorRectangleCreation(rectanglesToRender[util::firstConstructorShapeIndex]);
+    }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::V))
+    {
+        handleSecondConstructorRectangleCreation(rectanglesToRender[util::secondConstructorShapeIndex]);
+    }
+    // deletion
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::G))
+    {
+        hideAndDeleteShape(rectanglesToRender[util::defaultShapeIndex]);
+    }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Y))
+    {
+        hideAndDeleteShape(rectanglesToRender[util::firstConstructorShapeIndex]);
+    }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::H))
+    {
+        hideAndDeleteShape(rectanglesToRender[util::secondConstructorShapeIndex]);
+    }
+}
+
+// Line and Circle shape creation auxiliary functions and structs
 struct Dimensions
 {
     float mainPointX{};
@@ -37,8 +101,11 @@ template <typename ShapeType>
 void Creation::hideAndDeleteShape(std::unique_ptr<ShapeType>& oldShapePtr)
 {
     // hide the shape with another call to show() (not really necessary but the assignment says so)
-    oldShapePtr.get()->show();
-    oldShapePtr.reset();
+    if (oldShapePtr.get() != nullptr)
+    {
+        oldShapePtr.get()->show();
+        oldShapePtr.reset();
+    }
 }
 
 template <typename ShapeType>
@@ -127,26 +194,7 @@ void Creation::handleSecondConstructorShapeCreation(std::unique_ptr<ShapeType>& 
     }
 }
 
-template <typename ShapeType>
-void Creation::checkForShapeCreation(std::array<std::unique_ptr<ShapeType>, 3>& shapesToRender)
-{
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::F))
-    {
-        handleDefaultShapeCreation(shapesToRender[util::defaultShapeIndex]);
-    }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::C))
-    {
-        handleFirstConstructorShapeCreation(shapesToRender[util::firstConstructorShapeIndex]);
-    }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::V))
-    {
-        handleSecondConstructorShapeCreation(shapesToRender[util::secondConstructorShapeIndex]);
-    }
-}
-
-template void Creation::checkForShapeCreation(std::array<std::unique_ptr<Line>, 3>&);
-template void Creation::checkForShapeCreation(std::array<std::unique_ptr<Circle>, 3>&);
-
+// rectangle creation auxiliary functions
 void Creation::createAndShowDefaultRectangle(std::unique_ptr<Rectangle>& newRectanglePtr)
 {
     Rectangle defaultRectangle{};
@@ -233,21 +281,5 @@ void Creation::handleSecondConstructorRectangleCreation(std::unique_ptr<Rectangl
         Rectangle secondConstructorRectangle{ createSecondConstructorRectangle() };
         secondConstructorRectangle.show();
         rectanglePtr = std::make_unique<Rectangle>(secondConstructorRectangle);
-    }
-}
-
-void Creation::checkForRectangleShapeCreation(std::array<std::unique_ptr<Rectangle>, 3>& rectanglesToRender)
-{
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::F))
-    {
-        handleDefaultRectangleCreation(rectanglesToRender[util::defaultShapeIndex]);
-    }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::C))
-    {
-        handleFirstConstructorRectangleCreation(rectanglesToRender[util::firstConstructorShapeIndex]);
-    }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::V))
-    {
-        handleSecondConstructorRectangleCreation(rectanglesToRender[util::secondConstructorShapeIndex]);
     }
 }

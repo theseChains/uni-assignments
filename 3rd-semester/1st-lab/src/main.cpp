@@ -79,7 +79,7 @@ int main()
 
         ImGui::SFML::Update(window, deltaClock.restart());
 
-        runGuiLoop();
+        startGuiLoop();
 
         guiHandleCircleArrayCreation(circleArrays);
         guiHandleRectangleArrayCreation(rectangleArrays);

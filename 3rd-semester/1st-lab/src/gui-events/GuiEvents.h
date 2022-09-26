@@ -19,10 +19,15 @@
 
 #include "GuiShapeCreation.h"
 #include "GuiShapeArrayCreation.h"
+#include "GuiShapeModification.h"
+#include "GuiShapeMovement.h"
 
-void guiHandleCircleEvents(std::array<std::unique_ptr<Circle>, 3>& circlesToRender);
-void guiHandleRectangleEvents(std::array<std::unique_ptr<Rectangle>, 3>& rectanglesToRender);
-void guiHandleLineEvents(std::array<std::unique_ptr<Line>, 3>& linesToRender);
+void guiHandleCircleEvents(std::array<std::unique_ptr<Circle>, 3>& circlesToRender,
+        VectorOfArrayOfCirclePtrs& circleArraysToRender);
+void guiHandleRectangleEvents(std::array<std::unique_ptr<Rectangle>, 3>& rectanglesToRender,
+        VectorOfArrayOfRectanglePtrs& rectangleArraysToRender);
+void guiHandleLineEvents(std::array<std::unique_ptr<Line>, 3>& linesToRender,
+        VectorOfArrayOfLinePtrs& lineArraysToRender);
 
 void guiHandleCircleArrayEvents(VectorOfArrayOfCirclePtrs& circelArraysToRender);
 void guiHandleRectangleArrayEvents(VectorOfArrayOfRectanglePtrs& rectangleArraysToRender);

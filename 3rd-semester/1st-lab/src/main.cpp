@@ -25,7 +25,7 @@ int main()
 
     if (!ImGui::SFML::Init(window))
     {
-        std::cerr << "Unable to initialize ImGui\n";
+        std::cerr << "Failed to initialize ImGui\n";
         return 1;
     }
 
@@ -73,7 +73,6 @@ int main()
                 handleRectangleEvents(rectanglesToRender);
                 handleLineEvents(linesToRender);
 
-                // todo: move rectangle creation in namespaces too
                 handleCircleArrayEvents(circleArrays);
                 handleRectangleArrayEvents(rectangleArrays);
                 handleLineArrayEvents(lineArrays);
@@ -92,9 +91,9 @@ int main()
             mode::shift();
         }
 
-        guiHandleCircleEvents(circlesToRender);
-        guiHandleRectangleEvents(rectanglesToRender);
-        guiHandleLineEvents(linesToRender);
+        guiHandleCircleEvents(circlesToRender, circleArrays);
+        guiHandleRectangleEvents(rectanglesToRender, rectangleArrays);
+        guiHandleLineEvents(linesToRender, lineArrays);
 
         guiHandleCircleArrayEvents(circleArrays);
         guiHandleRectangleArrayEvents(rectangleArrays);

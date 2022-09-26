@@ -1,25 +1,79 @@
 #include "ShapeModification.h"
 
+void enlargeCircles(std::array<std::unique_ptr<Circle>, 3>& circlesToRender)
+{
+    for (const auto& circle : circlesToRender)
+    {
+        if (circle.get() != nullptr)
+        {
+            circle->changeRadius(2.0f);
+        }
+    }
+}
+
+void reduceCircles(std::array<std::unique_ptr<Circle>, 3>& circlesToRender)
+{
+    for (const auto& circle : circlesToRender)
+    {
+        if (circle.get() != nullptr)
+        {
+            circle->changeRadius(-2.0f);
+        }
+    }
+}
+
 void checkForCircleModification(std::array<std::unique_ptr<Circle>, 3>& circlesToRender)
 {
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::O))
     {
-        for (const auto& circle : circlesToRender)
-        {
-            if (circle.get() != nullptr)
-            {
-                circle->changeRadius(2.0f);
-            }
-        }
+        enlargeCircles(circlesToRender);
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::I))
     {
-        for (const auto& circle : circlesToRender)
+        reduceCircles(circlesToRender);
+    }
+}
+
+void reduceHeightOfRectangles(std::array<std::unique_ptr<Rectangle>, 3>& rectanglesToRender)
+{
+    for (const auto& rectangle : rectanglesToRender)
+    {
+        if (rectangle.get() != nullptr)
         {
-            if (circle.get() != nullptr)
-            {
-                circle->changeRadius(-2.0f);
-            }
+            rectangle->changeHeight(-2.0f);
+        }
+    }
+}
+
+void reduceWidthOfRectangles(std::array<std::unique_ptr<Rectangle>, 3>& rectanglesToRender)
+{
+    for (const auto& rectangle : rectanglesToRender)
+    {
+        if (rectangle.get() != nullptr)
+        {
+            rectangle->changeWidth(-2.0f);
+        }
+    }
+}
+
+void increaseHeightOfRectangles(std::array<std::unique_ptr<Rectangle>, 3>& rectanglesToRender)
+{
+    for (const auto& rectangle : rectanglesToRender)
+    {
+        if (rectangle.get() != nullptr)
+        {
+            rectangle->changeHeight(2.0f);
+        }
+    }
+}
+
+void increaseWidthOfRectangles(std::array<std::unique_ptr<Rectangle>, 3>& rectanglesToRender)
+{
+    for (const auto& rectangle : rectanglesToRender)
+    {
+        if (rectangle.get() != nullptr)
+        {
+            rectangle->changeWidth(2.0f);
         }
     }
 }
@@ -28,42 +82,40 @@ void checkForRectangleModification(std::array<std::unique_ptr<Rectangle>, 3>& re
 {
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
     {
-        for (const auto& rectangle : rectanglesToRender)
-        {
-            if (rectangle.get() != nullptr)
-            {
-                rectangle->changeHeight(-2.0f);
-            }
-        }
+        reduceHeightOfRectangles(rectanglesToRender);
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
     {
-        for (const auto& rectangle : rectanglesToRender)
-        {
-            if (rectangle.get() != nullptr)
-            {
-                rectangle->changeWidth(-2.0f);
-            }
-        }
+        reduceWidthOfRectangles(rectanglesToRender);
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
     {
-        for (const auto& rectangle : rectanglesToRender)
-        {
-            if (rectangle.get() != nullptr)
-            {
-                rectangle->changeHeight(2.0f);
-            }
-        }
+        increaseHeightOfRectangles(rectanglesToRender);
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
     {
-        for (const auto& rectangle : rectanglesToRender)
+        increaseWidthOfRectangles(rectanglesToRender);
+    }
+}
+
+void rotateLinesClockwise(std::array<std::unique_ptr<Line>, 3>& linesToRender)
+{
+    for (const auto& line : linesToRender)
+    {
+        if (line.get() != nullptr)
         {
-            if (rectangle.get() != nullptr)
-            {
-                rectangle->changeWidth(2.0f);
-            }
+            line->rotate(2.0f);
+        }
+    }
+}
+
+void rotateLinesCounterClockwise(std::array<std::unique_ptr<Line>, 3>& linesToRender)
+{
+    for (const auto& line : linesToRender)
+    {
+        if (line.get() != nullptr)
+        {
+            line->rotate(-2.0f);
         }
     }
 }
@@ -72,23 +124,11 @@ void checkForLineModification(std::array<std::unique_ptr<Line>, 3>& linesToRende
 {
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::R))
     {
-        for (const auto& line : linesToRender)
-        {
-            if (line.get() != nullptr)
-            {
-                line->rotate(2.0f);
-            }
-        }
+        rotateLinesClockwise(linesToRender);
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::T))
     {
-        for (const auto& line : linesToRender)
-        {
-            if (line.get() != nullptr)
-            {
-                line->rotate(-2.0f);
-            }
-        }
+        rotateLinesCounterClockwise(linesToRender);
     }
 }
 

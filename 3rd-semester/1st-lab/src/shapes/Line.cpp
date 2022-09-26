@@ -2,8 +2,8 @@
 
 // default constructor, initialized with arbitrary values
 Line::Line()
-    : m_mainPointX{ util::windowWidth / 2.0f - 200.0f },
-    m_mainPointY{ util::windowHeight / 2.0f },
+    : m_mainPointX{ rnd::getFloat(util::guiWidth, util::windowWidth - 100) },
+    m_mainPointY{ rnd::getFloat(0, util::windowHeight - 100) },
     m_length{ 100.0f },
     m_color{ sf::Color::Magenta },
     m_isShown{ false }

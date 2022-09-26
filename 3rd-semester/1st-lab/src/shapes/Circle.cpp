@@ -2,8 +2,8 @@
 
 // default constructor, initialized with arbitrary values
 Circle::Circle() 
-    : m_centerX{ util::windowWidth / 2.0f - rnd::getFloat(10, 200) }, 
-    m_centerY{ util::windowHeight / 2.0f - rnd::getFloat(10, 200) },
+    : m_centerX{ rnd::getFloat(util::guiWidth, util::windowWidth - 100) }, 
+    m_centerY{ rnd::getFloat(0, util::windowHeight - 100) },
     m_radius{ 50.0f }, 
     m_color{ sf::Color::Magenta },
     m_isShown{ false }

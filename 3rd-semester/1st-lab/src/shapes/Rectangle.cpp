@@ -2,8 +2,8 @@
 
 // default constructor, initialized with arbitrary values
 Rectangle::Rectangle()
-    : m_topLeftX{ util::windowWidth / 2.0f - 75.0f },
-    m_topLeftY{ util::windowHeight / 2.0f - 150.0f },
+    : m_topLeftX{ rnd::getFloat(util::guiWidth, util::windowWidth - 100) },
+    m_topLeftY{ rnd::getFloat(0, util::windowHeight - 100) },
     m_width{ 150.0f },
     m_height{ 100.0f },
     m_color{ sf::Color::Magenta },

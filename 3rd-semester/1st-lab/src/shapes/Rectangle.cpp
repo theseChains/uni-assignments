@@ -57,6 +57,7 @@ std::optional<sf::RectangleShape> Rectangle::show(bool modifyVisibility)
             return rectangleSprite;
         }
     }
+    // for rendering
     else
     {
         if (m_isShown)

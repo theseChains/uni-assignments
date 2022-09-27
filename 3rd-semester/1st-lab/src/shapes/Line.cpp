@@ -56,6 +56,7 @@ std::optional<sf::RectangleShape> Line::show(bool modifyVisibility)
             return lineSprite;
         }
     }
+    // for rendering
     else
     {
         if (m_isShown)

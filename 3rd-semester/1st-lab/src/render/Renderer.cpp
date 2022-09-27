@@ -22,15 +22,9 @@ template void Renderer::renderShapes(std::array<std::unique_ptr<Line>, 3>&);
 template <typename ShapeType>
 void Renderer::renderShapeArrays(VectorOfArrayOfShapePtrs<ShapeType>& arraysToRender)
 {
-    for (const auto& shapeArray : arraysToRender)
+    for (auto& shapeArray : arraysToRender)
     {
-        for (const auto& shape : shapeArray)
-        {
-            if (shape.get() != nullptr && shape.get()->isShown())
-            {
-                m_window.get().draw(shape.get()->show(false).value());
-            }
-        }
+        renderShapes(shapeArray);
     }
 }
 

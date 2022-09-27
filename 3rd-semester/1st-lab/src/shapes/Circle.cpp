@@ -53,6 +53,7 @@ std::optional<sf::CircleShape> Circle::show(bool modifyVisibility)
             return circleSprite;
         }
     }
+    // for rendering
     else
     {
         if (m_isShown)

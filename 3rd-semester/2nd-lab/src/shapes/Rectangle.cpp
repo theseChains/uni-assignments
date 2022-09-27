@@ -2,8 +2,8 @@
 
 // default constructor, initialized with arbitrary values
 Rectangle::Rectangle()
-    : m_topLeftX{ rnd::getFloat(util::guiWidth, util::windowWidth - 100) },
-    m_topLeftY{ rnd::getFloat(0, util::windowHeight - 100) },
+    : m_vertex{ rnd::getFloat(util::guiWidth, util::windowWidth - 100),
+        rnd::getFloat(0, util::windowHeight - 100) },
     m_width{ 150.0f },
     m_height{ 100.0f },
     m_color{ sf::Color::Magenta },
@@ -13,25 +13,29 @@ Rectangle::Rectangle()
 
 Rectangle::Rectangle(float topLeftX, float topLeftY, float width, float height,
         const sf::Color& color)
-    : m_topLeftX{ topLeftX },
-    m_topLeftY{ topLeftY },
+    : m_vertex{ topLeftX, topLeftY },
     m_width{ width },
     m_height{ height },
     m_color{ color },
     m_isShown{ false }
 {
+    checkForBounds();
+
+    std::cout << "Rectangle object created\n";
 }
 
 Rectangle::Rectangle(float topLeftX, float topLeftY, float width, float height,
         const std::array<int, 4>& colorComponents)
-    : m_topLeftX{ topLeftX },
-    m_topLeftY{ topLeftY },
+    : m_vertex{ topLeftX, topLeftY },
     m_width{ width },
     m_height{ height },
     m_color{ sf::Color(colorComponents[component::red], colorComponents[component::green],
             colorComponents[component::blue], colorComponents[component::alpha]) },
     m_isShown{ false }
 {
+    checkForBounds();
+
+    std::cout << "Rectangle object created\n";
 }
 
 std::optional<sf::RectangleShape> Rectangle::show(bool modifyVisibility)
@@ -48,13 +52,7 @@ std::optional<sf::RectangleShape> Rectangle::show(bool modifyVisibility)
         {
             m_isShown = true;
 
-            sf::RectangleShape rectangleSprite{};
-
-            rectangleSprite.setPosition(m_topLeftX, m_topLeftY);
-            rectangleSprite.setFillColor(m_color);
-            rectangleSprite.setSize(sf::Vector2f{ m_width, m_height });
-
-            return rectangleSprite;
+            return sf::RectangleShape{ createSprite() };
         }
     }
     // for rendering
@@ -62,13 +60,7 @@ std::optional<sf::RectangleShape> Rectangle::show(bool modifyVisibility)
     {
         if (m_isShown)
         {
-            sf::RectangleShape rectangleSprite{};
-
-            rectangleSprite.setPosition(m_topLeftX, m_topLeftY);
-            rectangleSprite.setFillColor(m_color);
-            rectangleSprite.setSize(sf::Vector2f{ m_width, m_height });
-
-            return rectangleSprite;
+            return sf::RectangleShape{ createSprite() };
         }
         else
         {
@@ -83,8 +75,8 @@ void Rectangle::moveTo(float offsetX, float offsetY)
     {
         show();
 
-        m_topLeftX += offsetX;
-        m_topLeftY += offsetY;
+        m_vertex.setX(m_vertex.getX() + offsetX);
+        m_vertex.setY(m_vertex.getY() + offsetY);
 
         show();
     }
@@ -127,4 +119,30 @@ void Rectangle::changeHeight(float heightOffset)
 bool Rectangle::isShown() const
 {
     return m_isShown;
+}
+
+sf::RectangleShape Rectangle::createSprite() const
+{
+    sf::RectangleShape rectangleSprite{};
+
+    rectangleSprite.setPosition(m_vertex.getX(), m_vertex.getY());
+    rectangleSprite.setFillColor(m_color);
+    rectangleSprite.setSize(sf::Vector2f{ m_width, m_height });
+
+    return rectangleSprite;
+}
+
+void Rectangle::checkForBounds()
+{
+    float farRightX{ m_vertex.getX() + m_width * 2.0f };
+    if (farRightX > static_cast<float>(util::windowWidth))
+    {
+        m_vertex.setX(m_vertex.getX() - (farRightX - static_cast<float>(util::windowWidth)));
+    }
+
+    float farDownY{ m_vertex.getY() + m_height * 2.0f };
+    if (farDownY > static_cast<float>(util::windowHeight))
+    {
+        m_vertex.setY(m_vertex.getY() - (farDownY - static_cast<float>(util::windowHeight)));
+    }
 }

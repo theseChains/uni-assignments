@@ -100,7 +100,7 @@ bool Circle::isShown() const
     return m_isShown;
 }
 
-sf::CircleShape Circle::createSprite()
+sf::CircleShape Circle::createSprite() const
 {
     sf::CircleShape circleSprite{};
 

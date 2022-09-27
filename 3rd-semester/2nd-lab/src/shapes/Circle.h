@@ -36,7 +36,7 @@ private:
     bool m_isShown{};
 
     // auxiliary
-    sf::CircleShape createSprite();
+    sf::CircleShape createSprite() const;
     void checkForBounds();
 };
 

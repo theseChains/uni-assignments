@@ -4,9 +4,12 @@
 #include <SFML/Graphics.hpp>
 
 #include <array>
+#include <iostream>
 #include <optional>
 
 #include "../util.h"
+
+#include "Vertex.h"
 
 class Rectangle
 {
@@ -26,8 +29,7 @@ public:
     bool isShown() const;
 
 private:
-    float m_topLeftX{};
-    float m_topLeftY{};
+    Vertex m_vertex{};
 
     float m_width{};
     float m_height{};
@@ -35,6 +37,10 @@ private:
     sf::Color m_color{};
 
     bool m_isShown{};
+
+    // auxiliary
+    sf::RectangleShape createSprite() const;
+    void checkForBounds();
 };
 
 #endif

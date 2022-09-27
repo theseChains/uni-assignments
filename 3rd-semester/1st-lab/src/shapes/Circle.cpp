@@ -44,7 +44,6 @@ std::optional<sf::CircleShape> Circle::show(bool modifyVisibility)
         {
             m_isShown = true;
 
-            // make the sprite here instead of having it as a class member variable
             sf::CircleShape circleSprite{};
 
             circleSprite.setPosition(m_topLeftX, m_topLeftY);
@@ -58,7 +57,6 @@ std::optional<sf::CircleShape> Circle::show(bool modifyVisibility)
     {
         if (m_isShown)
         {
-            // make the sprite here instead of having it as a class member variable
             sf::CircleShape circleSprite{};
 
             circleSprite.setPosition(m_topLeftX, m_topLeftY);
@@ -78,13 +76,11 @@ void Circle::moveTo(float offsetX, float offsetY)
 {
     if (m_isShown)
     {
-        // modifies visibility, sets it to false
         show();
 
         m_topLeftX += offsetX;
         m_topLeftY += offsetY;
 
-        // modifies visibility again, sets it to true, creates a sprite
         show();
     }
 }
@@ -93,7 +89,6 @@ void Circle::changeRadius(float radiusOffset)
 {
     if (m_isShown)
     {
-        // set visibility to false
         show();
 
         m_radius += radiusOffset;
@@ -103,7 +98,6 @@ void Circle::changeRadius(float radiusOffset)
             m_radius = 0.0f;
         }
 
-        // redraw the circle again, setting visibility to true
         show();
     }
 }

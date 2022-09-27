@@ -40,6 +40,15 @@ void guiCheckForShapeMovement(std::array<std::unique_ptr<ShapeType>, 3>& shapesT
             Movement::moveShapeArrayRight(shapeArray);
         }
     }
+    if (ImGui::Button("Move shapes to a random\npoint (Q)"))
+    {
+        Movement::moveShapeArrayToRandomPoint(shapesToRender);
+
+        for (auto& shapeArray : shapeArraysToRender)
+        {
+            Movement::moveShapeArrayToRandomPoint(shapeArray);
+        }
+    }
 }
 
 template void guiCheckForShapeMovement(std::array<std::unique_ptr<Circle>, 3>&,

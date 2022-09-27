@@ -36,29 +36,43 @@ Rectangle::Rectangle(float topLeftX, float topLeftY, float width, float height,
 
 std::optional<sf::RectangleShape> Rectangle::show(bool modifyVisibility)
 {
-    if (m_isShown)
+    if (modifyVisibility)
     {
-        if (modifyVisibility)
+        if (m_isShown)
         {
             m_isShown = false;
-        }
 
-        return std::nullopt;
+            return std::nullopt;
+        }
+        else
+        {
+            m_isShown = true;
+
+            sf::RectangleShape rectangleSprite{};
+
+            rectangleSprite.setPosition(m_topLeftX, m_topLeftY);
+            rectangleSprite.setFillColor(m_color);
+            rectangleSprite.setSize(sf::Vector2f{ m_width, m_height });
+
+            return rectangleSprite;
+        }
     }
     else
     {
-        if (modifyVisibility)
+        if (m_isShown)
         {
-            m_isShown = true;
+            sf::RectangleShape rectangleSprite{};
+
+            rectangleSprite.setPosition(m_topLeftX, m_topLeftY);
+            rectangleSprite.setFillColor(m_color);
+            rectangleSprite.setSize(sf::Vector2f{ m_width, m_height });
+
+            return rectangleSprite;
         }
-
-        sf::RectangleShape rectangleSprite{};
-
-        rectangleSprite.setPosition(m_topLeftX, m_topLeftY);
-        rectangleSprite.setFillColor(m_color);
-        rectangleSprite.setSize(sf::Vector2f{ m_width, m_height });
-
-        return rectangleSprite;
+        else
+        {
+            return std::nullopt;
+        }
     }
 }
 

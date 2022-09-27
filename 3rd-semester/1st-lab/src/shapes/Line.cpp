@@ -34,30 +34,45 @@ Line::Line(float mainPointX, float mainPointY, float length, const std::array<in
 
 std::optional<sf::RectangleShape> Line::show(bool modifyVisibility)
 {
-    if (m_isShown)
+    if (modifyVisibility)
     {
-        if (modifyVisibility)
+        if (m_isShown)
         {
             m_isShown = false;
-        }
 
-        return std::nullopt;
+            return std::nullopt;
+        }
+        else
+        {
+            m_isShown = true;
+
+            sf::RectangleShape lineSprite{};
+
+            lineSprite.setPosition(m_mainPointX, m_mainPointY);
+            lineSprite.setFillColor(m_color);
+            lineSprite.setSize(sf::Vector2f{ m_length, util::lineWidth });
+            lineSprite.setRotation(m_angle);
+
+            return lineSprite;
+        }
     }
     else
     {
-        if (modifyVisibility)
+        if (m_isShown)
         {
-            m_isShown = true;
+            sf::RectangleShape lineSprite{};
+
+            lineSprite.setPosition(m_mainPointX, m_mainPointY);
+            lineSprite.setFillColor(m_color);
+            lineSprite.setSize(sf::Vector2f{ m_length, util::lineWidth });
+            lineSprite.setRotation(m_angle);
+
+            return lineSprite;
         }
-
-        sf::RectangleShape lineSprite{};
-
-        lineSprite.setPosition(m_mainPointX, m_mainPointY);
-        lineSprite.setFillColor(m_color);
-        lineSprite.setSize(sf::Vector2f{ m_length, util::lineWidth });
-        lineSprite.setRotation(m_angle);
-
-        return lineSprite;
+        else
+        {
+            return std::nullopt;
+        }
     }
 }
 
@@ -65,7 +80,7 @@ void Line::moveTo(float offsetX, float offsetY)
 {
     if (m_isShown)
     {
-        show(); // set visibility to false
+        show();
 
         m_mainPointX += offsetX;
         m_mainPointY += offsetY;

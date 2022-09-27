@@ -1,6 +1,8 @@
 #ifndef UTIL_FUNCTIONS_H
 #define UTIL_FUNCTIONS_H
 
+#include <SFML/Graphics.hpp>
+
 #include <random>
 #include <string>
 

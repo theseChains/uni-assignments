@@ -4,9 +4,12 @@
 #include <SFML/Graphics.hpp>
 
 #include <array>
+#include <iostream>
 #include <optional>
 
 #include "../util.h"
+
+#include "Vertex.h"
 
 class Line
 {
@@ -24,8 +27,7 @@ public:
     bool isShown() const;
 
 private:
-    float m_mainPointX{};
-    float m_mainPointY{};
+    Vertex m_vertex{};
 
     float m_length{};
 
@@ -34,6 +36,10 @@ private:
     float m_angle{};
 
     bool m_isShown{};
+
+    // auxiliary
+    sf::RectangleShape createSprite() const;
+    void checkForBounds();
 };
 
 #endif

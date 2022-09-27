@@ -1,89 +1,114 @@
 #include "Circle.h"
 
 // default constructor, initialized with arbitrary values
-Circle::Circle() 
-    : m_centerX{ rnd::getFloat(util::guiWidth, util::windowWidth - 100) }, 
-    m_centerY{ rnd::getFloat(0, util::windowHeight - 100) },
-    m_radius{ 50.0f }, 
+Circle::Circle()
+    : m_topLeftX{ rnd::getFloat(util::guiWidth, util::windowWidth - 100) },
+    m_topLeftY{ rnd::getFloat(0, util::windowHeight - 100) },
+    m_radius{ 50.0f },
     m_color{ sf::Color::Magenta },
     m_isShown{ false }
 {
-    initializeSfSprite(); 
 }
 
-Circle::Circle(float centerX, float centerY, float radius, const sf::Color& color)
-    : m_centerX{ centerX },
-    m_centerY{ centerY },
+Circle::Circle(float topLeftX, float topLeftY, float radius, const sf::Color& color)
+    : m_topLeftX{ topLeftX },
+    m_topLeftY{ topLeftY },
     m_radius{ radius },
     m_color{ color },
     m_isShown{ false }
 {
-    initializeSfSprite();
 }
 
-Circle::Circle(float centerX, float centerY, float radius, 
+Circle::Circle(float topLeftX, float topLeftY, float radius,
         const std::array<int, 4>& colorComponents)
-    : m_centerX{ centerX },
-    m_centerY{ centerY },
+    : m_topLeftX{ topLeftX },
+    m_topLeftY{ topLeftY },
     m_radius{ radius },
     m_color{ sf::Color(colorComponents[component::red], colorComponents[component::green],
             colorComponents[component::blue], colorComponents[component::alpha]) },
     m_isShown{ false }
 {
-    initializeSfSprite(); 
 }
 
-void Circle::show()
+std::optional<sf::CircleShape> Circle::show(bool modifyVisibility)
 {
-    if (m_isShown)
+    if (modifyVisibility)
     {
-        m_isShown = false;
+        if (m_isShown)
+        {
+            m_isShown = false;
+
+            return std::nullopt;
+        }
+        else
+        {
+            m_isShown = true;
+
+            // make the sprite here instead of having it as a class member variable
+            sf::CircleShape circleSprite{};
+
+            circleSprite.setPosition(m_topLeftX, m_topLeftY);
+            circleSprite.setFillColor(m_color);
+            circleSprite.setRadius(m_radius);
+
+            return circleSprite;
+        }
     }
     else
     {
-        m_isShown = true;
+        if (m_isShown)
+        {
+            // make the sprite here instead of having it as a class member variable
+            sf::CircleShape circleSprite{};
+
+            circleSprite.setPosition(m_topLeftX, m_topLeftY);
+            circleSprite.setFillColor(m_color);
+            circleSprite.setRadius(m_radius);
+
+            return circleSprite;
+        }
+        else
+        {
+            return std::nullopt;
+        }
     }
 }
 
 void Circle::moveTo(float offsetX, float offsetY)
 {
-    m_centerX += offsetX;
-    m_centerY += offsetY;
+    if (m_isShown)
+    {
+        // modifies visibility, sets it to false
+        show();
 
-    updateSfSprite();
+        m_topLeftX += offsetX;
+        m_topLeftY += offsetY;
+
+        // modifies visibility again, sets it to true, creates a sprite
+        show();
+    }
 }
 
 void Circle::changeRadius(float radiusOffset)
 {
-    m_radius += radiusOffset;
-
-    if (m_radius < 0.0f)
+    if (m_isShown)
     {
-        m_radius = 0.0f;
+        // set visibility to false
+        show();
+
+        m_radius += radiusOffset;
+
+        if (m_radius < 0.0f)
+        {
+            m_radius = 0.0f;
+        }
+
+        // redraw the circle again, setting visibility to true
+        show();
     }
-
-    updateSfSprite();
-}
-
-sf::CircleShape Circle::getSprite() const
-{
-    return m_sprite;
 }
 
 bool Circle::isShown() const
 {
     return m_isShown;
-}
-
-void Circle::initializeSfSprite()
-{
-    m_sprite.setPosition(m_centerX, m_centerY);
-    m_sprite.setFillColor(m_color);
-    m_sprite.setRadius(m_radius);
-}
-
-void Circle::updateSfSprite()
-{
-    m_sprite.setPosition(m_centerX, m_centerY);
-    m_sprite.setRadius(m_radius);
 }

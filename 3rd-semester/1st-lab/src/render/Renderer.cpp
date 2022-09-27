@@ -10,7 +10,7 @@ void Renderer::renderShapes(std::array<std::unique_ptr<ShapeType>, 3> &shapesToR
     {
         if (shape.get() != nullptr && shape.get()->isShown())
         {
-            m_window.get().draw(shape.get()->getSprite());
+            m_window.get().draw(shape.get()->show(false).value());
         }
     }
 }
@@ -28,7 +28,7 @@ void Renderer::renderShapeArrays(VectorOfArrayOfShapePtrs<ShapeType>& arraysToRe
         {
             if (shape.get() != nullptr && shape.get()->isShown())
             {
-                m_window.get().draw(shape.get()->getSprite());
+                m_window.get().draw(shape.get()->show(false).value());
             }
         }
     }

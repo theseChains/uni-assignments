@@ -4,6 +4,7 @@
 #include <SFML/Graphics.hpp>
 
 #include <array>
+#include <optional>
 
 #include "../util.h"
 
@@ -15,20 +16,16 @@ public:
     Rectangle(float topLeftX, float topLeftY, float width, float height,
             const std::array<int, 4>& colorComponents);
 
-    void show();
+    std::optional<sf::RectangleShape> show(bool modifyVisibility = true);
 
     void moveTo(float offsetX, float offsetY);
 
     void changeWidth(float widthOffset);
     void changeHeight(float heightOffset);
-    
-    sf::RectangleShape getSprite() const;
 
     bool isShown() const;
 
 private:
-    sf::RectangleShape m_sprite{};
-
     float m_topLeftX{};
     float m_topLeftY{};
 
@@ -38,9 +35,6 @@ private:
     sf::Color m_color{};
 
     bool m_isShown{};
-
-    void initializeSfSprite();
-    void updateSfSprite();
 };
 
 #endif

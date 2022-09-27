@@ -9,7 +9,6 @@ Rectangle::Rectangle()
     m_color{ sf::Color::Magenta },
     m_isShown{ false }
 {
-    initializeSfSprite();
 }
 
 Rectangle::Rectangle(float topLeftX, float topLeftY, float width, float height,
@@ -21,7 +20,6 @@ Rectangle::Rectangle(float topLeftX, float topLeftY, float width, float height,
     m_color{ color },
     m_isShown{ false }
 {
-    initializeSfSprite();
 }
 
 Rectangle::Rectangle(float topLeftX, float topLeftY, float width, float height,
@@ -34,72 +32,84 @@ Rectangle::Rectangle(float topLeftX, float topLeftY, float width, float height,
             colorComponents[component::blue], colorComponents[component::alpha]) },
     m_isShown{ false }
 {
-    initializeSfSprite();
 }
 
-void Rectangle::show()
+std::optional<sf::RectangleShape> Rectangle::show(bool modifyVisibility)
 {
     if (m_isShown)
     {
-        m_isShown = false;
+        if (modifyVisibility)
+        {
+            m_isShown = false;
+        }
+
+        return std::nullopt;
     }
     else
     {
-        m_isShown = true;
+        if (modifyVisibility)
+        {
+            m_isShown = true;
+        }
+
+        sf::RectangleShape rectangleSprite{};
+
+        rectangleSprite.setPosition(m_topLeftX, m_topLeftY);
+        rectangleSprite.setFillColor(m_color);
+        rectangleSprite.setSize(sf::Vector2f{ m_width, m_height });
+
+        return rectangleSprite;
     }
 }
 
 void Rectangle::moveTo(float offsetX, float offsetY)
 {
-    m_topLeftX += offsetX;
-    m_topLeftY += offsetY;
+    if (m_isShown)
+    {
+        show();
 
-    updateSfSprite();
+        m_topLeftX += offsetX;
+        m_topLeftY += offsetY;
+
+        show();
+    }
 }
 
 void Rectangle::changeWidth(float widthOffset)
 {
-    m_width += widthOffset;
-
-    if (m_width < 0.0f)
+    if (m_isShown)
     {
-        m_width = 0.0f;
-    }
+        show();
 
-    updateSfSprite();
+        m_width += widthOffset;
+
+        if (m_width < 0.0f)
+        {
+            m_width = 0.0f;
+        }
+
+        show();
+    }
 }
 
 void Rectangle::changeHeight(float heightOffset)
 {
-    m_height += heightOffset;
-
-    if (m_height < 0.0f)
+    if (m_isShown)
     {
-        m_height = 0.0f;
+        show();
+
+        m_height += heightOffset;
+
+        if (m_height < 0.0f)
+        {
+            m_height = 0.0f;
+        }
+
+        show();
     }
-
-    updateSfSprite();
-}
-
-sf::RectangleShape Rectangle::getSprite() const
-{
-    return m_sprite;
 }
 
 bool Rectangle::isShown() const
 {
     return m_isShown;
-}
-
-void Rectangle::initializeSfSprite()
-{
-    m_sprite.setPosition(m_topLeftX, m_topLeftY);
-    m_sprite.setFillColor(m_color);
-    m_sprite.setSize(sf::Vector2f{ m_width, m_height });
-}
-
-void Rectangle::updateSfSprite()
-{
-    m_sprite.setPosition(m_topLeftX, m_topLeftY);
-    m_sprite.setSize(sf::Vector2f{ m_width, m_height });
 }

@@ -4,7 +4,7 @@
 #include <SFML/Graphics.hpp>
 
 #include <array>
-#include <vector>
+#include <optional>
 
 #include "../util.h"
 
@@ -15,30 +15,25 @@ public:
     Line(float mainPointX, float mainPointY, float length, const sf::Color& color);
     Line(float mainPointX, float mainPointY, float length, const std::array<int, 4>& colorComponents);
 
-    void show();
+    std::optional<sf::RectangleShape> show(bool modifyVisibility = true);
 
     void moveTo(float offsetX, float offsetY);
 
-    void rotate(float angle);
-
-    sf::RectangleShape getSprite() const;
+    void rotate(float angleOffset);
 
     bool isShown() const;
 
 private:
-    sf::RectangleShape m_sprite{};
-
     float m_mainPointX{};
     float m_mainPointY{};
 
     float m_length{};
 
     sf::Color m_color{};
+    
+    float m_angle{};
 
     bool m_isShown{};
-
-    void initializeSfSprite();
-    void updateSfSprite();
 };
 
 #endif

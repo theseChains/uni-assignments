@@ -6,9 +6,9 @@ Line::Line()
     m_mainPointY{ rnd::getFloat(0, util::windowHeight - 100) },
     m_length{ 100.0f },
     m_color{ sf::Color::Magenta },
+    m_angle{ 0.0f },
     m_isShown{ false }
 {
-    initializeSfSprite();
 }
 
 Line::Line(float mainPointX, float mainPointY, float length, const sf::Color& color)
@@ -16,9 +16,9 @@ Line::Line(float mainPointX, float mainPointY, float length, const sf::Color& co
     m_mainPointY{ mainPointY },
     m_length{ length },
     m_color{ color },
+    m_angle{ 0.0f },
     m_isShown{ false }
 {
-    initializeSfSprite();
 }
 
 Line::Line(float mainPointX, float mainPointY, float length, const std::array<int, 4>& colorComponents)
@@ -27,55 +27,66 @@ Line::Line(float mainPointX, float mainPointY, float length, const std::array<in
     m_length{ length },
     m_color{ sf::Color(colorComponents[component::red], colorComponents[component::green],
             colorComponents[component::blue], colorComponents[component::alpha]) },
+    m_angle{ 0.0f },
     m_isShown{ false }
 {
-    initializeSfSprite();
 }
 
-void Line::show()
+std::optional<sf::RectangleShape> Line::show(bool modifyVisibility)
 {
-    // hide if already shown
     if (m_isShown)
     {
-        m_isShown = false;
+        if (modifyVisibility)
+        {
+            m_isShown = false;
+        }
+
+        return std::nullopt;
     }
     else
     {
-        m_isShown = true;
+        if (modifyVisibility)
+        {
+            m_isShown = true;
+        }
+
+        sf::RectangleShape lineSprite{};
+
+        lineSprite.setPosition(m_mainPointX, m_mainPointY);
+        lineSprite.setFillColor(m_color);
+        lineSprite.setSize(sf::Vector2f{ m_length, util::lineWidth });
+        lineSprite.setRotation(m_angle);
+
+        return lineSprite;
     }
 }
 
 void Line::moveTo(float offsetX, float offsetY)
 {
-    m_mainPointX += offsetX;
-    m_mainPointY += offsetY;
+    if (m_isShown)
+    {
+        show(); // set visibility to false
 
-    updateSfSprite();
+        m_mainPointX += offsetX;
+        m_mainPointY += offsetY;
+
+        show();
+    }
 }
 
-void Line::rotate(float angle)
+void Line::rotate(float angleOffset)
 {
-    m_sprite.rotate(angle);
-}
+    if (m_isShown)
+    {
+        show();
 
-sf::RectangleShape Line::getSprite() const
-{
-    return m_sprite;
+        m_angle += angleOffset;
+
+        show();
+    }
 }
 
 bool Line::isShown() const
 {
     return m_isShown;
-}
-
-void Line::initializeSfSprite()
-{
-    m_sprite.setPosition(m_mainPointX, m_mainPointY);
-    m_sprite.setFillColor(m_color);
-    m_sprite.setSize(sf::Vector2f{ m_length, util::lineWidth });
-}
-
-void Line::updateSfSprite()
-{
-    m_sprite.setPosition(m_mainPointX, m_mainPointY);
 }

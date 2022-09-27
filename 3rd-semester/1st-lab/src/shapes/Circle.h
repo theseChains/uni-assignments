@@ -4,6 +4,7 @@
 #include <SFML/Graphics.hpp>
 
 #include <array>
+#include <optional>
 
 #include "../util.h"
 
@@ -11,33 +12,26 @@ class Circle
 {
 public:
     Circle();
-    Circle(float centerX, float centerY, float radius, const sf::Color& color);
-    Circle(float centerX, float centerY, float radius, const std::array<int, 4>& colorComponents);
+    Circle(float topLeftX, float topLeftY, float radius, const sf::Color& color);
+    Circle(float topLeftX, float topLeftY, float radius, const std::array<int, 4>& colorComponents);
 
-    void show();
+    std::optional<sf::CircleShape> show(bool modifyVisibility = true);
 
     void moveTo(float offsetX, float offsetY);
 
     void changeRadius(float radiusOffset);
 
-    sf::CircleShape getSprite() const;
-
     bool isShown() const;
 
 private:
-    sf::CircleShape m_sprite{};
-
-    float m_centerX{};
-    float m_centerY{};
+    float m_topLeftX{};
+    float m_topLeftY{};
 
     float m_radius{};
 
     sf::Color m_color{};
 
     bool m_isShown{};
-
-    void initializeSfSprite();
-    void updateSfSprite();
 };
 
 #endif

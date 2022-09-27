@@ -4,6 +4,7 @@
 #include <SFML/Graphics.hpp>
 
 #include <array>
+#include <iostream>
 #include <optional>
 
 #include "../util.h"
@@ -26,13 +27,17 @@ public:
     bool isShown() const;
 
 private:
-    Vertex vertex{};
+    Vertex m_vertex{};
 
     float m_radius{};
 
     sf::Color m_color{};
 
     bool m_isShown{};
+
+    // auxiliary
+    sf::CircleShape createSprite();
+    void checkForBounds();
 };
 
 #endif

@@ -2,7 +2,7 @@
 
 // default constructor, initialized with arbitrary values
 Circle::Circle()
-    : vertex{ rnd::getFloat(util::guiWidth, util::windowWidth - 100),
+    : m_vertex{ rnd::getFloat(util::guiWidth, util::windowWidth - 100),
         rnd::getFloat(0, util::windowHeight - 100) },
     m_radius{ 50.0f },
     m_color{ sf::Color::Magenta },
@@ -11,23 +11,27 @@ Circle::Circle()
 }
 
 Circle::Circle(float topLeftX, float topLeftY, float radius, const sf::Color& color)
-    : vertex{ rnd::getFloat(util::guiWidth, util::windowWidth - 100),
-        rnd::getFloat(0, util::windowHeight - 100) },
+    : m_vertex{ topLeftX, topLeftY },
     m_radius{ radius },
     m_color{ color },
     m_isShown{ false }
 {
+    checkForBounds();
+
+    std::cout << "Circle object created\n";
 }
 
 Circle::Circle(float topLeftX, float topLeftY, float radius,
         const std::array<int, 4>& colorComponents)
-    : vertex{ rnd::getFloat(util::guiWidth, util::windowWidth - 100),
-        rnd::getFloat(0, util::windowHeight - 100) },
+    : m_vertex{ topLeftX, topLeftY },
     m_radius{ radius },
     m_color{ sf::Color(colorComponents[component::red], colorComponents[component::green],
             colorComponents[component::blue], colorComponents[component::alpha]) },
     m_isShown{ false }
 {
+    checkForBounds();
+
+    std::cout << "Circle object created\n";
 }
 
 std::optional<sf::CircleShape> Circle::show(bool modifyVisibility)
@@ -44,13 +48,7 @@ std::optional<sf::CircleShape> Circle::show(bool modifyVisibility)
         {
             m_isShown = true;
 
-            sf::CircleShape circleSprite{};
-
-            circleSprite.setPosition(vertex.getX(), vertex.getY());
-            circleSprite.setFillColor(m_color);
-            circleSprite.setRadius(m_radius);
-
-            return circleSprite;
+            return sf::CircleShape{ createSprite() };
         }
     }
     // for rendering
@@ -58,13 +56,7 @@ std::optional<sf::CircleShape> Circle::show(bool modifyVisibility)
     {
         if (m_isShown)
         {
-            sf::CircleShape circleSprite{};
-
-            circleSprite.setPosition(vertex.getX(), vertex.getY());
-            circleSprite.setFillColor(m_color);
-            circleSprite.setRadius(m_radius);
-
-            return circleSprite;
+            return sf::CircleShape{ createSprite() };
         }
         else
         {
@@ -79,8 +71,8 @@ void Circle::moveTo(float offsetX, float offsetY)
     {
         show();
 
-        vertex.setX(vertex.getX() + offsetX);
-        vertex.setY(vertex.getY() + offsetY);
+        m_vertex.setX(m_vertex.getX() + offsetX);
+        m_vertex.setY(m_vertex.getY() + offsetY);
 
         show();
     }
@@ -106,4 +98,30 @@ void Circle::changeRadius(float radiusOffset)
 bool Circle::isShown() const
 {
     return m_isShown;
+}
+
+sf::CircleShape Circle::createSprite()
+{
+    sf::CircleShape circleSprite{};
+
+    circleSprite.setPosition(m_vertex.getX(), m_vertex.getY());
+    circleSprite.setFillColor(m_color);
+    circleSprite.setRadius(m_radius);
+
+    return circleSprite;
+}
+
+void Circle::checkForBounds()
+{
+    float farRightX{ m_vertex.getX() + m_radius * 2.0f };
+    if (farRightX > static_cast<float>(util::windowWidth))
+    {
+        m_vertex.setX(m_vertex.getX() - (farRightX - static_cast<float>(util::windowWidth)));
+    }
+
+    float farDownY{ m_vertex.getY() + m_radius * 2.0f };
+    if (farDownY > static_cast<float>(util::windowHeight))
+    {
+        m_vertex.setY(m_vertex.getY() - (farDownY - static_cast<float>(util::windowHeight)));
+    }
 }

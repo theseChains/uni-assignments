@@ -2,8 +2,8 @@
 
 // default constructor, initialized with arbitrary values
 Circle::Circle()
-    : m_topLeftX{ rnd::getFloat(util::guiWidth, util::windowWidth - 100) },
-    m_topLeftY{ rnd::getFloat(0, util::windowHeight - 100) },
+    : vertex{ rnd::getFloat(util::guiWidth, util::windowWidth - 100),
+        rnd::getFloat(0, util::windowHeight - 100) },
     m_radius{ 50.0f },
     m_color{ sf::Color::Magenta },
     m_isShown{ false }
@@ -11,8 +11,8 @@ Circle::Circle()
 }
 
 Circle::Circle(float topLeftX, float topLeftY, float radius, const sf::Color& color)
-    : m_topLeftX{ topLeftX },
-    m_topLeftY{ topLeftY },
+    : vertex{ rnd::getFloat(util::guiWidth, util::windowWidth - 100),
+        rnd::getFloat(0, util::windowHeight - 100) },
     m_radius{ radius },
     m_color{ color },
     m_isShown{ false }
@@ -21,8 +21,8 @@ Circle::Circle(float topLeftX, float topLeftY, float radius, const sf::Color& co
 
 Circle::Circle(float topLeftX, float topLeftY, float radius,
         const std::array<int, 4>& colorComponents)
-    : m_topLeftX{ topLeftX },
-    m_topLeftY{ topLeftY },
+    : vertex{ rnd::getFloat(util::guiWidth, util::windowWidth - 100),
+        rnd::getFloat(0, util::windowHeight - 100) },
     m_radius{ radius },
     m_color{ sf::Color(colorComponents[component::red], colorComponents[component::green],
             colorComponents[component::blue], colorComponents[component::alpha]) },
@@ -46,7 +46,7 @@ std::optional<sf::CircleShape> Circle::show(bool modifyVisibility)
 
             sf::CircleShape circleSprite{};
 
-            circleSprite.setPosition(m_topLeftX, m_topLeftY);
+            circleSprite.setPosition(vertex.getX(), vertex.getY());
             circleSprite.setFillColor(m_color);
             circleSprite.setRadius(m_radius);
 
@@ -60,7 +60,7 @@ std::optional<sf::CircleShape> Circle::show(bool modifyVisibility)
         {
             sf::CircleShape circleSprite{};
 
-            circleSprite.setPosition(m_topLeftX, m_topLeftY);
+            circleSprite.setPosition(vertex.getX(), vertex.getY());
             circleSprite.setFillColor(m_color);
             circleSprite.setRadius(m_radius);
 
@@ -79,8 +79,8 @@ void Circle::moveTo(float offsetX, float offsetY)
     {
         show();
 
-        m_topLeftX += offsetX;
-        m_topLeftY += offsetY;
+        vertex.setX(vertex.getX() + offsetX);
+        vertex.setY(vertex.getY() + offsetY);
 
         show();
     }

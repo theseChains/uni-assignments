@@ -8,6 +8,8 @@
 
 #include "../util.h"
 
+#include "Vertex.h"
+
 class Circle
 {
 public:
@@ -24,8 +26,7 @@ public:
     bool isShown() const;
 
 private:
-    float m_topLeftX{};
-    float m_topLeftY{};
+    Vertex vertex{};
 
     float m_radius{};
 

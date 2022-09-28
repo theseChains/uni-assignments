@@ -116,6 +116,22 @@ sf::Color Circle::getColor() const
     return m_color;
 }
 
+void Circle::setPosition(float newX, float newY)
+{
+    m_vertex.setX(newX);
+    m_vertex.setY(newY);
+}
+
+void Circle::setColor(const sf::Color& color)
+{
+    m_color = color;
+}
+
+void Circle::setRadius(float newRadius)
+{
+    m_radius = newRadius;
+}
+
 sf::CircleShape Circle::createSprite() const
 {
     sf::CircleShape circleSprite{};

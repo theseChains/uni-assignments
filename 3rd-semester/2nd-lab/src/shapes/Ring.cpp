@@ -2,32 +2,18 @@
 
 Ring::Ring() : m_outerCircle{ Circle{} }
 {
-    std::cout << "default ring constructor, outer circle initialized\n";
     // initialize inner circle here in case outer circle changes its coordinates
-    float mainPointOffset{ m_outerCircle.getRadius() - m_outerCircle.getRadius() *
-        util::innerCircleRadiusMultiplier };
-    float innerCircleX{ m_outerCircle.getPosition().getX() + mainPointOffset };
-    float innerCircleY{ m_outerCircle.getPosition().getY() + mainPointOffset };
+    initializeInnerCircle();
 
-    m_innerCircle = Circle{ innerCircleX, innerCircleY, m_outerCircle.getRadius() *
-        util::innerCircleRadiusMultiplier, sf::Color::Black };
-    std::cout << "default ring constructor, inner circle initialized\n";
-
-    std::cout << "Ring object created\n";
+    std::cout << "Ring object created\n\n";
 }
 
 Ring::Ring(float topLeftX, float topLeftY, float radius, const sf::Color& color)
     : m_outerCircle{ Circle{ topLeftX, topLeftY, radius, color } }
 {
-    float mainPointOffset{ m_outerCircle.getRadius() - m_outerCircle.getRadius() *
-        util::innerCircleRadiusMultiplier };
-    float innerCircleX{ m_outerCircle.getPosition().getX() + mainPointOffset };
-    float innerCircleY{ m_outerCircle.getPosition().getY() + mainPointOffset };
+    initializeInnerCircle();
 
-    m_innerCircle = Circle{ innerCircleX, innerCircleY, m_outerCircle.getRadius() *
-        util::innerCircleRadiusMultiplier, sf::Color::Black };
-
-    std::cout << "Ring object created\n";
+    std::cout << "Ring object created\n\n";
 }
 
 Ring::Ring(float topLeftX, float topLeftY, float radius, const std::array<int, 4>& colorComponents)
@@ -35,15 +21,9 @@ Ring::Ring(float topLeftX, float topLeftY, float radius, const std::array<int, 4
             colorComponents[component::green], colorComponents[component::blue],
             colorComponents[component::alpha]) } }
 {
-    float mainPointOffset{ m_outerCircle.getRadius() - m_outerCircle.getRadius() *
-        util::innerCircleRadiusMultiplier };
-    float innerCircleX{ m_outerCircle.getPosition().getX() + mainPointOffset };
-    float innerCircleY{ m_outerCircle.getPosition().getY() + mainPointOffset };
+    initializeInnerCircle();
 
-    m_innerCircle = Circle{ innerCircleX, innerCircleY, m_outerCircle.getRadius() *
-        util::innerCircleRadiusMultiplier, sf::Color::Black };
-
-    std::cout << "Ring object created\n";
+    std::cout << "Ring object created\n\n";
 }
 
 Ring::OptCircles Ring::show(bool modifyVisibility)
@@ -82,11 +62,10 @@ void Ring::moveTo(float offsetX, float offsetY)
     {
         show();
 
-        m_outerCircle.getPosition().setX(m_outerCircle.getPosition().getX() + offsetX);
-        m_outerCircle.getPosition().setY(m_outerCircle.getPosition().getY() + offsetY);
-
-        m_innerCircle.getPosition().setX(m_innerCircle.getPosition().getX() + offsetX);
-        m_innerCircle.getPosition().setY(m_innerCircle.getPosition().getY() + offsetY);
+        m_outerCircle.setPosition(m_outerCircle.getPosition().getX() + offsetX,
+                m_outerCircle.getPosition().getY() + offsetY);
+        m_innerCircle.setPosition(m_innerCircle.getPosition().getX() + offsetX,
+                m_innerCircle.getPosition().getY() + offsetY);
 
         show();
     }
@@ -95,6 +74,18 @@ void Ring::moveTo(float offsetX, float offsetY)
 bool Ring::isShown() const
 {
     return m_isShown;
+}
+
+void Ring::initializeInnerCircle()
+{
+    float mainPointOffset{ m_outerCircle.getRadius() - m_outerCircle.getRadius() *
+        util::innerCircleRadiusMultiplier };
+    float innerCircleX{ m_outerCircle.getPosition().getX() + mainPointOffset };
+    float innerCircleY{ m_outerCircle.getPosition().getY() + mainPointOffset };
+
+    m_innerCircle.setPosition(innerCircleX, innerCircleY);
+    m_innerCircle.setColor(sf::Color::Black);
+    m_innerCircle.setRadius(m_outerCircle.getRadius() * util::innerCircleRadiusMultiplier);
 }
 
 sf::CircleShape Ring::createOuterCircleSprite() const

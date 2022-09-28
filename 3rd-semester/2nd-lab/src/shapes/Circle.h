@@ -30,6 +30,10 @@ public:
     float getRadius() const;
     sf::Color getColor() const;
 
+    void setPosition(float newX, float newY);
+    void setColor(const sf::Color& color);
+    void setRadius(float newRadius);
+
 private:
     Vertex m_vertex{};
 

@@ -35,6 +35,7 @@ private:
     bool m_isShown{};
 
     // auxiliary
+    void initializeInnerCircle();
     sf::CircleShape createOuterCircleSprite() const;
     sf::CircleShape createInnerCircleSprite() const;
 };

@@ -19,7 +19,7 @@ Line::Line(float mainPointX, float mainPointY, float length, const sf::Color& co
     m_isShown{ false }
 {
     checkForBounds();
-    
+
     std::cout << "Line object created\n";
 }
 

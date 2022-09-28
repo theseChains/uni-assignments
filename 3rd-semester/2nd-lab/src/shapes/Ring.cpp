@@ -4,7 +4,7 @@ Ring::Ring() : m_outerCircle{ Circle{} }
 {
     // initialize inner circle here in case outer circle changes its coordinates
     m_innerCircle = Circle{ m_outerCircle.getPosition().getX(), m_outerCircle.getPosition().getY(),
-        m_outerCircle.getRadius() * util::innerCircleRadiusMultiplier, sf::Color::Transparent };
+        m_outerCircle.getRadius() * util::innerCircleRadiusMultiplier, sf::Color::Black };
 
     std::cout << "Ring object created\n";
 }
@@ -13,7 +13,7 @@ Ring::Ring(float topLeftX, float topLeftY, float radius, const sf::Color& color)
     : m_outerCircle{ Circle{ topLeftX, topLeftY, radius, color } }
 {
     m_innerCircle = Circle{ m_outerCircle.getPosition().getX(), m_outerCircle.getPosition().getY(),
-        radius * util::innerCircleRadiusMultiplier, sf::Color::Transparent };
+        radius * util::innerCircleRadiusMultiplier, sf::Color::Black };
 
     std::cout << "Ring object created\n";
 }
@@ -24,7 +24,7 @@ Ring::Ring(float topLeftX, float topLeftY, float radius, const std::array<int, 4
             colorComponents[component::alpha]) } }
 {
     m_innerCircle = Circle{ m_outerCircle.getPosition().getX(), m_outerCircle.getPosition().getY(),
-        radius * util::innerCircleRadiusMultiplier, sf::Color::Transparent };
+        radius * util::innerCircleRadiusMultiplier, sf::Color::Black };
     std::cout << "Ring object created\n";
 }
 

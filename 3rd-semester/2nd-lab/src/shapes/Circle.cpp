@@ -8,6 +8,7 @@ Circle::Circle()
     m_color{ sf::Color::Magenta },
     m_isShown{ false }
 {
+    std::cout << "Circle object created\n";
 }
 
 Circle::Circle(float topLeftX, float topLeftY, float radius, const sf::Color& color)

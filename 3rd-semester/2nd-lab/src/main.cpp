@@ -73,6 +73,7 @@ int main()
                 handleCircleEvents(circlesToRender);
                 handleRectangleEvents(rectanglesToRender);
                 handleLineEvents(linesToRender);
+                handleRingEvents(ringsToRender);
 
                 handleCircleArrayEvents(circleArrays);
                 handleRectangleArrayEvents(rectangleArrays);
@@ -99,6 +100,7 @@ int main()
         renderer.renderShapes(circlesToRender);
         renderer.renderShapes(rectanglesToRender);
         renderer.renderShapes(linesToRender);
+        renderer.renderRings(ringsToRender);
 
         renderer.renderShapeArrays(circleArrays);
         renderer.renderShapeArrays(rectangleArrays);

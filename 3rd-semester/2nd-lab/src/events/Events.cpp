@@ -30,6 +30,14 @@ void handleLineEvents(std::array<std::unique_ptr<Line>, 3>& linesToRender)
     }
 }
 
+void handleRingEvents(std::array<std::unique_ptr<Ring>, 3>& ringsToRender)
+{
+    if (mode::rings)
+    {
+        Creation::checkForShapeCreation(ringsToRender);
+    }
+}
+
 void handleCircleArrayEvents(VectorOfArrayOfCirclePtrs& circleArraysToRender)
 {
     if (mode::circles)

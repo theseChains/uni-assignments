@@ -89,10 +89,12 @@ int main()
         guiHandleCircleArrayCreation(circleArrays);
         guiHandleRectangleArrayCreation(rectangleArrays);
         guiHandleLineArrayCreation(lineArrays);
+        guiHandleRingArrayCreation(ringArrays);
 
         guiHandleCircleEvents(circlesToRender, circleArrays);
         guiHandleRectangleEvents(rectanglesToRender, rectangleArrays);
         guiHandleLineEvents(linesToRender, lineArrays);
+        guiHandleRingEvents(ringsToRender, ringArrays);
 
         ImGui::End();
 

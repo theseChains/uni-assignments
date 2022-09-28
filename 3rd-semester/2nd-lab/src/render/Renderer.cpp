@@ -25,7 +25,7 @@ void Renderer::renderRings(std::array<std::unique_ptr<Ring>, 3>& ringsToRender)
     {
         if (ring.get() != nullptr && ring.get()->isShown())
         {
-            m_window.get().draw(ring.get()->show(false).outerCircle.value()); 
+            m_window.get().draw(ring.get()->show(false).outerCircle.value());
             m_window.get().draw(ring.get()->show(false).innerCircle.value());
         }
     }

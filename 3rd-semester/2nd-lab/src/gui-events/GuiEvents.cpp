@@ -6,7 +6,7 @@ void guiHandleCircleEvents(std::array<std::unique_ptr<Circle>, 3>& circlesToRend
     if (mode::circles)
     {
         GuiCreation::checkForShapeCreation(circlesToRender);
-        guiCheckForCircleModification(circlesToRender, circleArraysToRender);
+        guiCheckForCircularShapeModification(circlesToRender, circleArraysToRender);
         guiCheckForShapeMovement(circlesToRender, circleArraysToRender);
     }
 }
@@ -29,7 +29,18 @@ void guiHandleLineEvents(std::array<std::unique_ptr<Line>, 3>& linesToRender,
     {
         GuiCreation::checkForShapeCreation(linesToRender);
         guiCheckForLineModification(linesToRender, lineArraysToRender);
-        guiCheckForShapeMovement(linesToRender, lineArraysToRender); 
+        guiCheckForShapeMovement(linesToRender, lineArraysToRender);
+    }
+}
+
+void guiHandleRingEvents(std::array<std::unique_ptr<Ring>, 3>& ringsToRender,
+        VectorOfArrayOfRingPtrs& ringArraysToRender)
+{
+    if (mode::rings)
+    {
+        GuiCreation::checkForShapeCreation(ringsToRender);
+        guiCheckForCircularShapeModification(ringsToRender, ringArraysToRender);
+        guiCheckForShapeMovement(ringsToRender, ringArraysToRender); 
     }
 }
 
@@ -54,5 +65,13 @@ void guiHandleLineArrayCreation(VectorOfArrayOfLinePtrs& lineArraysToRender)
     if (mode::lines)
     {
         GuiArrayCreation::checkForShapeArrayCreation(lineArraysToRender);
+    }
+}
+
+void guiHandleRingArrayCreation(VectorOfArrayOfRingPtrs& ringArraysToRender)
+{
+    if (mode::rings)
+    {
+        GuiArrayCreation::checkForShapeArrayCreation(ringArraysToRender);
     }
 }

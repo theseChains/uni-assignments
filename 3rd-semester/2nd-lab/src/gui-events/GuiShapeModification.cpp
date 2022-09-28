@@ -1,27 +1,33 @@
 #include "GuiShapeModification.h"
 
-void guiCheckForCircleModification(std::array<std::unique_ptr<Circle>, 3>& circlesToRender,
-        VectorOfArrayOfCirclePtrs& circleArraysToRender)
+template <typename CircularShape>
+void guiCheckForCircularShapeModification(std::array<std::unique_ptr<CircularShape>, 3>& shapesToRender,
+       VectorOfArrayOfCircularShapePtrs<CircularShape>& shapeArraysToRender)
 {
-    if (ImGui::Button("Enlarge circles (O)"))
+    if (ImGui::Button("Enlarge rings (O)"))
     {
-        Modification::enlargeCircles(circlesToRender);
+        Modification::enlargeCircles(shapesToRender);
 
-        for (auto& circleArray : circleArraysToRender)
+        for (auto& shapeArray : shapeArraysToRender)
         {
-            Modification::enlargeCircles(circleArray);
+            Modification::enlargeCircles(shapeArray);
         }
     }
-    if (ImGui::Button("Reduce circles (I)"))
+    if (ImGui::Button("Reduce rings (I)"))
     {
-        Modification::reduceCircles(circlesToRender);
+        Modification::reduceCircles(shapesToRender);
 
-        for (auto& circleArray : circleArraysToRender)
+        for (auto& shapeArray : shapeArraysToRender)
         {
-            Modification::reduceCircles(circleArray);
+            Modification::reduceCircles(shapeArray);
         }
     }
 }
+
+template void guiCheckForCircularShapeModification(std::array<std::unique_ptr<Circle>, 3>&,
+        VectorOfArrayOfCirclePtrs&);
+template void guiCheckForCircularShapeModification(std::array<std::unique_ptr<Ring>, 3>&,
+        VectorOfArrayOfRingPtrs&);
 
 void guiCheckForRectangleModification(std::array<std::unique_ptr<Rectangle>, 3>& rectanglesToRender,
         VectorOfArrayOfRectanglePtrs& rectangleArraysToRender)

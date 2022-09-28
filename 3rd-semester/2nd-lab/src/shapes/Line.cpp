@@ -9,6 +9,7 @@ Line::Line()
     m_angle{ 0.0f },
     m_isShown{ false }
 {
+    std::cout << "Line object created\n";
 }
 
 Line::Line(float mainPointX, float mainPointY, float length, const sf::Color& color)

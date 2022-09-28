@@ -16,6 +16,7 @@
 #include "../shapes/Circle.h"
 #include "../shapes/Rectangle.h"
 #include "../shapes/Line.h"
+#include "../shapes/Ring.h"
 
 #include "GuiShapeCreation.h"
 #include "GuiShapeArrayCreation.h"
@@ -28,9 +29,12 @@ void guiHandleRectangleEvents(std::array<std::unique_ptr<Rectangle>, 3>& rectang
         VectorOfArrayOfRectanglePtrs& rectangleArraysToRender);
 void guiHandleLineEvents(std::array<std::unique_ptr<Line>, 3>& linesToRender,
         VectorOfArrayOfLinePtrs& lineArraysToRender);
+void guiHandleRingEvents(std::array<std::unique_ptr<Ring>, 3>& ringsToRender,
+        VectorOfArrayOfRingPtrs& ringArraysToRender);
 
-void guiHandleCircleArrayCreation(VectorOfArrayOfCirclePtrs& circelArraysToRender);
+void guiHandleCircleArrayCreation(VectorOfArrayOfCirclePtrs& circleArraysToRender);
 void guiHandleRectangleArrayCreation(VectorOfArrayOfRectanglePtrs& rectangleArraysToRender);
 void guiHandleLineArrayCreation(VectorOfArrayOfLinePtrs& lineArraysToRender);
+void guiHandleRingArrayCreation(VectorOfArrayOfRingPtrs& ringArraysToRender);
 
 #endif

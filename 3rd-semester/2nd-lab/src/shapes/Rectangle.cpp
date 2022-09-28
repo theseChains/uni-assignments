@@ -9,6 +9,7 @@ Rectangle::Rectangle()
     m_color{ sf::Color::Magenta },
     m_isShown{ false }
 {
+    std::cout << "Rectangle object created\n";
 }
 
 Rectangle::Rectangle(float topLeftX, float topLeftY, float width, float height,

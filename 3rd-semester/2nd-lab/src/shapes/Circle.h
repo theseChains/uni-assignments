@@ -26,6 +26,10 @@ public:
 
     bool isShown() const;
 
+    Vertex getPosition() const;
+    float getRadius() const;
+    sf::Color getColor() const;
+
 private:
     Vertex m_vertex{};
 

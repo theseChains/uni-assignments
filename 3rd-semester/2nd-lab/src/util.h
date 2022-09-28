@@ -16,6 +16,8 @@ namespace util
     inline constexpr int defaultShapeIndex{ 0 };
     inline constexpr int firstConstructorShapeIndex{ 1 };
     inline constexpr int secondConstructorShapeIndex{ 2 };
+
+    inline constexpr float innerCircleRadiusMultiplier{ 0.75 };
 }
 
 namespace component
@@ -41,6 +43,7 @@ namespace mode
     inline bool circles{ true };
     inline bool rectangles{ false };
     inline bool lines{ false };
+    inline bool rings{ false };
 
     void shift();
 

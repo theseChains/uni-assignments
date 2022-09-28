@@ -16,6 +16,7 @@
 #include "shapes/Circle.h"
 #include "shapes/Rectangle.h"
 #include "shapes/Line.h"
+#include "shapes/Ring.h"
 
 #include "render/Renderer.h"
 
@@ -37,10 +38,12 @@ int main()
     std::array<std::unique_ptr<Circle>, 3> circlesToRender{};
     std::array<std::unique_ptr<Rectangle>, 3> rectanglesToRender{};
     std::array<std::unique_ptr<Line>, 3> linesToRender{};
+    std::array<std::unique_ptr<Ring>, 3> ringsToRender{};
 
     VectorOfArrayOfCirclePtrs circleArrays{};
     VectorOfArrayOfRectanglePtrs rectangleArrays{};
     VectorOfArrayOfLinePtrs lineArrays{};
+    VectorOfArrayOfRingPtrs ringArrays{};
 
     sf::Clock deltaClock{};
     while (window.isOpen())

@@ -12,9 +12,9 @@
 class Ring
 {
 public:
-    Ring() = default;
-    Ring(const Circle& outerCircle);
-    Ring(const Circle& outerCircle, const Circle& innerCircle);
+    Ring();
+    Ring(float topLeftX, float topLeftY, float radius, const sf::Color& color);
+    Ring(float topLeftX, float topLeftY, float radius, const std::array<int, 4>& colorComponents);
 
     struct OptCircles
     {
@@ -33,6 +33,10 @@ private:
     Circle m_innerCircle{};
 
     bool m_isShown{};
+
+    // auxiliary
+    sf::CircleShape createOuterCircleSprite() const;
+    sf::CircleShape createInnerCircleSprite() const;
 };
 
 #endif

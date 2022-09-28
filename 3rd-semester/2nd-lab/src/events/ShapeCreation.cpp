@@ -64,6 +64,37 @@ void Creation::checkForRectangleShapeCreation(std::array<std::unique_ptr<Rectang
     }
 }
 
+// Ring shape creation
+void Creation::checkForRingShapeCreation(std::array<std::unique_ptr<Ring>, 3>& ringsToRender)
+{
+    // no default constructor for this one, so the indices are a bit misleading
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::F))
+    {
+        handleFirstRingCreation(ringsToRender[util::defaultShapeIndex]);
+    }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::C))
+    {
+        handleSecondRingCreation(ringsToRender[util::firstConstructorShapeIndex]);
+    }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::V))
+    {
+        hanldeThirdRingCreation(ringsToRender[util::secondConstructorShapeIndex]);
+    }
+    // deletion
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::G))
+    {
+        hideAndDeleteShape(ringsToRender[util::defaultShapeIndex]);
+    }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Y))
+    {
+        hideAndDeleteShape(ringsToRender[util::firstConstructorShapeIndex]);
+    }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::H))
+    {
+        hideAndDeleteShape(ringsToRender[util::secondConstructorShapeIndex]);
+    }
+}
+
 // Line and Circle shape creation auxiliary functions and structs
 struct Dimensions
 {

@@ -100,6 +100,21 @@ bool Circle::isShown() const
     return m_isShown;
 }
 
+Vertex Circle::getPosition() const
+{
+    return m_vertex;
+}
+
+float Circle::getRadius() const
+{
+    return m_radius;
+}
+
+sf::Color Circle::getColor() const
+{
+    return m_color;
+}
+
 sf::CircleShape Circle::createSprite() const
 {
     sf::CircleShape circleSprite{};

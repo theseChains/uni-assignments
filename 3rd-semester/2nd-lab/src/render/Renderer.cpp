@@ -43,3 +43,11 @@ void Renderer::renderShapeArrays(VectorOfArrayOfShapePtrs<ShapeType>& arraysToRe
 template void Renderer::renderShapeArrays(VectorOfArrayOfCirclePtrs&);
 template void Renderer::renderShapeArrays(VectorOfArrayOfRectanglePtrs&);
 template void Renderer::renderShapeArrays(VectorOfArrayOfLinePtrs&);
+
+void Renderer::renderRingArrays(VectorOfArrayOfRingPtrs& ringArraysToRender)
+{
+    for (auto& ringArray : ringArraysToRender)
+    {
+        renderRings(ringArray);
+    }
+}

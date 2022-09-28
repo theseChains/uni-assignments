@@ -1,58 +1,70 @@
 #include "ShapeModification.h"
 
-void checkForCircleModification(std::array<std::unique_ptr<Circle>, 3>& circlesToRender)
+template <typename CircularShape>
+void Modification::checkForCircularShapeModification(
+        std::array<std::unique_ptr<CircularShape>, 3>& shapesToRender)
 {
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::O))
     {
-        enlargeCircles(circlesToRender);
+        Modification::enlargeCircles(shapesToRender);
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::I))
     {
-        reduceCircles(circlesToRender);
+        Modification::reduceCircles(shapesToRender);
     }
 }
 
-void checkForRectangleModification(std::array<std::unique_ptr<Rectangle>, 3>& rectanglesToRender)
+template void Modification::checkForCircularShapeModification(std::array<std::unique_ptr<Circle>, 3>&);
+template void Modification::checkForCircularShapeModification(std::array<std::unique_ptr<Ring>, 3>&);
+
+void Modification::checkForRectangleModification(
+        std::array<std::unique_ptr<Rectangle>, 3>& rectanglesToRender)
 {
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
     {
-        reduceHeightOfRectangles(rectanglesToRender);
+        Modification::reduceHeightOfRectangles(rectanglesToRender);
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
     {
-        reduceWidthOfRectangles(rectanglesToRender);
+        Modification::reduceWidthOfRectangles(rectanglesToRender);
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
     {
-        increaseHeightOfRectangles(rectanglesToRender);
+        Modification::increaseHeightOfRectangles(rectanglesToRender);
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
     {
-        increaseWidthOfRectangles(rectanglesToRender);
+        Modification::increaseWidthOfRectangles(rectanglesToRender);
     }
 }
 
-void checkForLineModification(std::array<std::unique_ptr<Line>, 3>& linesToRender)
+void Modification::checkForLineModification(std::array<std::unique_ptr<Line>, 3>& linesToRender)
 {
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::R))
     {
-        rotateLinesClockwise(linesToRender);
+        Modification::rotateLinesClockwise(linesToRender);
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::T))
     {
-        rotateLinesCounterClockwise(linesToRender);
+        Modification::rotateLinesCounterClockwise(linesToRender);
     }
 }
 
-void checkForCircleArrayModification(VectorOfArrayOfCirclePtrs& circleArraysToRender)
+template <typename CircularShape>
+void Modification::checkForCircularShapeArrayModification(
+        VectorOfArrayOfCircularShapePtrs<CircularShape>& shapeArraysToRender)
 {
-    for (auto& circleArray : circleArraysToRender)
+    for (auto& shapeArray : shapeArraysToRender)
     {
-        checkForCircleModification(circleArray);
+        checkForCircularShapeModification(shapeArray);
     }
 }
 
-void checkForRectangleArrayModification(VectorOfArrayOfRectanglePtrs& rectangleArraysToRender)
+template void Modification::checkForCircularShapeArrayModification(VectorOfArrayOfCirclePtrs&);
+template void Modification::checkForCircularShapeArrayModification(VectorOfArrayOfRingPtrs&);
+
+void Modification::checkForRectangleArrayModification(
+        VectorOfArrayOfRectanglePtrs& rectangleArraysToRender)
 {
     for (auto& rectangleArray : rectangleArraysToRender)
     {
@@ -60,7 +72,7 @@ void checkForRectangleArrayModification(VectorOfArrayOfRectanglePtrs& rectangleA
     }
 }
 
-void checkForLineArrayModification(VectorOfArrayOfLinePtrs& lineArraysToRender)
+void Modification::checkForLineArrayModification(VectorOfArrayOfLinePtrs& lineArraysToRender)
 {
     for (auto& lineArray : lineArraysToRender)
     {
@@ -69,30 +81,33 @@ void checkForLineArrayModification(VectorOfArrayOfLinePtrs& lineArraysToRender)
 }
 
 // circle modification
-void enlargeCircles(std::array<std::unique_ptr<Circle>, 3>& circlesToRender)
+template <typename CircularShape>
+void Modification::enlargeCircles(std::array<std::unique_ptr<CircularShape>, 3>& shapesToRender)
 {
-    for (const auto& circle : circlesToRender)
+    for (const auto& shape : shapesToRender)
     {
-        if (circle.get() != nullptr)
+        if (shape.get() != nullptr)
         {
-            circle->changeRadius(2.0f);
+            shape->changeRadius(2.0f);
         }
     }
 }
 
-void reduceCircles(std::array<std::unique_ptr<Circle>, 3>& circlesToRender)
+template <typename CircularShape>
+void Modification::reduceCircles(std::array<std::unique_ptr<CircularShape>, 3>& shapesToRender)
 {
-    for (const auto& circle : circlesToRender)
+    for (const auto& shape : shapesToRender)
     {
-        if (circle.get() != nullptr)
+        if (shape.get() != nullptr)
         {
-            circle->changeRadius(-2.0f);
+            shape->changeRadius(-2.0f);
         }
     }
 }
 
 // rectangle modification
-void reduceHeightOfRectangles(std::array<std::unique_ptr<Rectangle>, 3>& rectanglesToRender)
+void Modification::reduceHeightOfRectangles(
+        std::array<std::unique_ptr<Rectangle>, 3>& rectanglesToRender)
 {
     for (const auto& rectangle : rectanglesToRender)
     {
@@ -103,7 +118,8 @@ void reduceHeightOfRectangles(std::array<std::unique_ptr<Rectangle>, 3>& rectang
     }
 }
 
-void reduceWidthOfRectangles(std::array<std::unique_ptr<Rectangle>, 3>& rectanglesToRender)
+void Modification::reduceWidthOfRectangles(
+        std::array<std::unique_ptr<Rectangle>, 3>& rectanglesToRender)
 {
     for (const auto& rectangle : rectanglesToRender)
     {
@@ -114,7 +130,8 @@ void reduceWidthOfRectangles(std::array<std::unique_ptr<Rectangle>, 3>& rectangl
     }
 }
 
-void increaseHeightOfRectangles(std::array<std::unique_ptr<Rectangle>, 3>& rectanglesToRender)
+void Modification::increaseHeightOfRectangles(
+        std::array<std::unique_ptr<Rectangle>, 3>& rectanglesToRender)
 {
     for (const auto& rectangle : rectanglesToRender)
     {
@@ -125,7 +142,8 @@ void increaseHeightOfRectangles(std::array<std::unique_ptr<Rectangle>, 3>& recta
     }
 }
 
-void increaseWidthOfRectangles(std::array<std::unique_ptr<Rectangle>, 3>& rectanglesToRender)
+void Modification::increaseWidthOfRectangles(
+        std::array<std::unique_ptr<Rectangle>, 3>& rectanglesToRender)
 {
     for (const auto& rectangle : rectanglesToRender)
     {
@@ -137,7 +155,7 @@ void increaseWidthOfRectangles(std::array<std::unique_ptr<Rectangle>, 3>& rectan
 }
 
 // line modification
-void rotateLinesClockwise(std::array<std::unique_ptr<Line>, 3>& linesToRender)
+void Modification::rotateLinesClockwise(std::array<std::unique_ptr<Line>, 3>& linesToRender)
 {
     for (const auto& line : linesToRender)
     {
@@ -148,7 +166,7 @@ void rotateLinesClockwise(std::array<std::unique_ptr<Line>, 3>& linesToRender)
     }
 }
 
-void rotateLinesCounterClockwise(std::array<std::unique_ptr<Line>, 3>& linesToRender)
+void Modification::rotateLinesCounterClockwise(std::array<std::unique_ptr<Line>, 3>& linesToRender)
 {
     for (const auto& line : linesToRender)
     {

@@ -32,6 +32,7 @@ public:
 
     // Ring
     void renderRings(std::array<std::unique_ptr<Ring>, 3>& ringsToRender);
+    void renderRingArrays(VectorOfArrayOfRingPtrs& ringArraysToRender);
 };
 
 #endif

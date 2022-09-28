@@ -26,6 +26,8 @@ public:
 
     void moveTo(float offsetX, float offsetY);
 
+    void changeRadius(float radiusOffset);
+
     bool isShown() const;
 
 private:

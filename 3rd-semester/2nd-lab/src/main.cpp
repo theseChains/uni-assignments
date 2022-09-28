@@ -78,6 +78,7 @@ int main()
                 handleCircleArrayEvents(circleArrays);
                 handleRectangleArrayEvents(rectangleArrays);
                 handleLineArrayEvents(lineArrays);
+                handleRingArrayEvents(ringArrays);
             }
         }
 
@@ -105,6 +106,7 @@ int main()
         renderer.renderShapeArrays(circleArrays);
         renderer.renderShapeArrays(rectangleArrays);
         renderer.renderShapeArrays(lineArrays);
+        renderer.renderRingArrays(ringArrays);
 
         ImGui::SFML::Render(window);
 

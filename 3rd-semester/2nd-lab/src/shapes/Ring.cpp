@@ -71,6 +71,29 @@ void Ring::moveTo(float offsetX, float offsetY)
     }
 }
 
+void Ring::changeRadius(float radiusOffset)
+{
+    if (m_isShown)
+    {
+        show();
+
+        m_outerCircle.setRadius(m_outerCircle.getRadius() + radiusOffset);
+        m_innerCircle.setRadius(m_innerCircle.getRadius() + radiusOffset);
+
+        if (m_outerCircle.getRadius() < 0.0f)
+        {
+            m_outerCircle.setRadius(0.0f);
+        }
+
+        if (m_innerCircle.getRadius() < 0.0f)
+        {
+            m_innerCircle.setRadius(0.0f);
+        }
+
+        show();
+    }
+}
+
 bool Ring::isShown() const
 {
     return m_isShown;

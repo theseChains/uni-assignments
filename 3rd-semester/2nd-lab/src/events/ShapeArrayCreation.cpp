@@ -22,6 +22,7 @@ void ArrayCreation::checkForShapeArrayCreation(VectorOfArrayOfShapePtrs<ShapeTyp
 
 template void ArrayCreation::checkForShapeArrayCreation(VectorOfArrayOfCirclePtrs&);
 template void ArrayCreation::checkForShapeArrayCreation(VectorOfArrayOfLinePtrs&);
+template void ArrayCreation::checkForShapeArrayCreation(VectorOfArrayOfRingPtrs&);
 
 void ArrayCreation::checkForRectangleArrayCreation(VectorOfArrayOfRectanglePtrs& rectangleArraysToRender)
 {

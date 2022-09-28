@@ -5,20 +5,20 @@ void guiCheckForCircleModification(std::array<std::unique_ptr<Circle>, 3>& circl
 {
     if (ImGui::Button("Enlarge circles (O)"))
     {
-        enlargeCircles(circlesToRender);
+        Modification::enlargeCircles(circlesToRender);
 
         for (auto& circleArray : circleArraysToRender)
         {
-            enlargeCircles(circleArray);
+            Modification::enlargeCircles(circleArray);
         }
     }
     if (ImGui::Button("Reduce circles (I)"))
     {
-        reduceCircles(circlesToRender);
+        Modification::reduceCircles(circlesToRender);
 
         for (auto& circleArray : circleArraysToRender)
         {
-            reduceCircles(circleArray);
+            Modification::reduceCircles(circleArray);
         }
     }
 }
@@ -28,38 +28,38 @@ void guiCheckForRectangleModification(std::array<std::unique_ptr<Rectangle>, 3>&
 {
     if (ImGui::Button("Reduce height of\nrectangles (Up)"))
     {
-        reduceHeightOfRectangles(rectanglesToRender);
+        Modification::reduceHeightOfRectangles(rectanglesToRender);
 
         for (auto& rectangleArray : rectangleArraysToRender)
         {
-            reduceHeightOfRectangles(rectangleArray);
+            Modification::reduceHeightOfRectangles(rectangleArray);
         }
     }
     if (ImGui::Button("Reduce width of\nrectangles (Left)"))
     {
-        reduceWidthOfRectangles(rectanglesToRender);
+        Modification::reduceWidthOfRectangles(rectanglesToRender);
 
         for (auto& rectangleArray : rectangleArraysToRender)
         {
-            reduceWidthOfRectangles(rectangleArray);
+            Modification::reduceWidthOfRectangles(rectangleArray);
         }
     }
     if (ImGui::Button("Increase height of\nrectangles (Down)"))
     {
-        increaseHeightOfRectangles(rectanglesToRender);
+        Modification::increaseHeightOfRectangles(rectanglesToRender);
 
         for (auto& rectangleArray : rectangleArraysToRender)
         {
-            increaseHeightOfRectangles(rectangleArray);
+            Modification::increaseHeightOfRectangles(rectangleArray);
         }
     }
     if (ImGui::Button("Increase width of\nrectangles (Right)"))
     {
-        increaseWidthOfRectangles(rectanglesToRender);
+        Modification::increaseWidthOfRectangles(rectanglesToRender);
 
         for (auto& rectangleArray : rectangleArraysToRender)
         {
-            increaseWidthOfRectangles(rectangleArray);
+            Modification::increaseWidthOfRectangles(rectangleArray);
         }
     }
 }
@@ -69,20 +69,20 @@ void guiCheckForLineModification(std::array<std::unique_ptr<Line>, 3>& linesToRe
 {
     if (ImGui::Button("Rotate lines clockwise (R)"))
     {
-        rotateLinesClockwise(linesToRender);
+        Modification::rotateLinesClockwise(linesToRender);
 
         for (auto& lineArray : lineArraysToRender)
         {
-            rotateLinesClockwise(lineArray);
+            Modification::rotateLinesClockwise(lineArray);
         }
     }
     if (ImGui::Button("Rotate lines counter-\nclockwise (T)"))
     {
-        rotateLinesCounterClockwise(linesToRender);
+        Modification::rotateLinesCounterClockwise(linesToRender);
 
         for (auto& lineArray : lineArraysToRender)
         {
-            rotateLinesCounterClockwise(lineArray);
+            Modification::rotateLinesCounterClockwise(lineArray);
         }
     }
 }

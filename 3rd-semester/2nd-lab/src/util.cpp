@@ -29,9 +29,14 @@ void mode::shift()
         lines = false;
         rings = true;
     }
-    else
+    else if (rings)
     {
         rings = false;
+        asterisks = true;
+    }
+    else
+    {
+        asterisks = false;
         circles = true;
     }
 }
@@ -50,8 +55,12 @@ std::string mode::get()
     {
         return "working with lines";
     }
-    else
+    else if (rings)
     {
         return "working with rings";
+    }
+    else
+    {
+        return "working with asterisks";
     }
 }

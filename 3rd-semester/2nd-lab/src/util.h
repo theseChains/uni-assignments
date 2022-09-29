@@ -44,6 +44,7 @@ namespace mode
     inline bool rectangles{ false };
     inline bool lines{ false };
     inline bool rings{ false };
+    inline bool asterisks{ false };
 
     void shift();
 

@@ -28,6 +28,13 @@ public:
 
     bool isShown() const;
 
+    Vertex getPosition() const;
+    float getWidth() const;
+    float getHeight() const;
+    sf::Color getColor() const;
+
+    void setPosition(float newX, float newY);
+
 private:
     Vertex m_vertex{};
 

@@ -14,6 +14,7 @@
 #include "../shapes/Circle.h"
 #include "../shapes/Rectangle.h"
 #include "../shapes/Line.h"
+#include "../shapes/Asterisk.h"
 
 class Renderer
 {
@@ -33,6 +34,9 @@ public:
     // Ring
     void renderRings(std::array<std::unique_ptr<Ring>, 3>& ringsToRender);
     void renderRingArrays(VectorOfArrayOfRingPtrs& ringArraysToRender);
+
+    // Asterisk
+    void renderAsterisks(std::unique_ptr<Asterisk>& asterisk);
 };
 
 #endif

@@ -13,8 +13,9 @@ class Asterisk
 {
 public:
     Asterisk();
-    Asterisk(float topLeftX, float topLeftY, float radius, const sf::Color& color);
-    Asterisk(float topLeftX, float topLeftY, float radius, const std::array<int, 4>& colorComponents);
+    Asterisk(float topLeftX, float topLeftY, float width, float height, const sf::Color& color);
+    Asterisk(float topLeftX, float topLeftY, float width, float height,
+            const std::array<int, 4>& colorComponents);
 
     struct OptAsterisk
     {
@@ -37,9 +38,6 @@ private:
     bool m_isShown{};
 
     // auxiliary
-    void initializeThirtyDegreeRectangle();
-    void initializeSixtyDegreeRectangle();
-
     sf::RectangleShape createVerticalRectangle() const;
     sf::RectangleShape createThirtyDegreeRectangle() const;
     sf::RectangleShape createSixtyDegreeRectangle() const;

@@ -31,6 +31,16 @@ void Renderer::renderRings(std::array<std::unique_ptr<Ring>, 3>& ringsToRender)
     }
 }
 
+void Renderer::renderAsterisks(std::unique_ptr<Asterisk>& asterisk)
+{
+    if (asterisk.get() != nullptr && asterisk.get()->isShown())
+    {
+        m_window.get().draw(asterisk.get()->show(false).verticalRectangle.value());
+        m_window.get().draw(asterisk.get()->show(false).thirtyDegreeRectangle.value());
+        m_window.get().draw(asterisk.get()->show(false).sixtyDegreeRectangle.value());
+    }
+}
+
 template <typename ShapeType>
 void Renderer::renderShapeArrays(VectorOfArrayOfShapePtrs<ShapeType>& arraysToRender)
 {

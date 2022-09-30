@@ -5,7 +5,7 @@ Rectangle::Rectangle()
     : m_vertex{ rnd::getFloat(util::guiWidth, util::windowWidth - 100),
         rnd::getFloat(0, util::windowHeight - 100) },
     m_width{ 150.0f },
-    m_height{ 100.0f },
+    m_height{ 40.0f },
     m_color{ sf::Color::Magenta },
     m_isShown{ false }
 {
@@ -120,6 +120,32 @@ void Rectangle::changeHeight(float heightOffset)
 bool Rectangle::isShown() const
 {
     return m_isShown;
+}
+
+Vertex Rectangle::getPosition() const
+{
+    return m_vertex;
+}
+
+float Rectangle::getWidth() const
+{
+    return m_width;
+}
+
+float Rectangle::getHeight() const
+{
+    return m_height;
+}
+
+sf::Color Rectangle::getColor() const
+{
+    return m_color;
+}
+
+void Rectangle::setPosition(float newX, float newY)
+{
+    m_vertex.setX(newX);
+    m_vertex.setY(newY);
 }
 
 sf::RectangleShape Rectangle::createSprite() const

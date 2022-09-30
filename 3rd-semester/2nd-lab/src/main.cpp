@@ -17,6 +17,7 @@
 #include "shapes/Rectangle.h"
 #include "shapes/Line.h"
 #include "shapes/Ring.h"
+#include "shapes/Asterisk.h"
 
 #include "render/Renderer.h"
 
@@ -34,6 +35,11 @@ int main()
     configureGui();
 
     Renderer renderer{ window };
+
+    std::unique_ptr<Asterisk> asterisk{};
+    Asterisk newAsterisk{};
+    asterisk = std::make_unique<Asterisk>(newAsterisk);
+    asterisk->show();
 
     std::array<std::unique_ptr<Circle>, 3> circlesToRender{};
     std::array<std::unique_ptr<Rectangle>, 3> rectanglesToRender{};
@@ -109,6 +115,8 @@ int main()
         renderer.renderShapeArrays(rectangleArrays);
         renderer.renderShapeArrays(lineArrays);
         renderer.renderRingArrays(ringArrays);
+
+        renderer.renderAsterisks(asterisk);
 
         ImGui::SFML::Render(window);
 

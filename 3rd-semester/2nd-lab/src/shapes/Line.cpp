@@ -98,6 +98,11 @@ bool Line::isShown() const
     return m_isShown;
 }
 
+void Line::setColor(const sf::Color& color)
+{
+    m_color = color;
+}
+
 sf::RectangleShape Line::createSprite() const
 {
     sf::RectangleShape lineSprite{};

@@ -26,6 +26,8 @@ public:
 
     bool isShown() const;
 
+    void setColor(const sf::Color& color);
+
 private:
     Vertex m_vertex{};
 

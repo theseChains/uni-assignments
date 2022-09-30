@@ -10,9 +10,9 @@
 #include "Line.h"
 
 /* an asterisk, contains 6 lines each 60 degrees away from adjacent lines
- *  \ /
- * -- --
- *  / \
+ *  \ / - 300 degree line
+ * -- -- - 0 degree line
+ *  / \ - 60 degree line, and so on
  */
 
 class Asterisk
@@ -55,6 +55,8 @@ private:
     sf::RectangleShape createOneEightyDegreeLine() const;
     sf::RectangleShape createTwoFortyDegreeLine() const;
     sf::RectangleShape createThreeHundredDegreeLine() const;
+
+    void initializeColorComponents(Line& line, const std::array<int, 4>& colorComponents);
 };
 
 #endif

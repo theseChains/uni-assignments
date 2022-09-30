@@ -3,11 +3,14 @@
 Asterisk::Asterisk() : m_verticalRectangle{ Rectangle{} }, m_thirtyDegreeRectangle{ Rectangle{} },
     m_sixtyDegreeRectangle{ Rectangle{} }
 {
-    m_thirtyDegreeRectangle.setPosition(m_verticalRectangle.getPosition().getX(),
-            m_verticalRectangle.getPosition().getY() + 1000);
+    m_thirtyDegreeRectangle.setPosition(m_verticalRectangle.getPosition().getX() +
+            m_verticalRectangle.getHeight(),
+            m_verticalRectangle.getPosition().getY() +
+            m_verticalRectangle.get() / util::twoBySqrtOfTwo); 
+
     m_sixtyDegreeRectangle.setPosition(m_verticalRectangle.getPosition().getX() +
-            m_verticalRectangle.getHeight() / 2,
-            m_verticalRectangle.getPosition().getY() + (m_verticalRectangle.getWidth() / 2 + 
+            m_verticalRectangle.getHeight() / 2.0f,
+            m_verticalRectangle.getPosition().getY() + (m_verticalRectangle.getWidth() / 2.0f + 
             m_verticalRectangle.getWidth() / util::twoBySqrtOfTwo +
             m_verticalRectangle.getHeight() / util::twoBySqrtOfTwo)); 
 

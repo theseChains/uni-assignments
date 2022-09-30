@@ -7,21 +7,29 @@
 
 #include "../util.h"
 
-#include "Rectangle.h"
+#include "Line.h"
+
+/* an asterisk, contains 6 lines each 60 degrees away from adjacent lines
+ *  \ /
+ * -- --
+ *  / \
+ */
 
 class Asterisk
 {
 public:
     Asterisk();
-    Asterisk(float topLeftX, float topLeftY, float width, float height, const sf::Color& color);
-    Asterisk(float topLeftX, float topLeftY, float width, float height,
-            const std::array<int, 4>& colorComponents);
+    Asterisk(float mainPointX, float mainPointY, float length, const sf::Color& color);
+    Asterisk(float mainPointX, float mainPointY, float length, const std::array<int, 4>& colorComponents);
 
     struct OptAsterisk
     {
-        std::optional<sf::RectangleShape> verticalRectangle{};
-        std::optional<sf::RectangleShape> thirtyDegreeRectangle{};
-        std::optional<sf::RectangleShape> sixtyDegreeRectangle{};
+        std::optional<sf::RectangleShape> zeroDegreeLine{};
+        std::optional<sf::RectangleShape> sixtyDegreeLine{};
+        std::optional<sf::RectangleShape> oneTwentyDegreeLine{};
+        std::optional<sf::RectangleShape> oneEightyDegreeLine{};
+        std::optional<sf::RectangleShape> twoFortyDegreeLine{};
+        std::optional<sf::RectangleShape> threeHundredDegreeLine{};
     };
 
     OptAsterisk show(bool modifyVisibility = true);
@@ -31,16 +39,22 @@ public:
     bool isShown() const;
 
 private:
-    Rectangle m_verticalRectangle{};
-    Rectangle m_thirtyDegreeRectangle{};
-    Rectangle m_sixtyDegreeRectangle{};
+    Line m_zeroDegreeLine{};
+    Line m_sixtyDegreeLine{};
+    Line m_oneTwentyDegreeLine{};
+    Line m_oneEightyDegreeLine{};
+    Line m_twoFortyDegreeLine{};
+    Line m_threeHundredDegreeLine{};
 
     bool m_isShown{};
 
     // auxiliary
-    sf::RectangleShape createVerticalRectangle() const;
-    sf::RectangleShape createThirtyDegreeRectangle() const;
-    sf::RectangleShape createSixtyDegreeRectangle() const;
+    sf::RectangleShape createZeroDegreeLine() const;
+    sf::RectangleShape createSixtyDegreeLine() const;
+    sf::RectangleShape createOneTwentyDegreeLine() const;
+    sf::RectangleShape createOneEightyDegreeLine() const;
+    sf::RectangleShape createTwoFortyDegreeLine() const;
+    sf::RectangleShape createThreeHundredDegreeLine() const;
 };
 
 #endif

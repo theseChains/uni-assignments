@@ -1,7 +1,6 @@
 #ifndef UTIL_FUNCTIONS_H
 #define UTIL_FUNCTIONS_H
 
-#include <numbers>
 #include <random>
 #include <string>
 
@@ -19,8 +18,6 @@ namespace util
     inline constexpr int secondConstructorShapeIndex{ 2 };
 
     inline constexpr float innerCircleRadiusMultiplier{ 0.75 };
-
-    inline constexpr float twoBySqrtOfTwo{ 2.0f * std::numbers::sqrt2 };
 }
 
 namespace component

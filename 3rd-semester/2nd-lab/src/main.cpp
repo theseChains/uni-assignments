@@ -36,20 +36,17 @@ int main()
 
     Renderer renderer{ window };
 
-    std::unique_ptr<Asterisk> asterisk{};
-    Asterisk newAsterisk{};
-    asterisk = std::make_unique<Asterisk>(newAsterisk);
-    asterisk->show();
-
     std::array<std::unique_ptr<Circle>, 3> circlesToRender{};
     std::array<std::unique_ptr<Rectangle>, 3> rectanglesToRender{};
     std::array<std::unique_ptr<Line>, 3> linesToRender{};
     std::array<std::unique_ptr<Ring>, 3> ringsToRender{};
+    std::array<std::unique_ptr<Asterisk>, 3> asterisksToRender{};
 
     VectorOfArrayOfCirclePtrs circleArrays{};
     VectorOfArrayOfRectanglePtrs rectangleArrays{};
     VectorOfArrayOfLinePtrs lineArrays{};
     VectorOfArrayOfRingPtrs ringArrays{};
+    VectorOfArrayOfAsteriskPtrs asteriskArrays{};
 
     sf::Clock deltaClock{};
     while (window.isOpen())
@@ -80,11 +77,13 @@ int main()
                 handleRectangleEvents(rectanglesToRender);
                 handleLineEvents(linesToRender);
                 handleRingEvents(ringsToRender);
+                handleAsteriskEvents(asterisksToRender);
 
                 handleCircleArrayEvents(circleArrays);
                 handleRectangleArrayEvents(rectangleArrays);
                 handleLineArrayEvents(lineArrays);
                 handleRingArrayEvents(ringArrays);
+                handleAsteriskArrayEvents(asteriskArrays);
             }
         }
 
@@ -110,13 +109,13 @@ int main()
         renderer.renderShapes(rectanglesToRender);
         renderer.renderShapes(linesToRender);
         renderer.renderRings(ringsToRender);
+        renderer.renderAsterisks(asterisksToRender);
 
         renderer.renderShapeArrays(circleArrays);
         renderer.renderShapeArrays(rectangleArrays);
         renderer.renderShapeArrays(lineArrays);
         renderer.renderRingArrays(ringArrays);
-
-        renderer.renderAsterisks(asterisk);
+        renderer.renderAsteriskArrays(asteriskArrays);
 
         ImGui::SFML::Render(window);
 

@@ -31,13 +31,19 @@ void Renderer::renderRings(std::array<std::unique_ptr<Ring>, 3>& ringsToRender)
     }
 }
 
-void Renderer::renderAsterisks(std::unique_ptr<Asterisk>& asterisk)
+void Renderer::renderAsterisks(std::array<std::unique_ptr<Asterisk>, 3>& asterisksToRender)
 {
-    if (asterisk.get() != nullptr && asterisk.get()->isShown())
+    for (const auto& asterisk : asterisksToRender)
     {
-        m_window.get().draw(asterisk.get()->show(false).verticalRectangle.value());
-        m_window.get().draw(asterisk.get()->show(false).thirtyDegreeRectangle.value());
-        m_window.get().draw(asterisk.get()->show(false).sixtyDegreeRectangle.value());
+        if (asterisk.get() != nullptr && asterisk.get()->isShown())
+        {
+            m_window.get().draw(asterisk.get()->show(false).zeroDegreeLine.value());
+            m_window.get().draw(asterisk.get()->show(false).sixtyDegreeLine.value());
+            m_window.get().draw(asterisk.get()->show(false).oneTwentyDegreeLine.value());
+            m_window.get().draw(asterisk.get()->show(false).oneEightyDegreeLine.value());
+            m_window.get().draw(asterisk.get()->show(false).twoFortyDegreeLine.value());
+            m_window.get().draw(asterisk.get()->show(false).threeHundredDegreeLine.value());
+        }
     }
 }
 
@@ -59,5 +65,13 @@ void Renderer::renderRingArrays(VectorOfArrayOfRingPtrs& ringArraysToRender)
     for (auto& ringArray : ringArraysToRender)
     {
         renderRings(ringArray);
+    }
+}
+
+void Renderer::renderAsteriskArrays(VectorOfArrayOfAsteriskPtrs& asteriskArraysToRender)
+{
+    for (auto& asteriskArray : asteriskArraysToRender)
+    {
+        renderAsterisks(asteriskArray);
     }
 }

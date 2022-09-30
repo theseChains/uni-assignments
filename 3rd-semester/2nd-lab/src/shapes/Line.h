@@ -26,6 +26,11 @@ public:
 
     bool isShown() const;
 
+    Vertex getPosition() const;
+    sf::Color getColor() const;
+    float getLength() const;
+
+    void setPosition(float newX, float newY);
     void setColor(const sf::Color& color);
 
 private:
@@ -34,7 +39,7 @@ private:
     float m_length{};
 
     sf::Color m_color{};
-    
+
     float m_angle{};
 
     bool m_isShown{};

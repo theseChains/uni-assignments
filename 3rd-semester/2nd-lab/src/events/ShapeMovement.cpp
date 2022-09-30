@@ -29,6 +29,7 @@ template void Movement::checkForShapeMovement(std::array<std::unique_ptr<Circle>
 template void Movement::checkForShapeMovement(std::array<std::unique_ptr<Rectangle>, 3>&);
 template void Movement::checkForShapeMovement(std::array<std::unique_ptr<Line>, 3>&);
 template void Movement::checkForShapeMovement(std::array<std::unique_ptr<Ring>, 3>&);
+template void Movement::checkForShapeMovement(std::array<std::unique_ptr<Asterisk>, 3>&);
 
 template <typename ShapeType>
 void Movement::checkForShapeArrayMovement(VectorOfArrayOfShapePtrs<ShapeType>& shapeArraysToRender)
@@ -43,6 +44,7 @@ template void Movement::checkForShapeArrayMovement(VectorOfArrayOfCirclePtrs&);
 template void Movement::checkForShapeArrayMovement(VectorOfArrayOfRectanglePtrs&);
 template void Movement::checkForShapeArrayMovement(VectorOfArrayOfLinePtrs&);
 template void Movement::checkForShapeArrayMovement(VectorOfArrayOfRingPtrs&);
+template void Movement::checkForShapeArrayMovement(VectorOfArrayOfAsteriskPtrs&);
 
 template <typename ShapeType>
 void Movement::moveShapeArrayUp(std::array<std::unique_ptr<ShapeType>, 3>& shapesToRender)

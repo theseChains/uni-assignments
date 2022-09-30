@@ -98,6 +98,27 @@ bool Line::isShown() const
     return m_isShown;
 }
 
+Vertex Line::getPosition() const
+{
+    return m_vertex;
+}
+
+sf::Color Line::getColor() const
+{
+    return m_color;
+}
+
+float Line::getLength() const
+{
+    return m_length;
+}
+
+void Line::setPosition(float newX, float newY)
+{
+    m_vertex.setX(newX);
+    m_vertex.setY(newY);
+}
+
 void Line::setColor(const sf::Color& color)
 {
     m_color = color;

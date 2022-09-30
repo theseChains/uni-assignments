@@ -36,6 +36,8 @@ public:
 
     void moveTo(float offsetX, float offsetY);
 
+    void rotate(float angleOffset);
+
     bool isShown() const;
 
 private:
@@ -48,14 +50,10 @@ private:
 
     bool m_isShown{};
 
-    // auxiliary
-    sf::RectangleShape createZeroDegreeLine() const;
-    sf::RectangleShape createSixtyDegreeLine() const;
-    sf::RectangleShape createOneTwentyDegreeLine() const;
-    sf::RectangleShape createOneEightyDegreeLine() const;
-    sf::RectangleShape createTwoFortyDegreeLine() const;
-    sf::RectangleShape createThreeHundredDegreeLine() const;
+    float m_currentRotationAngle{};
 
+    // auxiliary
+    sf::RectangleShape createRotatedLineSprite(float rotationAngle) const;
     void initializeColorComponents(Line& line, const std::array<int, 4>& colorComponents);
 };
 

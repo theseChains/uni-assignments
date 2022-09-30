@@ -38,17 +38,21 @@ void Modification::checkForRectangleModification(
     }
 }
 
-void Modification::checkForLineModification(std::array<std::unique_ptr<Line>, 3>& linesToRender)
+template <typename LineShape>
+void Modification::checkForLineShapeModification(std::array<std::unique_ptr<LineShape>, 3>& linesShapesToRender)
 {
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::R))
     {
-        Modification::rotateLinesClockwise(linesToRender);
+        Modification::rotateLinesClockwise(linesShapesToRender);
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::T))
     {
-        Modification::rotateLinesCounterClockwise(linesToRender);
+        Modification::rotateLinesCounterClockwise(linesShapesToRender);
     }
 }
+
+template void Modification::checkForLineShapeModification(std::array<std::unique_ptr<Line>, 3>&);
+template void Modification::checkForLineShapeModification(std::array<std::unique_ptr<Asterisk>, 3>&);
 
 template <typename CircularShape>
 void Modification::checkForCircularShapeArrayModification(
@@ -72,13 +76,18 @@ void Modification::checkForRectangleArrayModification(
     }
 }
 
-void Modification::checkForLineArrayModification(VectorOfArrayOfLinePtrs& lineArraysToRender)
+template <typename LineShape>
+void Modification::checkForLineShapeArrayModification(
+        VectorOfArrayOfLineShapePtrs<LineShape>& lineArraysToRender)
 {
     for (auto& lineArray : lineArraysToRender)
     {
-        checkForLineModification(lineArray);
+        checkForLineShapeModification(lineArray);
     }
 }
+
+template void Modification::checkForLineShapeArrayModification(VectorOfArrayOfLinePtrs&);
+template void Modification::checkForLineShapeArrayModification(VectorOfArrayOfAsteriskPtrs&);
 
 // circle modification
 template <typename CircularShape>
@@ -154,25 +163,27 @@ void Modification::increaseWidthOfRectangles(
     }
 }
 
-// line modification
-void Modification::rotateLinesClockwise(std::array<std::unique_ptr<Line>, 3>& linesToRender)
+// Line and Asterisk modification
+template <typename LineShape>
+void Modification::rotateLinesClockwise(std::array<std::unique_ptr<LineShape>, 3>& lineShapesToRender)
 {
-    for (const auto& line : linesToRender)
+    for (const auto& lineShape : lineShapesToRender)
     {
-        if (line.get() != nullptr)
+        if (lineShape.get() != nullptr)
         {
-            line->rotate(2.0f);
+            lineShape->rotate(2.0f);
         }
     }
 }
 
-void Modification::rotateLinesCounterClockwise(std::array<std::unique_ptr<Line>, 3>& linesToRender)
+template <typename LineShape>
+void Modification::rotateLinesCounterClockwise(std::array<std::unique_ptr<LineShape>, 3>& lineShapesToRender)
 {
-    for (const auto& line : linesToRender)
+    for (const auto& lineShape : lineShapesToRender)
     {
-        if (line.get() != nullptr)
+        if (lineShape.get() != nullptr)
         {
-            line->rotate(-2.0f);
+            lineShape->rotate(-2.0f);
         }
     }
 }

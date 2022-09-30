@@ -36,7 +36,8 @@ public:
     void renderRingArrays(VectorOfArrayOfRingPtrs& ringArraysToRender);
 
     // Asterisk
-    void renderAsterisks(std::unique_ptr<Asterisk>& asterisk);
+    void renderAsterisks(std::array<std::unique_ptr<Asterisk>, 3>& asterisksToRender);
+    void renderAsteriskArrays(VectorOfArrayOfAsteriskPtrs& asteriskArraysToRender);
 };
 
 #endif

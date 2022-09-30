@@ -11,6 +11,7 @@
 #include "../shapes/Rectangle.h"
 #include "../shapes/Line.h"
 #include "../shapes/Ring.h"
+#include "../shapes/Asterisk.h"
 
 namespace Modification
 {
@@ -19,14 +20,19 @@ namespace Modification
     void checkForCircularShapeModification(std::array<std::unique_ptr<CircularShape>, 3>& shapesToRender);
     
     void checkForRectangleModification(std::array<std::unique_ptr<Rectangle>, 3>& rectanglesToRender);
-    void checkForLineModification(std::array<std::unique_ptr<Line>, 3>& linesToRender);
-    
+
     template <typename CircularShape>
     void checkForCircularShapeArrayModification(
             VectorOfArrayOfCircularShapePtrs<CircularShape>& shapeArraysToRender);
 
     void checkForRectangleArrayModification(VectorOfArrayOfRectanglePtrs& rectangleArraysToRender);
-    void checkForLineArrayModification(VectorOfArrayOfLinePtrs& lineArraysToRender);
+
+    // for Line and Asterisk
+    template <typename LineShape>
+    void checkForLineShapeModification(std::array<std::unique_ptr<LineShape>, 3>& linesShapesToRender);
+
+    template <typename LineShape>
+    void checkForLineShapeArrayModification(VectorOfArrayOfLineShapePtrs<LineShape>& lineArraysToRender);
     
     // auxiliary
     template <typename CircularShape>
@@ -40,8 +46,11 @@ namespace Modification
     void increaseHeightOfRectangles(std::array<std::unique_ptr<Rectangle>, 3>& rectanglesToRender);
     void increaseWidthOfRectangles(std::array<std::unique_ptr<Rectangle>, 3>& rectanglesToRender);
     
-    void rotateLinesClockwise(std::array<std::unique_ptr<Line>, 3>& linesToRender);
-    void rotateLinesCounterClockwise(std::array<std::unique_ptr<Line>, 3>& linesToRender);
+    template <typename LineShape>
+    void rotateLinesClockwise(std::array<std::unique_ptr<LineShape>, 3>& linesToRender);
+
+    template <typename LineShape>
+    void rotateLinesCounterClockwise(std::array<std::unique_ptr<LineShape>, 3>& linesToRender);
 }
 
 #endif

@@ -14,6 +14,7 @@
 #include "../shapes/Circle.h"
 #include "../shapes/Rectangle.h"
 #include "../shapes/Line.h"
+#include "../shapes/Ellipse.h"
 
 class Renderer
 {
@@ -27,8 +28,9 @@ public:
     template <typename RectangleShape>
     void renderRectangleShapes(std::array<std::unique_ptr<RectangleShape>, 3>& shapesToRender);
 
-    // Circle
-    void renderCircleShapes(std::array<std::unique_ptr<Circle>, 3>& shapesToRender);
+    // Circle and Ellipse
+    template <typename CircularShape>
+    void renderCircleShapes(std::array<std::unique_ptr<CircularShape>, 3>& shapesToRender);
 
     template <typename RectangleShape>
     void renderRectangleShapeArrays(VectorOfArrayOfShapePtrs<RectangleShape>& arraysToRender);

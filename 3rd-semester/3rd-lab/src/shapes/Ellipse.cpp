@@ -82,7 +82,7 @@ sf::CircleShape Ellipse::createSprite() const
     ellipseSprite.setPosition(m_vertex.getX(), m_vertex.getY());
     ellipseSprite.setFillColor(m_color);
     ellipseSprite.setRadius(m_radius);
-    ellipseSprite.setScale(m_radius, m_semiaxis);
+    ellipseSprite.setScale(m_radius / m_radius, m_radius / m_semiaxis);
     ellipseSprite.setRotation(m_angle);
 
     return ellipseSprite;

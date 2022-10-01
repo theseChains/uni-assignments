@@ -30,6 +30,15 @@ void handleLineEvents(std::array<std::unique_ptr<Line>, 3>& linesToRender)
     }
 }
 
+void handleEllipseEvents(std::array<std::unique_ptr<Ellipse>, 3>& ellipsesToRender)
+{
+    if (mode::ellipses)
+    {
+        Creation::checkForShapeCreation(ellipsesToRender);
+        Movement::checkForShapeMovement(ellipsesToRender);
+    }
+}
+
 // arrays of shapes
 void handleCircleArrayEvents(VectorOfArrayOfCirclePtrs& circleArraysToRender)
 {

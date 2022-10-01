@@ -28,6 +28,7 @@ void Movement::checkForShapeMovement(std::array<std::unique_ptr<ShapeType>, 3>& 
 template void Movement::checkForShapeMovement(std::array<std::unique_ptr<Circle>, 3>&);
 template void Movement::checkForShapeMovement(std::array<std::unique_ptr<Rectangle>, 3>&);
 template void Movement::checkForShapeMovement(std::array<std::unique_ptr<Line>, 3>&);
+template void Movement::checkForShapeMovement(std::array<std::unique_ptr<Ellipse>, 3>&);
 
 template <typename ShapeType>
 void Movement::checkForShapeArrayMovement(VectorOfArrayOfShapePtrs<ShapeType>& shapeArraysToRender)

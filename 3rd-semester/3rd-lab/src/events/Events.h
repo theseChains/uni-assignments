@@ -16,6 +16,7 @@
 void handleCircleEvents(std::array<std::unique_ptr<Circle>, 3>& circlesToRender);
 void handleRectangleEvents(std::array<std::unique_ptr<Rectangle>, 3>& rectanglesToRender);
 void handleLineEvents(std::array<std::unique_ptr<Line>, 3>& linesToRender);
+void handleEllipseEvents(std::array<std::unique_ptr<Ellipse>, 3>& ellipsesToRender);
 
 void handleCircleArrayEvents(VectorOfArrayOfCirclePtrs& circleArraysToRender);
 void handleRectangleArrayEvents(VectorOfArrayOfRectanglePtrs& rectangleArraysToRender);

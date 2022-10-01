@@ -14,7 +14,6 @@
 #include "../shapes/Circle.h"
 #include "../shapes/Rectangle.h"
 #include "../shapes/Line.h"
-#include "../shapes/Asterisk.h"
 
 class Renderer
 {
@@ -24,23 +23,17 @@ public:
 public:
     Renderer(sf::RenderWindow& window);
 
-    // Rectangle
+    // Rectangle and Line
     template <typename RectangleShape>
     void renderRectangleShapes(std::array<std::unique_ptr<RectangleShape>, 3>& shapesToRender);
 
     // Circle
     void renderCircleShapes(std::array<std::unique_ptr<Circle>, 3>& shapesToRender);
 
-    template <typename ShapeType>
-    void renderShapeArrays(VectorOfArrayOfShapePtrs<ShapeType>& arraysToRender);
+    template <typename RectangleShape>
+    void renderRectangleShapeArrays(VectorOfArrayOfShapePtrs<RectangleShape>& arraysToRender);
 
-    // Ring
-    void renderRings(std::array<std::unique_ptr<Ring>, 3>& ringsToRender);
-    void renderRingArrays(VectorOfArrayOfRingPtrs& ringArraysToRender);
-
-    // Asterisk
-    void renderAsterisks(std::array<std::unique_ptr<Asterisk>, 3>& asterisksToRender);
-    void renderAsteriskArrays(VectorOfArrayOfAsteriskPtrs& asteriskArraysToRender);
+    void renderCircleShapeArrays(VectorOfArrayOfCirclePtrs& circleArraysTorender);
 };
 
 #endif

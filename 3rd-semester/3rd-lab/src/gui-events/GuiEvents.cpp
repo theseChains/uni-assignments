@@ -33,28 +33,6 @@ void guiHandleLineEvents(std::array<std::unique_ptr<Line>, 3>& linesToRender,
     }
 }
 
-void guiHandleRingEvents(std::array<std::unique_ptr<Ring>, 3>& ringsToRender,
-        VectorOfArrayOfRingPtrs& ringArraysToRender)
-{
-    if (mode::rings)
-    {
-        GuiCreation::checkForShapeCreation(ringsToRender);
-        guiCheckForCircularShapeModification(ringsToRender, ringArraysToRender);
-        guiCheckForShapeMovement(ringsToRender, ringArraysToRender); 
-    }
-}
-
-void guiHandleAsteriskEvents(std::array<std::unique_ptr<Asterisk>, 3>& asterisksToRender,
-        VectorOfArrayOfAsteriskPtrs& asteriskArraysToRender)
-{
-    if (mode::asterisks)
-    {
-        GuiCreation::checkForShapeCreation(asterisksToRender);
-        guiCheckForLineShapeModification(asterisksToRender, asteriskArraysToRender);
-        guiCheckForShapeMovement(asterisksToRender, asteriskArraysToRender); 
-    }
-}
-
 // array creation
 void guiHandleCircleArrayCreation(VectorOfArrayOfCirclePtrs& circleArraysToRender)
 {
@@ -77,21 +55,5 @@ void guiHandleLineArrayCreation(VectorOfArrayOfLinePtrs& lineArraysToRender)
     if (mode::lines)
     {
         GuiArrayCreation::checkForShapeArrayCreation(lineArraysToRender);
-    }
-}
-
-void guiHandleRingArrayCreation(VectorOfArrayOfRingPtrs& ringArraysToRender)
-{
-    if (mode::rings)
-    {
-        GuiArrayCreation::checkForShapeArrayCreation(ringArraysToRender);
-    }
-}
-
-void guiHandleAsteriskArrayCreation(VectorOfArrayOfAsteriskPtrs& asteriskArraysToRender)
-{
-    if (mode::asterisks)
-    {
-        GuiArrayCreation::checkForShapeArrayCreation(asteriskArraysToRender);
     }
 }

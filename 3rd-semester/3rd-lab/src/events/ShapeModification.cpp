@@ -15,7 +15,6 @@ void Modification::checkForCircularShapeModification(
 }
 
 template void Modification::checkForCircularShapeModification(std::array<std::unique_ptr<Circle>, 3>&);
-template void Modification::checkForCircularShapeModification(std::array<std::unique_ptr<Ring>, 3>&);
 
 void Modification::checkForRectangleModification(
         std::array<std::unique_ptr<Rectangle>, 3>& rectanglesToRender)
@@ -52,7 +51,6 @@ void Modification::checkForLineShapeModification(std::array<std::unique_ptr<Line
 }
 
 template void Modification::checkForLineShapeModification(std::array<std::unique_ptr<Line>, 3>&);
-template void Modification::checkForLineShapeModification(std::array<std::unique_ptr<Asterisk>, 3>&);
 
 template <typename CircularShape>
 void Modification::checkForCircularShapeArrayModification(
@@ -65,7 +63,6 @@ void Modification::checkForCircularShapeArrayModification(
 }
 
 template void Modification::checkForCircularShapeArrayModification(VectorOfArrayOfCirclePtrs&);
-template void Modification::checkForCircularShapeArrayModification(VectorOfArrayOfRingPtrs&);
 
 void Modification::checkForRectangleArrayModification(
         VectorOfArrayOfRectanglePtrs& rectangleArraysToRender)
@@ -87,7 +84,6 @@ void Modification::checkForLineShapeArrayModification(
 }
 
 template void Modification::checkForLineShapeArrayModification(VectorOfArrayOfLinePtrs&);
-template void Modification::checkForLineShapeArrayModification(VectorOfArrayOfAsteriskPtrs&);
 
 // circle modification
 template <typename CircularShape>

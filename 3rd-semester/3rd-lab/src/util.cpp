@@ -24,19 +24,9 @@ void mode::shift()
         rectangles = false;
         lines = true;
     }
-    else if (lines)
-    {
-        lines = false;
-        rings = true;
-    }
-    else if (rings)
-    {
-        rings = false;
-        asterisks = true;
-    }
     else
     {
-        asterisks = false;
+        lines = false;
         circles = true;
     }
 }
@@ -51,16 +41,8 @@ std::string mode::get()
     {
         return "working with rectangles";
     }
-    else if (lines)
-    {
-        return "working with lines";
-    }
-    else if (rings)
-    {
-        return "working with rings";
-    }
     else
     {
-        return "working with asterisks";
+        return "working with lines";
     }
 }

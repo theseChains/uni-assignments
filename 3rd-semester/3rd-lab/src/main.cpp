@@ -16,8 +16,6 @@
 #include "shapes/Circle.h"
 #include "shapes/Rectangle.h"
 #include "shapes/Line.h"
-#include "shapes/Ring.h"
-#include "shapes/Asterisk.h"
 
 #include "render/Renderer.h"
 
@@ -39,14 +37,10 @@ int main()
     std::array<std::unique_ptr<Circle>, 3> circlesToRender{};
     std::array<std::unique_ptr<Rectangle>, 3> rectanglesToRender{};
     std::array<std::unique_ptr<Line>, 3> linesToRender{};
-    std::array<std::unique_ptr<Ring>, 3> ringsToRender{};
-    std::array<std::unique_ptr<Asterisk>, 3> asterisksToRender{};
 
     VectorOfArrayOfCirclePtrs circleArrays{};
     VectorOfArrayOfRectanglePtrs rectangleArrays{};
     VectorOfArrayOfLinePtrs lineArrays{};
-    VectorOfArrayOfRingPtrs ringArrays{};
-    VectorOfArrayOfAsteriskPtrs asteriskArrays{};
 
     sf::Clock deltaClock{};
     while (window.isOpen())
@@ -103,9 +97,9 @@ int main()
         renderer.renderRectangleShapes(rectanglesToRender);
         renderer.renderRectangleShapes(linesToRender);
 
-        renderer.renderShapeArrays(circleArrays);
-        renderer.renderShapeArrays(rectangleArrays);
-        renderer.renderShapeArrays(lineArrays);
+        renderer.renderCircleShapeArrays(circleArrays);
+        renderer.renderRectangleShapeArrays(rectangleArrays);
+        renderer.renderRectangleShapeArrays(lineArrays);
 
         ImGui::SFML::Render(window);
 

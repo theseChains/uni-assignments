@@ -26,8 +26,6 @@ void guiCheckForCircularShapeModification(std::array<std::unique_ptr<CircularSha
 
 template void guiCheckForCircularShapeModification(std::array<std::unique_ptr<Circle>, 3>&,
         VectorOfArrayOfCirclePtrs&);
-template void guiCheckForCircularShapeModification(std::array<std::unique_ptr<Ring>, 3>&,
-        VectorOfArrayOfRingPtrs&);
 
 void guiCheckForRectangleModification(std::array<std::unique_ptr<Rectangle>, 3>& rectanglesToRender,
         VectorOfArrayOfRectanglePtrs& rectangleArraysToRender)
@@ -96,5 +94,3 @@ void guiCheckForLineShapeModification(std::array<std::unique_ptr<LineShape>, 3>&
 
 template void guiCheckForLineShapeModification(std::array<std::unique_ptr<Line>, 3>&,
         VectorOfArrayOfLinePtrs&);
-template void guiCheckForLineShapeModification(std::array<std::unique_ptr<Asterisk>, 3>&,
-        VectorOfArrayOfAsteriskPtrs&);

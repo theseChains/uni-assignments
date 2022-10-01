@@ -9,8 +9,6 @@
 #include "../shapes/Circle.h"
 #include "../shapes/Rectangle.h"
 #include "../shapes/Line.h"
-#include "../shapes/Ring.h"
-#include "../shapes/Asterisk.h"
 
 namespace Creation
 {

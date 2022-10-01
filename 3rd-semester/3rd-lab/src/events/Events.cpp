@@ -30,26 +30,6 @@ void handleLineEvents(std::array<std::unique_ptr<Line>, 3>& linesToRender)
     }
 }
 
-void handleRingEvents(std::array<std::unique_ptr<Ring>, 3>& ringsToRender)
-{
-    if (mode::rings)
-    {
-        Creation::checkForShapeCreation(ringsToRender);
-        Modification::checkForCircularShapeModification(ringsToRender);
-        Movement::checkForShapeMovement(ringsToRender);
-    }
-}
-
-void handleAsteriskEvents(std::array<std::unique_ptr<Asterisk>, 3>& asterisksToRender)
-{
-    if (mode::asterisks)
-    {
-        Creation::checkForShapeCreation(asterisksToRender);
-        Modification::checkForLineShapeModification(asterisksToRender); 
-        Movement::checkForShapeMovement(asterisksToRender);
-    }
-}
-
 // arrays of shapes
 void handleCircleArrayEvents(VectorOfArrayOfCirclePtrs& circleArraysToRender)
 {
@@ -78,25 +58,5 @@ void handleLineArrayEvents(VectorOfArrayOfLinePtrs& lineArraysToRender)
         ArrayCreation::checkForShapeArrayCreation(lineArraysToRender);
         Modification::checkForLineShapeArrayModification(lineArraysToRender);
         Movement::checkForShapeArrayMovement(lineArraysToRender);
-    }
-}
-
-void handleRingArrayEvents(VectorOfArrayOfRingPtrs& ringArraysToRender)
-{
-    if (mode::rings)
-    {
-        ArrayCreation::checkForShapeArrayCreation(ringArraysToRender);
-        Modification::checkForCircularShapeArrayModification(ringArraysToRender);
-        Movement::checkForShapeArrayMovement(ringArraysToRender);
-    }
-}
-
-void handleAsteriskArrayEvents(VectorOfArrayOfAsteriskPtrs& asteriskArraysToRender)
-{
-    if (mode::asterisks)
-    {
-        ArrayCreation::checkForShapeArrayCreation(asteriskArraysToRender);
-        Modification::checkForLineShapeArrayModification(asteriskArraysToRender);
-        Movement::checkForShapeArrayMovement(asteriskArraysToRender);
     }
 }

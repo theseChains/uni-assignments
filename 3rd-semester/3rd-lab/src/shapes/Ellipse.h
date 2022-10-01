@@ -3,6 +3,7 @@
 
 #include <SFML/Graphics.hpp>
 
+#include "Figure.h"
 #include "Circle.h"
 
 class Ellipse : public Circle
@@ -18,13 +19,11 @@ public:
 
     void rotateByNinetyDegrees();
 
-    bool isShown() const;
-
 private:
     // the second radius
     float m_semiaxis{};
 
-    bool m_isShown{};
+    float m_angle{};
 
     sf::CircleShape createSprite() const;
 };

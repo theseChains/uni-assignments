@@ -24,9 +24,14 @@ void mode::shift()
         rectangles = false;
         lines = true;
     }
-    else
+    else if (lines)
     {
         lines = false;
+        ellipses = true;
+    }
+    else
+    {
+        ellipses = false;
         circles = true;
     }
 }
@@ -41,8 +46,12 @@ std::string mode::get()
     {
         return "working with rectangles";
     }
-    else
+    else if (lines)
     {
         return "working with lines";
+    }
+    else
+    {
+        return "working with ellipses";
     }
 }

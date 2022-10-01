@@ -43,8 +43,7 @@ namespace mode
     inline bool circles{ true };
     inline bool rectangles{ false };
     inline bool lines{ false };
-    inline bool rings{ false };
-    inline bool asterisks{ false };
+    inline bool ellipses{ false };
 
     void shift();
 

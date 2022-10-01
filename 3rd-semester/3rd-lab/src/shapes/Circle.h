@@ -34,7 +34,7 @@ public:
     void setColor(const sf::Color& color);
     void setRadius(float newRadius);
 
-private:
+protected:
     float m_radius{};
 
     bool m_isShown{};

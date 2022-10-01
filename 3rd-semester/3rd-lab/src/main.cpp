@@ -13,9 +13,12 @@
 #include "gui-events/GuiConfig.h"
 #include "gui-events/GuiEvents.h"
 
+#include "shapes/Figure.h"
+
 #include "shapes/Circle.h"
 #include "shapes/Rectangle.h"
 #include "shapes/Line.h"
+#include "shapes/Ellipse.h"
 
 #include "render/Renderer.h"
 
@@ -37,10 +40,12 @@ int main()
     std::array<std::unique_ptr<Circle>, 3> circlesToRender{};
     std::array<std::unique_ptr<Rectangle>, 3> rectanglesToRender{};
     std::array<std::unique_ptr<Line>, 3> linesToRender{};
+    std::array<std::unique_ptr<Ellipse>, 3> ellipsesToRender{};
 
     VectorOfArrayOfCirclePtrs circleArrays{};
     VectorOfArrayOfRectanglePtrs rectangleArrays{};
     VectorOfArrayOfLinePtrs lineArrays{};
+    VectorOfArrayOfEllipsePtrs ellipseArrays{};
 
     sf::Clock deltaClock{};
     while (window.isOpen())

@@ -14,24 +14,32 @@ public:
 
     struct ToShow
     {
-        std::optional<sf::CircleShape> optCircleShape{};
-        std::optional<sf::RectangleShape> optRectangleShape{};
+        ToShow() = default;
+        ToShow(const std::optional<sf::CircleShape>& optCircleShape)
+            : m_optCircleShape{ optCircleShape}
+        {}
+        ToShow(const std::optional<sf::RectangleShape>& optRectangleShape)
+            : m_optRectangleShape{ optRectangleShape }
+        {}
+
+        std::optional<sf::CircleShape> m_optCircleShape{};
+        std::optional<sf::RectangleShape> m_optRectangleShape{};
 
         sf::RectangleShape rectValue() const
         {
-            return optRectangleShape.value();
+            return m_optRectangleShape.value();
         }
 
         sf::CircleShape circleValue() const
         {
-            return optCircleShape.value();
+            return m_optCircleShape.value();
         }
 
         // overload std::optional<sf::CircleShape> cast - provide a way to convert this ToShow
         // struct to the optional<> type.
         // with this we can overload a funciton that differ only by return types
-        operator std::optional<sf::CircleShape>() const { return optCircleShape; };
-        operator std::optional<sf::RectangleShape>() const { return optRectangleShape; };
+        operator std::optional<sf::CircleShape>() const;
+        operator std::optional<sf::RectangleShape>() const;
     };
 
     virtual ToShow show(bool modifyVisibility = true) = 0;

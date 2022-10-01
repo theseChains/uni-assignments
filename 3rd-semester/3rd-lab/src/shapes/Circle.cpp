@@ -43,7 +43,7 @@ Circle::ToShow Circle::show(bool modifyVisibility)
         {
             m_isShown = false;
 
-            return ToShow{ std::nullopt };
+            return ToShow{};
         }
         else
         {
@@ -61,7 +61,7 @@ Circle::ToShow Circle::show(bool modifyVisibility)
         }
         else
         {
-            return ToShow{ std::nullopt };
+            return ToShow{};
         }
     }
 }

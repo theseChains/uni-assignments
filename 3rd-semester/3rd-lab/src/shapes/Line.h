@@ -9,16 +9,17 @@
 
 #include "../util.h"
 
+#include "Figure.h"
 #include "Vertex.h"
 
-class Line
+class Line : public Figure
 {
 public:
     Line();
     Line(float mainPointX, float mainPointY, float length, const sf::Color& color);
     Line(float mainPointX, float mainPointY, float length, const std::array<int, 4>& colorComponents);
 
-    std::optional<sf::RectangleShape> show(bool modifyVisibility = true);
+    ToShow show(bool modifyVisibility = true);
 
     void moveTo(float offsetX, float offsetY);
 
@@ -26,7 +27,6 @@ public:
 
     bool isShown() const;
 
-    Vertex getPosition() const;
     sf::Color getColor() const;
     float getLength() const;
 
@@ -34,8 +34,6 @@ public:
     void setColor(const sf::Color& color);
 
 private:
-    Vertex m_vertex{};
-
     float m_length{};
 
     sf::Color m_color{};

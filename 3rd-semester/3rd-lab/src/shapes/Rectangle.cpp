@@ -2,7 +2,7 @@
 
 // default constructor, initialized with arbitrary values
 Rectangle::Rectangle()
-    : m_vertex{ rnd::getFloat(util::guiWidth, util::windowWidth - 100),
+    : Figure{ rnd::getFloat(util::guiWidth, util::windowWidth - 100),
         rnd::getFloat(0, util::windowHeight - 100) },
     m_width{ 150.0f },
     m_height{ 40.0f },
@@ -14,7 +14,7 @@ Rectangle::Rectangle()
 
 Rectangle::Rectangle(float topLeftX, float topLeftY, float width, float height,
         const sf::Color& color)
-    : m_vertex{ topLeftX, topLeftY },
+    : Figure{ topLeftX, topLeftY },
     m_width{ width },
     m_height{ height },
     m_color{ color },
@@ -27,7 +27,7 @@ Rectangle::Rectangle(float topLeftX, float topLeftY, float width, float height,
 
 Rectangle::Rectangle(float topLeftX, float topLeftY, float width, float height,
         const std::array<int, 4>& colorComponents)
-    : m_vertex{ topLeftX, topLeftY },
+    : Figure{ topLeftX, topLeftY },
     m_width{ width },
     m_height{ height },
     m_color{ sf::Color(colorComponents[component::red], colorComponents[component::green],
@@ -39,7 +39,7 @@ Rectangle::Rectangle(float topLeftX, float topLeftY, float width, float height,
     std::cout << "Rectangle object created\n";
 }
 
-std::optional<sf::RectangleShape> Rectangle::show(bool modifyVisibility)
+Figure::ToShow Rectangle::show(bool modifyVisibility)
 {
     if (modifyVisibility)
     {
@@ -47,13 +47,13 @@ std::optional<sf::RectangleShape> Rectangle::show(bool modifyVisibility)
         {
             m_isShown = false;
 
-            return std::nullopt;
+            return ToShow{};
         }
         else
         {
             m_isShown = true;
 
-            return sf::RectangleShape{ createSprite() };
+            return ToShow{ sf::RectangleShape{ createSprite() } };
         }
     }
     // for rendering
@@ -61,11 +61,11 @@ std::optional<sf::RectangleShape> Rectangle::show(bool modifyVisibility)
     {
         if (m_isShown)
         {
-            return sf::RectangleShape{ createSprite() };
+            return ToShow{ sf::RectangleShape{ createSprite() } };
         }
         else
         {
-            return std::nullopt;
+            return ToShow{};
         }
     }
 }
@@ -120,11 +120,6 @@ void Rectangle::changeHeight(float heightOffset)
 bool Rectangle::isShown() const
 {
     return m_isShown;
-}
-
-Vertex Rectangle::getPosition() const
-{
-    return m_vertex;
 }
 
 float Rectangle::getWidth() const

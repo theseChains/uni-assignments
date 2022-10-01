@@ -2,7 +2,7 @@
 
 // default constructor, initialized with arbitrary values
 Line::Line()
-    : m_vertex{ rnd::getFloat(util::guiWidth, util::windowWidth - 100),
+    : Figure{ rnd::getFloat(util::guiWidth, util::windowWidth - 100),
         rnd::getFloat(0, util::windowHeight - 100) },
     m_length{ 100.0f },
     m_color{ sf::Color::Magenta },
@@ -13,7 +13,7 @@ Line::Line()
 }
 
 Line::Line(float mainPointX, float mainPointY, float length, const sf::Color& color)
-    : m_vertex{ mainPointX, mainPointY },
+    : Figure{ mainPointX, mainPointY },
     m_length{ length },
     m_color{ color },
     m_angle{ 0.0f },
@@ -25,7 +25,7 @@ Line::Line(float mainPointX, float mainPointY, float length, const sf::Color& co
 }
 
 Line::Line(float mainPointX, float mainPointY, float length, const std::array<int, 4>& colorComponents)
-    : m_vertex{ mainPointX, mainPointY },
+    : Figure{ mainPointX, mainPointY },
     m_length{ length },
     m_color{ sf::Color(colorComponents[component::red], colorComponents[component::green],
             colorComponents[component::blue], colorComponents[component::alpha]) },
@@ -37,7 +37,7 @@ Line::Line(float mainPointX, float mainPointY, float length, const std::array<in
     std::cout << "Line object created\n";
 }
 
-std::optional<sf::RectangleShape> Line::show(bool modifyVisibility)
+Figure::ToShow Line::show(bool modifyVisibility)
 {
     if (modifyVisibility)
     {
@@ -45,13 +45,13 @@ std::optional<sf::RectangleShape> Line::show(bool modifyVisibility)
         {
             m_isShown = false;
 
-            return std::nullopt;
+            return ToShow{};
         }
         else
         {
             m_isShown = true;
 
-            return sf::RectangleShape{ createSprite() };
+            return ToShow{ sf::RectangleShape{ createSprite() } };
         }
     }
     // for rendering
@@ -59,11 +59,11 @@ std::optional<sf::RectangleShape> Line::show(bool modifyVisibility)
     {
         if (m_isShown)
         {
-            return sf::RectangleShape{ createSprite() };
+            return ToShow{ sf::RectangleShape{ createSprite() } };
         }
         else
         {
-            return std::nullopt;
+            return ToShow{};
         }
     }
 }
@@ -96,11 +96,6 @@ void Line::rotate(float angleOffset)
 bool Line::isShown() const
 {
     return m_isShown;
-}
-
-Vertex Line::getPosition() const
-{
-    return m_vertex;
 }
 
 sf::Color Line::getColor() const

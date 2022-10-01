@@ -99,9 +99,9 @@ int main()
 
         window.clear();
 
-        renderer.renderCircles(circlesToRender);
-        renderer.renderShapes(rectanglesToRender);
-        renderer.renderShapes(linesToRender);
+        renderer.renderCircleShapes(circlesToRender);
+        renderer.renderRectangleShapes(rectanglesToRender);
+        renderer.renderRectangleShapes(linesToRender);
 
         renderer.renderShapeArrays(circleArrays);
         renderer.renderShapeArrays(rectangleArrays);

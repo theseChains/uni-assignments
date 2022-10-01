@@ -12,7 +12,7 @@
 #include "Figure.h"
 #include "Vertex.h"
 
-class Rectangle
+class Rectangle : public Figure
 {
 public:
     Rectangle();
@@ -20,16 +20,15 @@ public:
     Rectangle(float topLeftX, float topLeftY, float width, float height,
             const std::array<int, 4>& colorComponents);
 
-    std::optional<sf::RectangleShape> show(bool modifyVisibility = true);
+    ToShow show(bool modifyVisibility = true) override;
 
-    void moveTo(float offsetX, float offsetY);
+    void moveTo(float offsetX, float offsetY) override;
 
     void changeWidth(float widthOffset);
     void changeHeight(float heightOffset);
 
     bool isShown() const;
 
-    Vertex getPosition() const;
     float getWidth() const;
     float getHeight() const;
     sf::Color getColor() const;
@@ -37,8 +36,6 @@ public:
     void setPosition(float newX, float newY);
 
 private:
-    Vertex m_vertex{};
-
     float m_width{};
     float m_height{};
 

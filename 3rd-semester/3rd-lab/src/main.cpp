@@ -99,7 +99,7 @@ int main()
 
         window.clear();
 
-        renderer.renderShapes(circlesToRender);
+        renderer.renderCircles(circlesToRender);
         renderer.renderShapes(rectanglesToRender);
         renderer.renderShapes(linesToRender);
 

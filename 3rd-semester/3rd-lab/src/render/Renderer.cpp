@@ -3,21 +3,32 @@
 Renderer::Renderer(sf::RenderWindow& window) : m_window{ window }
 {}
 
-template <typename ShapeType>
-void Renderer::renderShapes(std::array<std::unique_ptr<ShapeType>, 3>& shapesToRender)
+template <typename RectangleShape>
+void Renderer::renderShapes(std::array<std::unique_ptr<RectangleShape>, 3>& shapesToRender)
 {
     for (const auto& shape : shapesToRender)
     {
         if (shape.get() != nullptr && shape.get()->isShown())
         {
-            m_window.get().draw(shape.get()->show(false).value());
+            //m_window.get().draw(shape.get()->show(false).value());
         }
     }
 }
 
-template void Renderer::renderShapes(std::array<std::unique_ptr<Circle>, 3>&);
 template void Renderer::renderShapes(std::array<std::unique_ptr<Rectangle>, 3>&);
 template void Renderer::renderShapes(std::array<std::unique_ptr<Line>, 3>&);
+
+void Renderer::renderCircles(std::array<std::unique_ptr<Circle>, 3>& shapesToRender)
+{
+    for (const auto& shape : shapesToRender)
+    {
+        if (shape.get() != nullptr && shape.get()->isShown())
+        {
+            Figure::ToShow stuff{ shape.get()->show(false).circleValue() };
+            m_window.get().draw(stuff.optCircleShape.value());
+        }
+    }
+}
 
 void Renderer::renderRings(std::array<std::unique_ptr<Ring>, 3>& ringsToRender)
 {

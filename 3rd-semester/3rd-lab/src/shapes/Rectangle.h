@@ -9,6 +9,7 @@
 
 #include "../util.h"
 
+#include "Figure.h"
 #include "Vertex.h"
 
 class Rectangle

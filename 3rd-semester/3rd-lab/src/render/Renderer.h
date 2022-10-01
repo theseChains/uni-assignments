@@ -24,9 +24,12 @@ public:
 public:
     Renderer(sf::RenderWindow& window);
 
-    // Circle, Rectangle, Line
+    // Rectangle, Line
     template <typename ShapeType>
     void renderShapes(std::array<std::unique_ptr<ShapeType>, 3>& shapesToRender);
+
+    // Circle
+    void renderCircles(std::array<std::unique_ptr<Circle>, 3>& shapesToRender);
 
     template <typename ShapeType>
     void renderShapeArrays(VectorOfArrayOfShapePtrs<ShapeType>& arraysToRender);

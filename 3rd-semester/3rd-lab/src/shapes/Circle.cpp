@@ -35,7 +35,7 @@ Circle::Circle(float topLeftX, float topLeftY, float radius,
     std::cout << "Circle object created\n";
 }
 
-std::optional<sf::CircleShape> Circle::show(bool modifyVisibility)
+Circle::ToShow Circle::show(bool modifyVisibility)
 {
     if (modifyVisibility)
     {
@@ -43,13 +43,13 @@ std::optional<sf::CircleShape> Circle::show(bool modifyVisibility)
         {
             m_isShown = false;
 
-            return std::nullopt;
+            return ToShow{ std::nullopt };
         }
         else
         {
             m_isShown = true;
 
-            return sf::CircleShape{ createSprite() };
+            return ToShow{ sf::CircleShape{ createSprite() } };
         }
     }
     // for rendering
@@ -57,11 +57,11 @@ std::optional<sf::CircleShape> Circle::show(bool modifyVisibility)
     {
         if (m_isShown)
         {
-            return sf::CircleShape{ createSprite() };
+            return ToShow{ sf::CircleShape{ createSprite() } };
         }
         else
         {
-            return std::nullopt;
+            return ToShow{ std::nullopt };
         }
     }
 }
@@ -99,11 +99,6 @@ void Circle::changeRadius(float radiusOffset)
 bool Circle::isShown() const
 {
     return m_isShown;
-}
-
-Vertex Circle::getPosition() const
-{
-    return m_vertex;
 }
 
 float Circle::getRadius() const

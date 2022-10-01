@@ -10,7 +10,7 @@
 class Figure
 {
 public:
-    Figure(float mainPointX, float mainPointY);
+    Figure(float mainPointX, float mainPointY, const sf::Color& color);
 
     struct ToShow
     {
@@ -37,6 +37,8 @@ public:
 
 protected:
     Vertex m_vertex{};
+
+    sf::Color m_color{};
 };
 
 #endif

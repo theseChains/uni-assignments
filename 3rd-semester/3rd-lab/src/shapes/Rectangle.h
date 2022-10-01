@@ -39,8 +39,6 @@ private:
     float m_width{};
     float m_height{};
 
-    sf::Color m_color{};
-
     bool m_isShown{};
 
     // auxiliary

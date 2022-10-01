@@ -36,8 +36,6 @@ public:
 private:
     float m_length{};
 
-    sf::Color m_color{};
-
     float m_angle{};
 
     bool m_isShown{};

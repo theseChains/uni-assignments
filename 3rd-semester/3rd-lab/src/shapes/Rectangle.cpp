@@ -3,10 +3,9 @@
 // default constructor, initialized with arbitrary values
 Rectangle::Rectangle()
     : Figure{ rnd::getFloat(util::guiWidth, util::windowWidth - 100),
-        rnd::getFloat(0, util::windowHeight - 100) },
+        rnd::getFloat(0, util::windowHeight - 100), sf::Color::Magenta },
     m_width{ 150.0f },
     m_height{ 40.0f },
-    m_color{ sf::Color::Magenta },
     m_isShown{ false }
 {
     std::cout << "Rectangle object created\n";
@@ -14,10 +13,9 @@ Rectangle::Rectangle()
 
 Rectangle::Rectangle(float topLeftX, float topLeftY, float width, float height,
         const sf::Color& color)
-    : Figure{ topLeftX, topLeftY },
+    : Figure{ topLeftX, topLeftY, color },
     m_width{ width },
     m_height{ height },
-    m_color{ color },
     m_isShown{ false }
 {
     checkForBounds();
@@ -27,11 +25,12 @@ Rectangle::Rectangle(float topLeftX, float topLeftY, float width, float height,
 
 Rectangle::Rectangle(float topLeftX, float topLeftY, float width, float height,
         const std::array<int, 4>& colorComponents)
-    : Figure{ topLeftX, topLeftY },
+    : Figure{ topLeftX, topLeftY, sf::Color(
+            colorComponents[component::red], colorComponents[component::green],
+            colorComponents[component::blue], colorComponents[component::alpha]
+            ) },
     m_width{ width },
     m_height{ height },
-    m_color{ sf::Color(colorComponents[component::red], colorComponents[component::green],
-            colorComponents[component::blue], colorComponents[component::alpha]) },
     m_isShown{ false }
 {
     checkForBounds();

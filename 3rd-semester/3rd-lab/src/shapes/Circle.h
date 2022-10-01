@@ -37,8 +37,6 @@ public:
 private:
     float m_radius{};
 
-    sf::Color m_color{};
-
     bool m_isShown{};
 
     // auxiliary

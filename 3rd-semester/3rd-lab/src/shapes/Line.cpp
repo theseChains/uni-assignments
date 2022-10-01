@@ -3,9 +3,8 @@
 // default constructor, initialized with arbitrary values
 Line::Line()
     : Figure{ rnd::getFloat(util::guiWidth, util::windowWidth - 100),
-        rnd::getFloat(0, util::windowHeight - 100) },
+        rnd::getFloat(0, util::windowHeight - 100), sf::Color::Magenta },
     m_length{ 100.0f },
-    m_color{ sf::Color::Magenta },
     m_angle{ 0.0f },
     m_isShown{ false }
 {
@@ -13,9 +12,8 @@ Line::Line()
 }
 
 Line::Line(float mainPointX, float mainPointY, float length, const sf::Color& color)
-    : Figure{ mainPointX, mainPointY },
+    : Figure{ mainPointX, mainPointY, color },
     m_length{ length },
-    m_color{ color },
     m_angle{ 0.0f },
     m_isShown{ false }
 {
@@ -25,10 +23,11 @@ Line::Line(float mainPointX, float mainPointY, float length, const sf::Color& co
 }
 
 Line::Line(float mainPointX, float mainPointY, float length, const std::array<int, 4>& colorComponents)
-    : Figure{ mainPointX, mainPointY },
+    : Figure{ mainPointX, mainPointY, sf::Color(
+            colorComponents[component::red], colorComponents[component::green],
+            colorComponents[component::blue], colorComponents[component::alpha]
+            ) },
     m_length{ length },
-    m_color{ sf::Color(colorComponents[component::red], colorComponents[component::green],
-            colorComponents[component::blue], colorComponents[component::alpha]) },
     m_angle{ 0.0f },
     m_isShown{ false }
 {

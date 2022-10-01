@@ -3,18 +3,16 @@
 // default constructor, initialized with arbitrary values
 Circle::Circle()
     : Figure{ rnd::getFloat(util::guiWidth, util::windowWidth - 100),
-        rnd::getFloat(0, util::windowHeight - 100) },
+        rnd::getFloat(0, util::windowHeight - 100), sf::Color::Magenta },
     m_radius{ 50.0f },
-    m_color{ sf::Color::Magenta },
     m_isShown{ false }
 {
     std::cout << "Circle object created\n";
 }
 
 Circle::Circle(float topLeftX, float topLeftY, float radius, const sf::Color& color)
-    : Figure{ topLeftX, topLeftY },
+    : Figure{ topLeftX, topLeftY, color },
     m_radius{ radius },
-    m_color{ color },
     m_isShown{ false }
 {
     checkForBounds();
@@ -24,10 +22,11 @@ Circle::Circle(float topLeftX, float topLeftY, float radius, const sf::Color& co
 
 Circle::Circle(float topLeftX, float topLeftY, float radius,
         const std::array<int, 4>& colorComponents)
-    : Figure{ topLeftX, topLeftY },
+    : Figure{ topLeftX, topLeftY, sf::Color(
+            colorComponents[component::red], colorComponents[component::green],
+            colorComponents[component::blue], colorComponents[component::alpha]
+            ) },
     m_radius{ radius },
-    m_color{ sf::Color(colorComponents[component::red], colorComponents[component::green],
-            colorComponents[component::blue], colorComponents[component::alpha]) },
     m_isShown{ false }
 {
     checkForBounds();

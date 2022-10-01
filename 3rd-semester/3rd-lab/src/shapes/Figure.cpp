@@ -1,6 +1,7 @@
 #include "Figure.h"
 
-Figure::Figure(float mainPointX, float mainPointY) : m_vertex{ mainPointX, mainPointY }
+Figure::Figure(float mainPointX, float mainPointY, const sf::Color& color)
+    : m_vertex{ mainPointX, mainPointY }, m_color{ color }
 {
 }
 

@@ -33,6 +33,7 @@ void GuiCreation::checkForShapeCreation(std::array<std::unique_ptr<ShapeType>, 3
 template void GuiCreation::checkForShapeCreation(std::array<std::unique_ptr<Circle>, 3>&);
 template void GuiCreation::checkForShapeCreation(std::array<std::unique_ptr<Line>, 3>&);
 template void GuiCreation::checkForShapeCreation(std::array<std::unique_ptr<Ring>, 3>&);
+template void GuiCreation::checkForShapeCreation(std::array<std::unique_ptr<Asterisk>, 3>&);
 
 void GuiCreation::checkForRectangleCreation(std::array<std::unique_ptr<Rectangle>, 3>& rectanglesToRender)
 {

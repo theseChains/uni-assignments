@@ -18,6 +18,8 @@ list (REMOVE_DUPLICATES project_INCLUDE_DIRS)
 add_executable(app.exe ${project_SOURCES})
 target_include_directories(app.exe PRIVATE ${project_INCLUDE_DIRS})
 
+# target_compile_options(app.exe PRIVATE -Wall -Wextra -Wpedantic)
+
 target_include_directories(app.exe PUBLIC /usr/include/SFML)
 target_link_libraries(app.exe sfml-system sfml-window sfml-graphics)
 

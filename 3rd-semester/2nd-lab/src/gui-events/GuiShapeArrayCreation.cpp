@@ -23,6 +23,7 @@ void GuiArrayCreation::checkForShapeArrayCreation(VectorOfArrayOfShapePtrs<Shape
 template void GuiArrayCreation::checkForShapeArrayCreation(VectorOfArrayOfCirclePtrs&);
 template void GuiArrayCreation::checkForShapeArrayCreation(VectorOfArrayOfLinePtrs&);
 template void GuiArrayCreation::checkForShapeArrayCreation(VectorOfArrayOfRingPtrs&);
+template void GuiArrayCreation::checkForShapeArrayCreation(VectorOfArrayOfAsteriskPtrs&);
 
 void GuiArrayCreation::checkForRectangleArrayCreation(VectorOfArrayOfRectanglePtrs& rectangleArraysToRender)
 {

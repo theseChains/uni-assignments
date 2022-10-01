@@ -59,3 +59,5 @@ template void guiCheckForShapeMovement(std::array<std::unique_ptr<Line>, 3>&,
         VectorOfArrayOfLinePtrs&);
 template void guiCheckForShapeMovement(std::array<std::unique_ptr<Ring>, 3>&,
         VectorOfArrayOfRingPtrs&);
+template void guiCheckForShapeMovement(std::array<std::unique_ptr<Asterisk>, 3>&,
+        VectorOfArrayOfAsteriskPtrs&);

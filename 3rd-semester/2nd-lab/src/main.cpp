@@ -95,11 +95,13 @@ int main()
         guiHandleRectangleArrayCreation(rectangleArrays);
         guiHandleLineArrayCreation(lineArrays);
         guiHandleRingArrayCreation(ringArrays);
+        guiHandleAsteriskArrayCreation(asteriskArrays);
 
         guiHandleCircleEvents(circlesToRender, circleArrays);
         guiHandleRectangleEvents(rectanglesToRender, rectangleArrays);
         guiHandleLineEvents(linesToRender, lineArrays);
         guiHandleRingEvents(ringsToRender, ringArrays);
+        guiHandleAsteriskEvents(asterisksToRender, asteriskArrays);
 
         ImGui::End();
 

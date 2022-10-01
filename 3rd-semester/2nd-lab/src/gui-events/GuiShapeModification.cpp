@@ -70,10 +70,11 @@ void guiCheckForRectangleModification(std::array<std::unique_ptr<Rectangle>, 3>&
     }
 }
 
-void guiCheckForLineModification(std::array<std::unique_ptr<Line>, 3>& linesToRender,
-        VectorOfArrayOfLinePtrs& lineArraysToRender)
+template <typename LineShape>
+void guiCheckForLineShapeModification(std::array<std::unique_ptr<LineShape>, 3>& linesToRender,
+        VectorOfArrayOfLineShapePtrs<LineShape>& lineArraysToRender)
 {
-    if (ImGui::Button("Rotate lines clockwise (R)"))
+    if (ImGui::Button("Rotate clockwise (R)"))
     {
         Modification::rotateLinesClockwise(linesToRender);
 
@@ -82,7 +83,7 @@ void guiCheckForLineModification(std::array<std::unique_ptr<Line>, 3>& linesToRe
             Modification::rotateLinesClockwise(lineArray);
         }
     }
-    if (ImGui::Button("Rotate lines counter-\nclockwise (T)"))
+    if (ImGui::Button("Rotate counter-\nclockwise (T)"))
     {
         Modification::rotateLinesCounterClockwise(linesToRender);
 
@@ -92,3 +93,8 @@ void guiCheckForLineModification(std::array<std::unique_ptr<Line>, 3>& linesToRe
         }
     }
 }
+
+template void guiCheckForLineShapeModification(std::array<std::unique_ptr<Line>, 3>&,
+        VectorOfArrayOfLinePtrs&);
+template void guiCheckForLineShapeModification(std::array<std::unique_ptr<Asterisk>, 3>&,
+        VectorOfArrayOfAsteriskPtrs&);

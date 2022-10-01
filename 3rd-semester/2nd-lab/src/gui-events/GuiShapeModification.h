@@ -16,6 +16,7 @@
 #include "../shapes/Rectangle.h"
 #include "../shapes/Line.h"
 #include "../shapes/Ring.h"
+#include "../shapes/Asterisk.h"
 
 // for Circle and Ring classes
 template <typename CircularShape>
@@ -24,7 +25,10 @@ void guiCheckForCircularShapeModification(std::array<std::unique_ptr<CircularSha
 
 void guiCheckForRectangleModification(std::array<std::unique_ptr<Rectangle>, 3>& rectanglesToRender,
         VectorOfArrayOfRectanglePtrs& rectangleArraysToRender);
-void guiCheckForLineModification(std::array<std::unique_ptr<Line>, 3>& linesToRender,
-        VectorOfArrayOfLinePtrs& lineArraysToRender);
+
+// for Line and Asterisk classes
+template <typename LineShape>
+void guiCheckForLineShapeModification(std::array<std::unique_ptr<LineShape>, 3>& linesToRender,
+        VectorOfArrayOfLineShapePtrs<LineShape>& lineArraysToRender);
 
 #endif

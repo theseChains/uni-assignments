@@ -29,3 +29,8 @@ sf::CircleShape Figure::ToShow::circleValue() const
 {
     return m_optCircleShape.value();
 }
+
+sf::ConvexShape Figure::ToShow::convexValue() const
+{
+    return m_optConvexShape.value();
+}

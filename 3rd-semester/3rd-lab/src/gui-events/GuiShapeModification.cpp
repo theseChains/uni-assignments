@@ -94,3 +94,17 @@ void guiCheckForLineShapeModification(std::array<std::unique_ptr<LineShape>, 3>&
 
 template void guiCheckForLineShapeModification(std::array<std::unique_ptr<Line>, 3>&,
         VectorOfArrayOfLinePtrs&);
+
+void guiCheckForEllipseShapeModification(std::array<std::unique_ptr<Ellipse>, 3>& ellipsesToRender,
+        VectorOfArrayOfEllipsePtrs& ellipseArraysToRender)
+{
+    if (ImGui::Button("Rotate by 90 degrees (R)"))
+    {
+        Modification::rotateByNinetyDegrees(ellipsesToRender);
+
+        for (auto& ellipseArray : ellipseArraysToRender)
+        {
+            Modification::rotateByNinetyDegrees(ellipseArray);
+        }
+    }
+}

@@ -35,6 +35,7 @@ void handleEllipseEvents(std::array<std::unique_ptr<Ellipse>, 3>& ellipsesToRend
     if (mode::ellipses)
     {
         Creation::checkForShapeCreation(ellipsesToRender);
+        Modification::checkForEllipseShapeModification(ellipsesToRender);
         Movement::checkForShapeMovement(ellipsesToRender);
     }
 }
@@ -67,5 +68,15 @@ void handleLineArrayEvents(VectorOfArrayOfLinePtrs& lineArraysToRender)
         ArrayCreation::checkForShapeArrayCreation(lineArraysToRender);
         Modification::checkForLineShapeArrayModification(lineArraysToRender);
         Movement::checkForShapeArrayMovement(lineArraysToRender);
+    }
+}
+
+void handleEllipseArrayEvents(VectorOfArrayOfEllipsePtrs& ellipseArraysToRender)
+{
+    if (mode::ellipses)
+    {
+        ArrayCreation::checkForShapeArrayCreation(ellipseArraysToRender);
+        Modification::checkForEllipseArrayModification(ellipseArraysToRender);
+        Movement::checkForShapeArrayMovement(ellipseArraysToRender);
     }
 }

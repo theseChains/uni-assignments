@@ -35,7 +35,8 @@ public:
     template <typename RectangleShape>
     void renderRectangleShapeArrays(VectorOfArrayOfShapePtrs<RectangleShape>& arraysToRender);
 
-    void renderCircleShapeArrays(VectorOfArrayOfCirclePtrs& circleArraysTorender);
+    template <typename CircularShape>
+    void renderCircleShapeArrays(VectorOfArrayOfCircularShapePtrs<CircularShape>& circleArraysTorender);
 };
 
 #endif

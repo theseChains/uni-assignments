@@ -12,6 +12,12 @@ float rnd::getFloat(int min, int max)
     return static_cast<float>(range(mt));
 }
 
+float rnd::getRealNumber(float min, float max)
+{
+    std::uniform_real_distribution<float> range(min, max);
+    return range(mt);
+}
+
 void mode::shift()
 {
     if (circles)

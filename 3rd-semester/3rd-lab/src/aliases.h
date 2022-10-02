@@ -17,7 +17,7 @@ using VectorOfArrayOfShapePtrs = std::vector<std::array<std::unique_ptr<ShapeTyp
 template <typename CircularShape>
 using VectorOfArrayOfCircularShapePtrs = std::vector<std::array<std::unique_ptr<CircularShape>, 3>>;
 
-// Line and something.. 
+// Line and something..
 template <typename LineShape>
 using VectorOfArrayOfLineShapePtrs = std::vector<std::array<std::unique_ptr<LineShape>, 3>>;
 

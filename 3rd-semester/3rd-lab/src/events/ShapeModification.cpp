@@ -52,6 +52,14 @@ void Modification::checkForLineShapeModification(std::array<std::unique_ptr<Line
 
 template void Modification::checkForLineShapeModification(std::array<std::unique_ptr<Line>, 3>&);
 
+void Modification::checkForEllipseShapeModification(std::array<std::unique_ptr<Ellipse>, 3>& ellipsesToRender)
+{
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::R))
+    {
+        Modification::rotateByNinetyDegrees(ellipsesToRender);
+    }
+}
+
 template <typename CircularShape>
 void Modification::checkForCircularShapeArrayModification(
         VectorOfArrayOfCircularShapePtrs<CircularShape>& shapeArraysToRender)
@@ -84,6 +92,14 @@ void Modification::checkForLineShapeArrayModification(
 }
 
 template void Modification::checkForLineShapeArrayModification(VectorOfArrayOfLinePtrs&);
+
+void Modification::checkForEllipseArrayModification(VectorOfArrayOfEllipsePtrs& ellipseArraysToRender)
+{
+    for (auto& ellipseArray : ellipseArraysToRender)
+    {
+        checkForEllipseShapeModification(ellipseArray);
+    }
+}
 
 // circle modification
 template <typename CircularShape>
@@ -180,6 +196,18 @@ void Modification::rotateLinesCounterClockwise(std::array<std::unique_ptr<LineSh
         if (lineShape.get() != nullptr)
         {
             lineShape->rotate(-2.0f);
+        }
+    }
+}
+
+// Ellipse modification
+void Modification::rotateByNinetyDegrees(std::array<std::unique_ptr<Ellipse>, 3>& ellipsesToRender)
+{
+    for (const auto& ellipse : ellipsesToRender)
+    {
+        if (ellipse.get() != nullptr)
+        {
+            ellipse->rotateByNinetyDegrees();
         }
     }
 }

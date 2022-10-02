@@ -33,6 +33,17 @@ void guiHandleLineEvents(std::array<std::unique_ptr<Line>, 3>& linesToRender,
     }
 }
 
+void guiHandleEllipseEvents(std::array<std::unique_ptr<Ellipse>, 3>& ellipsesToRender,
+        VectorOfArrayOfEllipsePtrs& ellipseArraysToRender)
+{
+    if (mode::ellipses)
+    {
+        GuiCreation::checkForShapeCreation(ellipsesToRender);
+        guiCheckForEllipseShapeModification(ellipsesToRender, ellipseArraysToRender);
+        guiCheckForShapeMovement(ellipsesToRender, ellipseArraysToRender);
+    }
+}
+
 // array creation
 void guiHandleCircleArrayCreation(VectorOfArrayOfCirclePtrs& circleArraysToRender)
 {
@@ -55,5 +66,13 @@ void guiHandleLineArrayCreation(VectorOfArrayOfLinePtrs& lineArraysToRender)
     if (mode::lines)
     {
         GuiArrayCreation::checkForShapeArrayCreation(lineArraysToRender);
+    }
+}
+
+void guiHandleEllipseArrayCreation(VectorOfArrayOfEllipsePtrs& ellipseArraysToRender)
+{
+    if (mode::ellipses)
+    {
+        GuiArrayCreation::checkForShapeArrayCreation(ellipseArraysToRender);
     }
 }

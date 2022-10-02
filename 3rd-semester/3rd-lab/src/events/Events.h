@@ -21,5 +21,6 @@ void handleEllipseEvents(std::array<std::unique_ptr<Ellipse>, 3>& ellipsesToRend
 void handleCircleArrayEvents(VectorOfArrayOfCirclePtrs& circleArraysToRender);
 void handleRectangleArrayEvents(VectorOfArrayOfRectanglePtrs& rectangleArraysToRender);
 void handleLineArrayEvents(VectorOfArrayOfLinePtrs& lineArraysToRender);
+void handleEllipseArrayEvents(VectorOfArrayOfEllipsePtrs& ellipseArraysToRender);
 
 #endif

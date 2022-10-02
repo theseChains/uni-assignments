@@ -45,10 +45,14 @@ void Renderer::renderRectangleShapeArrays(VectorOfArrayOfShapePtrs<RectangleShap
 template void Renderer::renderRectangleShapeArrays(VectorOfArrayOfRectanglePtrs&);
 template void Renderer::renderRectangleShapeArrays(VectorOfArrayOfLinePtrs&);
 
-void Renderer::renderCircleShapeArrays(VectorOfArrayOfCirclePtrs& circleArraysToRender)
+template <typename CircularShape>
+void Renderer::renderCircleShapeArrays(VectorOfArrayOfCircularShapePtrs<CircularShape>& circleArraysToRender)
 {
     for (auto& circleArray : circleArraysToRender)
     {
         renderCircleShapes(circleArray);
     }
 }
+
+template void Renderer::renderCircleShapeArrays(VectorOfArrayOfCirclePtrs&);
+template void Renderer::renderCircleShapeArrays(VectorOfArrayOfEllipsePtrs&);

@@ -2,21 +2,23 @@
 
 Ellipse::Ellipse() : Circle{}
 {
-    m_semiaxis = m_radius * 0.5;
+    m_semiaxis = m_radius * rnd::getRealNumber(0.2f, 2.0f);
+    std::cout << "Ellipse object created\n\n";
 }
-
 
 Ellipse::Ellipse(float topLeftX, float topLeftY, float radius, const sf::Color& color)
     : Circle{ topLeftX, topLeftY, radius, color }
 {
-    m_semiaxis = m_radius * 0.5;
+    m_semiaxis = m_radius * rnd::getRealNumber(0.2f, 2.0f);
+    std::cout << "Ellipse object created\n\n";
 }
 
 Ellipse::Ellipse(float topLeftX, float topLeftY, float radius,
         const std::array<int, 4>& colorComponents)
     : Circle{ topLeftX, topLeftY, radius, colorComponents }
 {
-    m_semiaxis = m_radius * 0.5;
+    m_semiaxis = m_radius * rnd::getRealNumber(0.2f, 2.0f);
+    std::cout << "Ellipse object created\n\n";
 }
 
 Ellipse::ToShow Ellipse::show(bool modifyVisibility)

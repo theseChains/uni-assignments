@@ -80,6 +80,7 @@ int main()
                 handleCircleArrayEvents(circleArrays);
                 handleRectangleArrayEvents(rectangleArrays);
                 handleLineArrayEvents(lineArrays);
+                handleEllipseArrayEvents(ellipseArrays);
             }
         }
 
@@ -90,10 +91,12 @@ int main()
         guiHandleCircleArrayCreation(circleArrays);
         guiHandleRectangleArrayCreation(rectangleArrays);
         guiHandleLineArrayCreation(lineArrays);
+        guiHandleEllipseArrayCreation(ellipseArrays);
 
         guiHandleCircleEvents(circlesToRender, circleArrays);
         guiHandleRectangleEvents(rectanglesToRender, rectangleArrays);
         guiHandleLineEvents(linesToRender, lineArrays);
+        guiHandleEllipseEvents(ellipsesToRender, ellipseArrays);
 
         ImGui::End();
 
@@ -107,6 +110,7 @@ int main()
         renderer.renderCircleShapeArrays(circleArrays);
         renderer.renderRectangleShapeArrays(rectangleArrays);
         renderer.renderRectangleShapeArrays(lineArrays);
+        renderer.renderCircleShapeArrays(ellipseArrays);
 
         ImGui::SFML::Render(window);
 

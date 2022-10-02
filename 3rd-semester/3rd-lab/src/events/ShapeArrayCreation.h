@@ -7,12 +7,13 @@
 #include "../shapes/Circle.h"
 #include "../shapes/Rectangle.h"
 #include "../shapes/Line.h"
+#include "../shapes/Ellipse.h"
 
 #include "ShapeCreation.h"
 
 namespace ArrayCreation
 {
-    // line, circle and ring arrays
+    // line, circle and ellipse arrays
     template <typename ShapeType>
     void checkForShapeArrayCreation(VectorOfArrayOfShapePtrs<ShapeType>& arraysToRender);
 

@@ -13,24 +13,30 @@
 
 namespace Modification
 {
-    // for Circle and Ring classes
+    // for Circle
     template <typename CircularShape>
     void checkForCircularShapeModification(std::array<std::unique_ptr<CircularShape>, 3>& shapesToRender);
-
-    void checkForRectangleModification(std::array<std::unique_ptr<Rectangle>, 3>& rectanglesToRender);
 
     template <typename CircularShape>
     void checkForCircularShapeArrayModification(
             VectorOfArrayOfCircularShapePtrs<CircularShape>& shapeArraysToRender);
 
+    // for Rectangle
+    void checkForRectangleModification(std::array<std::unique_ptr<Rectangle>, 3>& rectanglesToRender);
+
     void checkForRectangleArrayModification(VectorOfArrayOfRectanglePtrs& rectangleArraysToRender);
 
-    // for Line and Asterisk
+    // for Line
     template <typename LineShape>
     void checkForLineShapeModification(std::array<std::unique_ptr<LineShape>, 3>& linesShapesToRender);
 
     template <typename LineShape>
     void checkForLineShapeArrayModification(VectorOfArrayOfLineShapePtrs<LineShape>& lineArraysToRender);
+
+    // for Ellipse
+    void checkForEllipseShapeModification(std::array<std::unique_ptr<Ellipse>, 3>& ellipsesToRender);
+
+    void checkForEllipseArrayModification(VectorOfArrayOfEllipsePtrs& ellipseArraysToRender);
 
     // auxiliary
     template <typename CircularShape>
@@ -49,6 +55,8 @@ namespace Modification
 
     template <typename LineShape>
     void rotateLinesCounterClockwise(std::array<std::unique_ptr<LineShape>, 3>& linesToRender);
+
+    void rotateByNinetyDegrees(std::array<std::unique_ptr<Ellipse>, 3>& ellipsesToRender);
 }
 
 #endif

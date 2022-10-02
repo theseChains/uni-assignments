@@ -28,9 +28,12 @@ void guiHandleRectangleEvents(std::array<std::unique_ptr<Rectangle>, 3>& rectang
         VectorOfArrayOfRectanglePtrs& rectangleArraysToRender);
 void guiHandleLineEvents(std::array<std::unique_ptr<Line>, 3>& linesToRender,
         VectorOfArrayOfLinePtrs& lineArraysToRender);
+void guiHandleEllipseEvents(std::array<std::unique_ptr<Ellipse>, 3>& ellipsesToRender,
+        VectorOfArrayOfEllipsePtrs& ellipseArraysToRender);
 
 void guiHandleCircleArrayCreation(VectorOfArrayOfCirclePtrs& circleArraysToRender);
 void guiHandleRectangleArrayCreation(VectorOfArrayOfRectanglePtrs& rectangleArraysToRender);
 void guiHandleLineArrayCreation(VectorOfArrayOfLinePtrs& lineArraysToRender);
+void guiHandleEllipseArrayCreation(VectorOfArrayOfEllipsePtrs& ellipseArraysToRender);
 
 #endif

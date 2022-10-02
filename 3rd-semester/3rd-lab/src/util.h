@@ -36,6 +36,8 @@ namespace rnd
 
     // convenience function to avoid implicit conversions
     float getFloat(int min, int max);
+
+    float getRealNumber(float min, float max);
 }
 
 namespace mode

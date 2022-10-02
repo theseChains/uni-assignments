@@ -3,6 +3,8 @@
 
 #include <SFML/Graphics.hpp>
 
+#include <iostream>
+
 #include "Figure.h"
 #include "Circle.h"
 

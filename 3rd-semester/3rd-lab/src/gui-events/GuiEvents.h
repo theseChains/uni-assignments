@@ -15,6 +15,7 @@
 
 #include "../shapes/Circle.h"
 #include "../shapes/Rectangle.h"
+#include "../shapes/Ellipse.h"
 
 #include "GuiShapeCreation.h"
 #include "GuiShapeArrayCreation.h"

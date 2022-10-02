@@ -1,7 +1,7 @@
 #include "ShapeArrayCreation.h"
 
-template <typename ShapeType>
-void ArrayCreation::checkForShapeArrayCreation(VectorOfArrayOfShapePtrs<ShapeType>& arraysToRender)
+template <typename CircularShape>
+void ArrayCreation::checkForShapeArrayCreation(VectorOfArrayOfCircularShapePtrs<CircularShape>& arraysToRender)
 {
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::N))
     {
@@ -42,22 +42,22 @@ void ArrayCreation::checkForRectangleArrayCreation(VectorOfArrayOfRectanglePtrs&
     }
 }
 
-template <typename ShapeType>
-void ArrayCreation::handleShapeArrayCreation(VectorOfArrayOfShapePtrs<ShapeType>& arraysToRender)
+template <typename CircularShape>
+void ArrayCreation::handleShapeArrayCreation(VectorOfArrayOfCircularShapePtrs<CircularShape>& arraysToRender)
 {
-    ShapeType firstShape{};
-    ShapeType secondShape{ Creation::createFirstConstructorShape<ShapeType>() };
-    ShapeType thirdShape{ Creation::createSecondConstructorShape<ShapeType>() };
+    CircularShape firstShape{};
+    CircularShape secondShape{ Creation::createFirstConstructorCircularShape<CircularShape>() };
+    CircularShape thirdShape{ Creation::createSecondConstructorCircularShape<CircularShape>() };
 
     firstShape.show();
     secondShape.show();
     thirdShape.show();
 
     // i think i have to construct this in-place, otherwise std::construct_at fails
-    arraysToRender.push_back(std::array<std::unique_ptr<ShapeType>, 3>{
-        std::make_unique<ShapeType>(firstShape),
-        std::make_unique<ShapeType>(secondShape),
-        std::make_unique<ShapeType>(thirdShape)
+    arraysToRender.push_back(std::array<std::unique_ptr<CircularShape>, 3>{
+        std::make_unique<CircularShape>(firstShape),
+        std::make_unique<CircularShape>(secondShape),
+        std::make_unique<CircularShape>(thirdShape)
     });
 }
 

@@ -4,7 +4,7 @@ void handleCircleEvents(std::array<std::unique_ptr<Circle>, 3>& circlesToRender)
 {
     if (mode::circles)
     {
-        Creation::checkForShapeCreation(circlesToRender);
+        Creation::checkForCircularShapeCreation(circlesToRender);
         Modification::checkForCircularShapeModification(circlesToRender);
         Movement::checkForShapeMovement(circlesToRender);
     }
@@ -24,7 +24,7 @@ void handleEllipseEvents(std::array<std::unique_ptr<Ellipse>, 3>& ellipsesToRend
 {
     if (mode::ellipses)
     {
-        Creation::checkForShapeCreation(ellipsesToRender);
+        Creation::checkForCircularShapeCreation(ellipsesToRender);
         Modification::checkForEllipseShapeModification(ellipsesToRender);
         Movement::checkForShapeMovement(ellipsesToRender);
     }

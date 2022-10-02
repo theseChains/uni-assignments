@@ -3,20 +3,20 @@
 // gonna have to do a lot here.. might make the same constructor for a trapezoid and a rhombus
 
 // Ellipse and Circle shape creation
-template <typename ShapeType>
-void Creation::checkForShapeCreation(std::array<std::unique_ptr<ShapeType>, 3>& shapesToRender)
+template <typename CircularShape>
+void Creation::checkForCircularShapeCreation(std::array<std::unique_ptr<CircularShape>, 3>& shapesToRender)
 {
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::F))
     {
-        handleDefaultShapeCreation(shapesToRender[util::defaultShapeIndex]);
+        handleDefaultCircularShapeCreation(shapesToRender[util::defaultShapeIndex]);
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::C))
     {
-        handleFirstConstructorShapeCreation(shapesToRender[util::firstConstructorShapeIndex]);
+        handleFirstConstructorCircularShapeCreation(shapesToRender[util::firstConstructorShapeIndex]);
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::V))
     {
-        handleSecondConstructorShapeCreation(shapesToRender[util::secondConstructorShapeIndex]);
+        handleSecondConstructorCircularShapeCreation(shapesToRender[util::secondConstructorShapeIndex]);
     }
     // also put the deletion here, too lazy to move this somewhere else
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::G))
@@ -33,8 +33,8 @@ void Creation::checkForShapeCreation(std::array<std::unique_ptr<ShapeType>, 3>& 
     }
 }
 
-template void Creation::checkForShapeCreation(std::array<std::unique_ptr<Circle>, 3>&);
-template void Creation::checkForShapeCreation(std::array<std::unique_ptr<Ellipse>, 3>&);
+template void Creation::checkForCircularShapeCreation(std::array<std::unique_ptr<Circle>, 3>&);
+template void Creation::checkForCircularShapeCreation(std::array<std::unique_ptr<Ellipse>, 3>&);
 
 // Rectangle shape creation
 void Creation::checkForRectangleShapeCreation(std::array<std::unique_ptr<Rectangle>, 3>& rectanglesToRender)
@@ -67,7 +67,7 @@ void Creation::checkForRectangleShapeCreation(std::array<std::unique_ptr<Rectang
 }
 
 // Ellipse and Circle shape creation auxiliary functions and structs
-struct CirclePointAndRadius 
+struct CirclePointAndRadius
 {
     float m_mainPointX{};
     float m_mainPointY{};
@@ -110,89 +110,91 @@ void Creation::hideAndDeleteShape(std::unique_ptr<ShapeType>& oldShapePtr)
     }
 }
 
-template <typename ShapeType>
-void Creation::createAndShowDefaultShape(std::unique_ptr<ShapeType>& newShapePtr)
+template <typename CircularShape>
+void Creation::createAndShowDefaultCircularShape(std::unique_ptr<CircularShape>& newShapePtr)
 {
-    ShapeType defaultShape{};
+    CircularShape defaultShape{};
 
     defaultShape.show();
-    newShapePtr = std::make_unique<ShapeType>(defaultShape);
+    newShapePtr = std::make_unique<CircularShape>(defaultShape);
 }
 
-template <typename ShapeType>
-ShapeType Creation::createFirstConstructorShape()
+template <typename CircularShape>
+CircularShape Creation::createFirstConstructorCircularShape()
 {
     CirclePointAndRadius circleShapePointAndRadius{ createRandomPointAndRadius() };
-    Color shapeColor{ createRandomColor() };
+    Color circleColor{ createRandomColor() };
 
-    ShapeType firstConstructorShape{ shapeDimensions.mainPointX, shapeDimensions.mainPointY,
-        shapeDimensions.size, sf::Color(shapeColor.redComponent, shapeColor.greenComponent,
-        shapeColor.blueComponent) };
+    CircularShape firstConstructorShape{ circleShapePointAndRadius.m_mainPointX,
+        circleShapePointAndRadius.m_mainPointY, circleShapePointAndRadius.m_radius,
+        sf::Color(circleColor.m_redComponent, circleColor.m_greenComponent,
+        circleColor.m_blueComponent) };
 
     return firstConstructorShape;
 }
 
-template <typename ShapeType>
-ShapeType Creation::createSecondConstructorShape()
+template <typename CircularShape>
+CircularShape Creation::createSecondConstructorCircularShape()
 {
-    Dimensions shapeDimensions{ createRandomDimensions() };
-    Color shapeColor{ createRandomColor() };
+    CirclePointAndRadius circleShapePointAndRadius{ createRandomPointAndRadius() };
+    Color circleColor{ createRandomColor() };
     int alphaComponent{ rnd::getNumber(50, 255) };
 
-    ShapeType secondConstructorShape{ shapeDimensions.mainPointX, shapeDimensions.mainPointY,
-        shapeDimensions.size, std::array<int, 4>{ shapeColor.redComponent,
-        shapeColor.greenComponent, shapeColor.blueComponent, alphaComponent } };
+    CircularShape secondConstructorShape{ circleShapePointAndRadius.m_mainPointX,
+        circleShapePointAndRadius.m_mainPointY, circleShapePointAndRadius.m_radius,
+        std::array<int, 4>{ circleColor.m_redComponent, circleColor.m_greenComponent,
+        circleColor.m_blueComponent, alphaComponent } };
 
     return secondConstructorShape;
 }
 
-template <typename ShapeType>
-void Creation::handleDefaultShapeCreation(std::unique_ptr<ShapeType>& shapePtr)
+template <typename CircularShape>
+void Creation::handleDefaultCircularShapeCreation(std::unique_ptr<CircularShape>& shapePtr)
 {
     if (shapePtr != nullptr)
     {
         hideAndDeleteShape(shapePtr);
-        createAndShowDefaultShape(shapePtr);
+        createAndShowDefaultCircularShape(shapePtr);
     }
     else
     {
-        createAndShowDefaultShape(shapePtr);
+        createAndShowDefaultCircularShape(shapePtr);
     }
 }
 
-template <typename ShapeType>
-void Creation::handleFirstConstructorShapeCreation(std::unique_ptr<ShapeType>& shapePtr)
+template <typename CircularShape>
+void Creation::handleFirstConstructorCircularShapeCreation(std::unique_ptr<CircularShape>& shapePtr)
 {
     if (shapePtr != nullptr)
     {
         hideAndDeleteShape(shapePtr);
-        ShapeType firstConstructorShape{ createFirstConstructorShape<ShapeType>() };
+        CircularShape firstConstructorShape{ createFirstConstructorCircularShape<CircularShape>() };
         firstConstructorShape.show();
-        shapePtr = std::make_unique<ShapeType>(firstConstructorShape);
+        shapePtr = std::make_unique<CircularShape>(firstConstructorShape);
     }
     else
     {
-        ShapeType firstConstructorShape{ createFirstConstructorShape<ShapeType>() };
+        CircularShape firstConstructorShape{ createFirstConstructorCircularShape<CircularShape>() };
         firstConstructorShape.show();
-        shapePtr = std::make_unique<ShapeType>(firstConstructorShape);
+        shapePtr = std::make_unique<CircularShape>(firstConstructorShape);
     }
 }
 
-template <typename ShapeType>
-void Creation::handleSecondConstructorShapeCreation(std::unique_ptr<ShapeType>& shapePtr)
+template <typename CircularShape>
+void Creation::handleSecondConstructorCircularShapeCreation(std::unique_ptr<CircularShape>& shapePtr)
 {
     if (shapePtr != nullptr)
     {
         hideAndDeleteShape(shapePtr);
-        ShapeType secondConstructorShape{ createSecondConstructorShape<ShapeType>() };
+        CircularShape secondConstructorShape{ createSecondConstructorCircularShape<CircularShape>() };
         secondConstructorShape.show();
-        shapePtr = std::make_unique<ShapeType>(secondConstructorShape);
+        shapePtr = std::make_unique<CircularShape>(secondConstructorShape);
     }
     else
     {
-        ShapeType secondConstructorShape{ createSecondConstructorShape<ShapeType>() };
+        CircularShape secondConstructorShape{ createSecondConstructorCircularShape<CircularShape>() };
         secondConstructorShape.show();
-        shapePtr = std::make_unique<ShapeType>(secondConstructorShape);
+        shapePtr = std::make_unique<CircularShape>(secondConstructorShape);
     }
 }
 
@@ -215,8 +217,8 @@ Rectangle Creation::createFirstConstructorRectangle()
     Color rectangleColor{ createRandomColor() };
 
     Rectangle firstConstructorRectangle{ topLeftX, topLeftY, width, height,
-        sf::Color(rectangleColor.redComponent, rectangleColor.greenComponent,
-            rectangleColor.blueComponent) };
+        sf::Color(rectangleColor.m_redComponent, rectangleColor.m_greenComponent,
+            rectangleColor.m_blueComponent) };
 
     return firstConstructorRectangle;
 }
@@ -232,8 +234,8 @@ Rectangle Creation::createSecondConstructorRectangle()
     int alphaComponent{ rnd::getNumber(50, 255) };
 
     Rectangle secondConstructorRectangle{ topLeftX, topLeftY, width, height,
-        std::array<int, 4>{ rectangleColor.redComponent, rectangleColor.greenComponent,
-            rectangleColor.blueComponent, alphaComponent } };
+        std::array<int, 4>{ rectangleColor.m_redComponent, rectangleColor.m_greenComponent,
+            rectangleColor.m_blueComponent, alphaComponent } };
 
     return secondConstructorRectangle;
 }

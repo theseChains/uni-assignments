@@ -5,7 +5,7 @@ void guiHandleCircleEvents(std::array<std::unique_ptr<Circle>, 3>& circlesToRend
 {
     if (mode::circles)
     {
-        GuiCreation::checkForShapeCreation(circlesToRender);
+        GuiCreation::checkForCircularShapeCreation(circlesToRender);
         guiCheckForCircularShapeModification(circlesToRender, circleArraysToRender);
         guiCheckForShapeMovement(circlesToRender, circleArraysToRender);
     }
@@ -27,7 +27,7 @@ void guiHandleEllipseEvents(std::array<std::unique_ptr<Ellipse>, 3>& ellipsesToR
 {
     if (mode::ellipses)
     {
-        GuiCreation::checkForShapeCreation(ellipsesToRender);
+        GuiCreation::checkForCircularShapeCreation(ellipsesToRender);
         guiCheckForEllipseShapeModification(ellipsesToRender, ellipseArraysToRender);
         guiCheckForShapeMovement(ellipsesToRender, ellipseArraysToRender);
     }

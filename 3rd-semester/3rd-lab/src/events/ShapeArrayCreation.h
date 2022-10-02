@@ -13,11 +13,11 @@
 namespace ArrayCreation
 {
     // circle and ellipse arrays
-    template <typename ShapeType>
-    void checkForShapeArrayCreation(VectorOfArrayOfShapePtrs<ShapeType>& arraysToRender);
+    template <typename CircularShape>
+    void checkForShapeArrayCreation(VectorOfArrayOfCircularShapePtrs<CircularShape>& arraysToRender);
 
-    template <typename ShapeType>
-    void handleShapeArrayCreation(VectorOfArrayOfShapePtrs<ShapeType>& arraysToRender);
+    template <typename CircularShape>
+    void handleShapeArrayCreation(VectorOfArrayOfCircularShapePtrs<CircularShape>& arraysToRender);
 
     // rectangle arrays
     void checkForRectangleArrayCreation(VectorOfArrayOfRectanglePtrs& rectangleArraysToRender);

@@ -12,31 +12,31 @@
 
 namespace Creation
 {
-    // for Circle and Ring classes
-    template <typename ShapeType>
-    void checkForShapeCreation(std::array<std::unique_ptr<ShapeType>, 3>& shapesToRender);
+    // for Circle and Ellipse classes
+    template <typename CircularShape>
+    void checkForCircularShapeCreation(std::array<std::unique_ptr<CircularShape>, 3>& shapesToRender);
 
     // auxiliary funcitons
     template <typename ShapeType>
     void hideAndDeleteShape(std::unique_ptr<ShapeType>& oldShapePtr);
 
-    template <typename ShapeType>
-    void createAndShowDefaultShape(std::unique_ptr<ShapeType>& newShapePtr);
+    template <typename CircularShape>
+    void createAndShowDefaultCircularShape(std::unique_ptr<CircularShape>& newShapePtr);
 
-    template <typename ShapeType>
-    ShapeType createFirstConstructorShape();
+    template <typename CircularShape>
+    CircularShape createFirstConstructorCircularShape();
 
-    template <typename ShapeType>
-    ShapeType createSecondConstructorShape();
+    template <typename CircularShape>
+    CircularShape createSecondConstructorCircularShape();
 
-    template <typename ShapeType>
-    void handleDefaultShapeCreation(std::unique_ptr<ShapeType>& shapePtr);
+    template <typename CircularShape>
+    void handleDefaultCircularShapeCreation(std::unique_ptr<CircularShape>& shapePtr);
 
-    template <typename ShapeType>
-    void handleFirstConstructorShapeCreation(std::unique_ptr<ShapeType>& shapePtr);
+    template <typename CircularShape>
+    void handleFirstConstructorCircularShapeCreation(std::unique_ptr<CircularShape>& shapePtr);
 
-    template <typename ShapeType>
-    void handleSecondConstructorShapeCreation(std::unique_ptr<ShapeType>& shapePtr);
+    template <typename CircularShape>
+    void handleSecondConstructorCircularShapeCreation(std::unique_ptr<CircularShape>& shapePtr);
 
     // for Rectangle class
     void checkForRectangleShapeCreation(std::array<std::unique_ptr<Rectangle>, 3>& rectanglesToRender);

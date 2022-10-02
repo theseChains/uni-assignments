@@ -9,6 +9,7 @@
 #include "shapes/Rectangle.h"
 #include "shapes/Ellipse.h"
 
+// all shapes
 template <typename ShapeType>
 using VectorOfArrayOfShapePtrs = std::vector<std::array<std::unique_ptr<ShapeType>, 3>>;
 

@@ -35,6 +35,9 @@ protected:
     Vertex m_fourthVertex{};
 
     sf::Color m_color{};
+
+    // initializes second, third and fourth vertices
+    void initializeVertices();
 };
 
 #endif

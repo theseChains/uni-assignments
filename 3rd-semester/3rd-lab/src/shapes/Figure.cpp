@@ -20,6 +20,11 @@ Figure::ToShow::ToShow(const std::optional<sf::RectangleShape>& optRectangleShap
 {
 }
 
+Figure::ToShow::ToShow(const std::optional<sf::ConvexShape>& optConvexShape)
+    : m_optConvexShape{ optConvexShape }
+{
+}
+
 sf::RectangleShape Figure::ToShow::rectValue() const
 {
     return m_optRectangleShape.value();

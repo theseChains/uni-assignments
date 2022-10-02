@@ -12,7 +12,7 @@ class Figure
 public:
     Figure(float mainPointX, float mainPointY, const sf::Color& color);
 
-    // struct to overload the show() function for different shapes 
+    // struct to overload the show() function for different shapes
     struct ToShow
     {
     private:

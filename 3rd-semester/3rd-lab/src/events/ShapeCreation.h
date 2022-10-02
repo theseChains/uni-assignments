@@ -8,12 +8,11 @@
 
 #include "../shapes/Circle.h"
 #include "../shapes/Rectangle.h"
-#include "../shapes/Line.h"
 #include "../shapes/Ellipse.h"
 
 namespace Creation
 {
-    // for Line, Circle and Ring classes
+    // for Circle and Ring classes
     template <typename ShapeType>
     void checkForShapeCreation(std::array<std::unique_ptr<ShapeType>, 3>& shapesToRender);
 

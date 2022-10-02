@@ -9,7 +9,6 @@
 
 #include "../shapes/Circle.h"
 #include "../shapes/Rectangle.h"
-#include "../shapes/Line.h"
 
 namespace Modification
 {
@@ -25,13 +24,6 @@ namespace Modification
     void checkForRectangleModification(std::array<std::unique_ptr<Rectangle>, 3>& rectanglesToRender);
 
     void checkForRectangleArrayModification(VectorOfArrayOfRectanglePtrs& rectangleArraysToRender);
-
-    // for Line
-    template <typename LineShape>
-    void checkForLineShapeModification(std::array<std::unique_ptr<LineShape>, 3>& linesShapesToRender);
-
-    template <typename LineShape>
-    void checkForLineShapeArrayModification(VectorOfArrayOfLineShapePtrs<LineShape>& lineArraysToRender);
 
     // for Ellipse
     void checkForEllipseShapeModification(std::array<std::unique_ptr<Ellipse>, 3>& ellipsesToRender);

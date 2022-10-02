@@ -68,33 +68,6 @@ void guiCheckForRectangleModification(std::array<std::unique_ptr<Rectangle>, 3>&
     }
 }
 
-template <typename LineShape>
-void guiCheckForLineShapeModification(std::array<std::unique_ptr<LineShape>, 3>& linesToRender,
-        VectorOfArrayOfLineShapePtrs<LineShape>& lineArraysToRender)
-{
-    if (ImGui::Button("Rotate clockwise (R)"))
-    {
-        Modification::rotateLinesClockwise(linesToRender);
-
-        for (auto& lineArray : lineArraysToRender)
-        {
-            Modification::rotateLinesClockwise(lineArray);
-        }
-    }
-    if (ImGui::Button("Rotate counter-\nclockwise (T)"))
-    {
-        Modification::rotateLinesCounterClockwise(linesToRender);
-
-        for (auto& lineArray : lineArraysToRender)
-        {
-            Modification::rotateLinesCounterClockwise(lineArray);
-        }
-    }
-}
-
-template void guiCheckForLineShapeModification(std::array<std::unique_ptr<Line>, 3>&,
-        VectorOfArrayOfLinePtrs&);
-
 void guiCheckForEllipseShapeModification(std::array<std::unique_ptr<Ellipse>, 3>& ellipsesToRender,
         VectorOfArrayOfEllipsePtrs& ellipseArraysToRender)
 {

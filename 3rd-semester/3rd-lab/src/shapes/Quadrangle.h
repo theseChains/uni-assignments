@@ -34,8 +34,10 @@ protected:
     Vertex m_thirdVertex{};
     Vertex m_fourthVertex{};
 
-    sf::Color m_color{};
+    bool m_isShown{};
 
+    // auxiliary
+    sf::ConvexShape createSprite() const;
     // initializes second, third and fourth vertices
     void initializeVertices();
 };

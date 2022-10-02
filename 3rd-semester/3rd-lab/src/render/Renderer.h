@@ -13,7 +13,6 @@
 
 #include "../shapes/Circle.h"
 #include "../shapes/Rectangle.h"
-#include "../shapes/Line.h"
 #include "../shapes/Ellipse.h"
 
 class Renderer
@@ -24,7 +23,7 @@ public:
 public:
     Renderer(sf::RenderWindow& window);
 
-    // Rectangle and Line
+    // Rectangle
     template <typename RectangleShape>
     void renderRectangleShapes(std::array<std::unique_ptr<RectangleShape>, 3>& shapesToRender);
 

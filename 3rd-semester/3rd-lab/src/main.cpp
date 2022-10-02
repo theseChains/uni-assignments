@@ -17,7 +17,6 @@
 
 #include "shapes/Circle.h"
 #include "shapes/Rectangle.h"
-#include "shapes/Line.h"
 #include "shapes/Ellipse.h"
 
 #include "render/Renderer.h"
@@ -39,12 +38,10 @@ int main()
 
     std::array<std::unique_ptr<Circle>, 3> circlesToRender{};
     std::array<std::unique_ptr<Rectangle>, 3> rectanglesToRender{};
-    std::array<std::unique_ptr<Line>, 3> linesToRender{};
     std::array<std::unique_ptr<Ellipse>, 3> ellipsesToRender{};
 
     VectorOfArrayOfCirclePtrs circleArrays{};
     VectorOfArrayOfRectanglePtrs rectangleArrays{};
-    VectorOfArrayOfLinePtrs lineArrays{};
     VectorOfArrayOfEllipsePtrs ellipseArrays{};
 
     sf::Clock deltaClock{};
@@ -74,12 +71,10 @@ int main()
 
                 handleCircleEvents(circlesToRender);
                 handleRectangleEvents(rectanglesToRender);
-                handleLineEvents(linesToRender);
                 handleEllipseEvents(ellipsesToRender);
 
                 handleCircleArrayEvents(circleArrays);
                 handleRectangleArrayEvents(rectangleArrays);
-                handleLineArrayEvents(lineArrays);
                 handleEllipseArrayEvents(ellipseArrays);
             }
         }
@@ -90,12 +85,10 @@ int main()
 
         guiHandleCircleArrayCreation(circleArrays);
         guiHandleRectangleArrayCreation(rectangleArrays);
-        guiHandleLineArrayCreation(lineArrays);
         guiHandleEllipseArrayCreation(ellipseArrays);
 
         guiHandleCircleEvents(circlesToRender, circleArrays);
         guiHandleRectangleEvents(rectanglesToRender, rectangleArrays);
-        guiHandleLineEvents(linesToRender, lineArrays);
         guiHandleEllipseEvents(ellipsesToRender, ellipseArrays);
 
         ImGui::End();
@@ -104,12 +97,10 @@ int main()
 
         renderer.renderCircleShapes(circlesToRender);
         renderer.renderRectangleShapes(rectanglesToRender);
-        renderer.renderRectangleShapes(linesToRender);
         renderer.renderCircleShapes(ellipsesToRender);
 
         renderer.renderCircleShapeArrays(circleArrays);
         renderer.renderRectangleShapeArrays(rectangleArrays);
-        renderer.renderRectangleShapeArrays(lineArrays);
         renderer.renderCircleShapeArrays(ellipseArrays);
 
         ImGui::SFML::Render(window);

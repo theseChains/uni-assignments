@@ -1,6 +1,8 @@
 #include "ShapeCreation.h"
 
-// Line and Circle shape creation
+// gonna have to do a lot here.. might make the same constructor for a trapezoid and a rhombus
+
+// Ellipse and Circle shape creation
 template <typename ShapeType>
 void Creation::checkForShapeCreation(std::array<std::unique_ptr<ShapeType>, 3>& shapesToRender)
 {
@@ -31,7 +33,6 @@ void Creation::checkForShapeCreation(std::array<std::unique_ptr<ShapeType>, 3>& 
     }
 }
 
-template void Creation::checkForShapeCreation(std::array<std::unique_ptr<Line>, 3>&);
 template void Creation::checkForShapeCreation(std::array<std::unique_ptr<Circle>, 3>&);
 template void Creation::checkForShapeCreation(std::array<std::unique_ptr<Ellipse>, 3>&);
 
@@ -65,28 +66,28 @@ void Creation::checkForRectangleShapeCreation(std::array<std::unique_ptr<Rectang
     }
 }
 
-// Line and Circle shape creation auxiliary functions and structs
-struct Dimensions
+// Ellipse and Circle shape creation auxiliary functions and structs
+struct CirclePointAndRadius 
 {
-    float mainPointX{};
-    float mainPointY{};
-    float size{};
+    float m_mainPointX{};
+    float m_mainPointY{};
+    float m_radius{};
 };
 
 struct Color
 {
-    int redComponent{};
-    int greenComponent{};
-    int blueComponent{};
+    int m_redComponent{};
+    int m_greenComponent{};
+    int m_blueComponent{};
 };
 
-Dimensions createRandomDimensions()
+CirclePointAndRadius createRandomPointAndRadius()
 {
     float mainPointX{ rnd::getFloat(util::guiWidth, util::windowWidth - 100) };
     float mainPointY{ rnd::getFloat(0, util::windowHeight - 100) };
-    float size{ rnd::getFloat(10, 100) };
+    float radius{ rnd::getFloat(10, 100) };
 
-    return { mainPointX, mainPointY, size };
+    return { mainPointX, mainPointY, radius };
 }
 
 Color createRandomColor()
@@ -121,7 +122,7 @@ void Creation::createAndShowDefaultShape(std::unique_ptr<ShapeType>& newShapePtr
 template <typename ShapeType>
 ShapeType Creation::createFirstConstructorShape()
 {
-    Dimensions shapeDimensions{ createRandomDimensions() };
+    CirclePointAndRadius circleShapePointAndRadius{ createRandomPointAndRadius() };
     Color shapeColor{ createRandomColor() };
 
     ShapeType firstConstructorShape{ shapeDimensions.mainPointX, shapeDimensions.mainPointY,

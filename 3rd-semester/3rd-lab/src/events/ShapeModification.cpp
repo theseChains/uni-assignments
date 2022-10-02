@@ -37,21 +37,6 @@ void Modification::checkForRectangleModification(
     }
 }
 
-template <typename LineShape>
-void Modification::checkForLineShapeModification(std::array<std::unique_ptr<LineShape>, 3>& linesShapesToRender)
-{
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::R))
-    {
-        Modification::rotateLinesClockwise(linesShapesToRender);
-    }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::T))
-    {
-        Modification::rotateLinesCounterClockwise(linesShapesToRender);
-    }
-}
-
-template void Modification::checkForLineShapeModification(std::array<std::unique_ptr<Line>, 3>&);
-
 void Modification::checkForEllipseShapeModification(std::array<std::unique_ptr<Ellipse>, 3>& ellipsesToRender)
 {
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::R))
@@ -80,18 +65,6 @@ void Modification::checkForRectangleArrayModification(
         checkForRectangleModification(rectangleArray);
     }
 }
-
-template <typename LineShape>
-void Modification::checkForLineShapeArrayModification(
-        VectorOfArrayOfLineShapePtrs<LineShape>& lineArraysToRender)
-{
-    for (auto& lineArray : lineArraysToRender)
-    {
-        checkForLineShapeModification(lineArray);
-    }
-}
-
-template void Modification::checkForLineShapeArrayModification(VectorOfArrayOfLinePtrs&);
 
 void Modification::checkForEllipseArrayModification(VectorOfArrayOfEllipsePtrs& ellipseArraysToRender)
 {
@@ -171,31 +144,6 @@ void Modification::increaseWidthOfRectangles(
         if (rectangle.get() != nullptr)
         {
             rectangle->changeWidth(2.0f);
-        }
-    }
-}
-
-// Line and Asterisk modification
-template <typename LineShape>
-void Modification::rotateLinesClockwise(std::array<std::unique_ptr<LineShape>, 3>& lineShapesToRender)
-{
-    for (const auto& lineShape : lineShapesToRender)
-    {
-        if (lineShape.get() != nullptr)
-        {
-            lineShape->rotate(2.0f);
-        }
-    }
-}
-
-template <typename LineShape>
-void Modification::rotateLinesCounterClockwise(std::array<std::unique_ptr<LineShape>, 3>& lineShapesToRender)
-{
-    for (const auto& lineShape : lineShapesToRender)
-    {
-        if (lineShape.get() != nullptr)
-        {
-            lineShape->rotate(-2.0f);
         }
     }
 }

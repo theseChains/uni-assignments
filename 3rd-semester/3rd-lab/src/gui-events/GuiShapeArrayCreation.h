@@ -9,7 +9,6 @@
 
 #include "../shapes/Circle.h"
 #include "../shapes/Rectangle.h"
-#include "../shapes/Line.h"
 
 #include "../events/ShapeArrayCreation.h"
 

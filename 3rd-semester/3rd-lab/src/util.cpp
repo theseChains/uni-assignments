@@ -28,11 +28,6 @@ void mode::shift()
     else if (rectangles)
     {
         rectangles = false;
-        lines = true;
-    }
-    else if (lines)
-    {
-        lines = false;
         ellipses = true;
     }
     else
@@ -51,10 +46,6 @@ std::string mode::get()
     else if (rectangles)
     {
         return "working with rectangles";
-    }
-    else if (lines)
-    {
-        return "working with lines";
     }
     else
     {

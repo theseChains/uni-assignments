@@ -16,7 +16,6 @@ void Renderer::renderRectangleShapes(std::array<std::unique_ptr<RectangleShape>,
 }
 
 template void Renderer::renderRectangleShapes(std::array<std::unique_ptr<Rectangle>, 3>&);
-template void Renderer::renderRectangleShapes(std::array<std::unique_ptr<Line>, 3>&);
 
 template <typename CircularShape>
 void Renderer::renderCircleShapes(std::array<std::unique_ptr<CircularShape>, 3>& shapesToRender)
@@ -43,7 +42,6 @@ void Renderer::renderRectangleShapeArrays(VectorOfArrayOfShapePtrs<RectangleShap
 }
 
 template void Renderer::renderRectangleShapeArrays(VectorOfArrayOfRectanglePtrs&);
-template void Renderer::renderRectangleShapeArrays(VectorOfArrayOfLinePtrs&);
 
 template <typename CircularShape>
 void Renderer::renderCircleShapeArrays(VectorOfArrayOfCircularShapePtrs<CircularShape>& circleArraysToRender)

@@ -55,7 +55,5 @@ template void guiCheckForShapeMovement(std::array<std::unique_ptr<Circle>, 3>&,
         VectorOfArrayOfCirclePtrs&);
 template void guiCheckForShapeMovement(std::array<std::unique_ptr<Rectangle>, 3>&,
         VectorOfArrayOfRectanglePtrs&);
-template void guiCheckForShapeMovement(std::array<std::unique_ptr<Line>, 3>&,
-        VectorOfArrayOfLinePtrs&);
 template void guiCheckForShapeMovement(std::array<std::unique_ptr<Ellipse>, 3>&,
         VectorOfArrayOfEllipsePtrs&);

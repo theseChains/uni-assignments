@@ -34,7 +34,66 @@ Quadrangle::Quadrangle(float mainPointX, float mainPointY, float secondPointX, f
 
 Figure::ToShow Quadrangle::show(bool modifyVisibility)
 {
+    if (modifyVisibility)
+    {
+        if (m_isShown)
+        {
+            m_isShown = false;
 
+            return ToShow{};
+        }
+        else
+        {
+            m_isShown = true;
+
+            return ToShow{ sf::ConvexShape{ createSprite() } };
+        }
+    }
+    // for rendering
+    else
+    {
+        if (m_isShown)
+        {
+            return ToShow{ sf::ConvexShape{ createSprite() } };
+        }
+        else
+        {
+            return ToShow{};
+        }
+    }
+}
+
+void Quadrangle::moveTo(float offsetX, float offsetY)
+{
+    if (m_isShown)
+    {
+        show();
+
+        m_vertex.setX(m_vertex.getX() + offsetX);
+        m_vertex.setY(m_vertex.getY() + offsetY);
+        m_secondVertex.setX(m_secondVertex.getX() + offsetX);
+        m_secondVertex.setY(m_secondVertex.getY() + offsetY);
+        m_thirdVertex.setX(m_thirdVertex.getX() + offsetX);
+        m_thirdVertex.setY(m_thirdVertex.getY() + offsetY);
+        m_fourthVertex.setX(m_fourthVertex.getX() + offsetX);
+        m_fourthVertex.setY(m_fourthVertex.getY() + offsetY);
+
+        show();
+    }
+}
+
+sf::ConvexShape Quadrangle::createSprite() const
+{
+    sf::ConvexShape quadrangleSprite{};
+
+    quadrangleSprite.setPointCount(4);
+    quadrangleSprite.setPoint(0, sf::Vector2f{ m_vertex.getX(), m_vertex.getY() });
+    quadrangleSprite.setPoint(1, sf::Vector2f{ m_secondVertex.getX(), m_secondVertex.getY() });
+    quadrangleSprite.setPoint(2, sf::Vector2f{ m_thirdVertex.getX(), m_thirdVertex.getY() });
+    quadrangleSprite.setPoint(3, sf::Vector2f{ m_fourthVertex.getX(), m_fourthVertex.getY() });
+    quadrangleSprite.setFillColor(m_color);
+
+    return quadrangleSprite;
 }
 
 void Quadrangle::initializeVertices()

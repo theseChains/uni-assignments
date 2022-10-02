@@ -22,17 +22,6 @@ void guiHandleRectangleEvents(std::array<std::unique_ptr<Rectangle>, 3>& rectang
     }
 }
 
-void guiHandleLineEvents(std::array<std::unique_ptr<Line>, 3>& linesToRender,
-        VectorOfArrayOfLinePtrs& lineArraysToRender)
-{
-    if (mode::lines)
-    {
-        GuiCreation::checkForShapeCreation(linesToRender);
-        guiCheckForLineShapeModification(linesToRender, lineArraysToRender);
-        guiCheckForShapeMovement(linesToRender, lineArraysToRender);
-    }
-}
-
 void guiHandleEllipseEvents(std::array<std::unique_ptr<Ellipse>, 3>& ellipsesToRender,
         VectorOfArrayOfEllipsePtrs& ellipseArraysToRender)
 {
@@ -58,14 +47,6 @@ void guiHandleRectangleArrayCreation(VectorOfArrayOfRectanglePtrs& rectangleArra
     if (mode::rectangles)
     {
         GuiArrayCreation::checkForRectangleArrayCreation(rectangleArraysToRender);
-    }
-}
-
-void guiHandleLineArrayCreation(VectorOfArrayOfLinePtrs& lineArraysToRender)
-{
-    if (mode::lines)
-    {
-        GuiArrayCreation::checkForShapeArrayCreation(lineArraysToRender);
     }
 }
 

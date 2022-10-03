@@ -6,7 +6,7 @@ Quadrangle::Quadrangle()
 {
     initializeRandomVertices();
 
-    std::cout << "Quadrangle object created\n";
+    std::cout << "Quadrangle object created\n\n";
 }
 
 // convenience constructor for child classes (inheritance sucks.. so does this assignment.. kinda)
@@ -35,8 +35,8 @@ Quadrangle::Quadrangle(float mainPointX, float mainPointY, float secondPointX, f
     m_secondVertex.setPosition(secondPointX, secondPointY);
     m_thirdVertex.setPosition(thirdPointX, thirdPointY);
     m_fourthVertex.setPosition(fourthPointX, fourthPointY);
-    
-    std::cout << "Quadrangle object created\n";
+
+    std::cout << "Quadrangle object created\n\n";
 }
 
 Quadrangle::Quadrangle(float mainPointX, float mainPointY, float secondPointX, float secondPointY,

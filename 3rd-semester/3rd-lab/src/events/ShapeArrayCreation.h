@@ -9,7 +9,9 @@
 #include "../shapes/Ellipse.h"
 #include "../shapes/Quadrangle.h"
 
-#include "ShapeCreation.h"
+#include "CircularShapeCreation.h"
+#include "RectangleShapeCreation.h"
+#include "QuadrangleShapeCreation.h"
 
 namespace ArrayCreation
 {

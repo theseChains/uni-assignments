@@ -4,7 +4,10 @@
 #include "../util.h"
 #include "../aliases.h"
 
-#include "ShapeCreation.h"
+#include "CircularShapeCreation.h"
+#include "RectangleShapeCreation.h"
+#include "QuadrangleShapeCreation.h"
+
 #include "ShapeMovement.h"
 #include "ShapeModification.h"
 #include "ShapeArrayCreation.h"

@@ -15,7 +15,9 @@
 #include "../shapes/Ellipse.h"
 #include "../shapes/Quadrangle.h"
 
-#include "../events/ShapeCreation.h"
+#include "../events/CircularShapeCreation.h"
+#include "../events/RectangleShapeCreation.h"
+#include "../events/QuadrangleShapeCreation.h"
 
 namespace GuiCreation
 {

@@ -75,10 +75,12 @@ int main()
                 handleCircleEvents(circlesToRender);
                 handleRectangleEvents(rectanglesToRender);
                 handleEllipseEvents(ellipsesToRender);
+                handleQuadrangleEvents(quadranglesToRender);
 
                 handleCircleArrayEvents(circleArrays);
                 handleRectangleArrayEvents(rectangleArrays);
                 handleEllipseArrayEvents(ellipseArrays);
+                handleQuadrangleArrayEvents(quadrangleArrays);
             }
         }
 
@@ -89,10 +91,12 @@ int main()
         guiHandleCircleArrayCreation(circleArrays);
         guiHandleRectangleArrayCreation(rectangleArrays);
         guiHandleEllipseArrayCreation(ellipseArrays);
+        guiHandleQuadrangleArrayCreation(quadrangleArrays);
 
         guiHandleCircleEvents(circlesToRender, circleArrays);
         guiHandleRectangleEvents(rectanglesToRender, rectangleArrays);
         guiHandleEllipseEvents(ellipsesToRender, ellipseArrays);
+        guiHandleQuadrangleEvents(quadranglesToRender, quadrangleArrays);
 
         ImGui::End();
 

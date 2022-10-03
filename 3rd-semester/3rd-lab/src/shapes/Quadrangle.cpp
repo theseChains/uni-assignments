@@ -1,7 +1,7 @@
 #include "Quadrangle.h"
 
 Quadrangle::Quadrangle()
-    : Figure{ rnd::getFloat(util::guiWidth, util::windowWidth - 200),
+    : Figure{ rnd::getFloat(util::guiWidth + 200, util::windowWidth - 200),
         rnd::getFloat(0, util::windowHeight - 200), sf::Color::Magenta }
 {
     initializeRandomVertices();
@@ -15,7 +15,7 @@ Quadrangle::Quadrangle(float mainPointX, float mainPointY, float secondPointX, f
     : Figure{ mainPointX, mainPointY, color }
 {
     m_secondVertex.setPosition(secondPointX, secondPointY);
-    m_thirdVertex.setPosition(thirdPointX, secondPointY);
+    m_thirdVertex.setPosition(thirdPointX, thirdPointY);
     m_fourthVertex.setPosition(fourthPointX, fourthPointY);
     
     std::cout << "Quadrangle object created\n";
@@ -27,7 +27,7 @@ Quadrangle::Quadrangle(float mainPointX, float mainPointY, float secondPointX, f
     : Figure{ mainPointX, mainPointY, colorComponents }
 {
     m_secondVertex.setPosition(secondPointX, secondPointY);
-    m_thirdVertex.setPosition(thirdPointX, secondPointY);
+    m_thirdVertex.setPosition(thirdPointX, thirdPointY);
     m_fourthVertex.setPosition(fourthPointX, fourthPointY);
 
     std::cout << "Quadrangle object created\n";
@@ -110,6 +110,7 @@ void Quadrangle::initializeRandomVertices()
     m_thirdVertex.setX(m_secondVertex.getX() - rnd::getFloat(10, 50));
     m_thirdVertex.setY(m_secondVertex.getY() + rnd::getFloat(10, 200));
 
+    // this is a bit messy but whatever
     m_fourthVertex.setX(m_thirdVertex.getX() - rnd::getFloat(10, 200));
-    m_fourthVertex.setY(m_thirdVertex.getY() - rnd::getFloat(10, 50));
+    m_fourthVertex.setY(m_secondVertex.getY() + rnd::getFloat(10, 50));
 }

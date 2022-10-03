@@ -7,6 +7,7 @@
 #include "../shapes/Circle.h"
 #include "../shapes/Rectangle.h"
 #include "../shapes/Ellipse.h"
+#include "../shapes/Quadrangle.h"
 
 #include "ShapeCreation.h"
 
@@ -14,15 +15,20 @@ namespace ArrayCreation
 {
     // circle and ellipse arrays
     template <typename CircularShape>
-    void checkForShapeArrayCreation(VectorOfArrayOfCircularShapePtrs<CircularShape>& arraysToRender);
+    void checkForCircularShapeArrayCreation(VectorOfArrayOfCircularShapePtrs<CircularShape>& arraysToRender);
 
     template <typename CircularShape>
-    void handleShapeArrayCreation(VectorOfArrayOfCircularShapePtrs<CircularShape>& arraysToRender);
+    void handleCircularShapeArrayCreation(VectorOfArrayOfCircularShapePtrs<CircularShape>& arraysToRender);
 
     // rectangle arrays
     void checkForRectangleArrayCreation(VectorOfArrayOfRectanglePtrs& rectangleArraysToRender);
 
-    void handleRectangleArrayCreation(VectorOfArrayOfRectanglePtrs& rectangleArraysToRender); 
+    void handleRectangleArrayCreation(VectorOfArrayOfRectanglePtrs& rectangleArraysToRender);
+
+    // quadrangle arrays
+    void checkForQuadrangleArrayCreation(VectorOfArrayOfQuadranglePtrs& quadrangleArraysToRender);
+
+    void handleQuadrangleArrayCreation(VectorOfArrayOfQuadranglePtrs& quadrangleArraysToRender);
 }
 
 #endif

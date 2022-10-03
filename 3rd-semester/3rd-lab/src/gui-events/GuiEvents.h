@@ -13,10 +13,6 @@
 
 #include "../events/Events.h"
 
-#include "../shapes/Circle.h"
-#include "../shapes/Rectangle.h"
-#include "../shapes/Ellipse.h"
-
 #include "GuiShapeCreation.h"
 #include "GuiShapeArrayCreation.h"
 #include "GuiShapeModification.h"
@@ -28,9 +24,12 @@ void guiHandleRectangleEvents(std::array<std::unique_ptr<Rectangle>, 3>& rectang
         VectorOfArrayOfRectanglePtrs& rectangleArraysToRender);
 void guiHandleEllipseEvents(std::array<std::unique_ptr<Ellipse>, 3>& ellipsesToRender,
         VectorOfArrayOfEllipsePtrs& ellipseArraysToRender);
+void guiHandleQuadrangleEvents(std::array<std::unique_ptr<Quadrangle>, 3>& quadranglesToRender,
+        VectorOfArrayOfQuadranglePtrs& quadrangleArraysToRender);
 
 void guiHandleCircleArrayCreation(VectorOfArrayOfCirclePtrs& circleArraysToRender);
 void guiHandleRectangleArrayCreation(VectorOfArrayOfRectanglePtrs& rectangleArraysToRender);
 void guiHandleEllipseArrayCreation(VectorOfArrayOfEllipsePtrs& ellipseArraysToRender);
+void guiHandleQuadrangleArrayCreation(VectorOfArrayOfQuadranglePtrs& quadrangleArraysToRender);
 
 #endif

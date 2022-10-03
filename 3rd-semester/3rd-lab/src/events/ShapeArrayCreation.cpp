@@ -1,11 +1,12 @@
 #include "ShapeArrayCreation.h"
 
 template <typename CircularShape>
-void ArrayCreation::checkForShapeArrayCreation(VectorOfArrayOfCircularShapePtrs<CircularShape>& arraysToRender)
+void ArrayCreation::checkForCircularShapeArrayCreation(
+        VectorOfArrayOfCircularShapePtrs<CircularShape>& arraysToRender)
 {
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::N))
     {
-        handleShapeArrayCreation(arraysToRender);
+        handleCircularShapeArrayCreation(arraysToRender);
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::B))
     {
@@ -20,8 +21,8 @@ void ArrayCreation::checkForShapeArrayCreation(VectorOfArrayOfCircularShapePtrs<
     }
 }
 
-template void ArrayCreation::checkForShapeArrayCreation(VectorOfArrayOfCirclePtrs&);
-template void ArrayCreation::checkForShapeArrayCreation(VectorOfArrayOfEllipsePtrs&);
+template void ArrayCreation::checkForCircularShapeArrayCreation(VectorOfArrayOfCirclePtrs&);
+template void ArrayCreation::checkForCircularShapeArrayCreation(VectorOfArrayOfEllipsePtrs&);
 
 void ArrayCreation::checkForRectangleArrayCreation(VectorOfArrayOfRectanglePtrs& rectangleArraysToRender)
 {
@@ -42,8 +43,29 @@ void ArrayCreation::checkForRectangleArrayCreation(VectorOfArrayOfRectanglePtrs&
     }
 }
 
+void ArrayCreation::checkForQuadrangleArrayCreation(
+        VectorOfArrayOfQuadranglePtrs& quadrangleArraysToRender)
+{
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::N))
+    {
+        handleQuadrangleArrayCreation(quadrangleArraysToRender);
+    }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::B))
+    {
+        if (!quadrangleArraysToRender.empty())
+        {
+            quadrangleArraysToRender.pop_back();
+        }
+    }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+    {
+        quadrangleArraysToRender.clear();
+    }
+}
+
 template <typename CircularShape>
-void ArrayCreation::handleShapeArrayCreation(VectorOfArrayOfCircularShapePtrs<CircularShape>& arraysToRender)
+void ArrayCreation::handleCircularShapeArrayCreation(
+        VectorOfArrayOfCircularShapePtrs<CircularShape>& arraysToRender)
 {
     CircularShape firstShape{};
     CircularShape secondShape{ Creation::createFirstConstructorCircularShape<CircularShape>() };
@@ -75,5 +97,22 @@ void ArrayCreation::handleRectangleArrayCreation(VectorOfArrayOfRectanglePtrs& r
         std::make_unique<Rectangle>(firstRectangle),
         std::make_unique<Rectangle>(secondRectangle),
         std::make_unique<Rectangle>(thirdRectangle)
+    });
+}
+
+void ArrayCreation::handleQuadrangleArrayCreation(VectorOfArrayOfQuadranglePtrs& quadrangleArraysToRender)
+{
+    Quadrangle firstQuadrangle{};
+    Quadrangle secondQuadrangle{ Creation::createFirstConstructorQuadrangle() };
+    Quadrangle thirdQuadrangle{ Creation::createSecondConstructorQuadrangle() };
+
+    firstQuadrangle.show();
+    secondQuadrangle.show();
+    thirdQuadrangle.show();
+
+    quadrangleArraysToRender.push_back(std::array<std::unique_ptr<Quadrangle>, 3>{
+            std::make_unique<Quadrangle>(firstQuadrangle),
+            std::make_unique<Quadrangle>(secondQuadrangle),
+            std::make_unique<Quadrangle>(thirdQuadrangle)
     });
 }

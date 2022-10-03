@@ -64,12 +64,12 @@ void Creation::checkForRectangleShapeCreation(std::array<std::unique_ptr<Rectang
     }
 }
 
-// for Quadrangle shape creation
+// Quadrangle shape creation
 void Creation::checkForQuadrangleShapeCreation(std::array<std::unique_ptr<Quadrangle>, 3>& quadranglesToRender)
 {
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::F))
     {
-        handleDefaultQuadrangleShapeCreation(quadranglesToRender[util::defaultShapeIndex]); 
+        handleDefaultQuadrangleShapeCreation(quadranglesToRender[util::defaultShapeIndex]);
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::C))
     {
@@ -77,7 +77,7 @@ void Creation::checkForQuadrangleShapeCreation(std::array<std::unique_ptr<Quadra
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::V))
     {
-        handleSecondConstructorQuadrangleCreation(quadranglesToRender[util::firstConstructorShapeIndex]);
+        handleSecondConstructorQuadrangleCreation(quadranglesToRender[util::secondConstructorShapeIndex]);
     }
     // deletion
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::G))
@@ -339,14 +339,15 @@ struct QuadrangleVertices
 
 QuadrangleVertices createRandomQuadrangleVertices()
 {
-    float firstX{ rnd::getFloat(util::guiWidth, util::windowWidth - 300) };
-    float firstY{ rnd::getFloat(0, util::windowHeight) };
-    float secondX{ firstX + rnd::getFloat(10, 300) };
-    float secondY{ firstY + rnd::getFloat(10, 100) };
-    float thirdX{ secondX - rnd::getFloat(10, 100) };
-    float thirdY{ secondY + rnd::getFloat(10, 300) };
-    float fourthX{ thirdX - rnd::getFloat(10, 300) };
-    float fourthY{ thirdY - rnd::getFloat(10, 100) };
+    float firstX{ rnd::getFloat(util::guiWidth + 200, util::windowWidth - 200) };
+    float firstY{ rnd::getFloat(0, util::windowHeight - 200) };
+    // a bit messy but i'll leave it like that whatever
+    float secondX{ firstX + rnd::getFloat(10, 200) };
+    float secondY{ firstY + rnd::getFloat(10, 50) };
+    float thirdX{ secondX - rnd::getFloat(10, 50) };
+    float thirdY{ secondY + rnd::getFloat(10, 200) };
+    float fourthX{ thirdX - rnd::getFloat(10, 200) };
+    float fourthY{ secondY + rnd::getFloat(10, 50) };
 
     return { firstX, firstY, secondX, secondY, thirdX, thirdY, fourthX, fourthY };
 }

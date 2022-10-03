@@ -30,9 +30,14 @@ void mode::shift()
         rectangles = false;
         ellipses = true;
     }
-    else
+    else if (ellipses)
     {
         ellipses = false;
+        quadrangles = true;
+    }
+    else
+    {
+        quadrangles = false;
         circles = true;
     }
 }
@@ -47,8 +52,12 @@ std::string mode::get()
     {
         return "working with rectangles";
     }
-    else
+    else if (ellipses)
     {
         return "working with ellipses";
+    }
+    else
+    {
+        return "working with quadrangles";
     }
 }

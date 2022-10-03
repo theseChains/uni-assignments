@@ -9,15 +9,19 @@
 
 #include "../shapes/Circle.h"
 #include "../shapes/Rectangle.h"
+#include "../shapes/Ellipse.h"
+#include "../shapes/Quadrangle.h"
 
 #include "../events/ShapeArrayCreation.h"
 
 namespace GuiArrayCreation
 {
-    template <typename ShapeType>
-    void checkForShapeArrayCreation(VectorOfArrayOfShapePtrs<ShapeType>& arraysToRender);
+    template <typename CircularShape>
+    void checkForCircularShapeArrayCreation(VectorOfArrayOfShapePtrs<CircularShape>& arraysToRender);
 
     void checkForRectangleArrayCreation(VectorOfArrayOfRectanglePtrs& rectangleArraysToRender);
+
+    void checkForQuadrangleArrayCreation(VectorOfArrayOfQuadranglePtrs& quadrangleArraysToRender);
 }
 
 #endif

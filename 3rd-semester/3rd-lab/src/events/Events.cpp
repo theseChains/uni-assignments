@@ -30,12 +30,21 @@ void handleEllipseEvents(std::array<std::unique_ptr<Ellipse>, 3>& ellipsesToRend
     }
 }
 
+void handleQuadrangleEvents(std::array<std::unique_ptr<Quadrangle>, 3>& quadranglesToRender)
+{
+    if (mode::quadrangles)
+    {
+        Creation::checkForQuadrangleShapeCreation(quadranglesToRender);
+        Movement::checkForShapeMovement(quadranglesToRender);
+    }
+}
+
 // arrays of shapes
 void handleCircleArrayEvents(VectorOfArrayOfCirclePtrs& circleArraysToRender)
 {
     if (mode::circles)
     {
-        ArrayCreation::checkForShapeArrayCreation(circleArraysToRender);
+        ArrayCreation::checkForCircularShapeArrayCreation(circleArraysToRender);
         Modification::checkForCircularShapeArrayModification(circleArraysToRender);
         Movement::checkForShapeArrayMovement(circleArraysToRender);
     }
@@ -55,8 +64,17 @@ void handleEllipseArrayEvents(VectorOfArrayOfEllipsePtrs& ellipseArraysToRender)
 {
     if (mode::ellipses)
     {
-        ArrayCreation::checkForShapeArrayCreation(ellipseArraysToRender);
+        ArrayCreation::checkForCircularShapeArrayCreation(ellipseArraysToRender);
         Modification::checkForEllipseArrayModification(ellipseArraysToRender);
         Movement::checkForShapeArrayMovement(ellipseArraysToRender);
+    }
+}
+
+void handleQuadrangleArrayEvents(VectorOfArrayOfQuadranglePtrs& quadrangleArraysToRender)
+{
+    if (mode::quadrangles)
+    {
+        ArrayCreation::checkForQuadrangleArrayCreation(quadrangleArraysToRender);
+        Movement::checkForShapeArrayMovement(quadrangleArraysToRender);
     }
 }

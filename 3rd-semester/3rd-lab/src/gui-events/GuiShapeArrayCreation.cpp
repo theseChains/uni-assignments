@@ -1,11 +1,12 @@
 #include "GuiShapeArrayCreation.h"
 
-template <typename ShapeType>
-void GuiArrayCreation::checkForShapeArrayCreation(VectorOfArrayOfShapePtrs<ShapeType>& arraysToRender)
+template <typename CircularShape>
+void GuiArrayCreation::checkForCircularShapeArrayCreation(
+        VectorOfArrayOfShapePtrs<CircularShape>& arraysToRender)
 {
     if (ImGui::Button("Create an array of\nshapes (N)"))
     {
-        ArrayCreation::handleShapeArrayCreation(arraysToRender);
+        ArrayCreation::handleCircularShapeArrayCreation(arraysToRender);
     }
     if (ImGui::Button("Delete last array of\nshapes (B)"))
     {
@@ -20,10 +21,11 @@ void GuiArrayCreation::checkForShapeArrayCreation(VectorOfArrayOfShapePtrs<Shape
     }
 }
 
-template void GuiArrayCreation::checkForShapeArrayCreation(VectorOfArrayOfCirclePtrs&);
-template void GuiArrayCreation::checkForShapeArrayCreation(VectorOfArrayOfEllipsePtrs&);
+template void GuiArrayCreation::checkForCircularShapeArrayCreation(VectorOfArrayOfCirclePtrs&);
+template void GuiArrayCreation::checkForCircularShapeArrayCreation(VectorOfArrayOfEllipsePtrs&);
 
-void GuiArrayCreation::checkForRectangleArrayCreation(VectorOfArrayOfRectanglePtrs& rectangleArraysToRender)
+void GuiArrayCreation::checkForRectangleArrayCreation(
+        VectorOfArrayOfRectanglePtrs& rectangleArraysToRender)
 {
     if (ImGui::Button("Create an array of\nshapes (N)"))
     {
@@ -39,5 +41,25 @@ void GuiArrayCreation::checkForRectangleArrayCreation(VectorOfArrayOfRectanglePt
     if (ImGui::Button("Delete all arrays of\nshapes (Space)"))
     {
         rectangleArraysToRender.clear();
+    }
+}
+
+void GuiArrayCreation::checkForQuadrangleArrayCreation(
+        VectorOfArrayOfQuadranglePtrs& quadrangleArraysToRender)
+{
+    if (ImGui::Button("Create an array of\nshapes (N)"))
+    {
+        ArrayCreation::handleQuadrangleArrayCreation(quadrangleArraysToRender);
+    }
+    if (ImGui::Button("Delete last array of\nshapes (B)"))
+    {
+        if (!quadrangleArraysToRender.empty())
+        {
+            quadrangleArraysToRender.pop_back();
+        }
+    }
+    if (ImGui::Button("Delete all arrays of\nshapes (Space)"))
+    {
+        quadrangleArraysToRender.clear();
     }
 }

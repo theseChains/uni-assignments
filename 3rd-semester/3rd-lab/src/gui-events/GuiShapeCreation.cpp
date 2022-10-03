@@ -61,3 +61,32 @@ void GuiCreation::checkForRectangleCreation(std::array<std::unique_ptr<Rectangle
         Creation::hideAndDeleteShape(rectanglesToRender[util::secondConstructorShapeIndex]);
     }
 }
+
+void GuiCreation::checkForQuadrangleCreation(std::array<std::unique_ptr<Quadrangle>, 3>& quadranglesToRender)
+{
+    if (ImGui::Button("Create default shape (F)"))
+    {
+        Creation::handleDefaultQuadrangleShapeCreation(quadranglesToRender[util::defaultShapeIndex]);
+    }
+    if (ImGui::Button("Create first constructor\nshape (C)"))
+    {
+        Creation::handleFirstConstructorQuadrangleCreation(quadranglesToRender[util::firstConstructorShapeIndex]);
+    }
+    if (ImGui::Button("Create second constructor\nshape (V)"))
+    {
+        Creation::handleSecondConstructorQuadrangleCreation(quadranglesToRender[util::secondConstructorShapeIndex]);
+    }
+    // deletion
+    if (ImGui::Button("Delete default shape (G)"))
+    {
+        Creation::hideAndDeleteShape(quadranglesToRender[util::defaultShapeIndex]);
+    }
+    if (ImGui::Button("Delete first constructor\nshape (Y)"))
+    {
+        Creation::hideAndDeleteShape(quadranglesToRender[util::firstConstructorShapeIndex]);
+    }
+    if (ImGui::Button("Delete second constructor\nshape (H)"))
+    {
+        Creation::hideAndDeleteShape(quadranglesToRender[util::secondConstructorShapeIndex]);
+    }
+}

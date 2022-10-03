@@ -33,12 +33,22 @@ void guiHandleEllipseEvents(std::array<std::unique_ptr<Ellipse>, 3>& ellipsesToR
     }
 }
 
+void guiHandleQuadrangleEvents(std::array<std::unique_ptr<Quadrangle>, 3>& quadranglesToRender,
+        VectorOfArrayOfQuadranglePtrs& quadrangleArraysToRender)
+{
+    if (mode::quadrangles)
+    {
+        GuiCreation::checkForQuadrangleCreation(quadranglesToRender);
+        guiCheckForShapeMovement(quadranglesToRender, quadrangleArraysToRender);
+    }
+}
+
 // array creation
 void guiHandleCircleArrayCreation(VectorOfArrayOfCirclePtrs& circleArraysToRender)
 {
     if (mode::circles)
     {
-        GuiArrayCreation::checkForShapeArrayCreation(circleArraysToRender);
+        GuiArrayCreation::checkForCircularShapeArrayCreation(circleArraysToRender);
     }
 }
 
@@ -54,6 +64,14 @@ void guiHandleEllipseArrayCreation(VectorOfArrayOfEllipsePtrs& ellipseArraysToRe
 {
     if (mode::ellipses)
     {
-        GuiArrayCreation::checkForShapeArrayCreation(ellipseArraysToRender);
+        GuiArrayCreation::checkForCircularShapeArrayCreation(ellipseArraysToRender);
+    }
+}
+
+void guiHandleQuadrangleArrayCreation(VectorOfArrayOfQuadranglePtrs& quadrangleArraysToRender)
+{
+    if (mode::quadrangles)
+    {
+        GuiArrayCreation::checkForQuadrangleArrayCreation(quadrangleArraysToRender);
     }
 }

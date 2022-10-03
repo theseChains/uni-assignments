@@ -44,8 +44,8 @@ namespace mode
 {
     inline bool circles{ true };
     inline bool rectangles{ false };
-    inline bool lines{ false };
     inline bool ellipses{ false };
+    inline bool quadrangles{ false };
 
     void shift();
 

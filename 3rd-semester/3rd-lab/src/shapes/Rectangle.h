@@ -26,8 +26,6 @@ public:
     void changeWidth(float widthOffset);
     void changeHeight(float heightOffset);
 
-    bool isShown() const;
-
     float getWidth() const;
     float getHeight() const;
     sf::Color getColor() const;
@@ -37,8 +35,6 @@ public:
 private:
     float m_width{};
     float m_height{};
-
-    bool m_isShown{};
 
     // auxiliary
     sf::RectangleShape createSprite() const;

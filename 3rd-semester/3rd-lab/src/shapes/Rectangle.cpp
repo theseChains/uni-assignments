@@ -2,7 +2,7 @@
 
 // default constructor, initialized with arbitrary values
 Rectangle::Rectangle()
-    : Figure{ rnd::getFloat(util::guiWidth, util::windowWidth - 100),
+    : Quadrangle{ rnd::getFloat(util::guiWidth, util::windowWidth - 100),
         rnd::getFloat(0, util::windowHeight - 100), sf::Color::Magenta },
     m_width{ 150.0f },
     m_height{ 40.0f },
@@ -13,7 +13,7 @@ Rectangle::Rectangle()
 
 Rectangle::Rectangle(float topLeftX, float topLeftY, float width, float height,
         const sf::Color& color)
-    : Figure{ topLeftX, topLeftY, color },
+    : Quadrangle{ topLeftX, topLeftY, color },
     m_width{ width },
     m_height{ height },
     m_isShown{ false }
@@ -25,10 +25,7 @@ Rectangle::Rectangle(float topLeftX, float topLeftY, float width, float height,
 
 Rectangle::Rectangle(float topLeftX, float topLeftY, float width, float height,
         const std::array<int, 4>& colorComponents)
-    : Figure{ topLeftX, topLeftY, sf::Color(
-            colorComponents[component::red], colorComponents[component::green],
-            colorComponents[component::blue], colorComponents[component::alpha]
-            ) },
+    : Quadrangle{ topLeftX, topLeftY, colorComponents },
     m_width{ width },
     m_height{ height },
     m_isShown{ false }

@@ -11,7 +11,6 @@
 #include "../shapes/Ellipse.h"
 #include "../shapes/Quadrangle.h"
 
-// todo: split this into 3 files
 namespace Creation
 {
     // for Circle and Ellipse classes

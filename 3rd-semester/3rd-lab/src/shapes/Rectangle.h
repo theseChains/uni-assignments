@@ -9,10 +9,9 @@
 
 #include "../util.h"
 
-#include "Figure.h"
-#include "Vertex.h"
+#include "Quadrangle.h"
 
-class Rectangle : public Figure
+class Rectangle : public Quadrangle 
 {
 public:
     Rectangle();

@@ -16,6 +16,8 @@ class Quadrangle : public Figure
 {
 public:
     Quadrangle();
+    Quadrangle(float mainPointX, float mainPointY, const sf::Color& color);
+    Quadrangle(float mainPointX, float mainPointY, const std::array<int, 4>& colorComponents);
     Quadrangle(float mainPointX, float mainPointY, float secondPointX, float secondPointY,
             float thirdPointX, float thirdPointY, float fourthPointX, float fourthPointY,
             const sf::Color& color);

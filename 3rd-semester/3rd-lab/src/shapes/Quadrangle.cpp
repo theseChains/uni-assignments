@@ -9,6 +9,24 @@ Quadrangle::Quadrangle()
     std::cout << "Quadrangle object created\n";
 }
 
+// convenience constructor for child classes (inheritance sucks.. so does this assignment.. kinda)
+Quadrangle::Quadrangle(float mainPointX, float mainPointY, const sf::Color& color)
+    : Figure{ mainPointX, mainPointY, color }
+{
+    initializeRandomVertices();
+
+    std::cout << "Quadrangle object created\n";
+}
+
+// convenience constructor
+Quadrangle::Quadrangle(float mainPointX, float mainPointY, const std::array<int, 4>& colorComponents)
+    : Figure{ mainPointX, mainPointY, colorComponents }
+{
+    initializeRandomVertices();
+
+    std::cout << "Quadrangle object created\n";
+}
+
 Quadrangle::Quadrangle(float mainPointX, float mainPointY, float secondPointX, float secondPointY,
         float thirdPointX, float thirdPointY, float fourthPointX, float fourthPointY,
         const sf::Color& color)

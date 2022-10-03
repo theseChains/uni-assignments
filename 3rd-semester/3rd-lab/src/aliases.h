@@ -8,6 +8,7 @@
 #include "shapes/Circle.h"
 #include "shapes/Rectangle.h"
 #include "shapes/Ellipse.h"
+#include "shapes/Quadrangle.h"
 
 // all shapes
 template <typename ShapeType>
@@ -20,5 +21,6 @@ using VectorOfArrayOfCircularShapePtrs = std::vector<std::array<std::unique_ptr<
 using VectorOfArrayOfCirclePtrs = std::vector<std::array<std::unique_ptr<Circle>, 3>>;
 using VectorOfArrayOfRectanglePtrs = std::vector<std::array<std::unique_ptr<Rectangle>, 3>>;
 using VectorOfArrayOfEllipsePtrs = std::vector<std::array<std::unique_ptr<Ellipse>, 3>>;
+using VectorOfArrayOfQuadranglePtrs = std::vector<std::array<std::unique_ptr<Quadrangle>, 3>>;
 
 #endif

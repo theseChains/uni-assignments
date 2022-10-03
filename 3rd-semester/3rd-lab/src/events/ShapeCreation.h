@@ -9,7 +9,9 @@
 #include "../shapes/Circle.h"
 #include "../shapes/Rectangle.h"
 #include "../shapes/Ellipse.h"
+#include "../shapes/Quadrangle.h"
 
+// todo: split this into 3 files
 namespace Creation
 {
     // for Circle and Ellipse classes
@@ -49,6 +51,17 @@ namespace Creation
     void handleDefaultRectangleCreation(std::unique_ptr<Rectangle>& rectanglePtr);
     void handleFirstConstructorRectangleCreation(std::unique_ptr<Rectangle>& rectanglePtr);
     void handleSecondConstructorRectangleCreation(std::unique_ptr<Rectangle>& rectanglePtr);
+
+    // for Quadrangle class
+    void checkForQuadrangleShapeCreation(std::array<std::unique_ptr<Quadrangle>, 3>& quadranglesToRender);
+
+    void createAndShowDefaultQuadrangle(std::unique_ptr<Quadrangle>& newQuadranglePtr);
+    Quadrangle createFirstConstructorQuadrangle();
+    Quadrangle createSecondConstructorQuadrangle();
+
+    void handleDefaultQuadrangleShapeCreation(std::unique_ptr<Quadrangle>& quadranglePtr);
+    void handleFirstConstructorQuadrangleCreation(std::unique_ptr<Quadrangle>& quadranglePtr);
+    void handleSecondConstructorQuadrangleCreation(std::unique_ptr<Quadrangle>& quadranglePtr);
 }
 
 #endif

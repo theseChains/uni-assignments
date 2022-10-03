@@ -22,10 +22,7 @@ Circle::Circle(float topLeftX, float topLeftY, float radius, const sf::Color& co
 
 Circle::Circle(float topLeftX, float topLeftY, float radius,
         const std::array<int, 4>& colorComponents)
-    : Figure{ topLeftX, topLeftY, sf::Color(
-            colorComponents[component::red], colorComponents[component::green],
-            colorComponents[component::blue], colorComponents[component::alpha]
-            ) },
+    : Figure{ topLeftX, topLeftY, colorComponents },
     m_radius{ radius },
     m_isShown{ false }
 {

@@ -5,6 +5,14 @@ Figure::Figure(float mainPointX, float mainPointY, const sf::Color& color)
 {
 }
 
+Figure::Figure(float mainPointX, float mainPointY, const std::array<int, 4>& colorComponents)
+    : m_vertex{ mainPointX, mainPointY }, m_color{ sf::Color(
+            colorComponents[component::red], colorComponents[component::green],
+            colorComponents[component::blue], colorComponents[component::alpha]
+            ) }
+{
+}
+
 Vertex Figure::getPosition() const
 {
     return m_vertex;

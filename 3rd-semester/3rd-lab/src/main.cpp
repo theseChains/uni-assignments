@@ -18,6 +18,7 @@
 #include "shapes/Circle.h"
 #include "shapes/Rectangle.h"
 #include "shapes/Ellipse.h"
+#include "shapes/Quadrangle.h"
 
 #include "render/Renderer.h"
 
@@ -39,10 +40,12 @@ int main()
     std::array<std::unique_ptr<Circle>, 3> circlesToRender{};
     std::array<std::unique_ptr<Rectangle>, 3> rectanglesToRender{};
     std::array<std::unique_ptr<Ellipse>, 3> ellipsesToRender{};
+    std::array<std::unique_ptr<Quadrangle>, 3> quadranglesToRender{};
 
     VectorOfArrayOfCirclePtrs circleArrays{};
     VectorOfArrayOfRectanglePtrs rectangleArrays{};
     VectorOfArrayOfEllipsePtrs ellipseArrays{};
+    VectorOfArrayOfQuadranglePtrs quadrangleArrays{};
 
     sf::Clock deltaClock{};
     while (window.isOpen())
@@ -98,10 +101,12 @@ int main()
         renderer.renderCircleShapes(circlesToRender);
         renderer.renderRectangleShapes(rectanglesToRender);
         renderer.renderCircleShapes(ellipsesToRender);
+        renderer.renderQuadrangleShapes(quadranglesToRender);
 
         renderer.renderCircleShapeArrays(circleArrays);
         renderer.renderRectangleShapeArrays(rectangleArrays);
         renderer.renderCircleShapeArrays(ellipseArrays);
+        renderer.renderQuadrangleShapeArrays(quadrangleArrays);
 
         ImGui::SFML::Render(window);
 

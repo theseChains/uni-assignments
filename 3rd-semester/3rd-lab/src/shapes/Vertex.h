@@ -14,6 +14,7 @@ public:
 
     void setX(float newX);
     void setY(float newY);
+    void setPosition(float newX, float newY);
 
 private:
     float m_x{};

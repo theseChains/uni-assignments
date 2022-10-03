@@ -3,7 +3,10 @@
 
 #include <SFML/Graphics.hpp>
 
+#include <array>
 #include <optional>
+
+#include "../util.h"
 
 #include "Vertex.h"
 
@@ -11,6 +14,7 @@ class Figure
 {
 public:
     Figure(float mainPointX, float mainPointY, const sf::Color& color);
+    Figure(float mainPointX, float mainPointY, const std::array<int, 4>& colorComponents);
 
     // struct to overload the show() function for different shapes
     struct ToShow

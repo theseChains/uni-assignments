@@ -32,6 +32,17 @@ void Renderer::renderCircleShapes(std::array<std::unique_ptr<CircularShape>, 3>&
 template void Renderer::renderCircleShapes(std::array<std::unique_ptr<Circle>, 3>&);
 template void Renderer::renderCircleShapes(std::array<std::unique_ptr<Ellipse>, 3>&);
 
+void Renderer::renderQuadrangleShapes(std::array<std::unique_ptr<Quadrangle>, 3>& quadranglesToRender)
+{
+    for (const auto& quadrangle : quadranglesToRender)
+    {
+        if (quadrangle.get() != nullptr && quadrangle.get()->isShown())
+        {
+            m_window.get().draw(quadrangle.get()->show(false).convexValue());
+        }
+    }
+}
+
 template <typename RectangleShape>
 void Renderer::renderRectangleShapeArrays(VectorOfArrayOfShapePtrs<RectangleShape>& arraysToRender)
 {
@@ -54,3 +65,11 @@ void Renderer::renderCircleShapeArrays(VectorOfArrayOfCircularShapePtrs<Circular
 
 template void Renderer::renderCircleShapeArrays(VectorOfArrayOfCirclePtrs&);
 template void Renderer::renderCircleShapeArrays(VectorOfArrayOfEllipsePtrs&);
+
+void Renderer::renderQuadrangleShapeArrays(VectorOfArrayOfQuadranglePtrs& quadrangleArraysToRender)
+{
+    for (auto& quadrangleArray : quadrangleArraysToRender)
+    {
+        renderQuadrangleShapes(quadrangleArray);
+    }
+}

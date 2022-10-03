@@ -26,3 +26,9 @@ void Vertex::setY(float newY)
 {
     m_y = newY;
 }
+
+void Vertex::setPosition(float newX, float newY)
+{
+    m_x = newX;
+    m_y = newY;
+}

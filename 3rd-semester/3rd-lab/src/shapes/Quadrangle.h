@@ -39,7 +39,7 @@ protected:
     // auxiliary
     sf::ConvexShape createSprite() const;
     // initializes second, third and fourth vertices
-    void initializeVertices();
+    void initializeRandomVertices();
 };
 
 #endif

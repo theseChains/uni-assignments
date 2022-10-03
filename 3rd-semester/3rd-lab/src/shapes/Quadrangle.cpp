@@ -4,7 +4,7 @@ Quadrangle::Quadrangle()
     : Figure{ rnd::getFloat(util::guiWidth, util::windowWidth - 200),
         rnd::getFloat(0, util::windowHeight - 200), sf::Color::Magenta }
 {
-    initializeVertices();
+    initializeRandomVertices();
 
     std::cout << "Quadrangle object created\n";
 }
@@ -14,20 +14,21 @@ Quadrangle::Quadrangle(float mainPointX, float mainPointY, float secondPointX, f
         const sf::Color& color)
     : Figure{ mainPointX, mainPointY, color }
 {
-    initializeVertices();
-
+    m_secondVertex.setPosition(secondPointX, secondPointY);
+    m_thirdVertex.setPosition(thirdPointX, secondPointY);
+    m_fourthVertex.setPosition(fourthPointX, fourthPointY);
+    
     std::cout << "Quadrangle object created\n";
 }
 
 Quadrangle::Quadrangle(float mainPointX, float mainPointY, float secondPointX, float secondPointY,
         float thirdPointX, float thirdPointY, float fourthPointX, float fourthPointY,
         const std::array<int, 4>& colorComponents)
-    : Figure{ mainPointX, mainPointY, sf::Color(
-            colorComponents[component::red], colorComponents[component::blue],
-            colorComponents[component::green], colorComponents[component::alpha]
-            ) }
+    : Figure{ mainPointX, mainPointY, colorComponents }
 {
-    initializeVertices();
+    m_secondVertex.setPosition(secondPointX, secondPointY);
+    m_thirdVertex.setPosition(thirdPointX, secondPointY);
+    m_fourthVertex.setPosition(fourthPointX, fourthPointY);
 
     std::cout << "Quadrangle object created\n";
 }
@@ -82,6 +83,11 @@ void Quadrangle::moveTo(float offsetX, float offsetY)
     }
 }
 
+bool Quadrangle::isShown() const
+{
+    return m_isShown;
+}
+
 sf::ConvexShape Quadrangle::createSprite() const
 {
     sf::ConvexShape quadrangleSprite{};
@@ -96,7 +102,7 @@ sf::ConvexShape Quadrangle::createSprite() const
     return quadrangleSprite;
 }
 
-void Quadrangle::initializeVertices()
+void Quadrangle::initializeRandomVertices()
 {
     m_secondVertex.setX(m_vertex.getX() + rnd::getFloat(10, 200));
     m_secondVertex.setY(m_vertex.getY() + rnd::getFloat(10, 50));

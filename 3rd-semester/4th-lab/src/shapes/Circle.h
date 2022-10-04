@@ -34,6 +34,8 @@ public:
     void setColor(const sf::Color& color);
     void setRadius(float newRadius);
 
+    virtual ~Circle() = default;
+
 protected:
     float m_radius{};
 

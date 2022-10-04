@@ -31,6 +31,8 @@ public:
 
     bool isShown() const;
 
+    virtual ~Quadrangle() = default;
+
 protected:
     Vertex m_secondVertex{};
     Vertex m_thirdVertex{};

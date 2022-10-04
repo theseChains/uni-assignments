@@ -35,7 +35,7 @@ public:
         sf::ConvexShape convexValue() const;
     };
 
-    virtual ToShow show(bool modifyVisibility = true) = 0;
+    virtual ToShow show(bool modifyVisibility = true) { return ToShow{}; };
 
     virtual void moveTo(float offsetX, float offsetY) = 0;
 

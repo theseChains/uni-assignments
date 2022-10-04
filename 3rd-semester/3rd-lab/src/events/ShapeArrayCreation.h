@@ -17,15 +17,21 @@ namespace ArrayCreation
 {
     // circle and ellipse arrays
     template <typename CircularShape>
-    void checkForCircularShapeArrayCreation(VectorOfArrayOfCircularShapePtrs<CircularShape>& arraysToRender);
+    void checkForCircularShapeArrayCreation(
+            VectorOfArrayOfCircularShapePtrs<CircularShape>& arraysToRender);
 
     template <typename CircularShape>
-    void handleCircularShapeArrayCreation(VectorOfArrayOfCircularShapePtrs<CircularShape>& arraysToRender);
+    void handleCircularShapeArrayCreation(
+            VectorOfArrayOfCircularShapePtrs<CircularShape>& arraysToRender);
 
-    // rectangle arrays
-    void checkForRectangleArrayCreation(VectorOfArrayOfRectanglePtrs& rectangleArraysToRender);
+    // rectangle and rhombus arrays
+    template <typename ParallelogrammaticShape>
+    void checkForParallelogramArrayCreation(
+            VectorOfArrayOfParalellogramShapePtrs<ParallelogrammaticShape>& rectangleArraysToRender);
 
-    void handleRectangleArrayCreation(VectorOfArrayOfRectanglePtrs& rectangleArraysToRender);
+    template <typename ParallelogrammaticShape>
+    void handleParallelogramArrayCreation(
+            VectorOfArrayOfParalellogramShapePtrs<ParallelogrammaticShape>& rectangleArraysToRender);
 
     // quadrangle arrays
     void checkForQuadrangleArrayCreation(VectorOfArrayOfQuadranglePtrs& quadrangleArraysToRender);

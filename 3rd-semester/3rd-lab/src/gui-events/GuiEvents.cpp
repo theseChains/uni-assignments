@@ -16,7 +16,7 @@ void guiHandleRectangleEvents(std::array<std::unique_ptr<Rectangle>, 3>& rectang
 {
     if (mode::rectangles)
     {
-        GuiCreation::checkForRectangleCreation(rectanglesToRender);
+        GuiCreation::checkForParallelogramCreation(rectanglesToRender);
         guiCheckForRectangleModification(rectanglesToRender, rectangleArraysToRender);
         guiCheckForShapeMovement(rectanglesToRender, rectangleArraysToRender);
     }
@@ -56,7 +56,7 @@ void guiHandleRectangleArrayCreation(VectorOfArrayOfRectanglePtrs& rectangleArra
 {
     if (mode::rectangles)
     {
-        GuiArrayCreation::checkForRectangleArrayCreation(rectangleArraysToRender);
+        GuiArrayCreation::checkForParallelogramArrayCreation(rectangleArraysToRender);
     }
 }
 

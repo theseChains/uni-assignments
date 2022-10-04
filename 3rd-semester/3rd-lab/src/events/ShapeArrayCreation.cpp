@@ -24,24 +24,29 @@ void ArrayCreation::checkForCircularShapeArrayCreation(
 template void ArrayCreation::checkForCircularShapeArrayCreation(VectorOfArrayOfCirclePtrs&);
 template void ArrayCreation::checkForCircularShapeArrayCreation(VectorOfArrayOfEllipsePtrs&);
 
-void ArrayCreation::checkForRectangleArrayCreation(VectorOfArrayOfRectanglePtrs& rectangleArraysToRender)
+template <typename ParallelogrammaticShape>
+void ArrayCreation::checkForParallelogramArrayCreation(
+        VectorOfArrayOfParalellogramShapePtrs<ParallelogrammaticShape>& parallelogramArraysToRender)
 {
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::N))
     {
-        handleRectangleArrayCreation(rectangleArraysToRender);
+        handleParallelogramArrayCreation(parallelogramArraysToRender);
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::B))
     {
-        if (!rectangleArraysToRender.empty())
+        if (!parallelogramArraysToRender.empty())
         {
-            rectangleArraysToRender.pop_back();
+            parallelogramArraysToRender.pop_back();
         }
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
     {
-        rectangleArraysToRender.clear();
+        parallelogramArraysToRender.clear();
     }
 }
+
+template void ArrayCreation::checkForParallelogramArrayCreation(VectorOfArrayOfRectanglePtrs&);
+template void ArrayCreation::checkForParallelogramArrayCreation(VectorOfArrayOfRhombusPtrs&);
 
 void ArrayCreation::checkForQuadrangleArrayCreation(
         VectorOfArrayOfQuadranglePtrs& quadrangleArraysToRender)
@@ -83,20 +88,24 @@ void ArrayCreation::handleCircularShapeArrayCreation(
     });
 }
 
-void ArrayCreation::handleRectangleArrayCreation(VectorOfArrayOfRectanglePtrs& rectangleArraysToRender)
+template <typename ParallelogrammaticShape>
+void ArrayCreation::handleParallelogramArrayCreation(
+        VectorOfArrayOfParalellogramShapePtrs<ParallelogrammaticShape>& parallelogramArraysToRender)
 {
-    Rectangle firstRectangle{};
-    Rectangle secondRectangle{ Creation::createFirstConstructorRectangle() };
-    Rectangle thirdRectangle{ Creation::createSecondConstructorRectangle() };
+    ParallelogrammaticShape firstParallelogram{};
+    ParallelogrammaticShape secondParallelogram{
+        Creation::createFirstConstructorParallelogrammaticShape<ParallelogrammaticShape>() };
+    ParallelogrammaticShape thirdParallelogram{
+        Creation::createSecondConstructorParallelogrammaticShape<ParallelogrammaticShape>() };
 
-    firstRectangle.show();
-    secondRectangle.show();
-    thirdRectangle.show();
+    firstParallelogram.show();
+    secondParallelogram.show();
+    thirdParallelogram.show();
 
-    rectangleArraysToRender.push_back(std::array<std::unique_ptr<Rectangle>, 3>{
-        std::make_unique<Rectangle>(firstRectangle),
-        std::make_unique<Rectangle>(secondRectangle),
-        std::make_unique<Rectangle>(thirdRectangle)
+    parallelogramArraysToRender.push_back(std::array<std::unique_ptr<ParallelogrammaticShape>, 3>{
+        std::make_unique<ParallelogrammaticShape>(firstParallelogram),
+        std::make_unique<ParallelogrammaticShape>(secondParallelogram),
+        std::make_unique<ParallelogrammaticShape>(thirdParallelogram)
     });
 }
 

@@ -54,7 +54,7 @@ void handleRectangleArrayEvents(VectorOfArrayOfRectanglePtrs& rectangleArraysToR
 {
     if (mode::rectangles)
     {
-        ArrayCreation::checkForRectangleArrayCreation(rectangleArraysToRender);
+        ArrayCreation::checkForParallelogramArrayCreation(rectangleArraysToRender);
         Modification::checkForRectangleArrayModification(rectangleArraysToRender);
         Movement::checkForShapeArrayMovement(rectangleArraysToRender);
     }

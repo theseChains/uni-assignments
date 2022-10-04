@@ -19,7 +19,9 @@ namespace GuiArrayCreation
     template <typename CircularShape>
     void checkForCircularShapeArrayCreation(VectorOfArrayOfShapePtrs<CircularShape>& arraysToRender);
 
-    void checkForRectangleArrayCreation(VectorOfArrayOfRectanglePtrs& rectangleArraysToRender);
+    template <typename ParallelogrammaticShape>
+    void checkForParallelogramArrayCreation(
+            VectorOfArrayOfParalellogramShapePtrs<ParallelogrammaticShape>& rectangleArraysToRender);
 
     void checkForQuadrangleArrayCreation(VectorOfArrayOfQuadranglePtrs& quadrangleArraysToRender);
 }

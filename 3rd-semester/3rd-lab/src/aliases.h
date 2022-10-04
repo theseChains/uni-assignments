@@ -9,6 +9,7 @@
 #include "shapes/Rectangle.h"
 #include "shapes/Ellipse.h"
 #include "shapes/Quadrangle.h"
+#include "shapes/Rhombus.h"
 
 // all shapes
 template <typename ShapeType>
@@ -18,9 +19,15 @@ using VectorOfArrayOfShapePtrs = std::vector<std::array<std::unique_ptr<ShapeTyp
 template <typename CircularShape>
 using VectorOfArrayOfCircularShapePtrs = std::vector<std::array<std::unique_ptr<CircularShape>, 3>>;
 
+// Rectangle and Rhombus
+template <typename ParallelogrammaticShape>
+using VectorOfArrayOfParalellogramShapePtrs =
+        std::vector<std::array<std::unique_ptr<ParallelogrammaticShape>, 3>>;
+
 using VectorOfArrayOfCirclePtrs = std::vector<std::array<std::unique_ptr<Circle>, 3>>;
 using VectorOfArrayOfRectanglePtrs = std::vector<std::array<std::unique_ptr<Rectangle>, 3>>;
 using VectorOfArrayOfEllipsePtrs = std::vector<std::array<std::unique_ptr<Ellipse>, 3>>;
 using VectorOfArrayOfQuadranglePtrs = std::vector<std::array<std::unique_ptr<Quadrangle>, 3>>;
+using VectorOfArrayOfRhombusPtrs = std::vector<std::array<std::unique_ptr<Rhombus>, 3>>;
 
 #endif

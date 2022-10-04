@@ -24,25 +24,29 @@ void GuiArrayCreation::checkForCircularShapeArrayCreation(
 template void GuiArrayCreation::checkForCircularShapeArrayCreation(VectorOfArrayOfCirclePtrs&);
 template void GuiArrayCreation::checkForCircularShapeArrayCreation(VectorOfArrayOfEllipsePtrs&);
 
-void GuiArrayCreation::checkForRectangleArrayCreation(
-        VectorOfArrayOfRectanglePtrs& rectangleArraysToRender)
+template <typename ParallelogrammaticShape>
+void GuiArrayCreation::checkForParallelogramArrayCreation(
+        VectorOfArrayOfParalellogramShapePtrs<ParallelogrammaticShape>& shapeArraysToRender)
 {
     if (ImGui::Button("Create an array of\nshapes (N)"))
     {
-        ArrayCreation::handleRectangleArrayCreation(rectangleArraysToRender);
+        ArrayCreation::handleParallelogramArrayCreation(shapeArraysToRender);
     }
     if (ImGui::Button("Delete last array of\nshapes (B)"))
     {
-        if (!rectangleArraysToRender.empty())
+        if (!shapeArraysToRender.empty())
         {
-            rectangleArraysToRender.pop_back();
+            shapeArraysToRender.pop_back();
         }
     }
     if (ImGui::Button("Delete all arrays of\nshapes (Space)"))
     {
-        rectangleArraysToRender.clear();
+        shapeArraysToRender.clear();
     }
 }
+
+template void GuiArrayCreation::checkForParallelogramArrayCreation(VectorOfArrayOfRectanglePtrs&);
+template void GuiArrayCreation::checkForParallelogramArrayCreation(VectorOfArrayOfRhombusPtrs&);
 
 void GuiArrayCreation::checkForQuadrangleArrayCreation(
         VectorOfArrayOfQuadranglePtrs& quadrangleArraysToRender)

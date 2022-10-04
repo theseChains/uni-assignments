@@ -16,7 +16,7 @@
 #include "../shapes/Quadrangle.h"
 
 #include "../events/CircularShapeCreation.h"
-#include "../events/RectangleShapeCreation.h"
+#include "../events/ParallelogrammaticShapeCreation.h"
 #include "../events/QuadrangleShapeCreation.h"
 
 namespace GuiCreation
@@ -24,7 +24,9 @@ namespace GuiCreation
     template <typename CircularShape>
     void checkForCircularShapeCreation(std::array<std::unique_ptr<CircularShape>, 3>& shapesToRender);
 
-    void checkForRectangleCreation(std::array<std::unique_ptr<Rectangle>, 3>& rectanglesToRender);
+    template <typename ParallelogrammaticShape>
+    void checkForParallelogramCreation(
+            std::array<std::unique_ptr<ParallelogrammaticShape>, 3>& rectanglesToRender);
 
     void checkForQuadrangleCreation(std::array<std::unique_ptr<Quadrangle>, 3>& quadranglesToRender);
 }

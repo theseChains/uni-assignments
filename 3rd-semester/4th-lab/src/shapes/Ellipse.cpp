@@ -52,19 +52,6 @@ Ellipse::ToShow Ellipse::show(bool modifyVisibility)
     }
 }
 
-void Ellipse::moveTo(float offsetX, float offsetY)
-{
-    if (m_isShown)
-    {
-        show();
-
-        m_vertex.setX(m_vertex.getX() + offsetX);
-        m_vertex.setY(m_vertex.getY() + offsetY);
-
-        show();
-    }
-}
-
 void Ellipse::rotateByNinetyDegrees()
 {
     if (m_isShown)

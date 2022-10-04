@@ -58,19 +58,6 @@ Figure::ToShow Rhombus::show(bool modifyVisibility)
     }
 }
 
-void Rhombus::moveTo(float offsetX, float offsetY)
-{
-    if (m_isShown)
-    {
-        show();
-
-        m_vertex.setX(m_vertex.getX() + offsetX);
-        m_vertex.setY(m_vertex.getY() + offsetY);
-
-        show();
-    }
-}
-
 void Rhombus::changeFirstDiagonal(float diagonalOffset)
 {
     if (m_isShown)

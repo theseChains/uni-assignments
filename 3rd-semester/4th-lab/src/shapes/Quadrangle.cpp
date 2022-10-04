@@ -6,6 +6,8 @@ Quadrangle::Quadrangle()
 {
     initializeRandomVertices();
 
+    m_isQuadrangle = true;
+
     std::cout << "Quadrangle object created\n\n";
 }
 
@@ -36,6 +38,8 @@ Quadrangle::Quadrangle(float mainPointX, float mainPointY, float secondPointX, f
     m_thirdVertex.setPosition(thirdPointX, thirdPointY);
     m_fourthVertex.setPosition(fourthPointX, fourthPointY);
 
+    m_isQuadrangle = true;
+
     std::cout << "Quadrangle object created\n\n";
 }
 
@@ -47,6 +51,8 @@ Quadrangle::Quadrangle(float mainPointX, float mainPointY, float secondPointX, f
     m_secondVertex.setPosition(secondPointX, secondPointY);
     m_thirdVertex.setPosition(thirdPointX, thirdPointY);
     m_fourthVertex.setPosition(fourthPointX, fourthPointY);
+
+    m_isQuadrangle = true;
 
     std::cout << "Quadrangle object created\n";
 }
@@ -79,25 +85,6 @@ Figure::ToShow Quadrangle::show(bool modifyVisibility)
         {
             return ToShow{};
         }
-    }
-}
-
-void Quadrangle::moveTo(float offsetX, float offsetY)
-{
-    if (m_isShown)
-    {
-        show();
-
-        m_vertex.setX(m_vertex.getX() + offsetX);
-        m_vertex.setY(m_vertex.getY() + offsetY);
-        m_secondVertex.setX(m_secondVertex.getX() + offsetX);
-        m_secondVertex.setY(m_secondVertex.getY() + offsetY);
-        m_thirdVertex.setX(m_thirdVertex.getX() + offsetX);
-        m_thirdVertex.setY(m_thirdVertex.getY() + offsetY);
-        m_fourthVertex.setX(m_fourthVertex.getX() + offsetX);
-        m_fourthVertex.setY(m_fourthVertex.getY() + offsetY);
-
-        show();
     }
 }
 

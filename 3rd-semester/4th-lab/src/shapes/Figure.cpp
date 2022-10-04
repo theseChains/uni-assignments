@@ -18,6 +18,34 @@ Vertex Figure::getPosition() const
     return m_vertex;
 }
 
+void Figure::moveTo(float offsetX, float offsetY)
+{
+    if (m_isShown && m_isQuadrangle)
+    {
+        show();
+
+        m_vertex.setX(m_vertex.getX() + offsetX);
+        m_vertex.setY(m_vertex.getY() + offsetY);
+        m_secondVertex.setX(m_secondVertex.getX() + offsetX);
+        m_secondVertex.setY(m_secondVertex.getY() + offsetY);
+        m_thirdVertex.setX(m_thirdVertex.getX() + offsetX);
+        m_thirdVertex.setY(m_thirdVertex.getY() + offsetY);
+        m_fourthVertex.setX(m_fourthVertex.getX() + offsetX);
+        m_fourthVertex.setY(m_fourthVertex.getY() + offsetY);
+
+        show();
+    }
+    else if (m_isShown)
+    {
+        show();
+
+        m_vertex.setX(m_vertex.getX() + offsetX);
+        m_vertex.setY(m_vertex.getY() + offsetY);
+
+        show();
+    }
+}
+
 Figure::ToShow::ToShow(const std::optional<sf::CircleShape>& optCircleShape)
     : m_optCircleShape{ optCircleShape }
 {

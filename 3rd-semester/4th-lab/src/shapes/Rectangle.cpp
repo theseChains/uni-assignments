@@ -63,19 +63,6 @@ Figure::ToShow Rectangle::show(bool modifyVisibility)
     }
 }
 
-void Rectangle::moveTo(float offsetX, float offsetY)
-{
-    if (m_isShown)
-    {
-        show();
-
-        m_vertex.setX(m_vertex.getX() + offsetX);
-        m_vertex.setY(m_vertex.getY() + offsetY);
-
-        show();
-    }
-}
-
 void Rectangle::changeWidth(float widthOffset)
 {
     if (m_isShown)

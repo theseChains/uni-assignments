@@ -22,8 +22,6 @@ public:
 
     ToShow show(bool modifyVisibility = true) override;
 
-    void moveTo(float offsetX, float offsetY) override;
-
     void changeTopBase(float baseOffset);
     void changeBottomBase(float baseOffset);
     void changeHeight(float heightOffset);

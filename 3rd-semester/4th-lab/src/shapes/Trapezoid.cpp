@@ -61,19 +61,6 @@ Figure::ToShow Trapezoid::show(bool modifyVisibility)
     }
 }
 
-void Trapezoid::moveTo(float offsetX, float offsetY)
-{
-    if (m_isShown)
-    {
-        show();
-
-        m_vertex.setX(m_vertex.getX() + offsetX);
-        m_vertex.setY(m_vertex.getY() + offsetY);
-
-        show();
-    }
-}
-
 void Trapezoid::changeTopBase(float baseOffset)
 {
     if (m_isShown)

@@ -27,19 +27,13 @@ public:
 
     ToShow show(bool modifyVisibility = true) override;
 
-    void moveTo(float offsetX, float offsetY) override;
+    //void moveTo(float offsetX, float offsetY) override;
 
     bool isShown() const;
 
     virtual ~Quadrangle() = default;
 
 protected:
-    Vertex m_secondVertex{};
-    Vertex m_thirdVertex{};
-    Vertex m_fourthVertex{};
-
-    bool m_isShown{};
-
     // auxiliary
     sf::ConvexShape createSprite() const;
     // initializes second, third and fourth vertices

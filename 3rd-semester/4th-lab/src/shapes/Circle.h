@@ -21,8 +21,6 @@ public:
 
     ToShow show(bool modifyVisibility = true) override;
 
-    void moveTo(float offsetX, float offsetY) override;
-
     void changeRadius(float radiusOffset);
 
     bool isShown() const;

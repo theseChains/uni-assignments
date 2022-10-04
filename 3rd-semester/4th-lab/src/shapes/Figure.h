@@ -37,7 +37,7 @@ public:
 
     virtual ToShow show(bool modifyVisibility = true) { return ToShow{}; };
 
-    virtual void moveTo(float offsetX, float offsetY) = 0;
+    void moveTo(float offsetX, float offsetY);
 
     Vertex getPosition() const;
 
@@ -45,6 +45,13 @@ public:
 
 protected:
     Vertex m_vertex{};
+    Vertex m_secondVertex{};
+    Vertex m_thirdVertex{};
+    Vertex m_fourthVertex{};
+
+    bool m_isShown{};
+
+    bool m_isQuadrangle{};
 
     sf::Color m_color{};
 };

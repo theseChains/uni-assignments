@@ -19,6 +19,7 @@
 #include "shapes/Rectangle.h"
 #include "shapes/Ellipse.h"
 #include "shapes/Quadrangle.h"
+#include "shapes/Rhombus.h"
 
 #include "render/Renderer.h"
 
@@ -41,11 +42,13 @@ int main()
     std::array<std::unique_ptr<Rectangle>, 3> rectanglesToRender{};
     std::array<std::unique_ptr<Ellipse>, 3> ellipsesToRender{};
     std::array<std::unique_ptr<Quadrangle>, 3> quadranglesToRender{};
+    std::array<std::unique_ptr<Rhombus>, 3> rhombusesToRender{};
 
     VectorOfArrayOfCirclePtrs circleArrays{};
     VectorOfArrayOfRectanglePtrs rectangleArrays{};
     VectorOfArrayOfEllipsePtrs ellipseArrays{};
     VectorOfArrayOfQuadranglePtrs quadrangleArrays{};
+    VectorOfArrayOfRhombusPtrs rhombusArrays{};
 
     sf::Clock deltaClock{};
     while (window.isOpen())
@@ -76,11 +79,13 @@ int main()
                 handleRectangleEvents(rectanglesToRender);
                 handleEllipseEvents(ellipsesToRender);
                 handleQuadrangleEvents(quadranglesToRender);
+                handleRhombusEvents(rhombusesToRender);
 
                 handleCircleArrayEvents(circleArrays);
                 handleRectangleArrayEvents(rectangleArrays);
                 handleEllipseArrayEvents(ellipseArrays);
                 handleQuadrangleArrayEvents(quadrangleArrays);
+                handleRhombusArrayEvents(rhombusArrays);
             }
         }
 

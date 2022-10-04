@@ -39,6 +39,15 @@ void handleQuadrangleEvents(std::array<std::unique_ptr<Quadrangle>, 3>& quadrang
     }
 }
 
+void handleRhombusEvents(std::array<std::unique_ptr<Rhombus>, 3>& rhombusesToRender)
+{
+    if (mode::rhombuses)
+    {
+        Creation::checkForParallelogrammaticShapeCreation(rhombusesToRender);
+        Movement::checkForShapeMovement(rhombusesToRender);
+    }
+}
+
 // arrays of shapes
 void handleCircleArrayEvents(VectorOfArrayOfCirclePtrs& circleArraysToRender)
 {
@@ -76,5 +85,14 @@ void handleQuadrangleArrayEvents(VectorOfArrayOfQuadranglePtrs& quadrangleArrays
     {
         ArrayCreation::checkForQuadrangleArrayCreation(quadrangleArraysToRender);
         Movement::checkForShapeArrayMovement(quadrangleArraysToRender);
+    }
+}
+
+void handleRhombusArrayEvents(VectorOfArrayOfRhombusPtrs& rhombusArraysToRender)
+{
+    if (mode::rhombuses)
+    {
+        ArrayCreation::checkForParallelogramArrayCreation(rhombusArraysToRender);
+        Movement::checkForShapeArrayMovement(rhombusArraysToRender);
     }
 }

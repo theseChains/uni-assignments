@@ -46,6 +46,8 @@ namespace mode
     inline bool rectangles{ false };
     inline bool ellipses{ false };
     inline bool quadrangles{ false };
+    inline bool rhombuses{ false };
+    inline bool trapezoids{ false };
 
     void shift();
 

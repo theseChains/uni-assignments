@@ -14,7 +14,7 @@ void handleRectangleEvents(std::array<std::unique_ptr<Rectangle>, 3>& rectangles
 {
     if (mode::rectangles)
     {
-        Creation::checkForRectangleShapeCreation(rectanglesToRender);
+        Creation::checkForParallelogrammaticShapeCreation(rectanglesToRender);
         Modification::checkForRectangleModification(rectanglesToRender);
         Movement::checkForShapeMovement(rectanglesToRender);
     }

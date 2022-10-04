@@ -5,7 +5,7 @@
 #include "../aliases.h"
 
 #include "CircularShapeCreation.h"
-#include "RectangleShapeCreation.h"
+#include "ParallelogrammaticShapeCreation.h"
 #include "QuadrangleShapeCreation.h"
 
 #include "ShapeMovement.h"

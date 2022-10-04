@@ -10,7 +10,7 @@
 #include "../shapes/Quadrangle.h"
 
 #include "CircularShapeCreation.h"
-#include "RectangleShapeCreation.h"
+#include "ParallelogrammaticShapeCreation.h"
 #include "QuadrangleShapeCreation.h"
 
 namespace ArrayCreation

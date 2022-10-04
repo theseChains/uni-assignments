@@ -35,9 +35,19 @@ void mode::shift()
         ellipses = false;
         quadrangles = true;
     }
-    else
+    else if (quadrangles)
     {
         quadrangles = false;
+        rhombuses = true;
+    }
+    else if (rhombuses)
+    {
+        rhombuses = false;
+        trapezoids = true;
+    }
+    else
+    {
+        trapezoids = false;
         circles = true;
     }
 }
@@ -56,8 +66,16 @@ std::string mode::get()
     {
         return "working with ellipses";
     }
-    else
+    else if (quadrangles)
     {
         return "working with quadrangles";
+    }
+    else if (rhombuses)
+    {
+        return "working with rhombuses";
+    }
+    else
+    {
+        return "working with trapezoids";
     }
 }

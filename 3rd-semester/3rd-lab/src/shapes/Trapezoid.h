@@ -26,6 +26,7 @@ public:
 
     void changeTopBase(float baseOffset);
     void changeBottomBase(float baseOffset);
+    void changeHeight(float heightOffset);
 
 private:
     float m_topBaseLength{};

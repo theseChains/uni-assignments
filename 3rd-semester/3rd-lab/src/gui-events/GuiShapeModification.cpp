@@ -1,31 +1,27 @@
 #include "GuiShapeModification.h"
 
-template <typename CircularShape>
-void guiCheckForCircularShapeModification(std::array<std::unique_ptr<CircularShape>, 3>& shapesToRender,
-       VectorOfArrayOfCircularShapePtrs<CircularShape>& shapeArraysToRender)
+void guiCheckForCircleModification(std::array<std::unique_ptr<Circle>, 3>& circlesToRender,
+       VectorOfArrayOfCirclePtrs& circleArraysToRender)
 {
-    if (ImGui::Button("Enlarge rings (O)"))
+    if (ImGui::Button("Enlarge circles (O)"))
     {
-        Modification::enlargeCircles(shapesToRender);
+        Modification::enlargeCircles(circlesToRender);
 
-        for (auto& shapeArray : shapeArraysToRender)
+        for (auto& circleArray : circleArraysToRender)
         {
-            Modification::enlargeCircles(shapeArray);
+            Modification::enlargeCircles(circleArray);
         }
     }
-    if (ImGui::Button("Reduce rings (I)"))
+    if (ImGui::Button("Reduce circles (I)"))
     {
-        Modification::reduceCircles(shapesToRender);
+        Modification::reduceCircles(circlesToRender);
 
-        for (auto& shapeArray : shapeArraysToRender)
+        for (auto& circleArray : circleArraysToRender)
         {
-            Modification::reduceCircles(shapeArray);
+            Modification::reduceCircles(circleArray);
         }
     }
 }
-
-template void guiCheckForCircularShapeModification(std::array<std::unique_ptr<Circle>, 3>&,
-        VectorOfArrayOfCirclePtrs&);
 
 void guiCheckForRectangleModification(std::array<std::unique_ptr<Rectangle>, 3>& rectanglesToRender,
         VectorOfArrayOfRectanglePtrs& rectangleArraysToRender)
@@ -68,7 +64,7 @@ void guiCheckForRectangleModification(std::array<std::unique_ptr<Rectangle>, 3>&
     }
 }
 
-void guiCheckForEllipseShapeModification(std::array<std::unique_ptr<Ellipse>, 3>& ellipsesToRender,
+void guiCheckForEllipseModification(std::array<std::unique_ptr<Ellipse>, 3>& ellipsesToRender,
         VectorOfArrayOfEllipsePtrs& ellipseArraysToRender)
 {
     if (ImGui::Button("Rotate by 90 degrees (R)"))
@@ -78,6 +74,88 @@ void guiCheckForEllipseShapeModification(std::array<std::unique_ptr<Ellipse>, 3>
         for (auto& ellipseArray : ellipseArraysToRender)
         {
             Modification::rotateByNinetyDegrees(ellipseArray);
+        }
+    }
+}
+
+void guiCheckForRhombusModification(std::array<std::unique_ptr<Rhombus>, 3>& rhombusesToRender,
+        VectorOfArrayOfRhombusPtrs& rhombusArraysToRender)
+{
+    if (ImGui::Button("Reduce height of\nrhombuses (Up)"))
+    {
+        Modification::reduceHeightOfRhombuses(rhombusesToRender);
+
+        for (auto& rhombusArray : rhombusArraysToRender)
+        {
+            Modification::reduceHeightOfRhombuses(rhombusArray);
+        }
+    }
+    if (ImGui::Button("Reduce width of\nrhombuses (Left)"))
+    {
+        Modification::reduceWidthOfRhombuses(rhombusesToRender);
+
+        for (auto& rhombusArray : rhombusArraysToRender)
+        {
+            Modification::reduceWidthOfRhombuses(rhombusArray);
+        }
+    }
+    if (ImGui::Button("Increase height of\nrhombuses (Down)"))
+    {
+        Modification::increaseHeightOfRhombuses(rhombusesToRender);
+
+        for (auto& rhombusArray : rhombusArraysToRender)
+        {
+            Modification::increaseHeightOfRhombuses(rhombusArray);
+        }
+    }
+    if (ImGui::Button("Increase width of\nrhombuses (Right)"))
+    {
+        Modification::increaseWidthOfRhombuses(rhombusesToRender);
+
+        for (auto& rhombusArray : rhombusArraysToRender)
+        {
+            Modification::increaseWidthOfRhombuses(rhombusArray);
+        }
+    }
+}
+
+void guiCheckForTrapezoidModification(std::array<std::unique_ptr<Trapezoid>, 3>& trapezoidsToRender,
+        VectorOfArrayOfTrapezoidPtrs& trapezoidArraysToRender)
+{
+    if (ImGui::Button("Reduce height of\ntrapezoids (Up)"))
+    {
+        Modification::reduceHeightOfTrapezoids(trapezoidsToRender);
+
+        for (auto& trapezoidArray : trapezoidArraysToRender)
+        {
+            Modification::reduceHeightOfTrapezoids(trapezoidArray);
+        }
+    }
+    if (ImGui::Button("Reduce width of\ntrapezoids (Left)"))
+    {
+        Modification::reduceWidthOfTrapezoids(trapezoidsToRender);
+
+        for (auto& trapezoidArray : trapezoidArraysToRender)
+        {
+            Modification::reduceWidthOfTrapezoids(trapezoidArray);
+        }
+    }
+    if (ImGui::Button("Increase height of\ntrapezoids (Down)"))
+    {
+        Modification::increaseHeightOfTrapezoids(trapezoidsToRender);
+
+        for (auto& trapezoidArray : trapezoidArraysToRender)
+        {
+            Modification::increaseHeightOfTrapezoids(trapezoidArray);
+        }
+    }
+    if (ImGui::Button("Increase width of\ntrapezoids (Right)"))
+    {
+        Modification::increaseWidthOfTrapezoids(trapezoidsToRender);
+
+        for (auto& trapezoidArray : trapezoidArraysToRender)
+        {
+            Modification::increaseWidthOfTrapezoids(trapezoidArray);
         }
     }
 }

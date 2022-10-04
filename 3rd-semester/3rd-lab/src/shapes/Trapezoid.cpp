@@ -108,6 +108,23 @@ void Trapezoid::changeBottomBase(float baseOffset)
     }
 }
 
+void Trapezoid::changeHeight(float heightOffset)
+{
+    if (m_isShown)
+    {
+        show();
+
+        m_height += heightOffset;
+
+        if (m_height <= 0.0f)
+        {
+            m_height = 0.0f;
+        }
+
+        show();
+    }
+}
+
 sf::ConvexShape Trapezoid::createSprite() const
 {
     sf::ConvexShape trapezoidSprite{};

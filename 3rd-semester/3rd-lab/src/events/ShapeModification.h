@@ -39,6 +39,11 @@ namespace Modification
 
     void checkForRhombusArrayModification(VectorOfArrayOfRhombusPtrs& rhombusArraysToRender);
 
+    // for Trapezoid
+    void checkForTrapezoidShapeModification(std::array<std::unique_ptr<Trapezoid>, 3>& trapezoidsToRender);
+
+    void checkForTrapezoidArrayModification(VectorOfArrayOfTrapezoidPtrs& trapezoidArraysToRender);
+
     // auxiliary
     template <typename CircularShape>
     void enlargeCircles(std::array<std::unique_ptr<CircularShape>, 3>& shapesToRender);
@@ -63,6 +68,11 @@ namespace Modification
     void reduceWidthOfRhombuses(std::array<std::unique_ptr<Rhombus>, 3>& rhombusesToRender);
     void increaseHeightOfRhombuses(std::array<std::unique_ptr<Rhombus>, 3>& rhombusesToRender);
     void increaseWidthOfRhombuses(std::array<std::unique_ptr<Rhombus>, 3>& rhombusesToRender);
+
+    void reduceHeightOfTrapezoids(std::array<std::unique_ptr<Trapezoid>, 3>& trapezoidsToRender);
+    void reduceWidthOfTrapezoids(std::array<std::unique_ptr<Trapezoid>, 3>& trapezoidsToRender);
+    void increaseHeightOfTrapezoids(std::array<std::unique_ptr<Trapezoid>, 3>& trapezoidsToRender);
+    void increaseWidthOfTrapezoids(std::array<std::unique_ptr<Trapezoid>, 3>& trapezoidsToRender);
 }
 
 #endif

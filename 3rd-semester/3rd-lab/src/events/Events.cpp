@@ -54,6 +54,7 @@ void handleTrapezoidEvents(std::array<std::unique_ptr<Trapezoid>, 3>& trapezoids
     if (mode::trapezoids)
     {
         Creation::checkForTrapezoidShapeCreation(trapezoidsToRender);
+        Modification::checkForTrapezoidShapeModification(trapezoidsToRender);
         Movement::checkForShapeMovement(trapezoidsToRender);
     }
 }
@@ -113,6 +114,7 @@ void handleTrapezoidArrayEvents(VectorOfArrayOfTrapezoidPtrs& trapezoidArraysToR
     if (mode::trapezoids)
     {
         ArrayCreation::checkForTrapezoidArrayCreation(trapezoidArraysToRender);
+        Modification::checkForTrapezoidArrayModification(trapezoidArraysToRender);
         Movement::checkForShapeArrayMovement(trapezoidArraysToRender);
     }
 }

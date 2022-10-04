@@ -6,7 +6,7 @@ void guiHandleCircleEvents(std::array<std::unique_ptr<Circle>, 3>& circlesToRend
     if (mode::circles)
     {
         GuiCreation::checkForCircularShapeCreation(circlesToRender);
-        guiCheckForCircularShapeModification(circlesToRender, circleArraysToRender);
+        guiCheckForCircleModification(circlesToRender, circleArraysToRender);
         guiCheckForShapeMovement(circlesToRender, circleArraysToRender);
     }
 }
@@ -28,7 +28,7 @@ void guiHandleEllipseEvents(std::array<std::unique_ptr<Ellipse>, 3>& ellipsesToR
     if (mode::ellipses)
     {
         GuiCreation::checkForCircularShapeCreation(ellipsesToRender);
-        guiCheckForEllipseShapeModification(ellipsesToRender, ellipseArraysToRender);
+        guiCheckForEllipseModification(ellipsesToRender, ellipseArraysToRender);
         guiCheckForShapeMovement(ellipsesToRender, ellipseArraysToRender);
     }
 }
@@ -49,6 +49,7 @@ void guiHandleRhombusEvents(std::array<std::unique_ptr<Rhombus>, 3>& rhombusesTo
     if (mode::rhombuses)
     {
         GuiCreation::checkForParallelogramCreation(rhombusesToRender);
+        guiCheckForRhombusModification(rhombusesToRender, rhombusArraysToRender);
         guiCheckForShapeMovement(rhombusesToRender, rhombusArraysToRender);
     }
 }
@@ -59,6 +60,7 @@ void guiHandleTrapezoidEvents(std::array<std::unique_ptr<Trapezoid>, 3>& trapezo
     if (mode::trapezoids)
     {
         GuiCreation::checkForTrapezoidCreation(trapezoidsToRender);
+        guiCheckForTrapezoidModification(trapezoidsToRender, trapezoidArraysToRender);
         guiCheckForShapeMovement(trapezoidsToRender, trapezoidArraysToRender);
     }
 }

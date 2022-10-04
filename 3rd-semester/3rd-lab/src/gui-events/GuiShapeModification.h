@@ -14,17 +14,28 @@
 
 #include "../shapes/Circle.h"
 #include "../shapes/Rectangle.h"
+#include "../shapes/Ellipse.h"
+#include "../shapes/Rhombus.h"
+#include "../shapes/Trapezoid.h"
 
-// for Circle and ...
-template <typename CircularShape>
-void guiCheckForCircularShapeModification(std::array<std::unique_ptr<CircularShape>, 3>& shapesToRender,
-       VectorOfArrayOfCircularShapePtrs<CircularShape>& shapeArraysToRender);
+// for Circle
+void guiCheckForCircleModification(std::array<std::unique_ptr<Circle>, 3>& circlesToRender,
+       VectorOfArrayOfCirclePtrs& circleArraysToRender);
 
 // for Rectangle
 void guiCheckForRectangleModification(std::array<std::unique_ptr<Rectangle>, 3>& rectanglesToRender,
         VectorOfArrayOfRectanglePtrs& rectangleArraysToRender);
 
 // for Ellipse
-void guiCheckForEllipseShapeModification(std::array<std::unique_ptr<Ellipse>, 3>& ellipsesToRender,
+void guiCheckForEllipseModification(std::array<std::unique_ptr<Ellipse>, 3>& ellipsesToRender,
         VectorOfArrayOfEllipsePtrs& ellipseArraysToRender);
+
+// for Rhombus
+void guiCheckForRhombusModification(std::array<std::unique_ptr<Rhombus>, 3>& rhombusesToRender,
+        VectorOfArrayOfRhombusPtrs& rhombusArraysToRender);
+
+// for Trapezoid
+void guiCheckForTrapezoidModification(std::array<std::unique_ptr<Trapezoid>, 3>& trapezoidsToRender,
+        VectorOfArrayOfTrapezoidPtrs& trapezoidArraysToRender);
+
 #endif

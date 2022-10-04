@@ -67,6 +67,27 @@ void Modification::checkForRhombusShapeModification(
     }
 }
 
+void Modification::checkForTrapezoidShapeModification(
+        std::array<std::unique_ptr<Trapezoid>, 3>& trapezoidsToRender)
+{
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+    {
+        Modification::reduceHeightOfTrapezoids(trapezoidsToRender);
+    }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+    {
+        Modification::reduceWidthOfTrapezoids(trapezoidsToRender);
+    }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+    {
+        Modification::increaseHeightOfTrapezoids(trapezoidsToRender);
+    }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+    {
+        Modification::increaseWidthOfTrapezoids(trapezoidsToRender);
+    }
+}
+
 template <typename CircularShape>
 void Modification::checkForCircularShapeArrayModification(
         VectorOfArrayOfCircularShapePtrs<CircularShape>& shapeArraysToRender)
@@ -101,6 +122,14 @@ void Modification::checkForRhombusArrayModification(VectorOfArrayOfRhombusPtrs& 
     for (auto& rhombusArray : rhombusArraysToRender)
     {
         checkForRhombusShapeModification(rhombusArray);
+    }
+}
+
+void Modification::checkForTrapezoidArrayModification(VectorOfArrayOfTrapezoidPtrs& trapezoidArraysToRender)
+{
+    for (auto& trapezoidArray : trapezoidArraysToRender)
+    {
+        checkForTrapezoidShapeModification(trapezoidArray);
     }
 }
 
@@ -235,6 +264,57 @@ void Modification::increaseWidthOfRhombuses(
         if (rhombus.get() != nullptr)
         {
             rhombus->changeFirstDiagonal(2.0f);
+        }
+    }
+}
+
+// Trapezoid modification
+void Modification::reduceHeightOfTrapezoids(
+        std::array<std::unique_ptr<Trapezoid>, 3>& trapezoidsToRender)
+{
+    for (const auto& trapezoid : trapezoidsToRender)
+    {
+        if (trapezoid.get() != nullptr)
+        {
+            trapezoid->changeHeight(-2.0f);
+        }
+    }
+}
+
+void Modification::reduceWidthOfTrapezoids(
+        std::array<std::unique_ptr<Trapezoid>, 3>& trapezoidsToRender)
+{
+    for (const auto& trapezoid : trapezoidsToRender)
+    {
+        if (trapezoid.get() != nullptr)
+        {
+            trapezoid->changeTopBase(-2.0f);
+            trapezoid->changeBottomBase(-2.0f);
+        }
+    }
+}
+
+void Modification::increaseHeightOfTrapezoids(
+        std::array<std::unique_ptr<Trapezoid>, 3>& trapezoidsToRender)
+{
+    for (const auto& trapezoid : trapezoidsToRender)
+    {
+        if (trapezoid.get() != nullptr)
+        {
+            trapezoid->changeHeight(2.0f);
+        }
+    }
+}
+
+void Modification::increaseWidthOfTrapezoids(
+        std::array<std::unique_ptr<Trapezoid>, 3>& trapezoidsToRender)
+{
+    for (const auto& trapezoid : trapezoidsToRender)
+    {
+        if (trapezoid.get() != nullptr)
+        {
+            trapezoid->changeTopBase(2.0f);
+            trapezoid->changeBottomBase(2.0f);
         }
     }
 }

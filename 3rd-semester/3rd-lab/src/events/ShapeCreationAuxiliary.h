@@ -8,6 +8,7 @@
 #include "../shapes/Quadrangle.h"
 #include "../shapes/Rectangle.h"
 #include "../shapes/Rhombus.h"
+#include "../shapes/Trapezoid.h"
 
 namespace Creation
 {

@@ -48,6 +48,14 @@ void handleRhombusEvents(std::array<std::unique_ptr<Rhombus>, 3>& rhombusesToRen
     }
 }
 
+void handleTrapezoidEvents(std::array<std::unique_ptr<Trapezoid>, 3>& trapezoidsToRender)
+{
+    if (mode::trapezoids)
+    {
+        Creation::checkForTrapezoidShapeCreation(trapezoidsToRender);
+    }
+}
+
 // arrays of shapes
 void handleCircleArrayEvents(VectorOfArrayOfCirclePtrs& circleArraysToRender)
 {

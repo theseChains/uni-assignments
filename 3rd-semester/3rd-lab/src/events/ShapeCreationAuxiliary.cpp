@@ -15,6 +15,7 @@ template void Creation::hideAndDeleteShape(std::unique_ptr<Ellipse>&);
 template void Creation::hideAndDeleteShape(std::unique_ptr<Rectangle>&);
 template void Creation::hideAndDeleteShape(std::unique_ptr<Quadrangle>&);
 template void Creation::hideAndDeleteShape(std::unique_ptr<Rhombus>&);
+template void Creation::hideAndDeleteShape(std::unique_ptr<Trapezoid>&);
 
 Creation::Color Creation::createRandomColor()
 {

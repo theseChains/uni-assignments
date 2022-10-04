@@ -20,6 +20,7 @@
 #include "shapes/Ellipse.h"
 #include "shapes/Quadrangle.h"
 #include "shapes/Rhombus.h"
+#include "shapes/Trapezoid.h"
 
 #include "render/Renderer.h"
 
@@ -43,6 +44,7 @@ int main()
     std::array<std::unique_ptr<Ellipse>, 3> ellipsesToRender{};
     std::array<std::unique_ptr<Quadrangle>, 3> quadranglesToRender{};
     std::array<std::unique_ptr<Rhombus>, 3> rhombusesToRender{};
+    std::array<std::unique_ptr<Trapezoid>, 3> trapezoidsToRender{};
 
     VectorOfArrayOfCirclePtrs circleArrays{};
     VectorOfArrayOfRectanglePtrs rectangleArrays{};
@@ -80,6 +82,7 @@ int main()
                 handleEllipseEvents(ellipsesToRender);
                 handleQuadrangleEvents(quadranglesToRender);
                 handleRhombusEvents(rhombusesToRender);
+                handleTrapezoidEvents(trapezoidsToRender);
 
                 handleCircleArrayEvents(circleArrays);
                 handleRectangleArrayEvents(rectangleArrays);
@@ -114,6 +117,7 @@ int main()
         renderer.renderCircleShapes(ellipsesToRender);
         renderer.renderQuadrangularShapes(quadranglesToRender);
         renderer.renderQuadrangularShapes(rhombusesToRender);
+        renderer.renderQuadrangularShapes(trapezoidsToRender);
 
         renderer.renderCircleShapeArrays(circleArrays);
         renderer.renderQuadrangularShapeArrays(rectangleArrays);

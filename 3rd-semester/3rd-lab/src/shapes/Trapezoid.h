@@ -3,7 +3,6 @@
 
 #include <SFML/Graphics.hpp>
 
-#include <algorithm>
 #include <array>
 #include <iostream>
 #include <optional>

@@ -19,6 +19,7 @@ void Renderer::renderQuadrangularShapes(
 template void Renderer::renderQuadrangularShapes(std::array<std::unique_ptr<Rectangle>, 3>&);
 template void Renderer::renderQuadrangularShapes(std::array<std::unique_ptr<Rhombus>, 3>&);
 template void Renderer::renderQuadrangularShapes(std::array<std::unique_ptr<Quadrangle>, 3>&);
+template void Renderer::renderQuadrangularShapes(std::array<std::unique_ptr<Trapezoid>, 3>&);
 
 template <typename CircularShape>
 void Renderer::renderCircleShapes(std::array<std::unique_ptr<CircularShape>, 3>& shapesToRender)

@@ -26,7 +26,7 @@ namespace GuiCreation
 
     template <typename ParallelogrammaticShape>
     void checkForParallelogramCreation(
-            std::array<std::unique_ptr<ParallelogrammaticShape>, 3>& rectanglesToRender);
+            std::array<std::unique_ptr<ParallelogrammaticShape>, 3>& shapesToRender);
 
     void checkForQuadrangleCreation(std::array<std::unique_ptr<Quadrangle>, 3>& quadranglesToRender);
 }

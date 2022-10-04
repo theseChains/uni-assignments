@@ -59,3 +59,5 @@ template void guiCheckForShapeMovement(std::array<std::unique_ptr<Ellipse>, 3>&,
         VectorOfArrayOfEllipsePtrs&);
 template void guiCheckForShapeMovement(std::array<std::unique_ptr<Quadrangle>, 3>&,
         VectorOfArrayOfQuadranglePtrs&);
+template void guiCheckForShapeMovement(std::array<std::unique_ptr<Rhombus>, 3>&,
+        VectorOfArrayOfRhombusPtrs&);

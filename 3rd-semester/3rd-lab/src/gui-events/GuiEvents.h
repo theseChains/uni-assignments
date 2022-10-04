@@ -26,10 +26,13 @@ void guiHandleEllipseEvents(std::array<std::unique_ptr<Ellipse>, 3>& ellipsesToR
         VectorOfArrayOfEllipsePtrs& ellipseArraysToRender);
 void guiHandleQuadrangleEvents(std::array<std::unique_ptr<Quadrangle>, 3>& quadranglesToRender,
         VectorOfArrayOfQuadranglePtrs& quadrangleArraysToRender);
+void guiHandleRhombusEvents(std::array<std::unique_ptr<Rhombus>, 3>& rhombusesToRender,
+        VectorOfArrayOfRhombusPtrs& rhombusArraysToRender);
 
 void guiHandleCircleArrayCreation(VectorOfArrayOfCirclePtrs& circleArraysToRender);
 void guiHandleRectangleArrayCreation(VectorOfArrayOfRectanglePtrs& rectangleArraysToRender);
 void guiHandleEllipseArrayCreation(VectorOfArrayOfEllipsePtrs& ellipseArraysToRender);
 void guiHandleQuadrangleArrayCreation(VectorOfArrayOfQuadranglePtrs& quadrangleArraysToRender);
+void guiHandleRhombusArrayCreation(VectorOfArrayOfRhombusPtrs& rhombusArraysToRender);
 
 #endif

@@ -97,11 +97,13 @@ int main()
         guiHandleRectangleArrayCreation(rectangleArrays);
         guiHandleEllipseArrayCreation(ellipseArrays);
         guiHandleQuadrangleArrayCreation(quadrangleArrays);
+        guiHandleRhombusArrayCreation(rhombusArrays);
 
         guiHandleCircleEvents(circlesToRender, circleArrays);
         guiHandleRectangleEvents(rectanglesToRender, rectangleArrays);
         guiHandleEllipseEvents(ellipsesToRender, ellipseArrays);
         guiHandleQuadrangleEvents(quadranglesToRender, quadrangleArrays);
+        guiHandleRhombusEvents(rhombusesToRender, rhombusArrays);
 
         ImGui::End();
 

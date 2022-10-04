@@ -35,34 +35,34 @@ template void GuiCreation::checkForCircularShapeCreation(std::array<std::unique_
 
 template <typename ParallelogrammaticShape>
 void GuiCreation::checkForParallelogramCreation(
-        std::array<std::unique_ptr<ParallelogrammaticShape>, 3>& shapessToRender)
+        std::array<std::unique_ptr<ParallelogrammaticShape>, 3>& shapesToRender)
 {
     if (ImGui::Button("Create default shape (F)"))
     {
-        Creation::handleDefaultParallelogramCreation(shapessToRender[util::defaultShapeIndex]);
+        Creation::handleDefaultParallelogramCreation(shapesToRender[util::defaultShapeIndex]);
     }
     if (ImGui::Button("Create first constructor\nshape (C)"))
     {
         Creation::handleFirstConstructorParallelogramCreation(
-                shapessToRender[util::firstConstructorShapeIndex]);
+                shapesToRender[util::firstConstructorShapeIndex]);
     }
     if (ImGui::Button("Create second constructor\nshape (V)"))
     {
         Creation::handleSecondConstructorParallelogramCreation(
-                shapessToRender[util::secondConstructorShapeIndex]);
+                shapesToRender[util::secondConstructorShapeIndex]);
     }
     // deletion
     if (ImGui::Button("Delete default shape (G)"))
     {
-        Creation::hideAndDeleteShape(shapessToRender[util::defaultShapeIndex]);
+        Creation::hideAndDeleteShape(shapesToRender[util::defaultShapeIndex]);
     }
     if (ImGui::Button("Delete first constructor\nshape (Y)"))
     {
-        Creation::hideAndDeleteShape(shapessToRender[util::firstConstructorShapeIndex]);
+        Creation::hideAndDeleteShape(shapesToRender[util::firstConstructorShapeIndex]);
     }
     if (ImGui::Button("Delete second constructor\nshape (H)"))
     {
-        Creation::hideAndDeleteShape(shapessToRender[util::secondConstructorShapeIndex]);
+        Creation::hideAndDeleteShape(shapesToRender[util::secondConstructorShapeIndex]);
     }
 }
 

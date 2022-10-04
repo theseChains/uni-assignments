@@ -43,6 +43,16 @@ void guiHandleQuadrangleEvents(std::array<std::unique_ptr<Quadrangle>, 3>& quadr
     }
 }
 
+void guiHandleRhombusEvents(std::array<std::unique_ptr<Rhombus>, 3>& rhombusesToRender,
+        VectorOfArrayOfRhombusPtrs& rhombusArraysToRender)
+{
+    if (mode::rhombuses)
+    {
+        GuiCreation::checkForParallelogramCreation(rhombusesToRender);
+        guiCheckForShapeMovement(rhombusesToRender, rhombusArraysToRender);
+    }
+}
+
 // array creation
 void guiHandleCircleArrayCreation(VectorOfArrayOfCirclePtrs& circleArraysToRender)
 {
@@ -73,5 +83,13 @@ void guiHandleQuadrangleArrayCreation(VectorOfArrayOfQuadranglePtrs& quadrangleA
     if (mode::quadrangles)
     {
         GuiArrayCreation::checkForQuadrangleArrayCreation(quadrangleArraysToRender);
+    }
+}
+
+void guiHandleRhombusArrayCreation(VectorOfArrayOfRhombusPtrs& rhombusArraysToRender)
+{
+    if (mode::rhombuses)
+    {
+        GuiArrayCreation::checkForParallelogramArrayCreation(rhombusArraysToRender);
     }
 }

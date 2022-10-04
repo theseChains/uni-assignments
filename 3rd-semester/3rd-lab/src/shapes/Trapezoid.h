@@ -24,6 +24,9 @@ public:
 
     void moveTo(float offsetX, float offsetY) override;
 
+    void changeTopBase(float baseOffset);
+    void changeBottomBase(float baseOffset);
+
 private:
     float m_topBaseLength{};
     float m_bottomBaseLength{};

@@ -74,6 +74,40 @@ void Trapezoid::moveTo(float offsetX, float offsetY)
     }
 }
 
+void Trapezoid::changeTopBase(float baseOffset)
+{
+    if (m_isShown)
+    {
+        show();
+
+        m_topBaseLength += baseOffset;
+
+        if (m_topBaseLength <= 0.0f)
+        {
+            m_topBaseLength = 0.0f;
+        }
+
+        show();
+    }
+}
+
+void Trapezoid::changeBottomBase(float baseOffset)
+{
+    if (m_isShown)
+    {
+        show();
+
+        m_bottomBaseLength += baseOffset;
+
+        if (m_bottomBaseLength <= 0.0f)
+        {
+            m_bottomBaseLength = 0.0f;
+        }
+
+        show();
+    }
+}
+
 sf::ConvexShape Trapezoid::createSprite() const
 {
     sf::ConvexShape trapezoidSprite{};

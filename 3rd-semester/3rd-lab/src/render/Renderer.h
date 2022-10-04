@@ -15,6 +15,7 @@
 #include "../shapes/Rectangle.h"
 #include "../shapes/Ellipse.h"
 #include "../shapes/Quadrangle.h"
+#include "../shapes/Rhombus.h"
 
 class Renderer
 {
@@ -24,27 +25,22 @@ public:
 public:
     Renderer(sf::RenderWindow& window);
 
-    // Rectangle
-    template <typename RectangleShape>
-    void renderRectangleShapes(std::array<std::unique_ptr<RectangleShape>, 3>& shapesToRender);
+    // Rectangle, Quadrangle and Rhombus
+    template <typename QuadrangularShape>
+    void renderQuadrangularShapes(std::array<std::unique_ptr<QuadrangularShape>, 3>& shapesToRender);
 
     // Circle and Ellipse
     template <typename CircularShape>
     void renderCircleShapes(std::array<std::unique_ptr<CircularShape>, 3>& shapesToRender);
 
-    // Quadrangle
-    void renderQuadrangleShapes(std::array<std::unique_ptr<Quadrangle>, 3>& quadranglesToRender);
-
-    // Rectangle arrays
-    template <typename RectangleShape>
-    void renderRectangleShapeArrays(VectorOfArrayOfShapePtrs<RectangleShape>& arraysToRender);
+    // Rectangle, Quadrangle and Rhombus arrays
+    template <typename QuadrangularShape>
+    void renderQuadrangularShapeArrays(
+            VectorOfArrayOfQuadrangularShapePtrs<QuadrangularShape>& arraysToRender);
 
     // Circle arrays
     template <typename CircularShape>
     void renderCircleShapeArrays(VectorOfArrayOfCircularShapePtrs<CircularShape>& circleArraysTorender);
-
-    // Quadrangle arrays
-    void renderQuadrangleShapeArrays(VectorOfArrayOfQuadranglePtrs& quadrangleArraysToRender);
 };
 
 #endif

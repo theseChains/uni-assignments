@@ -24,6 +24,11 @@ template <typename ParallelogrammaticShape>
 using VectorOfArrayOfParalellogramShapePtrs =
         std::vector<std::array<std::unique_ptr<ParallelogrammaticShape>, 3>>;
 
+// Rectangle, Quadrangle and Rhombus
+template <typename QuadrangularShape>
+using VectorOfArrayOfQuadrangularShapePtrs =
+        std::vector<std::array<std::unique_ptr<QuadrangularShape>, 3>>;
+
 using VectorOfArrayOfCirclePtrs = std::vector<std::array<std::unique_ptr<Circle>, 3>>;
 using VectorOfArrayOfRectanglePtrs = std::vector<std::array<std::unique_ptr<Rectangle>, 3>>;
 using VectorOfArrayOfEllipsePtrs = std::vector<std::array<std::unique_ptr<Ellipse>, 3>>;

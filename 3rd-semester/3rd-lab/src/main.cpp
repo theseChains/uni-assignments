@@ -108,14 +108,16 @@ int main()
         window.clear();
 
         renderer.renderCircleShapes(circlesToRender);
-        renderer.renderRectangleShapes(rectanglesToRender);
+        renderer.renderQuadrangularShapes(rectanglesToRender);
         renderer.renderCircleShapes(ellipsesToRender);
-        renderer.renderQuadrangleShapes(quadranglesToRender);
+        renderer.renderQuadrangularShapes(quadranglesToRender);
+        renderer.renderQuadrangularShapes(rhombusesToRender);
 
         renderer.renderCircleShapeArrays(circleArrays);
-        renderer.renderRectangleShapeArrays(rectangleArrays);
+        renderer.renderQuadrangularShapeArrays(rectangleArrays);
         renderer.renderCircleShapeArrays(ellipseArrays);
-        renderer.renderQuadrangleShapeArrays(quadrangleArrays);
+        renderer.renderQuadrangularShapeArrays(quadrangleArrays);
+        renderer.renderQuadrangularShapeArrays(rhombusArrays);
 
         ImGui::SFML::Render(window);
 

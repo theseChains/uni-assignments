@@ -11,7 +11,7 @@
 
 #include "Quadrangle.h"
 
-class Rectangle : public Quadrangle 
+class Rectangle : public Quadrangle
 {
 public:
     Rectangle();
@@ -37,7 +37,7 @@ private:
     float m_height{};
 
     // auxiliary
-    sf::RectangleShape createSprite() const;
+    sf::ConvexShape createSprite() const;
     void checkForBounds();
 };
 

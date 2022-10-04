@@ -73,16 +73,16 @@ void Rhombus::moveTo(float offsetX, float offsetY)
 
 sf::ConvexShape Rhombus::createSprite() const
 {
-    sf::ConvexShape rhombusShape{};
+    sf::ConvexShape rhombusSprite{};
 
-    rhombusShape.setPointCount(4);
-    rhombusShape.setPoint(0, sf::Vector2f{ m_vertex.getX(), m_vertex.getY() });
-    rhombusShape.setPoint(1, sf::Vector2f{ m_vertex.getX() + m_firstDiagonalLength / 2,
+    rhombusSprite.setPointCount(4);
+    rhombusSprite.setPoint(0, sf::Vector2f{ m_vertex.getX(), m_vertex.getY() });
+    rhombusSprite.setPoint(1, sf::Vector2f{ m_vertex.getX() + m_firstDiagonalLength / 2,
             m_vertex.getY() - m_secondDiagonalLength / 2 });
-    rhombusShape.setPoint(2, sf::Vector2f{ m_vertex.getX() + m_firstDiagonalLength, m_vertex.getY() });
-    rhombusShape.setPoint(3, sf::Vector2f{ m_vertex.getX() + m_firstDiagonalLength / 2,
+    rhombusSprite.setPoint(2, sf::Vector2f{ m_vertex.getX() + m_firstDiagonalLength, m_vertex.getY() });
+    rhombusSprite.setPoint(3, sf::Vector2f{ m_vertex.getX() + m_firstDiagonalLength / 2,
             m_vertex.getY() + m_secondDiagonalLength / 2 });
-    rhombusShape.setFillColor(m_color);
+    rhombusSprite.setFillColor(m_color);
 
-    return rhombusShape;
+    return rhombusSprite;
 }

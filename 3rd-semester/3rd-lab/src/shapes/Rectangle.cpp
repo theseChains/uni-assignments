@@ -46,7 +46,7 @@ Figure::ToShow Rectangle::show(bool modifyVisibility)
         {
             m_isShown = true;
 
-            return ToShow{ sf::RectangleShape{ createSprite() } };
+            return ToShow{ sf::ConvexShape{ createSprite() } };
         }
     }
     // for rendering
@@ -54,7 +54,7 @@ Figure::ToShow Rectangle::show(bool modifyVisibility)
     {
         if (m_isShown)
         {
-            return ToShow{ sf::RectangleShape{ createSprite() } };
+            return ToShow{ sf::ConvexShape{ createSprite() } };
         }
         else
         {
@@ -131,13 +131,17 @@ void Rectangle::setPosition(float newX, float newY)
     m_vertex.setY(newY);
 }
 
-sf::RectangleShape Rectangle::createSprite() const
+sf::ConvexShape Rectangle::createSprite() const
 {
-    sf::RectangleShape rectangleSprite{};
+    sf::ConvexShape rectangleSprite{};
 
-    rectangleSprite.setPosition(m_vertex.getX(), m_vertex.getY());
+    rectangleSprite.setPointCount(4);
+    rectangleSprite.setPoint(0, sf::Vector2f{ m_vertex.getX(), m_vertex.getY() });
+    rectangleSprite.setPoint(1, sf::Vector2f{ m_vertex.getX() + m_width, m_vertex.getY() });
+    rectangleSprite.setPoint(2, sf::Vector2f{ m_vertex.getX() + m_width, m_vertex.getY() +
+            m_height });
+    rectangleSprite.setPoint(3, sf::Vector2f{ m_vertex.getX(), m_vertex.getY() + m_height });
     rectangleSprite.setFillColor(m_color);
-    rectangleSprite.setSize(sf::Vector2f{ m_width, m_height });
 
     return rectangleSprite;
 }

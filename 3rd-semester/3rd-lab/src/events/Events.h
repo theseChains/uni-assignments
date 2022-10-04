@@ -32,5 +32,6 @@ void handleRectangleArrayEvents(VectorOfArrayOfRectanglePtrs& rectangleArraysToR
 void handleEllipseArrayEvents(VectorOfArrayOfEllipsePtrs& ellipseArraysToRender);
 void handleQuadrangleArrayEvents(VectorOfArrayOfQuadranglePtrs& quadrangleArraysToRender);
 void handleRhombusArrayEvents(VectorOfArrayOfRhombusPtrs& rhombusArraysToRender);
+void handleTrapezoidArrayEvents(VectorOfArrayOfTrapezoidPtrs& trapezoidsToRender);
 
 #endif

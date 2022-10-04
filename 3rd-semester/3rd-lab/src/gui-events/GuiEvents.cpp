@@ -53,6 +53,16 @@ void guiHandleRhombusEvents(std::array<std::unique_ptr<Rhombus>, 3>& rhombusesTo
     }
 }
 
+void guiHandleTrapezoidEvents(std::array<std::unique_ptr<Trapezoid>, 3>& trapezoidsToRender,
+        VectorOfArrayOfTrapezoidPtrs& trapezoidArraysToRender)
+{
+    if (mode::trapezoids)
+    {
+        GuiCreation::checkForTrapezoidCreation(trapezoidsToRender);
+        guiCheckForShapeMovement(trapezoidsToRender, trapezoidArraysToRender);
+    }
+}
+
 // array creation
 void guiHandleCircleArrayCreation(VectorOfArrayOfCirclePtrs& circleArraysToRender)
 {
@@ -91,5 +101,13 @@ void guiHandleRhombusArrayCreation(VectorOfArrayOfRhombusPtrs& rhombusArraysToRe
     if (mode::rhombuses)
     {
         GuiArrayCreation::checkForParallelogramArrayCreation(rhombusArraysToRender);
+    }
+}
+
+void guiHandleTrapezoidArrayCreation(VectorOfArrayOfTrapezoidPtrs& trapezoidArraysToRender)
+{
+    if (mode::trapezoids)
+    {
+        GuiArrayCreation::checkForTrapezoidArrayCreation(trapezoidArraysToRender);
     }
 }

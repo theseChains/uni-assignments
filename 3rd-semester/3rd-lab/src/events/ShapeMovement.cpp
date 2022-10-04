@@ -30,6 +30,7 @@ template void Movement::checkForShapeMovement(std::array<std::unique_ptr<Rectang
 template void Movement::checkForShapeMovement(std::array<std::unique_ptr<Ellipse>, 3>&);
 template void Movement::checkForShapeMovement(std::array<std::unique_ptr<Quadrangle>, 3>&);
 template void Movement::checkForShapeMovement(std::array<std::unique_ptr<Rhombus>, 3>&);
+template void Movement::checkForShapeMovement(std::array<std::unique_ptr<Trapezoid>, 3>&);
 
 template <typename ShapeType>
 void Movement::checkForShapeArrayMovement(VectorOfArrayOfShapePtrs<ShapeType>& shapeArraysToRender)
@@ -45,6 +46,7 @@ template void Movement::checkForShapeArrayMovement(VectorOfArrayOfRectanglePtrs&
 template void Movement::checkForShapeArrayMovement(VectorOfArrayOfEllipsePtrs&);
 template void Movement::checkForShapeArrayMovement(VectorOfArrayOfQuadranglePtrs&);
 template void Movement::checkForShapeArrayMovement(VectorOfArrayOfRhombusPtrs&);
+template void Movement::checkForShapeArrayMovement(VectorOfArrayOfTrapezoidPtrs&);
 
 template <typename ShapeType>
 void Movement::moveShapeArrayUp(std::array<std::unique_ptr<ShapeType>, 3>& shapesToRender)

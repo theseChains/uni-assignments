@@ -26,7 +26,7 @@
 
 int main()
 {
-    sf::RenderWindow window{ sf::VideoMode{ util::windowWidth, util::windowHeight }, "study2" };
+    sf::RenderWindow window{ sf::VideoMode{ util::windowWidth, util::windowHeight }, "study3" };
     window.setFramerateLimit(60);
 
     if (!ImGui::SFML::Init(window))
@@ -51,6 +51,7 @@ int main()
     VectorOfArrayOfEllipsePtrs ellipseArrays{};
     VectorOfArrayOfQuadranglePtrs quadrangleArrays{};
     VectorOfArrayOfRhombusPtrs rhombusArrays{};
+    VectorOfArrayOfTrapezoidPtrs trapezoidArrays{};
 
     sf::Clock deltaClock{};
     while (window.isOpen())
@@ -89,6 +90,7 @@ int main()
                 handleEllipseArrayEvents(ellipseArrays);
                 handleQuadrangleArrayEvents(quadrangleArrays);
                 handleRhombusArrayEvents(rhombusArrays);
+                handleTrapezoidArrayEvents(trapezoidArrays);
             }
         }
 
@@ -101,12 +103,14 @@ int main()
         guiHandleEllipseArrayCreation(ellipseArrays);
         guiHandleQuadrangleArrayCreation(quadrangleArrays);
         guiHandleRhombusArrayCreation(rhombusArrays);
+        guiHandleTrapezoidArrayCreation(trapezoidArrays);
 
         guiHandleCircleEvents(circlesToRender, circleArrays);
         guiHandleRectangleEvents(rectanglesToRender, rectangleArrays);
         guiHandleEllipseEvents(ellipsesToRender, ellipseArrays);
         guiHandleQuadrangleEvents(quadranglesToRender, quadrangleArrays);
         guiHandleRhombusEvents(rhombusesToRender, rhombusArrays);
+        guiHandleTrapezoidEvents(trapezoidsToRender, trapezoidArrays);
 
         ImGui::End();
 
@@ -124,6 +128,7 @@ int main()
         renderer.renderCircleShapeArrays(ellipseArrays);
         renderer.renderQuadrangularShapeArrays(quadrangleArrays);
         renderer.renderQuadrangularShapeArrays(rhombusArrays);
+        renderer.renderQuadrangularShapeArrays(trapezoidArrays);
 
         ImGui::SFML::Render(window);
 

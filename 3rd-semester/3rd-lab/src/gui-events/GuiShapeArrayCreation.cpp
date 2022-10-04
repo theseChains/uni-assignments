@@ -67,3 +67,23 @@ void GuiArrayCreation::checkForQuadrangleArrayCreation(
         quadrangleArraysToRender.clear();
     }
 }
+
+void GuiArrayCreation::checkForTrapezoidArrayCreation(
+        VectorOfArrayOfTrapezoidPtrs& trapezoidArraysToRender)
+{
+    if (ImGui::Button("Create an array of\nshapes (N)"))
+    {
+        ArrayCreation::handleTrapezoidArrayCreation(trapezoidArraysToRender);
+    }
+    if (ImGui::Button("Delete last array of\nshapes (B)"))
+    {
+        if (!trapezoidArraysToRender.empty())
+        {
+            trapezoidArraysToRender.pop_back();
+        }
+    }
+    if (ImGui::Button("Delete all arrays of\nshapes (Space)"))
+    {
+        trapezoidArraysToRender.clear();
+    }
+}

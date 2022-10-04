@@ -37,11 +37,33 @@ void Modification::checkForRectangleModification(
     }
 }
 
-void Modification::checkForEllipseShapeModification(std::array<std::unique_ptr<Ellipse>, 3>& ellipsesToRender)
+void Modification::checkForEllipseShapeModification(
+        std::array<std::unique_ptr<Ellipse>, 3>& ellipsesToRender)
 {
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::R))
     {
         Modification::rotateByNinetyDegrees(ellipsesToRender);
+    }
+}
+
+void Modification::checkForRhombusShapeModification(
+        std::array<std::unique_ptr<Rhombus>, 3>& rhombusesToRender)
+{
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+    {
+        Modification::reduceHeightOfRhombuses(rhombusesToRender);
+    }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+    {
+        Modification::reduceWidthOfRhombuses(rhombusesToRender);
+    }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+    {
+        Modification::increaseHeightOfRhombuses(rhombusesToRender);
+    }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+    {
+        Modification::increaseWidthOfRhombuses(rhombusesToRender);
     }
 }
 
@@ -71,6 +93,14 @@ void Modification::checkForEllipseArrayModification(VectorOfArrayOfEllipsePtrs& 
     for (auto& ellipseArray : ellipseArraysToRender)
     {
         checkForEllipseShapeModification(ellipseArray);
+    }
+}
+
+void Modification::checkForRhombusArrayModification(VectorOfArrayOfRhombusPtrs& rhombusArraysToRender)
+{
+    for (auto& rhombusArray : rhombusArraysToRender)
+    {
+        checkForRhombusShapeModification(rhombusArray);
     }
 }
 
@@ -156,6 +186,55 @@ void Modification::rotateByNinetyDegrees(std::array<std::unique_ptr<Ellipse>, 3>
         if (ellipse.get() != nullptr)
         {
             ellipse->rotateByNinetyDegrees();
+        }
+    }
+}
+
+// Rhombus modification
+void Modification::reduceHeightOfRhombuses(
+        std::array<std::unique_ptr<Rhombus>, 3>& rhombusesToRender)
+{
+    for (const auto& rhombus : rhombusesToRender)
+    {
+        if (rhombus.get() != nullptr)
+        {
+            rhombus->changeSecondDiagonal(-2.0f);
+        }
+    }
+}
+
+void Modification::reduceWidthOfRhombuses(
+        std::array<std::unique_ptr<Rhombus>, 3>& rhombusesToRender)
+{
+    for (const auto& rhombus : rhombusesToRender)
+    {
+        if (rhombus.get() != nullptr)
+        {
+            rhombus->changeFirstDiagonal(-2.0f);
+        }
+    }
+}
+
+void Modification::increaseHeightOfRhombuses(
+        std::array<std::unique_ptr<Rhombus>, 3>& rhombusesToRender)
+{
+    for (const auto& rhombus : rhombusesToRender)
+    {
+        if (rhombus.get() != nullptr)
+        {
+            rhombus->changeSecondDiagonal(2.0f);
+        }
+    }
+}
+
+void Modification::increaseWidthOfRhombuses(
+        std::array<std::unique_ptr<Rhombus>, 3>& rhombusesToRender)
+{
+    for (const auto& rhombus : rhombusesToRender)
+    {
+        if (rhombus.get() != nullptr)
+        {
+            rhombus->changeFirstDiagonal(2.0f);
         }
     }
 }

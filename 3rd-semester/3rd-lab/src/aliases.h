@@ -10,6 +10,7 @@
 #include "shapes/Ellipse.h"
 #include "shapes/Quadrangle.h"
 #include "shapes/Rhombus.h"
+#include "shapes/Trapezoid.h"
 
 // all shapes
 template <typename ShapeType>
@@ -24,7 +25,7 @@ template <typename ParallelogrammaticShape>
 using VectorOfArrayOfParalellogramShapePtrs =
         std::vector<std::array<std::unique_ptr<ParallelogrammaticShape>, 3>>;
 
-// Rectangle, Quadrangle and Rhombus
+// Rectangle, Quadrangle, Trapezoid and Rhombus
 template <typename QuadrangularShape>
 using VectorOfArrayOfQuadrangularShapePtrs =
         std::vector<std::array<std::unique_ptr<QuadrangularShape>, 3>>;
@@ -34,5 +35,6 @@ using VectorOfArrayOfRectanglePtrs = std::vector<std::array<std::unique_ptr<Rect
 using VectorOfArrayOfEllipsePtrs = std::vector<std::array<std::unique_ptr<Ellipse>, 3>>;
 using VectorOfArrayOfQuadranglePtrs = std::vector<std::array<std::unique_ptr<Quadrangle>, 3>>;
 using VectorOfArrayOfRhombusPtrs = std::vector<std::array<std::unique_ptr<Rhombus>, 3>>;
+using VectorOfArrayOfTrapezoidPtrs = std::vector<std::array<std::unique_ptr<Trapezoid>, 3>>;
 
 #endif

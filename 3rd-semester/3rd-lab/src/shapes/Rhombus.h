@@ -24,6 +24,9 @@ public:
 
     void moveTo(float offsetX, float offsetY) override;
 
+    void changeFirstDiagonal(float diagonalOffset);
+    void changeSecondDiagonal(float diagonalOffset);
+
 private:
     float m_firstDiagonalLength{};
     float m_secondDiagonalLength{};

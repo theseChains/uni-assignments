@@ -28,11 +28,14 @@ void guiHandleQuadrangleEvents(std::array<std::unique_ptr<Quadrangle>, 3>& quadr
         VectorOfArrayOfQuadranglePtrs& quadrangleArraysToRender);
 void guiHandleRhombusEvents(std::array<std::unique_ptr<Rhombus>, 3>& rhombusesToRender,
         VectorOfArrayOfRhombusPtrs& rhombusArraysToRender);
+void guiHandleTrapezoidEvents(std::array<std::unique_ptr<Trapezoid>, 3>& trapezoidsToRender,
+        VectorOfArrayOfTrapezoidPtrs& trapezoidArraysToRender);
 
 void guiHandleCircleArrayCreation(VectorOfArrayOfCirclePtrs& circleArraysToRender);
 void guiHandleRectangleArrayCreation(VectorOfArrayOfRectanglePtrs& rectangleArraysToRender);
 void guiHandleEllipseArrayCreation(VectorOfArrayOfEllipsePtrs& ellipseArraysToRender);
 void guiHandleQuadrangleArrayCreation(VectorOfArrayOfQuadranglePtrs& quadrangleArraysToRender);
 void guiHandleRhombusArrayCreation(VectorOfArrayOfRhombusPtrs& rhombusArraysToRender);
+void guiHandleTrapezoidArrayCreation(VectorOfArrayOfTrapezoidPtrs& trapezoidArraysToRender);
 
 #endif

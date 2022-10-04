@@ -68,6 +68,26 @@ void ArrayCreation::checkForQuadrangleArrayCreation(
     }
 }
 
+void ArrayCreation::checkForTrapezoidArrayCreation(
+        VectorOfArrayOfTrapezoidPtrs& trapezoidArraysToRender)
+{
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::N))
+    {
+        handleTrapezoidArrayCreation(trapezoidArraysToRender);
+    }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::B))
+    {
+        if (!trapezoidArraysToRender.empty())
+        {
+            trapezoidArraysToRender.pop_back();
+        }
+    }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+    {
+        trapezoidArraysToRender.clear();
+    }
+}
+
 template <typename CircularShape>
 void ArrayCreation::handleCircularShapeArrayCreation(
         VectorOfArrayOfCircularShapePtrs<CircularShape>& arraysToRender)
@@ -123,5 +143,22 @@ void ArrayCreation::handleQuadrangleArrayCreation(VectorOfArrayOfQuadranglePtrs&
             std::make_unique<Quadrangle>(firstQuadrangle),
             std::make_unique<Quadrangle>(secondQuadrangle),
             std::make_unique<Quadrangle>(thirdQuadrangle)
+    });
+}
+
+void ArrayCreation::handleTrapezoidArrayCreation(VectorOfArrayOfTrapezoidPtrs& trapezoidArraysToRender)
+{
+    Trapezoid firstTrapezoid{};
+    Trapezoid secondTrapezoid{ Creation::createFirstConstructorTrapezoid() };
+    Trapezoid thirdTrapezoid{ Creation::createSecondConstructorTrapezoid() };
+
+    firstTrapezoid.show();
+    secondTrapezoid.show();
+    thirdTrapezoid.show();
+
+    trapezoidArraysToRender.push_back(std::array<std::unique_ptr<Trapezoid>, 3>{
+            std::make_unique<Trapezoid>(firstTrapezoid),
+            std::make_unique<Trapezoid>(secondTrapezoid),
+            std::make_unique<Trapezoid>(thirdTrapezoid)
     });
 }

@@ -13,6 +13,7 @@
 #include "../shapes/Rectangle.h"
 #include "../shapes/Ellipse.h"
 #include "../shapes/Quadrangle.h"
+#include "../shapes/Trapezoid.h"
 
 template <typename ShapeType>
 void guiCheckForShapeMovement(std::array<std::unique_ptr<ShapeType>, 3>& shapesToRender,

@@ -36,7 +36,6 @@ void Renderer::renderCircleShapes(std::array<std::unique_ptr<CircularShape>, 3>&
 template void Renderer::renderCircleShapes(std::array<std::unique_ptr<Circle>, 3>&);
 template void Renderer::renderCircleShapes(std::array<std::unique_ptr<Ellipse>, 3>&);
 
-// auxiliary
 template <typename QuadrangularShape>
 void Renderer::renderQuadrangularShapeArrays(
         VectorOfArrayOfQuadrangularShapePtrs<QuadrangularShape>& arraysToRender)
@@ -50,6 +49,7 @@ void Renderer::renderQuadrangularShapeArrays(
 template void Renderer::renderQuadrangularShapeArrays(VectorOfArrayOfRectanglePtrs&);
 template void Renderer::renderQuadrangularShapeArrays(VectorOfArrayOfRhombusPtrs&);
 template void Renderer::renderQuadrangularShapeArrays(VectorOfArrayOfQuadranglePtrs&);
+template void Renderer::renderQuadrangularShapeArrays(VectorOfArrayOfTrapezoidPtrs&);
 
 template <typename CircularShape>
 void Renderer::renderCircleShapeArrays(VectorOfArrayOfCircularShapePtrs<CircularShape>& circleArraysToRender)

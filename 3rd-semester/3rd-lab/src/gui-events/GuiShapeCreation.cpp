@@ -97,3 +97,32 @@ void GuiCreation::checkForQuadrangleCreation(std::array<std::unique_ptr<Quadrang
         Creation::hideAndDeleteShape(quadranglesToRender[util::secondConstructorShapeIndex]);
     }
 }
+
+void GuiCreation::checkForTrapezoidCreation(std::array<std::unique_ptr<Trapezoid>, 3>& trapezoidsToRender)
+{
+    if (ImGui::Button("Create default shape (F)"))
+    {
+        Creation::handleDefaultTrapezoidShapeCreation(trapezoidsToRender[util::defaultShapeIndex]);
+    }
+    if (ImGui::Button("Create first constructor\nshape (C)"))
+    {
+        Creation::handleFirstConstructorTrapezoidCreation(trapezoidsToRender[util::firstConstructorShapeIndex]);
+    }
+    if (ImGui::Button("Create second constructor\nshape (V)"))
+    {
+        Creation::handleSecondConstructorTrapezoidCreation(trapezoidsToRender[util::secondConstructorShapeIndex]);
+    }
+    // deletion
+    if (ImGui::Button("Delete default shape (G)"))
+    {
+        Creation::hideAndDeleteShape(trapezoidsToRender[util::defaultShapeIndex]);
+    }
+    if (ImGui::Button("Delete first constructor\nshape (Y)"))
+    {
+        Creation::hideAndDeleteShape(trapezoidsToRender[util::firstConstructorShapeIndex]);
+    }
+    if (ImGui::Button("Delete second constructor\nshape (H)"))
+    {
+        Creation::hideAndDeleteShape(trapezoidsToRender[util::secondConstructorShapeIndex]);
+    }
+}

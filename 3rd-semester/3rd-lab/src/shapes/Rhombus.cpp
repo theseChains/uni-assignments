@@ -71,6 +71,40 @@ void Rhombus::moveTo(float offsetX, float offsetY)
     }
 }
 
+void Rhombus::changeFirstDiagonal(float diagonalOffset)
+{
+    if (m_isShown)
+    {
+        show();
+
+        m_firstDiagonalLength += diagonalOffset;
+
+        if (m_firstDiagonalLength <= 0.0f)
+        {
+            m_firstDiagonalLength = 0.0f;
+        }
+
+        show();
+    }
+}
+
+void Rhombus::changeSecondDiagonal(float diagonalOffset)
+{
+    if (m_isShown)
+    {
+        show();
+
+        m_secondDiagonalLength += diagonalOffset;
+
+        if (m_secondDiagonalLength <= 0.0f)
+        {
+            m_secondDiagonalLength = 0.0f;
+        }
+
+        show();
+    }
+}
+
 sf::ConvexShape Rhombus::createSprite() const
 {
     sf::ConvexShape rhombusSprite{};

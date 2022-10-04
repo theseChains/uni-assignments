@@ -12,6 +12,7 @@
 #include "../shapes/Ellipse.h"
 #include "../shapes/Quadrangle.h"
 #include "../shapes/Rhombus.h"
+#include "../shapes/Trapezoid.h"
 
 namespace Movement
 {

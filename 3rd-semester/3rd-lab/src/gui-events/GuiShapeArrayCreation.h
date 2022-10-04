@@ -11,6 +11,8 @@
 #include "../shapes/Rectangle.h"
 #include "../shapes/Ellipse.h"
 #include "../shapes/Quadrangle.h"
+#include "../shapes/Rhombus.h"
+#include "../shapes/Trapezoid.h"
 
 #include "../events/ShapeArrayCreation.h"
 
@@ -24,6 +26,8 @@ namespace GuiArrayCreation
             VectorOfArrayOfParalellogramShapePtrs<ParallelogrammaticShape>& rectangleArraysToRender);
 
     void checkForQuadrangleArrayCreation(VectorOfArrayOfQuadranglePtrs& quadrangleArraysToRender);
+
+    void checkForTrapezoidArrayCreation(VectorOfArrayOfTrapezoidPtrs& trapezoidArraysToRender);
 }
 
 #endif

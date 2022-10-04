@@ -8,10 +8,12 @@
 #include "../shapes/Rectangle.h"
 #include "../shapes/Ellipse.h"
 #include "../shapes/Quadrangle.h"
+#include "../shapes/Trapezoid.h"
 
 #include "CircularShapeCreation.h"
 #include "ParallelogrammaticShapeCreation.h"
 #include "QuadrangleShapeCreation.h"
+#include "TrapezoidShapeCreation.h"
 
 namespace ArrayCreation
 {
@@ -37,6 +39,11 @@ namespace ArrayCreation
     void checkForQuadrangleArrayCreation(VectorOfArrayOfQuadranglePtrs& quadrangleArraysToRender);
 
     void handleQuadrangleArrayCreation(VectorOfArrayOfQuadranglePtrs& quadrangleArraysToRender);
+
+    // trapezoid arrays
+    void checkForTrapezoidArrayCreation(VectorOfArrayOfTrapezoidPtrs& trapezoidArraysToRender);
+
+    void handleTrapezoidArrayCreation(VectorOfArrayOfTrapezoidPtrs& trapezoidArraysToRender);
 }
 
 #endif

@@ -9,6 +9,10 @@
 
 #include "../shapes/Circle.h"
 #include "../shapes/Rectangle.h"
+#include "../shapes/Ellipse.h"
+#include "../shapes/Quadrangle.h"
+#include "../shapes/Rhombus.h"
+#include "../shapes/Trapezoid.h"
 
 namespace Modification
 {
@@ -30,6 +34,11 @@ namespace Modification
 
     void checkForEllipseArrayModification(VectorOfArrayOfEllipsePtrs& ellipseArraysToRender);
 
+    // for Rhombus
+    void checkForRhombusShapeModification(std::array<std::unique_ptr<Rhombus>, 3>& rhombusesToRender);
+
+    void checkForRhombusArrayModification(VectorOfArrayOfRhombusPtrs& rhombusArraysToRender);
+
     // auxiliary
     template <typename CircularShape>
     void enlargeCircles(std::array<std::unique_ptr<CircularShape>, 3>& shapesToRender);
@@ -49,6 +58,11 @@ namespace Modification
     void rotateLinesCounterClockwise(std::array<std::unique_ptr<LineShape>, 3>& linesToRender);
 
     void rotateByNinetyDegrees(std::array<std::unique_ptr<Ellipse>, 3>& ellipsesToRender);
+
+    void reduceHeightOfRhombuses(std::array<std::unique_ptr<Rhombus>, 3>& rhombusesToRender);
+    void reduceWidthOfRhombuses(std::array<std::unique_ptr<Rhombus>, 3>& rhombusesToRender);
+    void increaseHeightOfRhombuses(std::array<std::unique_ptr<Rhombus>, 3>& rhombusesToRender);
+    void increaseWidthOfRhombuses(std::array<std::unique_ptr<Rhombus>, 3>& rhombusesToRender);
 }
 
 #endif

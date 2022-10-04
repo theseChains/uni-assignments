@@ -44,6 +44,7 @@ void handleRhombusEvents(std::array<std::unique_ptr<Rhombus>, 3>& rhombusesToRen
     if (mode::rhombuses)
     {
         Creation::checkForParallelogrammaticShapeCreation(rhombusesToRender);
+        Modification::checkForRhombusShapeModification(rhombusesToRender);
         Movement::checkForShapeMovement(rhombusesToRender);
     }
 }
@@ -53,6 +54,7 @@ void handleTrapezoidEvents(std::array<std::unique_ptr<Trapezoid>, 3>& trapezoids
     if (mode::trapezoids)
     {
         Creation::checkForTrapezoidShapeCreation(trapezoidsToRender);
+        Movement::checkForShapeMovement(trapezoidsToRender);
     }
 }
 
@@ -101,6 +103,16 @@ void handleRhombusArrayEvents(VectorOfArrayOfRhombusPtrs& rhombusArraysToRender)
     if (mode::rhombuses)
     {
         ArrayCreation::checkForParallelogramArrayCreation(rhombusArraysToRender);
+        Modification::checkForRhombusArrayModification(rhombusArraysToRender);
         Movement::checkForShapeArrayMovement(rhombusArraysToRender);
+    }
+}
+
+void handleTrapezoidArrayEvents(VectorOfArrayOfTrapezoidPtrs& trapezoidArraysToRender)
+{
+    if (mode::trapezoids)
+    {
+        ArrayCreation::checkForTrapezoidArrayCreation(trapezoidArraysToRender);
+        Movement::checkForShapeArrayMovement(trapezoidArraysToRender);
     }
 }

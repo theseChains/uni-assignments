@@ -15,14 +15,9 @@
 
 #include "shapes/Figure.h"
 
-#include "shapes/Circle.h"
-#include "shapes/Rectangle.h"
-#include "shapes/Ellipse.h"
-#include "shapes/Quadrangle.h"
-#include "shapes/Rhombus.h"
-#include "shapes/Trapezoid.h"
-
 #include "render/Renderer.h"
+
+#include "containers/DynamicArray.h"
 
 int main()
 {
@@ -36,6 +31,19 @@ int main()
     }
 
     configureGui();
+
+    DynamicArray<int> intVec(10);
+
+    // i might have a const iterator here and i need a non-const one
+    for (auto& element : intVec)
+    {
+        element = rnd::getNumber(1, 9);
+    }
+
+    for (const auto& element : intVec)
+    {
+        std::cout << element << ' ';
+    }
 
     Renderer renderer{ window };
 

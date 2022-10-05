@@ -26,7 +26,7 @@
 
 int main()
 {
-    sf::RenderWindow window{ sf::VideoMode{ util::windowWidth, util::windowHeight }, "study3" };
+    sf::RenderWindow window{ sf::VideoMode{ util::windowWidth, util::windowHeight }, "study5" };
     window.setFramerateLimit(60);
 
     if (!ImGui::SFML::Init(window))
@@ -39,19 +39,13 @@ int main()
 
     Renderer renderer{ window };
 
-    std::array<std::unique_ptr<Circle>, 3> circlesToRender{};
-    std::array<std::unique_ptr<Rectangle>, 3> rectanglesToRender{};
-    std::array<std::unique_ptr<Ellipse>, 3> ellipsesToRender{};
-    std::array<std::unique_ptr<Quadrangle>, 3> quadranglesToRender{};
-    std::array<std::unique_ptr<Rhombus>, 3> rhombusesToRender{};
-    std::array<std::unique_ptr<Trapezoid>, 3> trapezoidsToRender{};
+    std::array<std::unique_ptr<Figure>, 30> shapesToRender{};
 
-    VectorOfArrayOfCirclePtrs circleArrays{};
-    VectorOfArrayOfRectanglePtrs rectangleArrays{};
-    VectorOfArrayOfEllipsePtrs ellipseArrays{};
-    VectorOfArrayOfQuadranglePtrs quadrangleArrays{};
-    VectorOfArrayOfRhombusPtrs rhombusArrays{};
-    VectorOfArrayOfTrapezoidPtrs trapezoidArrays{};
+    for (auto& shape : shapesToRender)
+    {
+        shape = std::make_unique<Trapezoid>(Creation::createFirstConstructorTrapezoid());
+        shape->show();
+    }
 
     sf::Clock deltaClock{};
     while (window.isOpen())
@@ -70,65 +64,17 @@ int main()
             {
                 window.close();
             }
-
-            if (event.type == event.KeyPressed)
-            {
-                if (sf::Keyboard::isKeyPressed(sf::Keyboard::M))
-                {
-                    mode::shift();
-                }
-
-                handleCircleEvents(circlesToRender);
-                handleRectangleEvents(rectanglesToRender);
-                handleEllipseEvents(ellipsesToRender);
-                handleQuadrangleEvents(quadranglesToRender);
-                handleRhombusEvents(rhombusesToRender);
-                handleTrapezoidEvents(trapezoidsToRender);
-
-                handleCircleArrayEvents(circleArrays);
-                handleRectangleArrayEvents(rectangleArrays);
-                handleEllipseArrayEvents(ellipseArrays);
-                handleQuadrangleArrayEvents(quadrangleArrays);
-                handleRhombusArrayEvents(rhombusArrays);
-                handleTrapezoidArrayEvents(trapezoidArrays);
-            }
         }
 
         ImGui::SFML::Update(window, deltaClock.restart());
 
         startGuiLoop();
 
-        guiHandleCircleArrayCreation(circleArrays);
-        guiHandleRectangleArrayCreation(rectangleArrays);
-        guiHandleEllipseArrayCreation(ellipseArrays);
-        guiHandleQuadrangleArrayCreation(quadrangleArrays);
-        guiHandleRhombusArrayCreation(rhombusArrays);
-        guiHandleTrapezoidArrayCreation(trapezoidArrays);
-
-        guiHandleCircleEvents(circlesToRender, circleArrays);
-        guiHandleRectangleEvents(rectanglesToRender, rectangleArrays);
-        guiHandleEllipseEvents(ellipsesToRender, ellipseArrays);
-        guiHandleQuadrangleEvents(quadranglesToRender, quadrangleArrays);
-        guiHandleRhombusEvents(rhombusesToRender, rhombusArrays);
-        guiHandleTrapezoidEvents(trapezoidsToRender, trapezoidArrays);
-
         ImGui::End();
 
         window.clear();
 
-        renderer.renderCircleShapes(circlesToRender);
-        renderer.renderQuadrangularShapes(rectanglesToRender);
-        renderer.renderCircleShapes(ellipsesToRender);
-        renderer.renderQuadrangularShapes(quadranglesToRender);
-        renderer.renderQuadrangularShapes(rhombusesToRender);
-        renderer.renderQuadrangularShapes(trapezoidsToRender);
-
-        renderer.renderCircleShapeArrays(circleArrays);
-        renderer.renderQuadrangularShapeArrays(rectangleArrays);
-        renderer.renderCircleShapeArrays(ellipseArrays);
-        renderer.renderQuadrangularShapeArrays(quadrangleArrays);
-        renderer.renderQuadrangularShapeArrays(rhombusArrays);
-        renderer.renderQuadrangularShapeArrays(trapezoidArrays);
+        renderer.renderShapeArray(shapesToRender);
 
         ImGui::SFML::Render(window);
 

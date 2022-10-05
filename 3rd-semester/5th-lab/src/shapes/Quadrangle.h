@@ -27,8 +27,6 @@ public:
 
     ToShow show(bool modifyVisibility = true) override;
 
-    //void moveTo(float offsetX, float offsetY) override;
-
     bool isShown() const;
 
     virtual ~Quadrangle() = default;

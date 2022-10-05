@@ -10,13 +10,8 @@ void configureGui()
 
 void startGuiLoop()
 {
-    ImGui::Begin(mode::get().c_str());
+    ImGui::Begin("array of objects");
 
     ImGui::SetWindowSize(ImVec2(util::guiWidth, util::windowHeight));
     ImGui::SetWindowPos(ImVec2(0, 0));
-
-    if (ImGui::Button("Change mode (M)"))
-    {
-        mode::shift();
-    }
 }

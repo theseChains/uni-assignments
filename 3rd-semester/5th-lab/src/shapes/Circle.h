@@ -37,8 +37,6 @@ public:
 protected:
     float m_radius{};
 
-    bool m_isShown{};
-
     // auxiliary
     sf::CircleShape createSprite() const;
     void checkForBounds();

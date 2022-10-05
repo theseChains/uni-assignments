@@ -4,18 +4,20 @@
 Circle::Circle()
     : Figure{ rnd::getFloat(util::guiWidth, util::windowWidth - 100),
         rnd::getFloat(0, util::windowHeight - 100), sf::Color::Magenta },
-    m_radius{ 50.0f },
-    m_isShown{ false }
+    m_radius{ 50.0f }
 {
+    m_isCircular = true;
+
     std::cout << "Circle object created\n";
 }
 
 Circle::Circle(float topLeftX, float topLeftY, float radius, const sf::Color& color)
     : Figure{ topLeftX, topLeftY, color },
-    m_radius{ radius },
-    m_isShown{ false }
+    m_radius{ radius }
 {
     checkForBounds();
+
+    m_isCircular = true;
 
     std::cout << "Circle object created\n";
 }
@@ -23,10 +25,11 @@ Circle::Circle(float topLeftX, float topLeftY, float radius, const sf::Color& co
 Circle::Circle(float topLeftX, float topLeftY, float radius,
         const std::array<int, 4>& colorComponents)
     : Figure{ topLeftX, topLeftY, colorComponents },
-    m_radius{ radius },
-    m_isShown{ false }
+    m_radius{ radius }
 {
     checkForBounds();
+
+    m_isCircular = true;
 
     std::cout << "Circle object created\n";
 }

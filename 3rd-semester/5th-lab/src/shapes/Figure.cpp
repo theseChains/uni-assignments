@@ -18,6 +18,16 @@ Vertex Figure::getPosition() const
     return m_vertex;
 }
 
+bool Figure::isShown() const
+{
+    return m_isShown;
+}
+
+bool Figure::isCircular() const
+{
+    return m_isCircular;
+}
+
 void Figure::moveTo(float offsetX, float offsetY)
 {
     if (m_isShown && m_isQuadrangle)
@@ -51,19 +61,9 @@ Figure::ToShow::ToShow(const std::optional<sf::CircleShape>& optCircleShape)
 {
 }
 
-Figure::ToShow::ToShow(const std::optional<sf::RectangleShape>& optRectangleShape)
-    : m_optRectangleShape{ optRectangleShape }
-{
-}
-
 Figure::ToShow::ToShow(const std::optional<sf::ConvexShape>& optConvexShape)
     : m_optConvexShape{ optConvexShape }
 {
-}
-
-sf::RectangleShape Figure::ToShow::rectValue() const
-{
-    return m_optRectangleShape.value();
 }
 
 sf::CircleShape Figure::ToShow::circleValue() const

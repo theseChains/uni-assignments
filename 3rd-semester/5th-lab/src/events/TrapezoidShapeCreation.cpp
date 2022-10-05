@@ -102,17 +102,17 @@ void Creation::handleFirstConstructorTrapezoidCreation(std::unique_ptr<Trapezoid
     if (trapezoidPtr != nullptr)
     {
         hideAndDeleteShape(trapezoidPtr);
-        Trapezoid mainConstructorTrapezoid{ createFirstConstructorTrapezoid() };
+        Trapezoid firstConstructorTrapezoid{ createFirstConstructorTrapezoid() };
 
-        mainConstructorTrapezoid.show();
-        trapezoidPtr = std::make_unique<Trapezoid>(mainConstructorTrapezoid);
+        firstConstructorTrapezoid.show();
+        trapezoidPtr = std::make_unique<Trapezoid>(firstConstructorTrapezoid);
     }
     else
     {
-        Trapezoid mainConstructorTrapezoid{ createFirstConstructorTrapezoid() };
+        Trapezoid firstConstructorTrapezoid{ createFirstConstructorTrapezoid() };
 
-        mainConstructorTrapezoid.show();
-        trapezoidPtr = std::make_unique<Trapezoid>(mainConstructorTrapezoid);
+        firstConstructorTrapezoid.show();
+        trapezoidPtr = std::make_unique<Trapezoid>(firstConstructorTrapezoid);
     }
 }
 

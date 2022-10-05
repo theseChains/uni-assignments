@@ -74,6 +74,13 @@ int main()
 
         startGuiLoop();
 
+        if (ImGui::Button("Change mode (M)"))
+        {
+            mode::shift();
+        }
+
+        guiHandleShapeArrayEvents(shapesToRender);
+
         ImGui::End();
 
         window.clear();

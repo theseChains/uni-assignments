@@ -4,11 +4,6 @@
 #include "../util.h"
 #include "../aliases.h"
 
-#include "CircularShapeCreation.h"
-#include "ParallelogrammaticShapeCreation.h"
-#include "QuadrangleShapeCreation.h"
-#include "TrapezoidShapeCreation.h"
-
 #include "ShapeMovement.h"
 #include "ShapeModification.h"
 #include "ShapeArrayCreation.h"
@@ -17,12 +12,19 @@
 
 void handleShapeArrayEvents(std::array<std::unique_ptr<Figure>, 30>& shapesToRender);
 
-void createRandomShapes(std::array<std::unique_ptr<Figure>, 30>& shapesToRender);
+void checkForShapeVisibilityModification(std::array<std::unique_ptr<Figure>, 30>& shapesToRender);
+void checkForCircularShapeVisibilityModification(
+        std::array<std::unique_ptr<Figure>, 30>& shapesToRender);
+void checkForQuadrangularShapeVisibilityModification(
+        std::array<std::unique_ptr<Figure>, 30>& shapesToRender);
+
 void showAllShapes(std::array<std::unique_ptr<Figure>, 30>& shapesToRender);
 void hideAllShapes(std::array<std::unique_ptr<Figure>, 30>& shapesToRender);
-void deleteAllShapes(std::array<std::unique_ptr<Figure>, 30>& shapesToRender);
 
 void showCircularShapes(std::array<std::unique_ptr<Figure>, 30>& shapesToRender);
 void hideCircularShapes(std::array<std::unique_ptr<Figure>, 30>& shapesToRender);
+
+void showQuadrangularShapes(std::array<std::unique_ptr<Figure>, 30>& shapesToRender);
+void hideQuadrangularShapes(std::array<std::unique_ptr<Figure>, 30>& shapesToRender);
 
 #endif

@@ -9,11 +9,7 @@
 
 #include "../shapes/Figure.h"
 #include "../shapes/Circle.h"
-#include "../shapes/Rectangle.h"
 #include "../shapes/Ellipse.h"
-#include "../shapes/Quadrangle.h"
-#include "../shapes/Rhombus.h"
-#include "../shapes/Trapezoid.h"
 
 namespace Modification
 {

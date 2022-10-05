@@ -18,6 +18,8 @@
 
 namespace GuiArrayCreation
 {
+    void checkForShapeCreation(std::array<std::unique_ptr<Figure>, 30>& shapesToRender);
+    void checkForShapeDeletion(std::array<std::unique_ptr<Figure>, 30>& shapesToRender);
 }
 
 #endif

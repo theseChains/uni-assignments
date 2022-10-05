@@ -13,10 +13,18 @@
 
 #include "../events/Events.h"
 
-#include "GuiShapeCreation.h"
 #include "GuiShapeArrayCreation.h"
 #include "GuiShapeModification.h"
 #include "GuiShapeMovement.h"
 
+void guiHandleShapeArrayEvents(std::array<std::unique_ptr<Figure>, 30>& shapesToRender);
+
+void guiCheckForShapeVisibilityModification(std::array<std::unique_ptr<Figure>, 30>& shapesToRender);
+
+void guiCheckForCircularShapeVisibilityModification(
+        std::array<std::unique_ptr<Figure>, 30>& shapesToRender);
+
+void guiCheckForQuadrangularShapeVisibilityModification(
+        std::array<std::unique_ptr<Figure>, 30>& shapesToRender);
 
 #endif

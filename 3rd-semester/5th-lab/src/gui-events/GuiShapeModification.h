@@ -13,10 +13,8 @@
 #include "../events/ShapeModification.h"
 
 #include "../shapes/Circle.h"
-#include "../shapes/Rectangle.h"
 #include "../shapes/Ellipse.h"
-#include "../shapes/Rhombus.h"
-#include "../shapes/Trapezoid.h"
 
+void guiCheckForCircularShapeModification(std::array<std::unique_ptr<Figure>, 30>& shapesToRender);
 
 #endif

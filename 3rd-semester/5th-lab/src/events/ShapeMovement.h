@@ -13,13 +13,19 @@
 
 namespace Movement
 {
+    void checkForShapeArrayMovement(std::array<std::unique_ptr<Figure>, 30>& shapesToRender);
+
+    void checkForCircularShapeMovement(std::array<std::unique_ptr<Figure>, 30>& shapesToRender);
+
+    void checkForQuadrangularShapeMovement(std::array<std::unique_ptr<Figure>, 30>& shapesToRender);
+
     void moveAllShapes(std::array<std::unique_ptr<Figure>, 30>& shapesToRender,
             float verticalDirection = 0.0f, float horizontalDirection = 0.0f);
 
     void moveCircularShapes(std::array<std::unique_ptr<Figure>, 30>& shapesToRender,
             float verticalDirection = 0.0f, float horizontalDirection = 0.0f);
 
-    void QuadrangularShapes(std::array<std::unique_ptr<Figure>, 30>& shapesToRender,
+    void moveQuadrangularShapes(std::array<std::unique_ptr<Figure>, 30>& shapesToRender,
             float verticalDirection = 0.0f, float horizontalDirection = 0.0f);
 }
 

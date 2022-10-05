@@ -1,164 +1,64 @@
 #include "ShapeArrayCreation.h"
 
-template <typename CircularShape>
-void ArrayCreation::checkForCircularShapeArrayCreation(
-        VectorOfArrayOfCircularShapePtrs<CircularShape>& arraysToRender)
+void ArrayCreation::checkForShapeCreation(std::array<std::unique_ptr<Figure>, 30>& shapesToRender)
 {
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::N))
     {
-        handleCircularShapeArrayCreation(arraysToRender);
+        createRandomShapes(shapesToRender);
     }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::B))
-    {
-        if (!arraysToRender.empty())
-        {
-            arraysToRender.pop_back();
-        }
-    }
+}
+
+void ArrayCreation::checkForShapeDeletion(std::array<std::unique_ptr<Figure>, 30>& shapesToRender)
+{
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
     {
-        arraysToRender.clear();
+        deleteAllShapes(shapesToRender);
     }
 }
 
-template void ArrayCreation::checkForCircularShapeArrayCreation(VectorOfArrayOfCirclePtrs&);
-template void ArrayCreation::checkForCircularShapeArrayCreation(VectorOfArrayOfEllipsePtrs&);
-
-template <typename ParallelogrammaticShape>
-void ArrayCreation::checkForParallelogramArrayCreation(
-        VectorOfArrayOfParalellogramShapePtrs<ParallelogrammaticShape>& parallelogramArraysToRender)
+void ArrayCreation::createRandomShapes(std::array<std::unique_ptr<Figure>, 30>& shapesToRender)
 {
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::N))
+    for (auto& shape : shapesToRender)
     {
-        handleParallelogramArrayCreation(parallelogramArraysToRender);
-    }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::B))
-    {
-        if (!parallelogramArraysToRender.empty())
+        int randomShapeIndex{ rnd::getNumber(1, 6) };
+
+        if (randomShapeIndex == util::circleIndex)
         {
-            parallelogramArraysToRender.pop_back();
+            shape = std::make_unique<Circle>(
+                    Creation::createFirstConstructorCircularShape<Circle>());
+        }
+        else if (randomShapeIndex == util::rectangleIndex)
+        {
+            shape = std::make_unique<Rectangle>(
+                    Creation::createFirstConstructorParallelogrammaticShape<Rectangle>());
+        }
+        else if (randomShapeIndex == util::ellipseIndex)
+        {
+            shape = std::make_unique<Ellipse>(
+                    Creation::createFirstConstructorCircularShape<Ellipse>());
+        }
+        else if (randomShapeIndex == util::quadrangleIndex)
+        {
+            shape = std::make_unique<Quadrangle>(
+                    Creation::createFirstConstructorQuadrangle());
+        }
+        else if (randomShapeIndex == util::rhombusIndex)
+        {
+            shape = std::make_unique<Rhombus>(
+                    Creation::createFirstConstructorParallelogrammaticShape<Rhombus>());
+        }
+        else if (randomShapeIndex == util::trapezoidIndex)
+        {
+            shape = std::make_unique<Trapezoid>(
+                    Creation::createFirstConstructorTrapezoid());
         }
     }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
-    {
-        parallelogramArraysToRender.clear();
-    }
 }
 
-template void ArrayCreation::checkForParallelogramArrayCreation(VectorOfArrayOfRectanglePtrs&);
-template void ArrayCreation::checkForParallelogramArrayCreation(VectorOfArrayOfRhombusPtrs&);
-
-void ArrayCreation::checkForQuadrangleArrayCreation(
-        VectorOfArrayOfQuadranglePtrs& quadrangleArraysToRender)
+void ArrayCreation::deleteAllShapes(std::array<std::unique_ptr<Figure>, 30>& shapesToRender)
 {
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::N))
+    for (auto& shape : shapesToRender)
     {
-        handleQuadrangleArrayCreation(quadrangleArraysToRender);
+        Creation::hideAndDeleteShape(shape);
     }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::B))
-    {
-        if (!quadrangleArraysToRender.empty())
-        {
-            quadrangleArraysToRender.pop_back();
-        }
-    }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
-    {
-        quadrangleArraysToRender.clear();
-    }
-}
-
-void ArrayCreation::checkForTrapezoidArrayCreation(
-        VectorOfArrayOfTrapezoidPtrs& trapezoidArraysToRender)
-{
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::N))
-    {
-        handleTrapezoidArrayCreation(trapezoidArraysToRender);
-    }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::B))
-    {
-        if (!trapezoidArraysToRender.empty())
-        {
-            trapezoidArraysToRender.pop_back();
-        }
-    }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
-    {
-        trapezoidArraysToRender.clear();
-    }
-}
-
-template <typename CircularShape>
-void ArrayCreation::handleCircularShapeArrayCreation(
-        VectorOfArrayOfCircularShapePtrs<CircularShape>& arraysToRender)
-{
-    CircularShape firstShape{};
-    CircularShape secondShape{ Creation::createFirstConstructorCircularShape<CircularShape>() };
-    CircularShape thirdShape{ Creation::createSecondConstructorCircularShape<CircularShape>() };
-
-    firstShape.show();
-    secondShape.show();
-    thirdShape.show();
-
-    // i think i have to construct this in-place, otherwise std::construct_at fails
-    arraysToRender.push_back(std::array<std::unique_ptr<CircularShape>, 3>{
-        std::make_unique<CircularShape>(firstShape),
-        std::make_unique<CircularShape>(secondShape),
-        std::make_unique<CircularShape>(thirdShape)
-    });
-}
-
-template <typename ParallelogrammaticShape>
-void ArrayCreation::handleParallelogramArrayCreation(
-        VectorOfArrayOfParalellogramShapePtrs<ParallelogrammaticShape>& parallelogramArraysToRender)
-{
-    ParallelogrammaticShape firstParallelogram{};
-    ParallelogrammaticShape secondParallelogram{
-        Creation::createFirstConstructorParallelogrammaticShape<ParallelogrammaticShape>() };
-    ParallelogrammaticShape thirdParallelogram{
-        Creation::createSecondConstructorParallelogrammaticShape<ParallelogrammaticShape>() };
-
-    firstParallelogram.show();
-    secondParallelogram.show();
-    thirdParallelogram.show();
-
-    parallelogramArraysToRender.push_back(std::array<std::unique_ptr<ParallelogrammaticShape>, 3>{
-        std::make_unique<ParallelogrammaticShape>(firstParallelogram),
-        std::make_unique<ParallelogrammaticShape>(secondParallelogram),
-        std::make_unique<ParallelogrammaticShape>(thirdParallelogram)
-    });
-}
-
-void ArrayCreation::handleQuadrangleArrayCreation(VectorOfArrayOfQuadranglePtrs& quadrangleArraysToRender)
-{
-    Quadrangle firstQuadrangle{};
-    Quadrangle secondQuadrangle{ Creation::createFirstConstructorQuadrangle() };
-    Quadrangle thirdQuadrangle{ Creation::createSecondConstructorQuadrangle() };
-
-    firstQuadrangle.show();
-    secondQuadrangle.show();
-    thirdQuadrangle.show();
-
-    quadrangleArraysToRender.push_back(std::array<std::unique_ptr<Quadrangle>, 3>{
-            std::make_unique<Quadrangle>(firstQuadrangle),
-            std::make_unique<Quadrangle>(secondQuadrangle),
-            std::make_unique<Quadrangle>(thirdQuadrangle)
-    });
-}
-
-void ArrayCreation::handleTrapezoidArrayCreation(VectorOfArrayOfTrapezoidPtrs& trapezoidArraysToRender)
-{
-    Trapezoid firstTrapezoid{};
-    Trapezoid secondTrapezoid{ Creation::createFirstConstructorTrapezoid() };
-    Trapezoid thirdTrapezoid{ Creation::createSecondConstructorTrapezoid() };
-
-    firstTrapezoid.show();
-    secondTrapezoid.show();
-    thirdTrapezoid.show();
-
-    trapezoidArraysToRender.push_back(std::array<std::unique_ptr<Trapezoid>, 3>{
-            std::make_unique<Trapezoid>(firstTrapezoid),
-            std::make_unique<Trapezoid>(secondTrapezoid),
-            std::make_unique<Trapezoid>(thirdTrapezoid)
-    });
 }

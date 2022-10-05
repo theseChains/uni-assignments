@@ -17,33 +17,11 @@
 
 namespace ArrayCreation
 {
-    // circle and ellipse arrays
-    template <typename CircularShape>
-    void checkForCircularShapeArrayCreation(
-            VectorOfArrayOfCircularShapePtrs<CircularShape>& arraysToRender);
+    void checkForShapeCreation(std::array<std::unique_ptr<Figure>, 30>& shapesToRender);
+    void checkForShapeDeletion(std::array<std::unique_ptr<Figure>, 30>& shapesToRender);
 
-    template <typename CircularShape>
-    void handleCircularShapeArrayCreation(
-            VectorOfArrayOfCircularShapePtrs<CircularShape>& arraysToRender);
-
-    // rectangle and rhombus arrays
-    template <typename ParallelogrammaticShape>
-    void checkForParallelogramArrayCreation(
-            VectorOfArrayOfParalellogramShapePtrs<ParallelogrammaticShape>& rectangleArraysToRender);
-
-    template <typename ParallelogrammaticShape>
-    void handleParallelogramArrayCreation(
-            VectorOfArrayOfParalellogramShapePtrs<ParallelogrammaticShape>& rectangleArraysToRender);
-
-    // quadrangle arrays
-    void checkForQuadrangleArrayCreation(VectorOfArrayOfQuadranglePtrs& quadrangleArraysToRender);
-
-    void handleQuadrangleArrayCreation(VectorOfArrayOfQuadranglePtrs& quadrangleArraysToRender);
-
-    // trapezoid arrays
-    void checkForTrapezoidArrayCreation(VectorOfArrayOfTrapezoidPtrs& trapezoidArraysToRender);
-
-    void handleTrapezoidArrayCreation(VectorOfArrayOfTrapezoidPtrs& trapezoidArraysToRender);
+    void createRandomShapes(std::array<std::unique_ptr<Figure>, 30>& shapesToRender);
+    void deleteAllShapes(std::array<std::unique_ptr<Figure>, 30>& shapesToRender);
 }
 
 #endif

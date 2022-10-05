@@ -6,22 +6,20 @@ void handleShapeArrayEvents(std::array<std::unique_ptr<Figure>, 30>& shapesToRen
     {
         ArrayCreation::checkForShapeCreation(shapesToRender);
         ArrayCreation::checkForShapeDeletion(shapesToRender);
-        // showing
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::G))
         {
             showAllShapes(shapesToRender);
         }
-        // hiding
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::H))
         {
             hideAllShapes(shapesToRender);
         }
-        // deletion
         Movement::checkForShapeArrayMovement(shapesToRender);
     }
     if (mode::circular)
     {
         Movement::checkForCircularShapeMovement(shapesToRender);
+        Modification::checkForCircularShapeModification(shapesToRender);
     }
     if (mode::quadrangular)
     {
@@ -48,14 +46,6 @@ void hideAllShapes(std::array<std::unique_ptr<Figure>, 30>& shapesToRender)
         {
             shape->show();
         }
-    }
-}
-
-void deleteAllShapes(std::array<std::unique_ptr<Figure>, 30>& shapesToRender)
-{
-    for (auto& shape : shapesToRender)
-    {
-        Creation::hideAndDeleteShape(shape);
     }
 }
 

@@ -26,7 +26,7 @@
 
 int main()
 {
-    sf::RenderWindow window{ sf::VideoMode{ util::windowWidth, util::windowHeight }, "study3" };
+    sf::RenderWindow window{ sf::VideoMode{ util::windowWidth, util::windowHeight }, "study4" };
     window.setFramerateLimit(60);
 
     if (!ImGui::SFML::Init(window))

@@ -40,11 +40,11 @@ void handleShapeArrayEvents(std::array<std::unique_ptr<Figure>, 30>& shapesToRen
     }
     if (mode::circular)
     {
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::G))
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::J))
         {
             showCircularShapes(shapesToRender);
         }
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::H))
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::K))
         {
             hideCircularShapes(shapesToRender);
         }
@@ -151,7 +151,7 @@ void showCircularShapes(std::array<std::unique_ptr<Figure>, 30>& shapesToRender)
     {
         Circle* circleShape{ dynamic_cast<Circle*>(shape.get()) };
 
-        if (circleShape)
+        if (circleShape && (!circleShape->isShown()))
         {
             circleShape->show();
         }
@@ -164,7 +164,7 @@ void hideCircularShapes(std::array<std::unique_ptr<Figure>, 30>& shapesToRender)
     {
         Circle* circleShape{ dynamic_cast<Circle*>(shape.get()) };
 
-        if (circleShape)
+        if (circleShape && circleShape->isShown())
         {
             circleShape->show();
         }

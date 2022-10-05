@@ -20,62 +20,35 @@ float rnd::getRealNumber(float min, float max)
 
 void mode::shift()
 {
-    if (circles)
+    if (all)
     {
-        circles = false;
-        rectangles = true;
+        circular = true;
+        all = false;
     }
-    else if (rectangles)
+    else if (circular)
     {
-        rectangles = false;
-        ellipses = true;
-    }
-    else if (ellipses)
-    {
-        ellipses = false;
-        quadrangles = true;
-    }
-    else if (quadrangles)
-    {
-        quadrangles = false;
-        rhombuses = true;
-    }
-    else if (rhombuses)
-    {
-        rhombuses = false;
-        trapezoids = true;
+        quadrangular = true;
+        circular = false;
     }
     else
     {
-        trapezoids = false;
-        circles = true;
+        all = true;
+        quadrangular = false;
     }
 }
 
 std::string mode::get()
 {
-    if (circles)
+    if (all)
     {
-        return "working with circles";
+        return "working with all shapes";
     }
-    else if (rectangles)
+    else if (circular)
     {
-        return "working with rectangles";
-    }
-    else if (ellipses)
-    {
-        return "working with ellipses";
-    }
-    else if (quadrangles)
-    {
-        return "working with quadrangles";
-    }
-    else if (rhombuses)
-    {
-        return "working with rhombuses";
+        return "working with circular";
     }
     else
     {
-        return "working with trapezoids";
+        return "working with quadrangular";
     }
 }

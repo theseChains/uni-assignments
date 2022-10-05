@@ -11,13 +11,16 @@ namespace util
 
     inline constexpr int guiWidth{ 408 };
 
-    inline constexpr float lineWidth{ 2.0f };
-
     inline constexpr int defaultShapeIndex{ 0 };
     inline constexpr int firstConstructorShapeIndex{ 1 };
     inline constexpr int secondConstructorShapeIndex{ 2 };
 
-    inline constexpr float innerCircleRadiusMultiplier{ 0.75 };
+    inline constexpr int circleIndex{ 1 };
+    inline constexpr int rectangleIndex{ 2 };
+    inline constexpr int ellipseIndex{ 3 };
+    inline constexpr int quadrangleIndex{ 4 };
+    inline constexpr int rhombusIndex{ 5 };
+    inline constexpr int trapezoidIndex{ 6 }; 
 }
 
 namespace component
@@ -42,12 +45,9 @@ namespace rnd
 
 namespace mode
 {
-    inline bool circles{ true };
-    inline bool rectangles{ false };
-    inline bool ellipses{ false };
-    inline bool quadrangles{ false };
-    inline bool rhombuses{ false };
-    inline bool trapezoids{ false };
+    inline bool all{ true };
+    inline bool circular{ false };
+    inline bool quadrangular{ false };
 
     void shift();
 

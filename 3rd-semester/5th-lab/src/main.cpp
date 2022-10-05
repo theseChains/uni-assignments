@@ -41,12 +41,6 @@ int main()
 
     std::array<std::unique_ptr<Figure>, 30> shapesToRender{};
 
-    for (auto& shape : shapesToRender)
-    {
-        shape = std::make_unique<Trapezoid>(Creation::createFirstConstructorTrapezoid());
-        shape->show();
-    }
-
     sf::Clock deltaClock{};
     while (window.isOpen())
     {
@@ -63,6 +57,16 @@ int main()
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
             {
                 window.close();
+            }
+
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::M))
+            {
+                mode::shift();
+            }
+
+            if (event.type == event.KeyPressed)
+            {
+                handleShapeArrayEvents(shapesToRender);
             }
         }
 

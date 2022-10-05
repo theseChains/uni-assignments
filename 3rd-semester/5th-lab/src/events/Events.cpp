@@ -1,120 +1,172 @@
 #include "Events.h"
 
-void handleCircleEvents(std::array<std::unique_ptr<Circle>, 3>& circlesToRender)
+void handleShapeArrayEvents(std::array<std::unique_ptr<Figure>, 30>& shapesToRender)
 {
-    if (mode::circles)
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::N))
     {
-        Creation::checkForCircularShapeCreation(circlesToRender);
-        Modification::checkForCircularShapeModification(circlesToRender);
-        Movement::checkForShapeMovement(circlesToRender);
+        createRandomShapes(shapesToRender);
+    }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::G))
+    {
+        showAllShapes(shapesToRender);
+    }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::H))
+    {
+        hideAllShapes(shapesToRender);
+    }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
+    {
+        moveAllShapes(shapesToRender, 0.0f, -2.0f);
+    }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+    {
+        moveAllShapes(shapesToRender, -2.0f, 0.0f);
+    }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+    {
+        moveAllShapes(shapesToRender, 0.0f, 2.0f);
+    }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+    {
+        moveAllShapes(shapesToRender, 2.0f, 0.0f);
+    }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q))
+    {
+        moveAllShapes(shapesToRender);
+    }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+    {
+        deleteAllShapes(shapesToRender);
+    }
+    if (mode::circular)
+    {
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::G))
+        {
+            showCircularShapes(shapesToRender);
+        }
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::H))
+        {
+            hideCircularShapes(shapesToRender);
+        }
     }
 }
 
-void handleRectangleEvents(std::array<std::unique_ptr<Rectangle>, 3>& rectanglesToRender)
+void createRandomShapes(std::array<std::unique_ptr<Figure>, 30>& shapesToRender)
 {
-    if (mode::rectangles)
+    for (auto& shape : shapesToRender)
     {
-        Creation::checkForParallelogrammaticShapeCreation(rectanglesToRender);
-        Modification::checkForRectangleModification(rectanglesToRender);
-        Movement::checkForShapeMovement(rectanglesToRender);
+        int randomShapeIndex{ rnd::getNumber(1, 6) };
+
+        if (randomShapeIndex == util::circleIndex)
+        {
+            shape = std::make_unique<Circle>(
+                    Creation::createFirstConstructorCircularShape<Circle>());
+        }
+        else if (randomShapeIndex == util::rectangleIndex)
+        {
+            shape = std::make_unique<Rectangle>(
+                    Creation::createFirstConstructorParallelogrammaticShape<Rectangle>());
+        }
+        else if (randomShapeIndex == util::ellipseIndex)
+        {
+            shape = std::make_unique<Ellipse>(
+                    Creation::createFirstConstructorCircularShape<Ellipse>());
+        }
+        else if (randomShapeIndex == util::quadrangleIndex)
+        {
+            shape = std::make_unique<Quadrangle>(
+                    Creation::createFirstConstructorQuadrangle());
+        }
+        else if (randomShapeIndex == util::rhombusIndex)
+        {
+            shape = std::make_unique<Rhombus>(
+                    Creation::createFirstConstructorParallelogrammaticShape<Rhombus>());
+        }
+        else if (randomShapeIndex == util::trapezoidIndex)
+        {
+            shape = std::make_unique<Trapezoid>(
+                    Creation::createFirstConstructorTrapezoid());
+        }
     }
 }
 
-void handleEllipseEvents(std::array<std::unique_ptr<Ellipse>, 3>& ellipsesToRender)
+void showAllShapes(std::array<std::unique_ptr<Figure>, 30>& shapesToRender)
 {
-    if (mode::ellipses)
+    for (const auto& shape : shapesToRender)
     {
-        Creation::checkForCircularShapeCreation(ellipsesToRender);
-        Modification::checkForEllipseShapeModification(ellipsesToRender);
-        Movement::checkForShapeMovement(ellipsesToRender);
+        if (shape != nullptr && !shape->isShown())
+        {
+            shape->show();
+        }
     }
 }
 
-void handleQuadrangleEvents(std::array<std::unique_ptr<Quadrangle>, 3>& quadranglesToRender)
+void hideAllShapes(std::array<std::unique_ptr<Figure>, 30>& shapesToRender)
 {
-    if (mode::quadrangles)
+    for (const auto& shape : shapesToRender)
     {
-        Creation::checkForQuadrangleShapeCreation(quadranglesToRender);
-        Movement::checkForShapeMovement(quadranglesToRender);
+        if (shape != nullptr && shape->isShown())
+        {
+            shape->show();
+        }
     }
 }
 
-void handleRhombusEvents(std::array<std::unique_ptr<Rhombus>, 3>& rhombusesToRender)
+void moveAllShapes(std::array<std::unique_ptr<Figure>, 30>& shapesToRender,
+        float verticalDirection, float horizontalDirection)
 {
-    if (mode::rhombuses)
+    if (verticalDirection == 0.0f && horizontalDirection == 0.0f)
     {
-        Creation::checkForParallelogrammaticShapeCreation(rhombusesToRender);
-        Modification::checkForRhombusShapeModification(rhombusesToRender);
-        Movement::checkForShapeMovement(rhombusesToRender);
+        for (const auto& shape : shapesToRender)
+        {
+            if (shape != nullptr)
+            {
+                shape->moveTo(rnd::getFloat(-50, 50), rnd::getFloat(-50, 50));
+            }
+        }
+    }
+    else
+    {
+        for (const auto& shape : shapesToRender)
+        {
+            if (shape != nullptr)
+            {
+                shape->moveTo(verticalDirection, horizontalDirection);
+            }
+        }
     }
 }
 
-void handleTrapezoidEvents(std::array<std::unique_ptr<Trapezoid>, 3>& trapezoidsToRender)
+void deleteAllShapes(std::array<std::unique_ptr<Figure>, 30>& shapesToRender)
 {
-    if (mode::trapezoids)
+    for (auto& shape : shapesToRender)
     {
-        Creation::checkForTrapezoidShapeCreation(trapezoidsToRender);
-        Modification::checkForTrapezoidShapeModification(trapezoidsToRender);
-        Movement::checkForShapeMovement(trapezoidsToRender);
+        Creation::hideAndDeleteShape(shape);
     }
 }
 
-// arrays of shapes
-void handleCircleArrayEvents(VectorOfArrayOfCirclePtrs& circleArraysToRender)
+void showCircularShapes(std::array<std::unique_ptr<Figure>, 30>& shapesToRender)
 {
-    if (mode::circles)
+    for (const auto& shape : shapesToRender)
     {
-        ArrayCreation::checkForCircularShapeArrayCreation(circleArraysToRender);
-        Modification::checkForCircularShapeArrayModification(circleArraysToRender);
-        Movement::checkForShapeArrayMovement(circleArraysToRender);
+        Circle* circleShape{ dynamic_cast<Circle*>(shape.get()) };
+
+        if (circleShape)
+        {
+            circleShape->show();
+        }
     }
 }
 
-void handleRectangleArrayEvents(VectorOfArrayOfRectanglePtrs& rectangleArraysToRender)
+void hideCircularShapes(std::array<std::unique_ptr<Figure>, 30>& shapesToRender)
 {
-    if (mode::rectangles)
+    for (const auto& shape : shapesToRender)
     {
-        ArrayCreation::checkForParallelogramArrayCreation(rectangleArraysToRender);
-        Modification::checkForRectangleArrayModification(rectangleArraysToRender);
-        Movement::checkForShapeArrayMovement(rectangleArraysToRender);
-    }
-}
+        Circle* circleShape{ dynamic_cast<Circle*>(shape.get()) };
 
-void handleEllipseArrayEvents(VectorOfArrayOfEllipsePtrs& ellipseArraysToRender)
-{
-    if (mode::ellipses)
-    {
-        ArrayCreation::checkForCircularShapeArrayCreation(ellipseArraysToRender);
-        Modification::checkForEllipseArrayModification(ellipseArraysToRender);
-        Movement::checkForShapeArrayMovement(ellipseArraysToRender);
-    }
-}
-
-void handleQuadrangleArrayEvents(VectorOfArrayOfQuadranglePtrs& quadrangleArraysToRender)
-{
-    if (mode::quadrangles)
-    {
-        ArrayCreation::checkForQuadrangleArrayCreation(quadrangleArraysToRender);
-        Movement::checkForShapeArrayMovement(quadrangleArraysToRender);
-    }
-}
-
-void handleRhombusArrayEvents(VectorOfArrayOfRhombusPtrs& rhombusArraysToRender)
-{
-    if (mode::rhombuses)
-    {
-        ArrayCreation::checkForParallelogramArrayCreation(rhombusArraysToRender);
-        Modification::checkForRhombusArrayModification(rhombusArraysToRender);
-        Movement::checkForShapeArrayMovement(rhombusArraysToRender);
-    }
-}
-
-void handleTrapezoidArrayEvents(VectorOfArrayOfTrapezoidPtrs& trapezoidArraysToRender)
-{
-    if (mode::trapezoids)
-    {
-        ArrayCreation::checkForTrapezoidArrayCreation(trapezoidArraysToRender);
-        Modification::checkForTrapezoidArrayModification(trapezoidArraysToRender);
-        Movement::checkForShapeArrayMovement(trapezoidArraysToRender);
+        if (circleShape)
+        {
+            circleShape->show();
+        }
     }
 }

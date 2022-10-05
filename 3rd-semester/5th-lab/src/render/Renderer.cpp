@@ -9,9 +9,9 @@ void Renderer::renderQuadrangularShapes(
 {
     for (const auto& shape : shapesToRender)
     {
-        if (shape.get() != nullptr && shape.get()->isShown())
+        if (shape != nullptr && shape->isShown())
         {
-            m_window.get().draw(shape.get()->show(false).convexValue());
+            m_window.get().draw(shape->show(false).convexValue());
         }
     }
 }
@@ -26,9 +26,9 @@ void Renderer::renderCircleShapes(std::array<std::unique_ptr<CircularShape>, 3>&
 {
     for (const auto& shape : shapesToRender)
     {
-        if (shape.get() != nullptr && shape.get()->isShown())
+        if (shape != nullptr && shape->isShown())
         {
-            m_window.get().draw(shape.get()->show(false).circleValue());
+            m_window.get().draw(shape->show(false).circleValue());
         }
     }
 }

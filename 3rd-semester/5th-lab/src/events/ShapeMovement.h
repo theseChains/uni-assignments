@@ -7,36 +7,20 @@
 #include "../aliases.h"
 #include "../util.h"
 
+#include "../shapes/Figure.h"
 #include "../shapes/Circle.h"
-#include "../shapes/Rectangle.h"
-#include "../shapes/Ellipse.h"
 #include "../shapes/Quadrangle.h"
-#include "../shapes/Rhombus.h"
-#include "../shapes/Trapezoid.h"
 
 namespace Movement
 {
-    template <typename ShapeType>
-    void checkForShapeMovement(std::array<std::unique_ptr<ShapeType>, 3>& shapesToRender);
+    void moveAllShapes(std::array<std::unique_ptr<Figure>, 30>& shapesToRender,
+            float verticalDirection = 0.0f, float horizontalDirection = 0.0f);
 
-    template <typename ShapeType>
-    void checkForShapeArrayMovement(VectorOfArrayOfShapePtrs<ShapeType>& shapeArraysToRender);
+    void moveCircularShapes(std::array<std::unique_ptr<Figure>, 30>& shapesToRender,
+            float verticalDirection = 0.0f, float horizontalDirection = 0.0f);
 
-    // auxiliary
-    template <typename ShapeType>
-    void moveShapeArrayUp(std::array<std::unique_ptr<ShapeType>, 3>& shapesToRender);
-
-    template <typename ShapeType>
-    void moveShapeArrayLeft(std::array<std::unique_ptr<ShapeType>, 3>& shapesToRender);
-
-    template <typename ShapeType>
-    void moveShapeArrayDown(std::array<std::unique_ptr<ShapeType>, 3>& shapesToRender);
-
-    template <typename ShapeType>
-    void moveShapeArrayRight(std::array<std::unique_ptr<ShapeType>, 3>& shapesToRender);
-
-    template <typename ShapeType>
-    void moveShapeArrayToRandomPoint(std::array<std::unique_ptr<ShapeType>, 3>& shapesToRender);
+    void QuadrangularShapes(std::array<std::unique_ptr<Figure>, 30>& shapesToRender,
+            float verticalDirection = 0.0f, float horizontalDirection = 0.0f);
 }
 
 #endif

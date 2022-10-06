@@ -28,8 +28,8 @@ void Renderer::renderShapeList(DynamicList& shapesToRender)
         return;
     }
 
-    int index{ 0 };
-    for (DynamicList::Node* temp{ shapesToRender.first() }; temp->getNode() != nullptr; temp = temp->m_next)
+    // only goes through once instead of twice for some reason
+    for (DynamicList::Node* temp{ shapesToRender.first() }; temp != nullptr; temp = temp->m_next)
     {
         if (temp->m_shape != nullptr && temp->m_shape->isShown())
         {

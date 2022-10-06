@@ -46,6 +46,10 @@ int main()
     newRhombus.show();
     shapeListToRender.insert(std::make_unique<Rhombus>(newRhombus));
 
+    Rhombus anotherRhombus{ Creation::createFirstConstructorParallelogrammaticShape<Rhombus>() };
+    anotherRhombus.show();
+    shapeListToRender.insert(std::make_unique<Rhombus>(anotherRhombus));
+
     sf::Clock deltaClock{};
     while (window.isOpen())
     {

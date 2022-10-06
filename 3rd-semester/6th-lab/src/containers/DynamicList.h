@@ -5,20 +5,21 @@
 
 #include "../shapes/Figure.h"
 
+template <typename ShapeType>
 class DynamicList
 {
 public:
     class Node
     {
     public:
-        std::unique_ptr<Figure> m_shape{};
+        std::unique_ptr<ShapeType> m_shape{};
         Node* m_next{};
 
         Node(Node* currentNode) : m_next{ currentNode }
         {
         }
 
-        Node(std::unique_ptr<Figure>& newShape) : m_shape{ std::move(newShape) }
+        Node(std::unique_ptr<ShapeType>& newShape) : m_shape{ std::move(newShape) }
         {
         }
     };
@@ -29,7 +30,7 @@ private:
 public:
     DynamicList() = default;
 
-    void insert(std::unique_ptr<Figure> newShape)
+    void insert(std::unique_ptr<ShapeType> newShape)
     {
         Node* newNode{ new Node{ newShape } };
 

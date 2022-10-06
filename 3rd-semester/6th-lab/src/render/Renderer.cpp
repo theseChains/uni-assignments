@@ -21,7 +21,7 @@ void Renderer::renderShapeArray(DynamicArray<std::unique_ptr<Figure>>& shapesToR
     }
 }
 
-void Renderer::renderShapeList(DynamicList& shapesToRender)
+void Renderer::renderShapeList(DynamicList<Figure>& shapesToRender)
 {
     if (shapesToRender.first() == nullptr)
     {
@@ -29,7 +29,7 @@ void Renderer::renderShapeList(DynamicList& shapesToRender)
     }
 
     // only goes through once instead of twice for some reason
-    for (DynamicList::Node* temp{ shapesToRender.first() }; temp != nullptr; temp = temp->m_next)
+    for (DynamicList<Figure>::Node* temp{ shapesToRender.first() }; temp != nullptr; temp = temp->m_next)
     {
         if (temp->m_shape != nullptr && temp->m_shape->isShown())
         {

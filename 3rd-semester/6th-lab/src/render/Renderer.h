@@ -27,7 +27,7 @@ public:
     // all shapes array
     void renderShapeArray(DynamicArray<std::unique_ptr<Figure>>& shapesToRender);
 
-    void renderShapeList(DynamicList& shapesToRender);
+    void renderShapeList(DynamicList<Figure>& shapesToRender);
 };
 
 #endif

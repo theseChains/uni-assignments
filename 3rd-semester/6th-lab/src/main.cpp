@@ -36,7 +36,7 @@ int main()
     Renderer renderer{ window };
 
     DynamicArray<std::unique_ptr<Figure>> shapesToRender(30);
-    DynamicList shapeListToRender{};
+    DynamicList<Figure> shapeListToRender{};
 
     Trapezoid newTrapezoid{ Creation::createFirstConstructorTrapezoid() };
     newTrapezoid.show();

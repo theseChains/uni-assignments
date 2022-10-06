@@ -15,10 +15,10 @@
 #include "../shapes/Quadrangle.h"
 #include "../shapes/Trapezoid.h"
 
-void guiCheckForShapeMovement(std::array<std::unique_ptr<Figure>, 30>& shapesToRender);
+void guiCheckForShapeMovement(DynamicArray<std::unique_ptr<Figure>>& shapesToRender);
 
-void guiCheckForCircularShapeMovement(std::array<std::unique_ptr<Figure>, 30>& shapesToRender);
+void guiCheckForCircularShapeMovement(DynamicArray<std::unique_ptr<Figure>>& shapesToRender);
 
-void guiCheckForQuadrangularShapeMovement(std::array<std::unique_ptr<Figure>, 30>& shapesToRender);
+void guiCheckForQuadrangularShapeMovement(DynamicArray<std::unique_ptr<Figure>>& shapesToRender);
 
 #endif

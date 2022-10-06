@@ -11,13 +11,15 @@
 #include "../shapes/Circle.h"
 #include "../shapes/Ellipse.h"
 
+#include "../containers/DynamicArray.h"
+
 namespace Modification
 {
-    void checkForCircularShapeModification(std::array<std::unique_ptr<Figure>, 30>& shapesToRender);
+    void checkForCircularShapeModification(DynamicArray<std::unique_ptr<Figure>>& shapesToRender);
 
     // auxiliary
-    void enlargeCircularShapes(std::array<std::unique_ptr<Figure>, 30>& shapesToRender);
-    void reduceCircularShapes(std::array<std::unique_ptr<Figure>, 30>& shapesToRender);
+    void enlargeCircularShapes(DynamicArray<std::unique_ptr<Figure>>& shapesToRender);
+    void reduceCircularShapes(DynamicArray<std::unique_ptr<Figure>>& shapesToRender);
 }
 
 #endif

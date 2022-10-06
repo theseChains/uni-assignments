@@ -15,13 +15,15 @@
 #include "QuadrangleShapeCreation.h"
 #include "TrapezoidShapeCreation.h"
 
+#include "../containers/DynamicArray.h"
+
 namespace ArrayCreation
 {
-    void checkForShapeCreation(std::array<std::unique_ptr<Figure>, 30>& shapesToRender);
-    void checkForShapeDeletion(std::array<std::unique_ptr<Figure>, 30>& shapesToRender);
+    void checkForShapeCreation(DynamicArray<std::unique_ptr<Figure>>& shapesToRender);
+    void checkForShapeDeletion(DynamicArray<std::unique_ptr<Figure>>& shapesToRender);
 
-    void createRandomShapes(std::array<std::unique_ptr<Figure>, 30>& shapesToRender);
-    void deleteAllShapes(std::array<std::unique_ptr<Figure>, 30>& shapesToRender);
+    void createRandomShapes(DynamicArray<std::unique_ptr<Figure>>& shapesToRender);
+    void deleteAllShapes(DynamicArray<std::unique_ptr<Figure>>& shapesToRender);
 }
 
 #endif

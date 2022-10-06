@@ -10,21 +10,23 @@
 
 #include "../shapes/Figure.h"
 
-void handleShapeArrayEvents(std::array<std::unique_ptr<Figure>, 30>& shapesToRender);
+#include "../containers/DynamicArray.h"
 
-void checkForShapeVisibilityModification(std::array<std::unique_ptr<Figure>, 30>& shapesToRender);
+void handleShapeArrayEvents(DynamicArray<std::unique_ptr<Figure>>& shapesToRender);
+
+void checkForShapeVisibilityModification(DynamicArray<std::unique_ptr<Figure>>& shapesToRender);
 void checkForCircularShapeVisibilityModification(
-        std::array<std::unique_ptr<Figure>, 30>& shapesToRender);
+        DynamicArray<std::unique_ptr<Figure>>& shapesToRender);
 void checkForQuadrangularShapeVisibilityModification(
-        std::array<std::unique_ptr<Figure>, 30>& shapesToRender);
+        DynamicArray<std::unique_ptr<Figure>>& shapesToRender);
 
-void showAllShapes(std::array<std::unique_ptr<Figure>, 30>& shapesToRender);
-void hideAllShapes(std::array<std::unique_ptr<Figure>, 30>& shapesToRender);
+void showAllShapes(DynamicArray<std::unique_ptr<Figure>>& shapesToRender);
+void hideAllShapes(DynamicArray<std::unique_ptr<Figure>>& shapesToRender);
 
-void showCircularShapes(std::array<std::unique_ptr<Figure>, 30>& shapesToRender);
-void hideCircularShapes(std::array<std::unique_ptr<Figure>, 30>& shapesToRender);
+void showCircularShapes(DynamicArray<std::unique_ptr<Figure>>& shapesToRender);
+void hideCircularShapes(DynamicArray<std::unique_ptr<Figure>>& shapesToRender);
 
-void showQuadrangularShapes(std::array<std::unique_ptr<Figure>, 30>& shapesToRender);
-void hideQuadrangularShapes(std::array<std::unique_ptr<Figure>, 30>& shapesToRender);
+void showQuadrangularShapes(DynamicArray<std::unique_ptr<Figure>>& shapesToRender);
+void hideQuadrangularShapes(DynamicArray<std::unique_ptr<Figure>>& shapesToRender);
 
 #endif

@@ -1,7 +1,7 @@
 #include "ShapeModification.h"
 
 void Modification::checkForCircularShapeModification(
-        std::array<std::unique_ptr<Figure>, 30>& shapesToRender)
+        DynamicArray<std::unique_ptr<Figure>>& shapesToRender)
 {
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::O))
     {
@@ -13,7 +13,7 @@ void Modification::checkForCircularShapeModification(
     }
 }
 
-void Modification::enlargeCircularShapes(std::array<std::unique_ptr<Figure>, 30>& shapesToRender)
+void Modification::enlargeCircularShapes(DynamicArray<std::unique_ptr<Figure>>& shapesToRender)
 {
     for (const auto& shape : shapesToRender)
     {
@@ -26,7 +26,7 @@ void Modification::enlargeCircularShapes(std::array<std::unique_ptr<Figure>, 30>
     }
 }
 
-void Modification::reduceCircularShapes(std::array<std::unique_ptr<Figure>, 30>& shapesToRender)
+void Modification::reduceCircularShapes(DynamicArray<std::unique_ptr<Figure>>& shapesToRender)
 {
     for (const auto& shape : shapesToRender)
     {

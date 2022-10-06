@@ -13,6 +13,9 @@
 
 #include "../shapes/Figure.h"
 
+#include "../containers/DynamicArray.h"
+#include "../containers/DynamicList.h"
+
 class Renderer
 {
 public:
@@ -22,7 +25,9 @@ public:
     Renderer(sf::RenderWindow& window);
 
     // all shapes array
-    void renderShapeArray(std::array<std::unique_ptr<Figure>, 30>& shapesToRender);
+    void renderShapeArray(DynamicArray<std::unique_ptr<Figure>>& shapesToRender);
+
+    void renderShapeList(DynamicList& shapesToRender);
 };
 
 #endif

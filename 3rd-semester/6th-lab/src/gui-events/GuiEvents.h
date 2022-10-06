@@ -17,14 +17,16 @@
 #include "GuiShapeModification.h"
 #include "GuiShapeMovement.h"
 
-void guiHandleShapeArrayEvents(std::array<std::unique_ptr<Figure>, 30>& shapesToRender);
+#include "../containers/DynamicArray.h"
 
-void guiCheckForShapeVisibilityModification(std::array<std::unique_ptr<Figure>, 30>& shapesToRender);
+void guiHandleShapeArrayEvents(DynamicArray<std::unique_ptr<Figure>>& shapesToRender);
+
+void guiCheckForShapeVisibilityModification(DynamicArray<std::unique_ptr<Figure>>& shapesToRender);
 
 void guiCheckForCircularShapeVisibilityModification(
-        std::array<std::unique_ptr<Figure>, 30>& shapesToRender);
+        DynamicArray<std::unique_ptr<Figure>>& shapesToRender);
 
 void guiCheckForQuadrangularShapeVisibilityModification(
-        std::array<std::unique_ptr<Figure>, 30>& shapesToRender);
+        DynamicArray<std::unique_ptr<Figure>>& shapesToRender);
 
 #endif

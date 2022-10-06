@@ -1,6 +1,6 @@
 #include "ShapeMovement.h"
 
-void Movement::checkForShapeArrayMovement(std::array<std::unique_ptr<Figure>, 30>& shapesToRender)
+void Movement::checkForShapeArrayMovement(DynamicArray<std::unique_ptr<Figure>>& shapesToRender)
 {
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
     {
@@ -25,7 +25,7 @@ void Movement::checkForShapeArrayMovement(std::array<std::unique_ptr<Figure>, 30
 }
 
 void Movement::checkForCircularShapeMovement(
-        std::array<std::unique_ptr<Figure>, 30>& shapesToRender)
+        DynamicArray<std::unique_ptr<Figure>>& shapesToRender)
 {
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
     {
@@ -50,7 +50,7 @@ void Movement::checkForCircularShapeMovement(
 }
 
 void Movement::checkForQuadrangularShapeMovement(
-        std::array<std::unique_ptr<Figure>, 30>& shapesToRender)
+        DynamicArray<std::unique_ptr<Figure>>& shapesToRender)
 {
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
     {
@@ -74,7 +74,7 @@ void Movement::checkForQuadrangularShapeMovement(
     }
 }
 
-void Movement::moveAllShapes(std::array<std::unique_ptr<Figure>, 30>& shapesToRender,
+void Movement::moveAllShapes(DynamicArray<std::unique_ptr<Figure>>& shapesToRender,
         float verticalDirection, float horizontalDirection)
 {
     if (verticalDirection == 0.0f && horizontalDirection == 0.0f)
@@ -99,7 +99,7 @@ void Movement::moveAllShapes(std::array<std::unique_ptr<Figure>, 30>& shapesToRe
     }
 }
 
-void Movement::moveCircularShapes(std::array<std::unique_ptr<Figure>, 30>& shapesToRender,
+void Movement::moveCircularShapes(DynamicArray<std::unique_ptr<Figure>>& shapesToRender,
         float verticalDirection, float horizontalDirection)
 {
     if (verticalDirection == 0.0f && horizontalDirection == 0.0f)
@@ -128,7 +128,7 @@ void Movement::moveCircularShapes(std::array<std::unique_ptr<Figure>, 30>& shape
     }
 }
 
-void Movement::moveQuadrangularShapes(std::array<std::unique_ptr<Figure>, 30>& shapesToRender,
+void Movement::moveQuadrangularShapes(DynamicArray<std::unique_ptr<Figure>>& shapesToRender,
         float verticalDirection, float horizontalDirection)
 {
     if (verticalDirection == 0.0f && horizontalDirection == 0.0f)

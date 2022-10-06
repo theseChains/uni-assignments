@@ -11,21 +11,23 @@
 #include "../shapes/Circle.h"
 #include "../shapes/Quadrangle.h"
 
+#include "../containers/DynamicArray.h"
+
 namespace Movement
 {
-    void checkForShapeArrayMovement(std::array<std::unique_ptr<Figure>, 30>& shapesToRender);
+    void checkForShapeArrayMovement(DynamicArray<std::unique_ptr<Figure>>& shapesToRender);
 
-    void checkForCircularShapeMovement(std::array<std::unique_ptr<Figure>, 30>& shapesToRender);
+    void checkForCircularShapeMovement(DynamicArray<std::unique_ptr<Figure>>& shapesToRender);
 
-    void checkForQuadrangularShapeMovement(std::array<std::unique_ptr<Figure>, 30>& shapesToRender);
+    void checkForQuadrangularShapeMovement(DynamicArray<std::unique_ptr<Figure>>& shapesToRender);
 
-    void moveAllShapes(std::array<std::unique_ptr<Figure>, 30>& shapesToRender,
+    void moveAllShapes(DynamicArray<std::unique_ptr<Figure>>& shapesToRender,
             float verticalDirection = 0.0f, float horizontalDirection = 0.0f);
 
-    void moveCircularShapes(std::array<std::unique_ptr<Figure>, 30>& shapesToRender,
+    void moveCircularShapes(DynamicArray<std::unique_ptr<Figure>>& shapesToRender,
             float verticalDirection = 0.0f, float horizontalDirection = 0.0f);
 
-    void moveQuadrangularShapes(std::array<std::unique_ptr<Figure>, 30>& shapesToRender,
+    void moveQuadrangularShapes(DynamicArray<std::unique_ptr<Figure>>& shapesToRender,
             float verticalDirection = 0.0f, float horizontalDirection = 0.0f);
 }
 

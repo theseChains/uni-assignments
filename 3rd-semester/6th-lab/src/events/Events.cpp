@@ -1,6 +1,6 @@
 #include "Events.h"
 
-void handleShapeArrayEvents(std::array<std::unique_ptr<Figure>, 30>& shapesToRender)
+void handleShapeArrayEvents(DynamicArray<std::unique_ptr<Figure>>& shapesToRender)
 {
     if (mode::all)
     {
@@ -22,7 +22,7 @@ void handleShapeArrayEvents(std::array<std::unique_ptr<Figure>, 30>& shapesToRen
     }
 }
 
-void checkForShapeVisibilityModification(std::array<std::unique_ptr<Figure>, 30>& shapesToRender)
+void checkForShapeVisibilityModification(DynamicArray<std::unique_ptr<Figure>>& shapesToRender)
 {
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::G))
     {
@@ -35,7 +35,7 @@ void checkForShapeVisibilityModification(std::array<std::unique_ptr<Figure>, 30>
 }
 
 void checkForCircularShapeVisibilityModification(
-        std::array<std::unique_ptr<Figure>, 30>& shapesToRender)
+        DynamicArray<std::unique_ptr<Figure>>& shapesToRender)
 {
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::G))
     {
@@ -48,7 +48,7 @@ void checkForCircularShapeVisibilityModification(
 }
 
 void checkForQuadrangularShapeVisibilityModification(
-        std::array<std::unique_ptr<Figure>, 30>& shapesToRender)
+        DynamicArray<std::unique_ptr<Figure>>& shapesToRender)
 {
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::G))
     {
@@ -60,7 +60,7 @@ void checkForQuadrangularShapeVisibilityModification(
     }
 }
 
-void showAllShapes(std::array<std::unique_ptr<Figure>, 30>& shapesToRender)
+void showAllShapes(DynamicArray<std::unique_ptr<Figure>>& shapesToRender)
 {
     for (const auto& shape : shapesToRender)
     {
@@ -71,7 +71,7 @@ void showAllShapes(std::array<std::unique_ptr<Figure>, 30>& shapesToRender)
     }
 }
 
-void hideAllShapes(std::array<std::unique_ptr<Figure>, 30>& shapesToRender)
+void hideAllShapes(DynamicArray<std::unique_ptr<Figure>>& shapesToRender)
 {
     for (const auto& shape : shapesToRender)
     {
@@ -82,7 +82,7 @@ void hideAllShapes(std::array<std::unique_ptr<Figure>, 30>& shapesToRender)
     }
 }
 
-void showCircularShapes(std::array<std::unique_ptr<Figure>, 30>& shapesToRender)
+void showCircularShapes(DynamicArray<std::unique_ptr<Figure>>& shapesToRender)
 {
     for (const auto& shape : shapesToRender)
     {
@@ -95,7 +95,7 @@ void showCircularShapes(std::array<std::unique_ptr<Figure>, 30>& shapesToRender)
     }
 }
 
-void hideCircularShapes(std::array<std::unique_ptr<Figure>, 30>& shapesToRender)
+void hideCircularShapes(DynamicArray<std::unique_ptr<Figure>>& shapesToRender)
 {
     for (const auto& shape : shapesToRender)
     {
@@ -108,7 +108,7 @@ void hideCircularShapes(std::array<std::unique_ptr<Figure>, 30>& shapesToRender)
     }
 }
 
-void showQuadrangularShapes(std::array<std::unique_ptr<Figure>, 30>& shapesToRender)
+void showQuadrangularShapes(DynamicArray<std::unique_ptr<Figure>>& shapesToRender)
 {
     for (const auto& shape : shapesToRender)
     {
@@ -121,7 +121,7 @@ void showQuadrangularShapes(std::array<std::unique_ptr<Figure>, 30>& shapesToRen
     }
 }
 
-void hideQuadrangularShapes(std::array<std::unique_ptr<Figure>, 30>& shapesToRender)
+void hideQuadrangularShapes(DynamicArray<std::unique_ptr<Figure>>& shapesToRender)
 {
     for (const auto& shape : shapesToRender)
     {

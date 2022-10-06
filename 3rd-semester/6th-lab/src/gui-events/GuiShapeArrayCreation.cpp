@@ -1,6 +1,6 @@
 #include "GuiShapeArrayCreation.h"
 
-void GuiArrayCreation::checkForShapeCreation(std::array<std::unique_ptr<Figure>, 30>& shapesToRender)
+void GuiArrayCreation::checkForShapeCreation(DynamicArray<std::unique_ptr<Figure>>& shapesToRender)
 {
     if (ImGui::Button("Create random shapes (N)"))
     {
@@ -8,7 +8,7 @@ void GuiArrayCreation::checkForShapeCreation(std::array<std::unique_ptr<Figure>,
     }
 }
 
-void GuiArrayCreation::checkForShapeDeletion(std::array<std::unique_ptr<Figure>, 30>& shapesToRender)
+void GuiArrayCreation::checkForShapeDeletion(DynamicArray<std::unique_ptr<Figure>>& shapesToRender)
 {
     if (ImGui::Button("Delete all shapes (Space)"))
     {

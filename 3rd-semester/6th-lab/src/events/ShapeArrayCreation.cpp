@@ -1,6 +1,6 @@
 #include "ShapeArrayCreation.h"
 
-void ArrayCreation::checkForShapeCreation(std::array<std::unique_ptr<Figure>, 30>& shapesToRender)
+void ArrayCreation::checkForShapeCreation(DynamicArray<std::unique_ptr<Figure>>& shapesToRender)
 {
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::N))
     {
@@ -8,7 +8,7 @@ void ArrayCreation::checkForShapeCreation(std::array<std::unique_ptr<Figure>, 30
     }
 }
 
-void ArrayCreation::checkForShapeDeletion(std::array<std::unique_ptr<Figure>, 30>& shapesToRender)
+void ArrayCreation::checkForShapeDeletion(DynamicArray<std::unique_ptr<Figure>>& shapesToRender)
 {
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
     {
@@ -16,7 +16,7 @@ void ArrayCreation::checkForShapeDeletion(std::array<std::unique_ptr<Figure>, 30
     }
 }
 
-void ArrayCreation::createRandomShapes(std::array<std::unique_ptr<Figure>, 30>& shapesToRender)
+void ArrayCreation::createRandomShapes(DynamicArray<std::unique_ptr<Figure>>& shapesToRender)
 {
     for (auto& shape : shapesToRender)
     {
@@ -55,7 +55,7 @@ void ArrayCreation::createRandomShapes(std::array<std::unique_ptr<Figure>, 30>& 
     }
 }
 
-void ArrayCreation::deleteAllShapes(std::array<std::unique_ptr<Figure>, 30>& shapesToRender)
+void ArrayCreation::deleteAllShapes(DynamicArray<std::unique_ptr<Figure>>& shapesToRender)
 {
     for (auto& shape : shapesToRender)
     {

@@ -18,6 +18,7 @@
 #include "render/Renderer.h"
 
 #include "containers/DynamicArray.h"
+#include "containers/DynamicList.h"
 
 int main()
 {
@@ -32,22 +33,18 @@ int main()
 
     configureGui();
 
-    DynamicArray<int> intVec(10);
-
-    // i might have a const iterator here and i need a non-const one
-    for (auto& element : intVec)
-    {
-        element = rnd::getNumber(1, 9);
-    }
-
-    for (const auto& element : intVec)
-    {
-        std::cout << element << ' ';
-    }
-
     Renderer renderer{ window };
 
-    std::array<std::unique_ptr<Figure>, 30> shapesToRender{};
+    DynamicArray<std::unique_ptr<Figure>> shapesToRender(30);
+    DynamicList shapeListToRender{};
+
+    Trapezoid newTrapezoid{ Creation::createFirstConstructorTrapezoid() };
+    newTrapezoid.show();
+    shapeListToRender.insert(std::make_unique<Trapezoid>(newTrapezoid));
+
+    Rhombus newRhombus{ Creation::createFirstConstructorParallelogrammaticShape<Rhombus>() };
+    newRhombus.show();
+    shapeListToRender.insert(std::make_unique<Rhombus>(newRhombus));
 
     sf::Clock deltaClock{};
     while (window.isOpen())
@@ -94,6 +91,7 @@ int main()
         window.clear();
 
         renderer.renderShapeArray(shapesToRender);
+        renderer.renderShapeList(shapeListToRender);
 
         ImGui::SFML::Render(window);
 

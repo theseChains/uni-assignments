@@ -1,6 +1,6 @@
 #include "GuiEvents.h"
 
-void guiHandleShapeArrayEvents(std::array<std::unique_ptr<Figure>, 30>& shapesToRender)
+void guiHandleShapeArrayEvents(DynamicArray<std::unique_ptr<Figure>>& shapesToRender)
 {
     if (mode::all)
     {
@@ -22,7 +22,7 @@ void guiHandleShapeArrayEvents(std::array<std::unique_ptr<Figure>, 30>& shapesTo
     }
 }
 
-void guiCheckForShapeVisibilityModification(std::array<std::unique_ptr<Figure>, 30>& shapesToRender)
+void guiCheckForShapeVisibilityModification(DynamicArray<std::unique_ptr<Figure>>& shapesToRender)
 {
     if (ImGui::Button("Show all shapes (G)"))
     {
@@ -35,7 +35,7 @@ void guiCheckForShapeVisibilityModification(std::array<std::unique_ptr<Figure>, 
 }
 
 void guiCheckForCircularShapeVisibilityModification(
-        std::array<std::unique_ptr<Figure>, 30>& shapesToRender)
+        DynamicArray<std::unique_ptr<Figure>>& shapesToRender)
 {
     if (ImGui::Button("Show circular shapes (G)"))
     {
@@ -48,7 +48,7 @@ void guiCheckForCircularShapeVisibilityModification(
 }
 
 void guiCheckForQuadrangularShapeVisibilityModification(
-        std::array<std::unique_ptr<Figure>, 30>& shapesToRender)
+        DynamicArray<std::unique_ptr<Figure>>& shapesToRender)
 {
     if (ImGui::Button("Show quadrangular shapes (G)"))
     {

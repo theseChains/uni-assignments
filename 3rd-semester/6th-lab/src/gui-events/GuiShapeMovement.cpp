@@ -1,6 +1,6 @@
 #include "GuiShapeMovement.h"
 
-void guiCheckForShapeMovement(std::array<std::unique_ptr<Figure>, 30>& shapesToRender)
+void guiCheckForShapeMovement(DynamicArray<std::unique_ptr<Figure>>& shapesToRender)
 {
     if (ImGui::Button("Move shapes up (W)"))
     {
@@ -24,7 +24,7 @@ void guiCheckForShapeMovement(std::array<std::unique_ptr<Figure>, 30>& shapesToR
     }
 }
 
-void guiCheckForCircularShapeMovement(std::array<std::unique_ptr<Figure>, 30>& shapesToRender)
+void guiCheckForCircularShapeMovement(DynamicArray<std::unique_ptr<Figure>>& shapesToRender)
 {
     if (ImGui::Button("Move circular shapes\nup (W)"))
     {
@@ -48,7 +48,7 @@ void guiCheckForCircularShapeMovement(std::array<std::unique_ptr<Figure>, 30>& s
     }
 }
 
-void guiCheckForQuadrangularShapeMovement(std::array<std::unique_ptr<Figure>, 30>& shapesToRender)
+void guiCheckForQuadrangularShapeMovement(DynamicArray<std::unique_ptr<Figure>>& shapesToRender)
 {
     if (ImGui::Button("Move quadrangular shapes\nup (W)"))
     {

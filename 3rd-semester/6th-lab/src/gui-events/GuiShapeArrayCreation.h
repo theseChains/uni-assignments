@@ -16,10 +16,12 @@
 
 #include "../events/ShapeArrayCreation.h"
 
+#include "../containers/DynamicArray.h"
+
 namespace GuiArrayCreation
 {
-    void checkForShapeCreation(std::array<std::unique_ptr<Figure>, 30>& shapesToRender);
-    void checkForShapeDeletion(std::array<std::unique_ptr<Figure>, 30>& shapesToRender);
+    void checkForShapeCreation(DynamicArray<std::unique_ptr<Figure>>& shapesToRender);
+    void checkForShapeDeletion(DynamicArray<std::unique_ptr<Figure>>& shapesToRender);
 }
 
 #endif

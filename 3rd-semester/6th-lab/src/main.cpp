@@ -36,19 +36,11 @@ int main()
     Renderer renderer{ window };
 
     DynamicArray<std::unique_ptr<Figure>> shapesToRender(30);
-    DynamicList<Figure> shapeListToRender{};
+    DynamicList<std::shared_ptr<Figure>> shapeListToRender{};
 
     Trapezoid newTrapezoid{ Creation::createFirstConstructorTrapezoid() };
     newTrapezoid.show();
-    shapeListToRender.insert(std::make_unique<Trapezoid>(newTrapezoid));
-
-    Rhombus newRhombus{ Creation::createFirstConstructorParallelogrammaticShape<Rhombus>() };
-    newRhombus.show();
-    shapeListToRender.insert(std::make_unique<Rhombus>(newRhombus));
-
-    Rhombus anotherRhombus{ Creation::createFirstConstructorParallelogrammaticShape<Rhombus>() };
-    anotherRhombus.show();
-    shapeListToRender.insert(std::make_unique<Rhombus>(anotherRhombus));
+    shapeListToRender.insert(std::make_shared<Trapezoid>(newTrapezoid));
 
     sf::Clock deltaClock{};
     while (window.isOpen())

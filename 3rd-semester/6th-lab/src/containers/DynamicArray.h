@@ -3,7 +3,7 @@
 
 #include <cassert>
 
-template <typename ShapeType>
+template <typename T>
 class DynamicArray
 {
 public:
@@ -12,10 +12,10 @@ public:
     class MyIterator
     {
     private:
-        ShapeType* m_ptr{};
+        T* m_ptr{};
 
     public:
-        MyIterator(ShapeType* ptr) : m_ptr{ ptr }
+        MyIterator(T* ptr) : m_ptr{ ptr }
         {
         }
 
@@ -30,13 +30,13 @@ public:
             return m_ptr != other.m_ptr;
         }
 
-        const ShapeType& operator*() const
+        const T& operator*() const
         {
             return *m_ptr;
         }
 
         // non-const iterators
-        ShapeType& operator*()
+        T& operator*()
         {
             return *m_ptr;
         }
@@ -44,7 +44,7 @@ public:
 
 private:
     int m_size{};
-    ShapeType* m_data{};
+    T* m_data{};
 
 public:
     DynamicArray() = default;
@@ -55,7 +55,7 @@ public:
 
         if (size > 0)
         {
-            m_data = new ShapeType[size]{};
+            m_data = new T[size]{};
         }
     }
 

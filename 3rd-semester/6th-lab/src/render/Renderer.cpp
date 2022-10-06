@@ -21,7 +21,7 @@ void Renderer::renderShapeArray(DynamicArray<std::unique_ptr<Figure>>& shapesToR
     }
 }
 
-void Renderer::renderShapeList(DynamicList<Figure>& shapesToRender)
+void Renderer::renderShapeList(DynamicList<std::shared_ptr<Figure>>& shapesToRender)
 {
     if (shapesToRender.first() == nullptr)
     {
@@ -29,17 +29,18 @@ void Renderer::renderShapeList(DynamicList<Figure>& shapesToRender)
     }
 
     // only goes through once instead of twice for some reason
-    for (DynamicList<Figure>::Node* temp{ shapesToRender.first() }; temp != nullptr; temp = temp->m_next)
+    for (DynamicList<std::shared_ptr<Figure>>::Node* temp{ shapesToRender.first() };
+            temp != nullptr; temp = temp->m_next)
     {
-        if (temp->m_shape != nullptr && temp->m_shape->isShown())
+        if (temp->m_data!= nullptr && temp->m_data->isShown())
         {
-            if (temp->m_shape->isCircular())
+            if (temp->m_data->isCircular())
             {
-                m_window.get().draw(temp->m_shape->show(false).circleValue());
+                m_window.get().draw(temp->m_data->show(false).circleValue());
             }
             else
             {
-                m_window.get().draw(temp->m_shape->show(false).convexValue());
+                m_window.get().draw(temp->m_data->show(false).convexValue());
             }
         }
     }

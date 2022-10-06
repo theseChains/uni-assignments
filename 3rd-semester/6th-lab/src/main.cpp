@@ -73,6 +73,11 @@ int main()
                 mode::shift();
             }
 
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::C))
+            {
+                shapeListToRender.clear();
+            }
+
             if (event.type == event.KeyPressed)
             {
                 handleShapeArrayEvents(shapesToRender);

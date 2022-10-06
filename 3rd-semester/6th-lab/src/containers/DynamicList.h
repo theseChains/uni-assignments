@@ -21,11 +21,6 @@ public:
         Node(std::unique_ptr<Figure>& newShape) : m_shape{ std::move(newShape) }
         {
         }
-
-        Node* getNode()
-        {
-            return m_next;
-        }
     };
 
 private:
@@ -56,28 +51,23 @@ public:
 
     void clear()
     {
+        Node* currentNode{ m_head };
+        Node* nextNode{ nullptr };
 
+        while (currentNode != nullptr)
+        {
+            nextNode = currentNode->m_next;
+            delete currentNode;
+            currentNode = nextNode;
+        }
+
+        m_head = nullptr;
     }
 
     Node* first()
     {
         return m_head;
     }
-
-    //void render(Renderer& renderer)
-    //{
-    //    if (m_head == nullptr)
-    //    {
-    //        return;
-    //    }
-
-    //    Node* temp{ m_head };
-    //    while (temp->next != nullptr)
-    //    {
-    //        renderer.renderShapeList(std::move(temp->m_shape));
-    //        temp = temp->next;
-    //    }
-    //}
 };
 
 #endif

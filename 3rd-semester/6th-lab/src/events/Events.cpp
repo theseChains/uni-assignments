@@ -7,129 +7,33 @@ void handleShapeArrayEvents(DynamicArray<std::unique_ptr<Figure>>& shapesToRende
         ArrayCreation::checkForShapeCreation(shapesToRender);
         ArrayCreation::checkForShapeDeletion(shapesToRender);
         Movement::checkForShapeArrayMovement(shapesToRender);
-        checkForShapeVisibilityModification(shapesToRender);
+        checkForShapeArrayVisibilityModification(shapesToRender);
     }
     if (mode::circular)
     {
         Movement::checkForCircularShapeMovement(shapesToRender);
         Modification::checkForCircularShapeModification(shapesToRender);
-        checkForCircularShapeVisibilityModification(shapesToRender);
+        checkForCircularShapeArrayVisibilityModification(shapesToRender);
     }
     if (mode::quadrangular)
     {
         Movement::checkForQuadrangularShapeMovement(shapesToRender);
-        checkForQuadrangularShapeVisibilityModification(shapesToRender);
+        checkForQuadrangularShapeArrayVisibilityModification(shapesToRender);
     }
 }
 
-void checkForShapeVisibilityModification(DynamicArray<std::unique_ptr<Figure>>& shapesToRender)
+void handleShapeListEvents(DynamicList<std::shared_ptr<Figure>>& shapesToRender)
 {
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::G))
+    if (mode::all)
     {
-        showAllShapes(shapesToRender);
+
     }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::H))
+    if (mode::circular)
     {
-        hideAllShapes(shapesToRender);
+
     }
-}
-
-void checkForCircularShapeVisibilityModification(
-        DynamicArray<std::unique_ptr<Figure>>& shapesToRender)
-{
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::G))
+    if (mode::quadrangular)
     {
-        showCircularShapes(shapesToRender);
-    }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::H))
-    {
-        hideCircularShapes(shapesToRender);
-    }
-}
 
-void checkForQuadrangularShapeVisibilityModification(
-        DynamicArray<std::unique_ptr<Figure>>& shapesToRender)
-{
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::G))
-    {
-        showQuadrangularShapes(shapesToRender);
-    }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::H))
-    {
-        hideQuadrangularShapes(shapesToRender);
-    }
-}
-
-void showAllShapes(DynamicArray<std::unique_ptr<Figure>>& shapesToRender)
-{
-    for (const auto& shape : shapesToRender)
-    {
-        if (shape != nullptr && !shape->isShown())
-        {
-            shape->show();
-        }
-    }
-}
-
-void hideAllShapes(DynamicArray<std::unique_ptr<Figure>>& shapesToRender)
-{
-    for (const auto& shape : shapesToRender)
-    {
-        if (shape != nullptr && shape->isShown())
-        {
-            shape->show();
-        }
-    }
-}
-
-void showCircularShapes(DynamicArray<std::unique_ptr<Figure>>& shapesToRender)
-{
-    for (const auto& shape : shapesToRender)
-    {
-        Circle* circleShape{ dynamic_cast<Circle*>(shape.get()) };
-
-        if (circleShape && !circleShape->isShown())
-        {
-            circleShape->show();
-        }
-    }
-}
-
-void hideCircularShapes(DynamicArray<std::unique_ptr<Figure>>& shapesToRender)
-{
-    for (const auto& shape : shapesToRender)
-    {
-        Circle* circleShape{ dynamic_cast<Circle*>(shape.get()) };
-
-        if (circleShape && circleShape->isShown())
-        {
-            circleShape->show();
-        }
-    }
-}
-
-void showQuadrangularShapes(DynamicArray<std::unique_ptr<Figure>>& shapesToRender)
-{
-    for (const auto& shape : shapesToRender)
-    {
-        Quadrangle* quadrangularShape{ dynamic_cast<Quadrangle*>(shape.get()) };
-
-        if (quadrangularShape && !quadrangularShape->isShown())
-        {
-            quadrangularShape->show();
-        }
-    }
-}
-
-void hideQuadrangularShapes(DynamicArray<std::unique_ptr<Figure>>& shapesToRender)
-{
-    for (const auto& shape : shapesToRender)
-    {
-        Quadrangle* quadrangularShape{ dynamic_cast<Quadrangle*>(shape.get()) };
-
-        if (quadrangularShape && quadrangularShape->isShown())
-        {
-            quadrangularShape->show();
-        }
     }
 }

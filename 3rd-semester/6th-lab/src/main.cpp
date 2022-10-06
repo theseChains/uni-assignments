@@ -38,10 +38,6 @@ int main()
     DynamicArray<std::unique_ptr<Figure>> shapesToRender(30);
     DynamicList<std::shared_ptr<Figure>> shapeListToRender{};
 
-    Trapezoid newTrapezoid{ Creation::createFirstConstructorTrapezoid() };
-    newTrapezoid.show();
-    shapeListToRender.insert(std::make_shared<Trapezoid>(newTrapezoid));
-
     sf::Clock deltaClock{};
     while (window.isOpen())
     {

@@ -71,3 +71,75 @@ void guiCheckForQuadrangularShapeArrayMovement(DynamicArray<std::unique_ptr<Figu
         Movement::moveQuadrangularArrayShapes(shapesToRender);
     }
 }
+
+void guiCheckForShapeListMovement(DynamicList<std::unique_ptr<Figure>>& shapesToRender)
+{
+    if (ImGui::Button("Move shapes up (W)"))
+    {
+        Movement::moveAllListShapes(shapesToRender, 0.0f, -2.0f);
+    }
+    if (ImGui::Button("Move shapes left (A)"))
+    {
+        Movement::moveAllListShapes(shapesToRender, -2.0f, 0.0f);
+    }
+    if (ImGui::Button("Move shapes down (S)"))
+    {
+        Movement::moveAllListShapes(shapesToRender, 0.0f, 2.0f);
+    }
+    if (ImGui::Button("Move shapes right (D)"))
+    {
+        Movement::moveAllListShapes(shapesToRender, 2.0f, 0.0f);
+    }
+    if (ImGui::Button("Move shapes to a random\npoint (Q)"))
+    {
+        Movement::moveAllListShapes(shapesToRender);
+    }
+}
+
+void guiCheckForCircularShapeListMovement(DynamicList<std::unique_ptr<Figure>>& shapesToRender)
+{
+    if (ImGui::Button("Move circular shapes\nup (W)"))
+    {
+        Movement::moveCircularListShapes(shapesToRender, 0.0f, -2.0f);
+    }
+    if (ImGui::Button("Move circular shapes\nleft (A)"))
+    {
+        Movement::moveCircularListShapes(shapesToRender, -2.0f, 0.0f);
+    }
+    if (ImGui::Button("Move circular shapes\ndown (S)"))
+    {
+        Movement::moveCircularListShapes(shapesToRender, 0.0f, 2.0f);
+    }
+    if (ImGui::Button("Move circular shapes\nright (D)"))
+    {
+        Movement::moveCircularListShapes(shapesToRender, 2.0f, 0.0f);
+    }
+    if (ImGui::Button("Move circular shapes\nto a random point (Q)"))
+    {
+        Movement::moveCircularListShapes(shapesToRender);
+    }
+}
+
+void guiCheckForQuadrangularShapeListMovement(DynamicList<std::unique_ptr<Figure>>& shapesToRender)
+{
+    if (ImGui::Button("Move quadrangular shapes\nup (W)"))
+    {
+        Movement::moveQuadrangularListShapes(shapesToRender, 0.0f, -2.0f);
+    }
+    if (ImGui::Button("Move quadrangular shapes\nleft (A)"))
+    {
+        Movement::moveQuadrangularListShapes(shapesToRender, -2.0f, 0.0f);
+    }
+    if (ImGui::Button("Move quadrangular shapes\ndown (S)"))
+    {
+        Movement::moveQuadrangularListShapes(shapesToRender, 0.0f, 2.0f);
+    }
+    if (ImGui::Button("Move quadrangular shapes\nright (D)"))
+    {
+        Movement::moveQuadrangularListShapes(shapesToRender, 2.0f, 0.0f);
+    }
+    if (ImGui::Button("Move quadrangular shapes\nto a random point (Q)"))
+    {
+        Movement::moveQuadrangularListShapes(shapesToRender);
+    }
+}

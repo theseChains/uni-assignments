@@ -15,6 +15,9 @@
 #include "../shapes/Circle.h"
 #include "../shapes/Ellipse.h"
 
-void guiCheckForCircularShapeModification(DynamicArray<std::unique_ptr<Figure>>& shapesToRender);
+void guiCheckForCircularShapeArrayModification(DynamicArray<std::unique_ptr<Figure>>& shapesToRender);
+
+void guiCheckForCircularShapeListModification(DynamicList<std::unique_ptr<Figure>>& shapesToRender);
+
 
 #endif

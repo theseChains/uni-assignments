@@ -17,4 +17,10 @@ void guiCheckForCircularShapeArrayMovement(DynamicArray<std::unique_ptr<Figure>>
 
 void guiCheckForQuadrangularShapeArrayMovement(DynamicArray<std::unique_ptr<Figure>>& shapesToRender);
 
+void guiCheckForShapeListMovement(DynamicList<std::unique_ptr<Figure>>& shapesToRender);
+
+void guiCheckForCircularShapeListMovement(DynamicList<std::unique_ptr<Figure>>& shapesToRender);
+
+void guiCheckForQuadrangularShapeListMovement(DynamicList<std::unique_ptr<Figure>>& shapesToRender);
+
 #endif

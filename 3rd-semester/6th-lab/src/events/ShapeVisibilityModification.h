@@ -11,24 +11,21 @@
 
 void checkForShapeArrayVisibilityModification(DynamicArray<std::unique_ptr<Figure>>& shapesToRender);
 
-void showAllArrayShapes(DynamicArray<std::unique_ptr<Figure>>& shapesToRender);
-void hideAllArrayShapes(DynamicArray<std::unique_ptr<Figure>>& shapesToRender);
+void checkForShapeListVisibilityModification(DynamicList<std::unique_ptr<Figure>>& shapesToRender);
+
+void showShape(std::unique_ptr<Figure>& shape);
+void hideShape(std::unique_ptr<Figure>& shape);
 
 void checkForCircularShapeArrayVisibilityModification(
         DynamicArray<std::unique_ptr<Figure>>& shapesToRender);
 
-void showCircularArrayShapes(DynamicArray<std::unique_ptr<Figure>>& shapesToRender);
-void hideCircularArrayShapes(DynamicArray<std::unique_ptr<Figure>>& shapesToRender);
+void showCircularShape(std::unique_ptr<Figure>& shape);
+void hideCircularShape(std::unique_ptr<Figure>& shape);
 
 void checkForQuadrangularShapeArrayVisibilityModification(
         DynamicArray<std::unique_ptr<Figure>>& shapesToRender);
 
-void showQuadrangularArrayShapes(DynamicArray<std::unique_ptr<Figure>>& shapesToRender);
-void hideQuadrangularArrayShapes(DynamicArray<std::unique_ptr<Figure>>& shapesToRender);
-
-void checkForShapeListVisibilityModification(DynamicList<std::unique_ptr<Figure>>& shapesToRender);
-
-void checkForSubShapeListVisibilityModification(
-        DynamicList<std::unique_ptr<Figure>>& shapesToRender);
+void showQuadrangularShape(std::unique_ptr<Figure>& shape);
+void hideQuadrangularShape(std::unique_ptr<Figure>& shape);
 
 #endif

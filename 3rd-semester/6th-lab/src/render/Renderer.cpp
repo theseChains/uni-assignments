@@ -21,15 +21,14 @@ void Renderer::renderShapeArray(DynamicArray<std::unique_ptr<Figure>>& shapesToR
     }
 }
 
-void Renderer::renderShapeList(DynamicList<std::shared_ptr<Figure>>& shapesToRender)
+void Renderer::renderShapeList(DynamicList<std::unique_ptr<Figure>>& shapesToRender)
 {
     if (shapesToRender.first() == nullptr)
     {
         return;
     }
 
-    // only goes through once instead of twice for some reason
-    for (DynamicList<std::shared_ptr<Figure>>::Node* temp{ shapesToRender.first() };
+    for (DynamicList<std::unique_ptr<Figure>>::Node* temp{ shapesToRender.first() };
             temp != nullptr; temp = temp->m_next)
     {
         if (temp->m_data!= nullptr && temp->m_data->isShown())

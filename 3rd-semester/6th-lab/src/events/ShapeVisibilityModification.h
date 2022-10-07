@@ -26,9 +26,9 @@ void checkForQuadrangularShapeArrayVisibilityModification(
 void showQuadrangularArrayShapes(DynamicArray<std::unique_ptr<Figure>>& shapesToRender);
 void hideQuadrangularArrayShapes(DynamicArray<std::unique_ptr<Figure>>& shapesToRender);
 
-void checkForShapeListVisibilityModification(DynamicList<std::shared_ptr<Figure>>& shapesToRender);
+void checkForShapeListVisibilityModification(DynamicList<std::unique_ptr<Figure>>& shapesToRender);
 
 void checkForSubShapeListVisibilityModification(
-        DynamicList<std::shared_ptr<Figure>>& shapesToRender);
+        DynamicList<std::unique_ptr<Figure>>& shapesToRender);
 
 #endif

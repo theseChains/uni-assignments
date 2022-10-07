@@ -36,7 +36,7 @@ int main()
     Renderer renderer{ window };
 
     DynamicArray<std::unique_ptr<Figure>> shapesToRender(30);
-    DynamicList<std::shared_ptr<Figure>> shapeListToRender{};
+    DynamicList<std::unique_ptr<Figure>> shapeListToRender{};
 
     sf::Clock deltaClock{};
     while (window.isOpen())
@@ -69,6 +69,7 @@ int main()
             if (event.type == event.KeyPressed)
             {
                 handleShapeArrayEvents(shapesToRender);
+                handleShapeListEvents(shapeListToRender);
             }
         }
 

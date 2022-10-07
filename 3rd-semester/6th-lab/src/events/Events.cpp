@@ -22,11 +22,12 @@ void handleShapeArrayEvents(DynamicArray<std::unique_ptr<Figure>>& shapesToRende
     }
 }
 
-void handleShapeListEvents(DynamicList<std::shared_ptr<Figure>>& shapesToRender)
+void handleShapeListEvents(DynamicList<std::unique_ptr<Figure>>& shapesToRender)
 {
     if (mode::all)
     {
-
+        ListCreation::checkForShapeCreation(shapesToRender);
+        ListCreation::checkForShapeDeletion(shapesToRender);
     }
     if (mode::circular)
     {

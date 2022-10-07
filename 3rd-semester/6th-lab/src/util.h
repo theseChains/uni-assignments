@@ -20,7 +20,7 @@ namespace util
     inline constexpr int ellipseIndex{ 3 };
     inline constexpr int quadrangleIndex{ 4 };
     inline constexpr int rhombusIndex{ 5 };
-    inline constexpr int trapezoidIndex{ 6 }; 
+    inline constexpr int trapezoidIndex{ 6 };
 }
 
 namespace component

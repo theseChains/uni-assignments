@@ -16,6 +16,7 @@
 #include "TrapezoidShapeCreation.h"
 
 #include "../containers/DynamicArray.h"
+#include "../containers/DynamicList.h"
 
 namespace ArrayCreation
 {
@@ -24,6 +25,15 @@ namespace ArrayCreation
 
     void createRandomShapes(DynamicArray<std::unique_ptr<Figure>>& shapesToRender);
     void deleteAllShapes(DynamicArray<std::unique_ptr<Figure>>& shapesToRender);
+}
+
+namespace ListCreation
+{
+    void checkForShapeCreation(DynamicList<std::unique_ptr<Figure>>& shapesToRender);
+    void checkForShapeDeletion(DynamicList<std::unique_ptr<Figure>>& shapesToRender);
+
+    void createRandomShapes(DynamicList<std::unique_ptr<Figure>>& shapesToRender);
+    void deleteAllShapes(DynamicList<std::unique_ptr<Figure>>& shapesToRender);
 }
 
 #endif

@@ -15,6 +15,6 @@
 #include "../containers/DynamicList.h"
 
 void handleShapeArrayEvents(DynamicArray<std::unique_ptr<Figure>>& shapesToRender);
-void handleShapeListEvents(DynamicList<std::shared_ptr<Figure>>& shapesToRender);
+void handleShapeListEvents(DynamicList<std::unique_ptr<Figure>>& shapesToRender);
 
 #endif

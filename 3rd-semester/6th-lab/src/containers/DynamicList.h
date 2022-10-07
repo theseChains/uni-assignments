@@ -19,7 +19,7 @@ public:
         {
         }
 
-        Node(const T& newData) : m_data{ newData }
+        Node(T&& newData) : m_data{ std::move(newData) }
         {
         }
     };
@@ -33,6 +33,26 @@ public:
     void insert(const T& newData)
     {
         Node* newNode{ new Node{ newData } };
+
+        if (m_head == nullptr)
+        {
+            m_head = newNode;
+            return;
+        }
+
+        // traverse till the end and insert
+        Node* temp{ m_head };
+        while (temp->m_next != nullptr)
+        {
+            temp = temp->m_next;
+        }
+
+        temp->m_next = newNode;
+    }
+
+    void insert(T&& newData)
+    {
+        Node* newNode{ new Node{ std::move(newData) } };
 
         if (m_head == nullptr)
         {

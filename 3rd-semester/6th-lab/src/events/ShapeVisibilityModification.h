@@ -19,11 +19,17 @@ void hideShape(std::unique_ptr<Figure>& shape);
 void checkForCircularShapeArrayVisibilityModification(
         DynamicArray<std::unique_ptr<Figure>>& shapesToRender);
 
+void checkForCircularShapeListVisibilityModification(
+        DynamicList<std::unique_ptr<Figure>>& shapesToRender);
+
 void showCircularShape(std::unique_ptr<Figure>& shape);
 void hideCircularShape(std::unique_ptr<Figure>& shape);
 
 void checkForQuadrangularShapeArrayVisibilityModification(
         DynamicArray<std::unique_ptr<Figure>>& shapesToRender);
+
+void checkForQuadrangularShapeListVisibilityModification(
+        DynamicList<std::unique_ptr<Figure>>& shapesToRender);
 
 void showQuadrangularShape(std::unique_ptr<Figure>& shape);
 void hideQuadrangularShape(std::unique_ptr<Figure>& shape);

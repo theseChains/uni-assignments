@@ -64,7 +64,7 @@ void ArrayCreation::deleteAllShapes(DynamicArray<std::unique_ptr<Figure>>& shape
 
 void ListCreation::checkForShapeCreation(DynamicList<std::unique_ptr<Figure>>& shapesToRender)
 {
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::J))
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::N))
     {
         createRandomShapes(shapesToRender);
     }
@@ -72,7 +72,7 @@ void ListCreation::checkForShapeCreation(DynamicList<std::unique_ptr<Figure>>& s
 
 void ListCreation::checkForShapeDeletion(DynamicList<std::unique_ptr<Figure>>& shapesToRender)
 {
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::K))
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
     {
         deleteAllShapes(shapesToRender);
     }

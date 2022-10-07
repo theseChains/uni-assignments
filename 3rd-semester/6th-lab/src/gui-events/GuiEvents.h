@@ -17,9 +17,9 @@
 #include "GuiShapeModification.h"
 #include "GuiShapeMovement.h"
 
-#include "../containers/DynamicArray.h"
-
 void guiHandleShapeArrayEvents(DynamicArray<std::unique_ptr<Figure>>& shapesToRender);
+
+void guiHandleShapeListEvents(DynamicList<std::unique_ptr<Figure>>& shapesToRender);
 
 void guiCheckForShapeVisibilityModification(DynamicArray<std::unique_ptr<Figure>>& shapesToRender);
 

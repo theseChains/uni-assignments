@@ -12,14 +12,20 @@
 #include "../shapes/Ellipse.h"
 
 #include "../containers/DynamicArray.h"
+#include "../containers/DynamicList.h"
 
 namespace Modification
 {
-    void checkForCircularShapeModification(DynamicArray<std::unique_ptr<Figure>>& shapesToRender);
+    void checkForCircularShapeArrayModification(DynamicArray<std::unique_ptr<Figure>>& shapesToRender);
+
+    void checkForCircularShapeListModification(DynamicList<std::unique_ptr<Figure>>& shapesToRender);
 
     // auxiliary
-    void enlargeCircularShapes(DynamicArray<std::unique_ptr<Figure>>& shapesToRender);
-    void reduceCircularShapes(DynamicArray<std::unique_ptr<Figure>>& shapesToRender);
+    void enlargeCircularArrayShapes(DynamicArray<std::unique_ptr<Figure>>& shapesToRender);
+    void reduceCircularArrayShapes(DynamicArray<std::unique_ptr<Figure>>& shapesToRender);
+
+    void enlargeCircularListShapes(DynamicList<std::unique_ptr<Figure>>& shapesToRender);
+    void reduceCircularListShapes(DynamicList<std::unique_ptr<Figure>>& shapesToRender);
 }
 
 #endif

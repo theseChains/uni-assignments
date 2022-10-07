@@ -17,11 +17,15 @@
 #include "../events/ShapeArrayCreation.h"
 
 #include "../containers/DynamicArray.h"
+#include "../containers/DynamicList.h"
 
 namespace GuiArrayCreation
 {
-    void checkForShapeCreation(DynamicArray<std::unique_ptr<Figure>>& shapesToRender);
-    void checkForShapeDeletion(DynamicArray<std::unique_ptr<Figure>>& shapesToRender);
+    void checkForShapeArrayCreation(DynamicArray<std::unique_ptr<Figure>>& shapesToRender);
+    void checkForShapeArrayDeletion(DynamicArray<std::unique_ptr<Figure>>& shapesToRender);
+
+    void checkForShapeListCreation(DynamicList<std::unique_ptr<Figure>>& shapesToRender);
+    void checkForShapeListDeletion(DynamicList<std::unique_ptr<Figure>>& shapesToRender);
 }
 
 #endif

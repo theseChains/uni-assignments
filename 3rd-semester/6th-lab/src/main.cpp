@@ -56,6 +56,11 @@ int main()
                 window.close();
             }
 
+            if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::K)
+            {
+                container::shift();
+            }
+
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::M))
             {
                 mode::shift();
@@ -77,12 +82,18 @@ int main()
 
         startGuiLoop();
 
-        if (ImGui::Button("Change mode (M)"))
+        if (ImGui::Button("Change current container (K)"))
+        {
+            container::shift();
+        }
+
+        if (ImGui::Button("Change shape mode (M)"))
         {
             mode::shift();
         }
 
         guiHandleShapeArrayEvents(shapesToRender);
+        guiHandleShapeListEvents(shapeListToRender);
 
         ImGui::End();
 

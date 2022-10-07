@@ -2,23 +2,46 @@
 
 void guiHandleShapeArrayEvents(DynamicArray<std::unique_ptr<Figure>>& shapesToRender)
 {
-    if (mode::all)
+    if (container::array)
     {
-        GuiArrayCreation::checkForShapeCreation(shapesToRender);
-        GuiArrayCreation::checkForShapeDeletion(shapesToRender);
-        guiCheckForShapeMovement(shapesToRender);
-        guiCheckForShapeVisibilityModification(shapesToRender);
+        if (mode::all)
+        {
+            GuiArrayCreation::checkForShapeArrayCreation(shapesToRender);
+            GuiArrayCreation::checkForShapeArrayDeletion(shapesToRender);
+            guiCheckForShapeArrayMovement(shapesToRender);
+            guiCheckForShapeVisibilityModification(shapesToRender);
+        }
+        if (mode::circular)
+        {
+            guiCheckForCircularShapeArrayMovement(shapesToRender);
+            guiCheckForCircularShapeModification(shapesToRender);
+            guiCheckForCircularShapeVisibilityModification(shapesToRender);
+        }
+        if (mode::quadrangular)
+        {
+            guiCheckForQuadrangularShapeArrayMovement(shapesToRender);
+            guiCheckForQuadrangularShapeVisibilityModification(shapesToRender);
+        }
     }
-    if (mode::circular)
+}
+
+void guiHandleShapeListEvents(DynamicList<std::unique_ptr<Figure>>& shapesToRender)
+{
+    if (container::list)
     {
-        guiCheckForCircularShapeMovement(shapesToRender);
-        guiCheckForCircularShapeModification(shapesToRender);
-        guiCheckForCircularShapeVisibilityModification(shapesToRender);
-    }
-    if (mode::quadrangular)
-    {
-        guiCheckForQuadrangularShapeMovement(shapesToRender);
-        guiCheckForQuadrangularShapeVisibilityModification(shapesToRender);
+        if (mode::all)
+        {
+            GuiArrayCreation::checkForShapeListCreation(shapesToRender);
+            GuiArrayCreation::checkForShapeListDeletion(shapesToRender);
+        }
+        if (mode::circular)
+        {
+
+        }
+        if (mode::quadrangular)
+        {
+
+        }
     }
 }
 
@@ -26,11 +49,17 @@ void guiCheckForShapeVisibilityModification(DynamicArray<std::unique_ptr<Figure>
 {
     if (ImGui::Button("Show all shapes (G)"))
     {
-        showAllArrayShapes(shapesToRender);
+        for (auto& shape : shapesToRender)
+        {
+            showShape(shape);
+        }
     }
     if (ImGui::Button("Hide all shapes (H)"))
     {
-        hideAllArrayShapes(shapesToRender);
+        for (auto& shape : shapesToRender)
+        {
+            hideShape(shape);
+        }
     }
 }
 
@@ -39,11 +68,17 @@ void guiCheckForCircularShapeVisibilityModification(
 {
     if (ImGui::Button("Show circular shapes (G)"))
     {
-        showCircularArrayShapes(shapesToRender);
+        for (auto& shape : shapesToRender)
+        {
+            showCircularShape(shape);
+        }
     }
     if (ImGui::Button("Hide circular shapes (H)"))
     {
-        hideCircularArrayShapes(shapesToRender);
+        for (auto& shape : shapesToRender)
+        {
+            hideCircularShape(shape);
+        }
     }
 }
 
@@ -52,10 +87,16 @@ void guiCheckForQuadrangularShapeVisibilityModification(
 {
     if (ImGui::Button("Show quadrangular shapes (G)"))
     {
-        showQuadrangularArrayShapes(shapesToRender);
+        for (auto& shape : shapesToRender)
+        {
+            showQuadrangularShape(shape);
+        }
     }
     if (ImGui::Button("Hide quadrangular shapes (H)"))
     {
-        hideQuadrangularArrayShapes(shapesToRender);
+        for (auto& shape : shapesToRender)
+        {
+            hideQuadrangularShape(shape);
+        }
     }
 }

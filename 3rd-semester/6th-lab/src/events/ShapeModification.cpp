@@ -1,19 +1,32 @@
 #include "ShapeModification.h"
 
-void Modification::checkForCircularShapeModification(
+void Modification::checkForCircularShapeArrayModification(
         DynamicArray<std::unique_ptr<Figure>>& shapesToRender)
 {
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::O))
     {
-        enlargeCircularShapes(shapesToRender);
+        enlargeCircularArrayShapes(shapesToRender);
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::I))
     {
-        reduceCircularShapes(shapesToRender);
+        reduceCircularArrayShapes(shapesToRender);
     }
 }
 
-void Modification::enlargeCircularShapes(DynamicArray<std::unique_ptr<Figure>>& shapesToRender)
+void Modification::checkForCircularShapeListModification(
+        DynamicList<std::unique_ptr<Figure>>& shapesToRender)
+{
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::O))
+    {
+        enlargeCircularListShapes(shapesToRender);
+    }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::I))
+    {
+        reduceCircularListShapes(shapesToRender);
+    }
+}
+
+void Modification::enlargeCircularArrayShapes(DynamicArray<std::unique_ptr<Figure>>& shapesToRender)
 {
     for (const auto& shape : shapesToRender)
     {
@@ -26,11 +39,39 @@ void Modification::enlargeCircularShapes(DynamicArray<std::unique_ptr<Figure>>& 
     }
 }
 
-void Modification::reduceCircularShapes(DynamicArray<std::unique_ptr<Figure>>& shapesToRender)
+void Modification::reduceCircularArrayShapes(DynamicArray<std::unique_ptr<Figure>>& shapesToRender)
 {
     for (const auto& shape : shapesToRender)
     {
         Circle* circularShape{ dynamic_cast<Circle*>(shape.get()) };
+
+        if (circularShape)
+        {
+            circularShape->changeRadius(-2.0f);
+        }
+    }
+}
+
+void Modification::enlargeCircularListShapes(DynamicList<std::unique_ptr<Figure>>& shapesToRender)
+{
+    for (DynamicList<std::unique_ptr<Figure>>::Node* temp{ shapesToRender.first() };
+            temp != nullptr; temp = temp->m_next)
+    {
+        Circle* circularShape{ dynamic_cast<Circle*>(temp->m_data.get()) };
+
+        if (circularShape)
+        {
+            circularShape->changeRadius(2.0f);
+        }
+    }
+}
+
+void Modification::reduceCircularListShapes(DynamicList<std::unique_ptr<Figure>>& shapesToRender)
+{
+    for (DynamicList<std::unique_ptr<Figure>>::Node* temp{ shapesToRender.first() };
+            temp != nullptr; temp = temp->m_next)
+    {
+        Circle* circularShape{ dynamic_cast<Circle*>(temp->m_data.get()) };
 
         if (circularShape)
         {

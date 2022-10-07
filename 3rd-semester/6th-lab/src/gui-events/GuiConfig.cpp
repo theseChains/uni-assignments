@@ -11,6 +11,7 @@ void configureGui()
 void startGuiLoop()
 {
     ImGui::Begin(mode::get().c_str());
+    ImGui::Text("%s", container::get().c_str());
 
     ImGui::SetWindowSize(ImVec2(util::guiWidth, util::windowHeight));
     ImGui::SetWindowPos(ImVec2(0, 0));

@@ -4,10 +4,10 @@ void guiCheckForCircularShapeModification(DynamicArray<std::unique_ptr<Figure>>&
 {
     if (ImGui::Button("Enlarge circular shapes (O)"))
     {
-        Modification::enlargeCircularShapes(shapesToRender);
+        Modification::enlargeCircularArrayShapes(shapesToRender);
     }
     if (ImGui::Button("Reduce circular shapes (I)"))
     {
-        Modification::reduceCircularShapes(shapesToRender);
+        Modification::reduceCircularArrayShapes(shapesToRender);
     }
 }

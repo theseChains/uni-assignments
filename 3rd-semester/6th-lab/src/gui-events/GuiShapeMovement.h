@@ -9,16 +9,12 @@
 
 #include "../events/ShapeMovement.h"
 
-#include "../shapes/Circle.h"
-#include "../shapes/Rectangle.h"
-#include "../shapes/Ellipse.h"
-#include "../shapes/Quadrangle.h"
-#include "../shapes/Trapezoid.h"
+#include "../shapes/Figure.h"
 
-void guiCheckForShapeMovement(DynamicArray<std::unique_ptr<Figure>>& shapesToRender);
+void guiCheckForShapeArrayMovement(DynamicArray<std::unique_ptr<Figure>>& shapesToRender);
 
-void guiCheckForCircularShapeMovement(DynamicArray<std::unique_ptr<Figure>>& shapesToRender);
+void guiCheckForCircularShapeArrayMovement(DynamicArray<std::unique_ptr<Figure>>& shapesToRender);
 
-void guiCheckForQuadrangularShapeMovement(DynamicArray<std::unique_ptr<Figure>>& shapesToRender);
+void guiCheckForQuadrangularShapeArrayMovement(DynamicArray<std::unique_ptr<Figure>>& shapesToRender);
 
 #endif

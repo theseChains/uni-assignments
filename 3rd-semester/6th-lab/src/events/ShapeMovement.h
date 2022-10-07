@@ -12,22 +12,38 @@
 #include "../shapes/Quadrangle.h"
 
 #include "../containers/DynamicArray.h"
+#include "../containers/DynamicList.h"
 
 namespace Movement
 {
     void checkForShapeArrayMovement(DynamicArray<std::unique_ptr<Figure>>& shapesToRender);
 
-    void checkForCircularShapeMovement(DynamicArray<std::unique_ptr<Figure>>& shapesToRender);
+    void checkForCircularShapeArrayMovement(DynamicArray<std::unique_ptr<Figure>>& shapesToRender);
 
-    void checkForQuadrangularShapeMovement(DynamicArray<std::unique_ptr<Figure>>& shapesToRender);
+    void checkForQuadrangularShapeArrayMovement(DynamicArray<std::unique_ptr<Figure>>& shapesToRender);
 
-    void moveAllShapes(DynamicArray<std::unique_ptr<Figure>>& shapesToRender,
+    void checkForShapeListMovement(DynamicList<std::unique_ptr<Figure>>& shapesToRender);
+
+    void checkForCircularShapeListMovement(DynamicList<std::unique_ptr<Figure>>& shapesToRender);
+
+    void checkForQuadrangularShapeListMovement(DynamicList<std::unique_ptr<Figure>>& shapesToRender);
+
+    void moveAllArrayShapes(DynamicArray<std::unique_ptr<Figure>>& shapesToRender,
             float verticalDirection = 0.0f, float horizontalDirection = 0.0f);
 
-    void moveCircularShapes(DynamicArray<std::unique_ptr<Figure>>& shapesToRender,
+    void moveCircularArrayShapes(DynamicArray<std::unique_ptr<Figure>>& shapesToRender,
             float verticalDirection = 0.0f, float horizontalDirection = 0.0f);
 
-    void moveQuadrangularShapes(DynamicArray<std::unique_ptr<Figure>>& shapesToRender,
+    void moveQuadrangularArrayShapes(DynamicArray<std::unique_ptr<Figure>>& shapesToRender,
+            float verticalDirection = 0.0f, float horizontalDirection = 0.0f);
+
+    void moveAllListShapes(DynamicList<std::unique_ptr<Figure>>& shapesToRender,
+            float verticalDirection = 0.0f, float horizontalDirection = 0.0f);
+
+    void moveCircularListShapes(DynamicList<std::unique_ptr<Figure>>& shapesToRender,
+            float verticalDirection = 0.0f, float horizontalDirection = 0.0f);
+
+    void moveQuadrangularListShapes(DynamicList<std::unique_ptr<Figure>>& shapesToRender,
             float verticalDirection = 0.0f, float horizontalDirection = 0.0f);
 }
 

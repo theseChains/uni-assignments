@@ -54,4 +54,14 @@ namespace mode
     std::string get();
 }
 
+namespace container
+{
+    inline bool array{ true };
+    inline bool list{ false };
+
+    void shift();
+
+    std::string get();
+}
+
 #endif

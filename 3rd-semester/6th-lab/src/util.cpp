@@ -52,3 +52,29 @@ std::string mode::get()
         return "working with quadrangular";
     }
 }
+
+void container::shift()
+{
+    if (array)
+    {
+        array = false;
+        list = true;
+    }
+    else
+    {
+        list = false;
+        array = true;
+    }
+}
+
+std::string container::get()
+{
+    if (array)
+    {
+        return "working with a dynamic array";
+    }
+    else
+    {
+        return "working with a dynamic list";
+    }
+}

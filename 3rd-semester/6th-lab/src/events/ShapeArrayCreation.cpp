@@ -22,35 +22,34 @@ void ArrayCreation::createRandomShapes(DynamicArray<std::unique_ptr<Figure>>& sh
     {
         int randomShapeIndex{ rnd::getNumber(1, 6) };
 
-        if (randomShapeIndex == util::circleIndex)
+        switch (randomShapeIndex)
         {
-            shape = std::make_unique<Circle>(
-                    Creation::createFirstConstructorCircularShape<Circle>());
-        }
-        else if (randomShapeIndex == util::rectangleIndex)
-        {
-            shape = std::make_unique<Rectangle>(
-                    Creation::createFirstConstructorParallelogrammaticShape<Rectangle>());
-        }
-        else if (randomShapeIndex == util::ellipseIndex)
-        {
-            shape = std::make_unique<Ellipse>(
-                    Creation::createFirstConstructorCircularShape<Ellipse>());
-        }
-        else if (randomShapeIndex == util::quadrangleIndex)
-        {
-            shape = std::make_unique<Quadrangle>(
-                    Creation::createFirstConstructorQuadrangle());
-        }
-        else if (randomShapeIndex == util::rhombusIndex)
-        {
-            shape = std::make_unique<Rhombus>(
-                    Creation::createFirstConstructorParallelogrammaticShape<Rhombus>());
-        }
-        else if (randomShapeIndex == util::trapezoidIndex)
-        {
-            shape = std::make_unique<Trapezoid>(
-                    Creation::createFirstConstructorTrapezoid());
+            case util::circleIndex:
+                shape = std::make_unique<Circle>(
+                        Creation::createFirstConstructorCircularShape<Circle>());
+                break;
+            case util::rectangleIndex:
+                shape = std::make_unique<Rectangle>(
+                        Creation::createFirstConstructorParallelogrammaticShape<Rectangle>());
+                break;
+            case util::ellipseIndex:
+                shape = std::make_unique<Ellipse>(
+                        Creation::createFirstConstructorCircularShape<Ellipse>());
+                break;
+            case util::quadrangleIndex:
+                shape = std::make_unique<Quadrangle>(
+                        Creation::createFirstConstructorQuadrangle());
+                break;
+            case util::rhombusIndex:
+                shape = std::make_unique<Rhombus>(
+                        Creation::createFirstConstructorParallelogrammaticShape<Rhombus>());
+                break;
+            case util::trapezoidIndex:
+                shape = std::make_unique<Trapezoid>(
+                        Creation::createFirstConstructorTrapezoid());
+                break;
+            default:
+                std::cout << "unknown shape index\n";
         }
     }
 }
@@ -85,35 +84,35 @@ void ListCreation::createRandomShapes(DynamicList<std::unique_ptr<Figure>>& shap
     {
         int randomShapeIndex{ rnd::getNumber(1, 6) };
 
-        if (randomShapeIndex == util::circleIndex)
+        switch (randomShapeIndex)
         {
-            shapesToRender.insert(std::make_unique<Circle>(
-                    Creation::createFirstConstructorCircularShape<Circle>()));
-        }
-        else if (randomShapeIndex == util::rectangleIndex)
-        {
-            shapesToRender.insert(std::make_unique<Rectangle>(
-                    Creation::createFirstConstructorParallelogrammaticShape<Rectangle>()));
-        }
-        else if (randomShapeIndex == util::ellipseIndex)
-        {
-            shapesToRender.insert(std::make_unique<Ellipse>(
-                    Creation::createFirstConstructorCircularShape<Ellipse>()));
-        }
-        else if (randomShapeIndex == util::quadrangleIndex)
-        {
-            shapesToRender.insert(std::make_unique<Quadrangle>(
-                    Creation::createFirstConstructorQuadrangle()));
-        }
-        else if (randomShapeIndex == util::rhombusIndex)
-        {
-            shapesToRender.insert(std::make_unique<Rhombus>(
-                    Creation::createFirstConstructorParallelogrammaticShape<Rhombus>()));
-        }
-        else if (randomShapeIndex == util::trapezoidIndex)
-        {
-            shapesToRender.insert(std::make_unique<Trapezoid>(
-                    Creation::createFirstConstructorTrapezoid()));
+            case util::circleIndex:
+                shapesToRender.insert(std::make_unique<Circle>(
+                        Creation::createFirstConstructorCircularShape<Circle>()));
+                break;
+            case util::rectangleIndex:
+                shapesToRender.insert(std::make_unique<Rectangle>(
+                        Creation::createFirstConstructorParallelogrammaticShape<Rectangle>()));
+                break;
+            case util::ellipseIndex:
+                shapesToRender.insert(std::make_unique<Ellipse>(
+                        Creation::createFirstConstructorCircularShape<Ellipse>()));
+                break;
+            case util::quadrangleIndex:
+                shapesToRender.insert(std::make_unique<Quadrangle>(
+                        Creation::createFirstConstructorQuadrangle()));
+                break;
+            case util::rhombusIndex:
+                shapesToRender.insert(std::make_unique<Rhombus>(
+                        Creation::createFirstConstructorParallelogrammaticShape<Rhombus>()));
+                break;
+            case util::trapezoidIndex:
+                shapesToRender.insert(std::make_unique<Trapezoid>(
+                        Creation::createFirstConstructorTrapezoid()));
+                break;
+            default:
+                std::cout << "unknown shape index\n";
+                break;
         }
     }
 }

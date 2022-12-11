@@ -1,4 +1,5 @@
 #include "UserInput.h"
+#include "MouseInfo.h"
 
 #include <SFML/Graphics/CircleShape.hpp>
 #include <SFML/Window/Mouse.hpp>
@@ -8,18 +9,16 @@ struct VertexCreator
 	void operator()(EntityList& entityList, sf::RenderWindow& window)
 	{
 		sf::CircleShape vertex{};
-		float xMouseCoordinate{ static_cast<float>(sf::Mouse::getPosition(window).x) };
-		float yMouseCoordinate{ static_cast<float>(sf::Mouse::getPosition(window).y) };
-		vertex.setPosition(xMouseCoordinate - 15.0f, yMouseCoordinate - 15.0f);
+		vertex.setPosition(MouseInfo::getMousePosition(window) - sf::Vector2f{ 15.0f, 15.0f });
 		vertex.setRadius(15.0f);
-		vertex.setFillColor(sf::Color{ 240, 240, 250 });
+		vertex.setFillColor(sf::Color{ 210, 210, 250 });
 		entityList.pushCircleEntity(std::move(vertex));
 	}
 };
 
 struct VertexChooser
 {
-	void operator()(EntityList& entityList)
+	void operator()(EntityList& entityList, sf::RenderWindow& window)
 	{
 
 	}
@@ -54,5 +53,6 @@ void UserInput::initializeBindings()
 
 void UserInput::initializeActionBindings()
 {
-	m_actionBinding[Action::createVertex] = VertexCreator();
+	m_actionBinding[Action::createVertex] = VertexCreator{};
+	m_actionBinding[Action::chooseVertex] = VertexChooser{};
 }

@@ -4,6 +4,7 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/System/Time.hpp>
 
+#include "EntityList.h"
 #include "UserInput.h"
 
 class Application
@@ -19,9 +20,9 @@ private:
 
 private:
 	sf::RenderWindow m_window{};
-	UserInput m_userInput{};
 	// FontHolder m_fonts{};
-	// EntityList m_entityList{};
+	EntityList m_entityList{};
+	UserInput m_userInput{};
 };
 
 #endif

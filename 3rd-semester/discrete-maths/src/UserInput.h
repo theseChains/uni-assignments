@@ -1,9 +1,13 @@
 #ifndef USER_INPUT_H
 #define USER_INPUT_H
 
+#include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Window/Event.hpp>
 
+#include <functional>
 #include <map>
+
+#include "EntityList.h"
 
 class UserInput
 {
@@ -18,13 +22,14 @@ public:
 
 	UserInput();
 
-	void handleEvent(const sf::Event& event);
+	void handleEvent(const sf::Event& event, EntityList& entityList, sf::RenderWindow& window);
 
 private:
 	void initializeBindings();
+	void initializeActionBindings();
 
 	std::map<sf::Mouse::Button, Action> m_mouseBinding{};
-	std::map<sf::Keyboard::Key, Action> m_keyboardBinding{};
+	std::map<Action, std::function<void(EntityList&, sf::RenderWindow&)>> m_actionBinding{};
 };
 
 #endif

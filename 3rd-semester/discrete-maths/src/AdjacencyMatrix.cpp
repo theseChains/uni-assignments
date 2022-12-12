@@ -61,8 +61,10 @@ void AdjacencyMatrix::initializeMatrixTextCoordinates()
 		int columnIndex{ 1 };
 		for (auto& [x, y] : row)
 		{
-			x = coords::columnOffsetBetweenValues * columnIndex + coords::columnScreenOffset;
-			y = coords::rowOffsetBetweenValues * rowIndex + coords::rowScreenOffset;
+			x = coords::columnOffsetBetweenValues * static_cast<float>(columnIndex) +
+				coords::columnScreenOffset;
+			y = coords::rowOffsetBetweenValues * static_cast<float>(rowIndex) +
+				coords::rowScreenOffset;
 
 			++columnIndex;
 		}
@@ -81,17 +83,17 @@ void AdjacencyMatrix::initializeMatrixText()
 	m_matrixText[0].setString("    v0 v1 v2 v3 v4 v5 v6 v7 v8 v9");
 	m_matrixText[0].setPosition(0.0f, 30.0f);
 
-	for (int i{ 1 }; i < m_matrixText.size(); ++i)
+	for (std::size_t i{ 1 }; i < m_matrixText.size(); ++i)
 	{
 		// this is the number string
 		std::string matrixRowString{ "   " };
-		for (int j{ 0 }; j < 10; ++j)
+		for (std::size_t j{ 0 }; j < 10; ++j)
 		{
 			matrixRowString += std::to_string(m_matrix[i - 1][j]) + "  ";
 		}
 
 		// v1 + row 1 numbers, and so on
 		m_matrixText[i].setString("v" + std::to_string(i - 1) + matrixRowString);
-		m_matrixText[i].setPosition(0.0f, 25.0f * (i + 1));
+		m_matrixText[i].setPosition(0.0f, 25.0f * (static_cast<float>(i + 1)));
 	}
 }

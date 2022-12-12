@@ -22,7 +22,7 @@ struct VertexCreator
 
 struct VertexChooser
 {
-	void operator()(EntityList& entityList, sf::RenderWindow& window)
+	void operator()([[maybe_unused]] EntityList& entityList, [[maybe_unused]] sf::RenderWindow& window)
 	{
 		// alright, i have a different idea now, how about instead of choosing vertices to make
 		// connections with them, we make this struct to choose the vertices between which we want

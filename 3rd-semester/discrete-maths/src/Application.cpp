@@ -1,7 +1,9 @@
 #include "Application.h"
+#include "Config.h"
 
 Application::Application()
-	: m_window{ sf::RenderWindow{ sf::VideoMode{ 1280, 720 }, "assignment" } }
+	: m_window{ sf::RenderWindow{ sf::VideoMode{ constants::windowWidth, constants::windowHeight },
+		"assignment" } }
 	, m_userInput{}
 {
 	m_window.setVerticalSyncEnabled(true);
@@ -33,13 +35,13 @@ void Application::processInput()
 	}
 }
 
-void Application::update(sf::Time deltaTime)
+void Application::update([[maybe_unused]] sf::Time deltaTime)
 {
 }
 
 void Application::render()
 {
-	m_window.clear(sf::Color{ 20, 20, 30 });
+	m_window.clear(sf::Color{ background::red, background::green, background::blue });
 
 	m_entityList.draw(m_window);
 	m_adjacencyMatrix.draw(m_window);

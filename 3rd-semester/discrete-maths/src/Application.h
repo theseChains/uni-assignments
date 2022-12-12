@@ -4,6 +4,7 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/System/Time.hpp>
 
+#include "AdjacencyMatrix.h"
 #include "EntityList.h"
 #include "UserInput.h"
 
@@ -20,7 +21,7 @@ private:
 
 private:
 	sf::RenderWindow m_window{};
-	// FontHolder m_fonts{};
+	AdjacencyMatrix m_adjacencyMatrix{};
 	EntityList m_entityList{};
 	UserInput m_userInput{};
 };

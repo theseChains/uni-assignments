@@ -44,9 +44,9 @@ struct VertexRemover
 
 struct MatrixNumberChanger
 {
-	void operator()([[maybe_unused]] Context context)
+	void operator()(Context context)
 	{
-
+		context.m_adjacencyMatrix.handleLeftMouseClick(context.m_window);
 	}
 };
 

@@ -29,7 +29,6 @@ void Application::processInput()
 	while (m_window.pollEvent(event))
 	{
 		m_userInput.handleEvent(event, m_context);
-		m_adjacencyMatrix.handleEvent(event, m_window);
 
 		if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape)
 			m_window.close();
@@ -46,7 +45,8 @@ void Application::update([[maybe_unused]] sf::Time deltaTime)
 
 void Application::render()
 {
-	m_window.clear(sf::Color{ color::background::red, color::background::green, color::background::blue });
+	m_window.clear(sf::Color{ color::background::red, color::background::green,
+			color::background::blue });
 
 	m_entityList.draw(m_window);
 	m_adjacencyMatrix.draw(m_window);

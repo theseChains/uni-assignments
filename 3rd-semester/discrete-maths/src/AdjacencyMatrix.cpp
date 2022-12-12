@@ -23,24 +23,20 @@ AdjacencyMatrix::AdjacencyMatrix()
 	initializeBorderLines();
 }
 
-void AdjacencyMatrix::handleEvent(const sf::Event& event, sf::RenderWindow& window)
+void AdjacencyMatrix::handleLeftMouseClick(sf::RenderWindow& window)
 {
-	// this should go into user input...
-	if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left)
+	for (int rowIndex{ 0 }; const auto& row : m_matrixNumberBounds)
 	{
-		for (int rowIndex{ 0 }; const auto& row : m_matrixNumberBounds)
+		for (int columnIndex{ 0 }; const auto& bound : row)
 		{
-			for (int columnIndex{ 0 }; const auto& bound : row)
+			if (bound.contains(MouseInfo::getMousePosition(window)))
 			{
-				if (bound.contains(MouseInfo::getMousePosition(window)))
-				{
-					m_matrix[rowIndex][columnIndex] = !m_matrix[rowIndex][columnIndex];
-					return;
-				}
-				++columnIndex;
+				m_matrix[rowIndex][columnIndex] = !m_matrix[rowIndex][columnIndex];
+				return;
 			}
-			++rowIndex;
+			++columnIndex;
 		}
+		++rowIndex;
 	}
 }
 
@@ -71,7 +67,7 @@ void AdjacencyMatrix::initializeTopText()
 	m_topText.setString("Adjacency matrix");
 	m_topText.setPosition(70.0f, 0.0f);
 	m_topText.setCharacterSize(25);
-	m_topText.setFillColor(sf::Color{ text::red, text::green, text::blue });
+	m_topText.setFillColor(sf::Color{ color::text::red, color::text::green, color::text::blue });
 }
 
 void AdjacencyMatrix::initializeMatrixTextCoordinates()
@@ -132,11 +128,11 @@ void AdjacencyMatrix::initializeMatrixNumberBounds()
 void AdjacencyMatrix::initializeBorderLines()
 {
 	sf::RectangleShape verticalLine{ { 2.0f, constants::windowWidth } };
-	verticalLine.setFillColor(sf::Color{ text::red, text::green, text::blue });
+	verticalLine.setFillColor(sf::Color{ color::line::red, color::line::green, color::line::blue });
 	verticalLine.setPosition({ constants::adjacencyMatrixWidth, 0.0f });
 
 	sf::RectangleShape horizontalLine{ { constants::adjacencyMatrixWidth, 2.0f } };
-	horizontalLine.setFillColor(sf::Color{ text::red, text::green, text::blue });
+	horizontalLine.setFillColor(sf::Color{ color::line::red, color::line::green, color::line::blue });
 	horizontalLine.setPosition({ 0.0f, constants::adjacencyMatrixHeight });
 
 	m_borderLines[0] = verticalLine;

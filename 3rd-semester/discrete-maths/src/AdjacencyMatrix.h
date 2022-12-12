@@ -14,7 +14,7 @@ class AdjacencyMatrix
 public:
 	AdjacencyMatrix();
 
-	void handleEvent(const sf::Event& event, sf::RenderWindow& window);
+	void handleLeftMouseClick(sf::RenderWindow& window);
 	void update();
 	void draw(sf::RenderWindow& window) const;
 

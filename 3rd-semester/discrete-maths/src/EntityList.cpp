@@ -34,7 +34,17 @@ void EntityList::clearLineEntities()
 	m_lineEntities.clear();
 }
 
-void EntityList::draw(sf::RenderWindow& window)
+std::size_t EntityList::getCircleEntityListSize() const
+{
+	return m_circleEntities.size();
+}
+
+std::size_t EntityList::getLineEntityListSize() const
+{
+	return m_lineEntities.size();
+}
+
+void EntityList::draw(sf::RenderWindow& window) const
 {
 	for (const auto& entity : m_circleEntities)
 	{

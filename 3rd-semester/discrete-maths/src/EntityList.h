@@ -21,7 +21,10 @@ public:
 	void clearCircleEntities();
 	void clearLineEntities();
 
-	void draw(sf::RenderWindow& window);
+	std::size_t getCircleEntityListSize() const;
+	std::size_t getLineEntityListSize() const;
+
+	void draw(sf::RenderWindow& window) const;
 
 private:
 	std::vector<sf::CircleShape> m_circleEntities{};

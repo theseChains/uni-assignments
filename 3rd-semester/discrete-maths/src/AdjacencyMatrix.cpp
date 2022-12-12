@@ -7,7 +7,12 @@
 #include <iostream>
 #include <string>
 
-AdjacencyMatrix::AdjacencyMatrix() : m_matrix{}
+AdjacencyMatrix::AdjacencyMatrix()
+	: m_matrix{}
+	, m_font{}
+	, m_topText{}
+	, m_matrixText{}
+	, m_matrixNumberBounds{}
 {
 	m_font.loadFromFile("../res/FiraMono-Medium.otf");
 
@@ -15,6 +20,7 @@ AdjacencyMatrix::AdjacencyMatrix() : m_matrix{}
 	initializeMatrixTextCoordinates();
 	initializeMatrixText();
 	initializeMatrixNumberBounds();
+	initializeBorderLines();
 }
 
 void AdjacencyMatrix::handleEvent(const sf::Event& event, sf::RenderWindow& window)
@@ -54,6 +60,9 @@ void AdjacencyMatrix::draw(sf::RenderWindow& window) const
 
 	for (const auto& text : m_matrixText)
 		window.draw(text);
+
+	for (const auto& line : m_borderLines)
+		window.draw(line);
 }
 
 void AdjacencyMatrix::initializeTopText()
@@ -118,6 +127,20 @@ void AdjacencyMatrix::initializeMatrixNumberBounds()
 		}
 		++rowIndex;
 	}
+}
+
+void AdjacencyMatrix::initializeBorderLines()
+{
+	sf::RectangleShape verticalLine{ { 2.0f, constants::windowWidth } };
+	verticalLine.setFillColor(sf::Color{ text::red, text::green, text::blue });
+	verticalLine.setPosition({ constants::adjacencyMatrixWidth, 0.0f });
+
+	sf::RectangleShape horizontalLine{ { constants::adjacencyMatrixWidth, 2.0f } };
+	horizontalLine.setFillColor(sf::Color{ text::red, text::green, text::blue });
+	horizontalLine.setPosition({ 0.0f, constants::adjacencyMatrixHeight });
+
+	m_borderLines[0] = verticalLine;
+	m_borderLines[1] = horizontalLine;
 }
 
 std::string AdjacencyMatrix::getNumbersFromMatrix(std::size_t row)

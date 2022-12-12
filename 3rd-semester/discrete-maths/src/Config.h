@@ -7,30 +7,40 @@ namespace constants
 {
 	inline constexpr int windowWidth{ 1280 };
 	inline constexpr int windowHeight{ 720 };
-	
+
 	inline constexpr int adjacencyMatrixWidth{ 390 };
 	inline constexpr int adjacencyMatrixHeight{ 310 };
 }
 
-namespace background
+namespace color
 {
-	inline constexpr int red{ 20 };
-	inline constexpr int green{ 20 };
-	inline constexpr int blue{ 36 };
-}
+	namespace background
+	{
+		inline constexpr int red{ 20 };
+		inline constexpr int green{ 20 };
+		inline constexpr int blue{ 36 };
+	}
 
-namespace vertex
-{
-	inline constexpr int red{ 200 };
-	inline constexpr int green{ 200 };
-	inline constexpr int blue{ 255 };
-}
+	namespace vertex
+	{
+		inline constexpr int red{ 200 };
+		inline constexpr int green{ 200 };
+		inline constexpr int blue{ 255 };
+	}
 
-namespace text
-{
-	inline constexpr int red{ 190 };
-	inline constexpr int green{ 190 };
-	inline constexpr int blue{ 255 };
+	namespace text
+	{
+		inline constexpr int red{ 190 };
+		inline constexpr int green{ 190 };
+		inline constexpr int blue{ 255 };
+	}
+
+	namespace line
+	{
+		inline constexpr int red{ 65 };
+		inline constexpr int green{ 158 };
+		inline constexpr int blue{ 230 };
+	}
 }
 
 namespace coords

@@ -22,7 +22,12 @@ void AdjacencyMatrix::handleEvent()
 
 void AdjacencyMatrix::update()
 {
-	// update the matrix text
+	for (std::size_t i{ 1 }; i < m_matrixText.size(); ++i)
+	{
+		std::string matrixRowString{ getNumbersFromMatrix(i) };
+
+		m_matrixText[i].setString("v" + std::to_string(i - 1) + matrixRowString);
+	}
 }
 
 void AdjacencyMatrix::draw(sf::RenderWindow& window) const
@@ -86,15 +91,22 @@ void AdjacencyMatrix::initializeMatrixText()
 
 	for (std::size_t i{ 1 }; i < m_matrixText.size(); ++i)
 	{
-		// this is the number string
-		std::string matrixRowString{ "   " };
-		for (std::size_t j{ 0 }; j < 10; ++j)
-		{
-			matrixRowString += std::to_string(m_matrix[i - 1][j]) + "  ";
-		}
+		std::string matrixRowString{ getNumbersFromMatrix(i) };
 
 		// v1 + row 1 numbers, and so on
 		m_matrixText[i].setString("v" + std::to_string(i - 1) + matrixRowString);
 		m_matrixText[i].setPosition(0.0f, 25.0f * (static_cast<float>(i + 1)));
 	}
+}
+
+std::string AdjacencyMatrix::getNumbersFromMatrix(std::size_t row)
+{
+	std::string matrixRowString{ "   " };
+	for (std::size_t j{ 0 }; j < 10; ++j)
+	{
+		// retreive numbers from the string
+		matrixRowString += std::to_string(m_matrix[row - 1][j]) + "  ";
+	}
+
+	return matrixRowString;
 }

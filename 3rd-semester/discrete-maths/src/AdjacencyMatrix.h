@@ -21,6 +21,8 @@ private:
 	void initializeMatrixTextCoordinates();
 	void initializeMatrixText();
 
+	std::string getNumbersFromMatrix(std::size_t row);
+
 private:
 	using TextCoordinates = std::array<std::array<std::pair<float, float>, 10>, 10>;
 	std::array<std::array<bool, 10>, 10> m_matrix{};

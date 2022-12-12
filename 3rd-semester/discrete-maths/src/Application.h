@@ -5,6 +5,7 @@
 #include <SFML/System/Time.hpp>
 
 #include "AdjacencyMatrix.h"
+#include "Context.h"
 #include "EntityList.h"
 #include "UserInput.h"
 
@@ -24,6 +25,8 @@ private:
 	AdjacencyMatrix m_adjacencyMatrix{};
 	EntityList m_entityList{};
 	UserInput m_userInput{};
+
+	Context m_context;
 };
 
 #endif

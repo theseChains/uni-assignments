@@ -4,7 +4,10 @@
 Application::Application()
 	: m_window{ sf::RenderWindow{ sf::VideoMode{ constants::windowWidth, constants::windowHeight },
 		"assignment" } }
+	, m_adjacencyMatrix{}
+	, m_entityList{}
 	, m_userInput{}
+	, m_context{ m_window, m_adjacencyMatrix, m_entityList }
 {
 	m_window.setVerticalSyncEnabled(true);
 }
@@ -25,7 +28,8 @@ void Application::processInput()
 	sf::Event event{};
 	while (m_window.pollEvent(event))
 	{
-		m_userInput.handleEvent(event, m_entityList, m_window);
+		m_userInput.handleEvent(event, m_context);
+		m_adjacencyMatrix.handleEvent(event, m_window);
 
 		if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape)
 			m_window.close();
@@ -37,11 +41,12 @@ void Application::processInput()
 
 void Application::update([[maybe_unused]] sf::Time deltaTime)
 {
+	m_adjacencyMatrix.update();
 }
 
 void Application::render()
 {
-	m_window.clear(sf::Color{ background::red, background::green, background::blue });
+	m_window.clear(sf::Color{ color::background::red, color::background::green, color::background::blue });
 
 	m_entityList.draw(m_window);
 	m_adjacencyMatrix.draw(m_window);

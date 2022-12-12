@@ -7,6 +7,8 @@
 #include <functional>
 #include <map>
 
+#include "AdjacencyMatrix.h"
+#include "Context.h"
 #include "EntityList.h"
 
 class UserInput
@@ -16,20 +18,22 @@ public:
 	{
 		createVertex,
 		chooseVertex,
+		changeMatrixNumber,
 
 		numberOfActions
 	};
 
 	UserInput();
 
-	void handleEvent(const sf::Event& event, EntityList& entityList, sf::RenderWindow& window);
+	void handleEvent(const sf::Event& event, Context context);
 
 private:
 	void initializeBindings();
 	void initializeActionBindings();
 
 	std::map<sf::Mouse::Button, Action> m_mouseBinding{};
-	std::map<Action, std::function<void(EntityList&, sf::RenderWindow&)>> m_actionBinding{};
+	std::map<sf::Keyboard::Key, Action> m_keyBinding{};
+	std::map<Action, std::function<void(Context)>> m_actionBinding{};
 };
 
 #endif

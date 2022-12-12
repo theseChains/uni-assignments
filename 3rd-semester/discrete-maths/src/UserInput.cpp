@@ -7,22 +7,23 @@
 
 struct VertexCreator
 {
-	void operator()(EntityList& entityList, sf::RenderWindow& window)
+	void operator()(Context context)
 	{
-		if (MouseInfo::isMouseOnAdjacencyMatrix(window) || entityList.getCircleListSize() == 10)
+		if (MouseInfo::isMouseOnVertexPlane(context.m_window) ||
+				context.m_entityList.getCircleListSize() == 10)
 			return;
 
-		sf::CircleShape vertex{};
-		vertex.setPosition(MouseInfo::getMousePosition(window) - sf::Vector2f{ 15.0f, 15.0f });
-		vertex.setRadius(15.0f);
-		vertex.setFillColor(sf::Color{ vertex::red, vertex::green, vertex::blue });
-		entityList.pushCircleEntity(std::move(vertex));
+		sf::CircleShape vertex{ 15.0f };
+		vertex.setPosition(MouseInfo::getMousePosition(context.m_window) -
+				sf::Vector2f{ 15.0f, 15.0f });
+		vertex.setFillColor(sf::Color{ color::vertex::red, color::vertex::green, color::vertex::blue });
+		context.m_entityList.pushCircleEntity(std::move(vertex));
 	}
 };
 
 struct VertexChooser
 {
-	void operator()([[maybe_unused]] EntityList& entityList, [[maybe_unused]] sf::RenderWindow& window)
+	void operator()([[maybe_unused]] Context context)
 	{
 		// alright, i have a different idea now, how about instead of choosing vertices to make
 		// connections with them, we make this struct to choose the vertices between which we want
@@ -35,7 +36,15 @@ struct VertexChooser
 // upon pressing R on the keyboard or something (and obviously having the mouse on a vertex)
 struct VertexRemover
 {
-	void operator()()
+	void operator()([[maybe_unused]] Context context)
+	{
+
+	}
+};
+
+struct MatrixNumberChanger
+{
+	void operator()([[maybe_unused]] Context context)
 	{
 
 	}
@@ -47,8 +56,7 @@ UserInput::UserInput()
 	initializeActionBindings();
 }
 
-void UserInput::handleEvent(const sf::Event& event, EntityList& entityList,
-		sf::RenderWindow& window)
+void UserInput::handleEvent(const sf::Event& event, Context context)
 {
 	if (event.type == sf::Event::MouseButtonPressed)
 	{
@@ -56,19 +64,31 @@ void UserInput::handleEvent(const sf::Event& event, EntityList& entityList,
 		auto found{ m_mouseBinding.find(event.mouseButton.button) };
 		if (found != m_mouseBinding.end())
 		{
-			m_actionBinding[found->second](entityList, window);
+			m_actionBinding[found->second](context);
+		}
+	}
+	else if (event.type == sf::Event::KeyPressed)
+	{
+		auto found{ m_keyBinding.find(event.key.code) };
+		if (found != m_keyBinding.end())
+		{
+			m_actionBinding[found->second](context);
 		}
 	}
 }
 
 void UserInput::initializeBindings()
 {
-	m_mouseBinding[sf::Mouse::Left] = Action::createVertex;
+	m_mouseBinding[sf::Mouse::Left] = Action::changeMatrixNumber;
 	m_mouseBinding[sf::Mouse::Right] = Action::chooseVertex;
+
+	m_keyBinding[sf::Keyboard::C] = Action::createVertex;
 }
 
 void UserInput::initializeActionBindings()
 {
 	m_actionBinding[Action::createVertex] = VertexCreator{};
 	m_actionBinding[Action::chooseVertex] = VertexChooser{};
+
+	m_actionBinding[Action::changeMatrixNumber] = MatrixNumberChanger{};
 }

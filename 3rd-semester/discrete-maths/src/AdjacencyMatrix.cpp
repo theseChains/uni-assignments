@@ -1,5 +1,6 @@
 #include "AdjacencyMatrix.h"
 #include "Config.h"
+#include "MouseInfo.h"
 
 #include <SFML/Graphics/CircleShape.hpp>
 
@@ -13,11 +14,28 @@ AdjacencyMatrix::AdjacencyMatrix() : m_matrix{}
 	initializeTopText();
 	initializeMatrixTextCoordinates();
 	initializeMatrixText();
+	initializeMatrixNumberBounds();
 }
 
-void AdjacencyMatrix::handleEvent()
+void AdjacencyMatrix::handleEvent(const sf::Event& event, sf::RenderWindow& window)
 {
-	// handle clicking on the numbers of the matrix
+	// this should go into user input...
+	if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left)
+	{
+		for (int rowIndex{ 0 }; const auto& row : m_matrixNumberBounds)
+		{
+			for (int columnIndex{ 0 }; const auto& bound : row)
+			{
+				if (bound.contains(MouseInfo::getMousePosition(window)))
+				{
+					m_matrix[rowIndex][columnIndex] = !m_matrix[rowIndex][columnIndex];
+					return;
+				}
+				++columnIndex;
+			}
+			++rowIndex;
+		}
+	}
 }
 
 void AdjacencyMatrix::update()
@@ -36,18 +54,6 @@ void AdjacencyMatrix::draw(sf::RenderWindow& window) const
 
 	for (const auto& text : m_matrixText)
 		window.draw(text);
-
-	for (const auto& row : m_matrixTextCoordinates)
-	{
-		for (const auto& [x, y] : row)
-		{
-			sf::CircleShape circle{};
-			circle.setPosition(x, y);
-			circle.setRadius(7.5f);
-			circle.setFillColor(sf::Color{ 200, 200, 255, 180 });
-			window.draw(circle);
-		}
-	}
 }
 
 void AdjacencyMatrix::initializeTopText()
@@ -96,6 +102,21 @@ void AdjacencyMatrix::initializeMatrixText()
 		// v1 + row 1 numbers, and so on
 		m_matrixText[i].setString("v" + std::to_string(i - 1) + matrixRowString);
 		m_matrixText[i].setPosition(0.0f, 25.0f * (static_cast<float>(i + 1)));
+	}
+}
+
+void AdjacencyMatrix::initializeMatrixNumberBounds()
+{
+	for (int rowIndex{ 0 }; auto& row : m_matrixNumberBounds)
+	{
+		for (int columnIndex{ 0 }; auto& numberBound : row)
+		{
+			sf::FloatRect bound{ { m_matrixTextCoordinates[rowIndex][columnIndex].first,
+				m_matrixTextCoordinates[rowIndex][columnIndex].second }, { 15.0f, 15.0f } };
+			numberBound = bound;
+			++columnIndex;
+		}
+		++rowIndex;
 	}
 }
 

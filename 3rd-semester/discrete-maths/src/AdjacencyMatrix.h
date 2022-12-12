@@ -4,6 +4,7 @@
 #include <SFML/Graphics/Font.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Graphics/Text.hpp>
+#include <SFML/Window/Event.hpp>
 
 #include <array>
 
@@ -12,7 +13,7 @@ class AdjacencyMatrix
 public:
 	AdjacencyMatrix();
 
-	void handleEvent();
+	void handleEvent(const sf::Event& event, sf::RenderWindow& window);
 	void update();
 	void draw(sf::RenderWindow& window) const;
 
@@ -20,6 +21,7 @@ private:
 	void initializeTopText();
 	void initializeMatrixTextCoordinates();
 	void initializeMatrixText();
+	void initializeMatrixNumberBounds();
 
 	std::string getNumbersFromMatrix(std::size_t row);
 
@@ -32,6 +34,7 @@ private:
 	std::array<sf::Text, 11> m_matrixText{};
 
 	TextCoordinates m_matrixTextCoordinates{};
+	std::array<std::array<sf::FloatRect, 10>, 10> m_matrixNumberBounds{};
 };
 
 #endif

@@ -9,6 +9,7 @@ class MouseInfo
 {
 public:
 	static sf::Vector2f getMousePosition(sf::RenderWindow& window);
+	static bool isMouseOnAdjacencyMatrix(sf::RenderWindow& window);
 };
 
 #endif

@@ -48,7 +48,8 @@ void AdjacencyMatrix::draw(sf::RenderWindow& window) const
 void AdjacencyMatrix::initializeTopText()
 {
 	m_topText.setFont(m_font);
-	m_topText.setString("    Adjacency matrix");
+	m_topText.setString("Adjacency matrix");
+	m_topText.setPosition(70.0f, 0.0f);
 	m_topText.setCharacterSize(25);
 	m_topText.setFillColor(sf::Color{ text::red, text::green, text::blue });
 }
@@ -80,8 +81,8 @@ void AdjacencyMatrix::initializeMatrixText()
 		text.setCharacterSize(18);
 	}
 
-	m_matrixText[0].setString("    v0 v1 v2 v3 v4 v5 v6 v7 v8 v9");
-	m_matrixText[0].setPosition(0.0f, 30.0f);
+	m_matrixText[0].setString("v0 v1 v2 v3 v4 v5 v6 v7 v8 v9");
+	m_matrixText[0].setPosition(50.0f, 30.0f);
 
 	for (std::size_t i{ 1 }; i < m_matrixText.size(); ++i)
 	{

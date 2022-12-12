@@ -18,6 +18,8 @@ list (REMOVE_DUPLICATES project_INCLUDE_DIRS)
 add_executable(app ${project_SOURCES})
 target_include_directories(app PRIVATE ${project_INCLUDE_DIRS})
 
+target_compile_options(app PRIVATE -Wall -Wshadow -Wextra -Wpedantic -Wconversion)
+
 target_link_libraries(app sfml-system sfml-window sfml-graphics)
 
 find_package(OpenGL REQUIRED)

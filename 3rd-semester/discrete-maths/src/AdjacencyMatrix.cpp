@@ -61,8 +61,8 @@ void AdjacencyMatrix::initializeMatrixTextCoordinates()
 		int columnIndex{ 1 };
 		for (auto& [x, y] : row)
 		{
-			x = 33 * columnIndex + 19;
-			y = 25 * rowIndex + 29;
+			x = coords::columnOffsetBetweenValues * columnIndex + coords::columnScreenOffset;
+			y = coords::rowOffsetBetweenValues * rowIndex + coords::rowScreenOffset;
 
 			++columnIndex;
 		}

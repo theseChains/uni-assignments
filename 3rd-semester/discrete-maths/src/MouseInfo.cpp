@@ -1,4 +1,5 @@
 #include "MouseInfo.h"
+#include "Config.h"
 
 sf::Vector2f MouseInfo::getMousePosition(sf::RenderWindow& window)
 {
@@ -7,9 +8,9 @@ sf::Vector2f MouseInfo::getMousePosition(sf::RenderWindow& window)
 	return { xMouseCoordinate, yMouseCoordinate };
 }
 
-bool MouseInfo::isMouseOnAdjacencyMatrix(sf::RenderWindow& window)
+bool MouseInfo::isMouseOnVertexPlane(sf::RenderWindow& window)
 {
 	sf::Vector2f mousePos{ getMousePosition(window) };
 
-	return (mousePos.x <= 180.0f && mousePos.y <= 195.0f);
+	return (mousePos.x <= constants::adjacencyMatrixWidth + 15.0f);
 }

@@ -21,8 +21,8 @@ public:
 	void clearCircleEntities();
 	void clearLineEntities();
 
-	std::size_t getCircleEntityListSize() const;
-	std::size_t getLineEntityListSize() const;
+	std::size_t getCircleListSize() const;
+	std::size_t getLineListSize() const;
 
 	void draw(sf::RenderWindow& window) const;
 

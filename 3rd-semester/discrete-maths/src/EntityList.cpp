@@ -34,12 +34,12 @@ void EntityList::clearLineEntities()
 	m_lineEntities.clear();
 }
 
-std::size_t EntityList::getCircleEntityListSize() const
+std::size_t EntityList::getCircleListSize() const
 {
 	return m_circleEntities.size();
 }
 
-std::size_t EntityList::getLineEntityListSize() const
+std::size_t EntityList::getLineListSize() const
 {
 	return m_lineEntities.size();
 }

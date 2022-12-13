@@ -16,14 +16,19 @@ public:
 	void pushCircleEntity(sf::CircleShape&& circleEntity);
 	void pushLineEntity(sf::RectangleShape&& lineEntity);
 
-	void popCircleEntity();
-	void popLineEntity();
+	void popCircleEntityAtIndex(std::size_t index);
+	void popLineEntityAtIndex(std::size_t index);
 
 	void clearCircleEntities();
 	void clearLineEntities();
 
 	std::size_t getCircleListSize() const;
 	std::size_t getLineListSize() const;
+
+	sf::CircleShape getCircleEntityAtIndex(std::size_t index) const;
+	sf::RectangleShape getLineEntityAtIndex(std::size_t index) const;
+
+	void changeCircleEntityColorAtIndex(std::size_t index);
 
 	void draw(sf::RenderWindow& window) const;
 

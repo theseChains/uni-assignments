@@ -18,6 +18,7 @@ public:
 	{
 		createVertex,
 		chooseVertex,
+		removeVertex,
 		changeMatrixNumber,
 
 		numberOfActions

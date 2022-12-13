@@ -14,14 +14,14 @@ void EntityList::pushLineEntity(sf::RectangleShape&& lineEntity)
 	m_lineEntities.push_back(lineEntity);
 }
 
-void EntityList::popCircleEntity()
+void EntityList::popCircleEntityAtIndex(std::size_t index)
 {
-	m_circleEntities.pop_back();
+	m_circleEntities.erase(m_circleEntities.begin() + index);
 }
 
-void EntityList::popLineEntity()
+void EntityList::popLineEntityAtIndex(std::size_t index)
 {
-	m_lineEntities.pop_back();
+	m_lineEntities.erase(m_lineEntities.begin() + index);
 }
 
 void EntityList::clearCircleEntities()
@@ -42,6 +42,21 @@ std::size_t EntityList::getCircleListSize() const
 std::size_t EntityList::getLineListSize() const
 {
 	return m_lineEntities.size();
+}
+
+sf::CircleShape EntityList::getCircleEntityAtIndex(std::size_t index) const
+{
+	return m_circleEntities.at(index);
+}
+
+sf::RectangleShape EntityList::getLineEntityAtIndex(std::size_t index) const
+{
+	return m_lineEntities.at(index);
+}
+
+void EntityList::changeCircleEntityColorAtIndex(std::size_t index)
+{
+	m_circleEntities.at(index).setFillColor(sf::Color{ 0, 47, 108 });
 }
 
 void EntityList::draw(sf::RenderWindow& window) const

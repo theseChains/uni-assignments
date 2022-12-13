@@ -39,6 +39,8 @@ public:
 
 	void changeVertexEntityColorAtIndex(std::size_t index);
 
+	void reorganizeVertexLabels();
+
 	void draw(sf::RenderWindow& window) const;
 
 private:

@@ -24,6 +24,7 @@ struct VertexCreator
 		sf::CircleShape circle{ createCircle(context.m_window) };
 		sf::Text label{ createLabel(context.m_entityList, context.m_fontHolder,
 				circle.getPosition()) };
+
 		context.m_entityList.pushVertexEntity(std::move(circle), std::move(label));
 	}
 
@@ -81,6 +82,7 @@ struct VertexRemover
 			if (bounds.contains(MouseInfo::getMousePosition(context.m_window)))
 			{
 				entityList.popVertexEntityAtIndex(i);
+				entityList.reorganizeVertexLabels();
 			}
 		}
 	}
@@ -91,6 +93,7 @@ struct MatrixNumberChanger
 	void operator()(Context context)
 	{
 		context.m_adjacencyMatrix.handleLeftMouseClick(context.m_window);
+		// entityList.makeEdge();
 	}
 };
 

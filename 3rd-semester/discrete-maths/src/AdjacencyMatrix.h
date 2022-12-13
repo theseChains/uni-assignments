@@ -9,6 +9,8 @@
 
 #include <array>
 
+#include "FontHolder.h"
+
 class AdjacencyMatrix
 {
 public:

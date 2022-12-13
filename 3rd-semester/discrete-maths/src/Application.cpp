@@ -5,9 +5,9 @@
 Application::Application()
 	: m_window{ sf::RenderWindow{ sf::VideoMode{ constants::windowWidth, constants::windowHeight },
 		"assignment" } }
+	, m_fontHolder{}
 	, m_adjacencyMatrix{}
 	, m_entityList{}
-	, m_fontHolder{}
 	, m_userInput{}
 	, m_context{ m_window, m_adjacencyMatrix, m_entityList, m_fontHolder }
 {

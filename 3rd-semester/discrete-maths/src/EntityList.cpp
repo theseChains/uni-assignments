@@ -69,6 +69,14 @@ void EntityList::changeVertexEntityColorAtIndex(std::size_t index)
 	}
 }
 
+void EntityList::reorganizeVertexLabels()
+{
+	for (int vertexIndex{ 0 }; auto& vertex : m_vertexEntities)
+	{
+		vertex.label.setString("v" + std::to_string(vertexIndex++));
+	}
+}
+
 void EntityList::draw(sf::RenderWindow& window) const
 {
 	for (const auto& vertex : m_vertexEntities)

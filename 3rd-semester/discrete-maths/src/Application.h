@@ -23,9 +23,10 @@ private:
 
 private:
 	sf::RenderWindow m_window{};
+	FontHolder m_fontHolder{};
+
 	AdjacencyMatrix m_adjacencyMatrix;
 	EntityList m_entityList{};
-	FontHolder m_fontHolder{};
 	UserInput m_userInput{};
 
 	Context m_context;

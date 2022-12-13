@@ -1,5 +1,6 @@
 #include "AdjacencyMatrix.h"
-#include "Config.h"
+#include "Colors.h"
+#include "Constants.h"
 #include "MouseInfo.h"
 
 #include <SFML/Graphics/CircleShape.hpp>

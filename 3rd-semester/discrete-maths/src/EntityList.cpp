@@ -1,10 +1,11 @@
 #include "EntityList.h"
+#include "Colors.h"
 
 EntityList::EntityList() : m_vertexEntities{}, m_edgeEntities{}, m_numberOfChosenVertices{ 0 }
 {
 }
 
-void EntityList::pushVertexEntity(sf::CircleShape&& circle, sf::Text& label)
+void EntityList::pushVertexEntity(sf::CircleShape&& circle, sf::Text&& label)
 {
 	m_vertexEntities.push_back({ circle, label });
 }

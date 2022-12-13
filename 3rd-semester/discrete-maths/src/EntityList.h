@@ -10,8 +10,6 @@
 #include <tuple>
 #include <vector>
 
-#include "Config.h"
-
 class EntityList
 {
 private:
@@ -24,7 +22,7 @@ private:
 public:
 	EntityList();
 
-	void pushVertexEntity(sf::CircleShape&& circle, sf::Text& label);
+	void pushVertexEntity(sf::CircleShape&& circle, sf::Text&& label);
 	void pushEdgeEntity(sf::RectangleShape&& edge);
 
 	void popVertexEntityAtIndex(std::size_t index);

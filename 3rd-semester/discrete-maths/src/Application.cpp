@@ -1,5 +1,6 @@
 #include "Application.h"
-#include "Config.h"
+#include "Colors.h"
+#include "Constants.h"
 
 Application::Application()
 	: m_window{ sf::RenderWindow{ sf::VideoMode{ constants::windowWidth, constants::windowHeight },

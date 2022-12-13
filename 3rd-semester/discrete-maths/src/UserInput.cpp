@@ -13,6 +13,9 @@ struct VertexCreator
 				context.m_entityList.getCircleListSize() == 10)
 			return;
 
+		if (MouseInfo::mouseTooCloseToOtherVertex(context.m_entityList, context.m_window))
+			return;
+
 		sf::CircleShape vertex{ 15.0f };
 		vertex.setPosition(MouseInfo::getMousePosition(context.m_window) -
 				sf::Vector2f{ 15.0f, 15.0f });

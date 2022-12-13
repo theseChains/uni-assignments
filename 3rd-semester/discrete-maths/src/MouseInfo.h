@@ -13,7 +13,7 @@ class MouseInfo
 {
 public:
 	static sf::Vector2f getMousePosition(sf::RenderWindow& window);
-	static bool isMouseOnVertexPlane(sf::RenderWindow& window);
+	static bool mouseIsNotOnVertexPlane(sf::RenderWindow& window);
 	static bool mouseTooCloseToOtherVertex(EntityList& entityList, sf::RenderWindow& window);
 };
 

@@ -1,5 +1,5 @@
 #include "MouseInfo.h"
-#include "Config.h"
+#include "Constants.h"
 
 sf::Vector2f MouseInfo::getMousePosition(sf::RenderWindow& window)
 {
@@ -8,11 +8,12 @@ sf::Vector2f MouseInfo::getMousePosition(sf::RenderWindow& window)
 	return { xMouseCoordinate, yMouseCoordinate };
 }
 
-bool MouseInfo::isMouseOnVertexPlane(sf::RenderWindow& window)
+bool MouseInfo::mouseIsNotOnVertexPlane(sf::RenderWindow& window)
 {
 	sf::Vector2f mousePos{ getMousePosition(window) };
 
-	return (mousePos.x <= constants::adjacencyMatrixWidth + constants::vertexRadius);
+	return (mousePos.x <= constants::adjacencyMatrixWidth + constants::vertexRadius +
+			constants::labelOffset);
 }
 
 bool MouseInfo::mouseTooCloseToOtherVertex(EntityList& entityList, sf::RenderWindow& window)

@@ -4,39 +4,48 @@
 #include <SFML/Graphics/CircleShape.hpp>
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
+#include <SFML/Graphics/Text.hpp>
 
 #include <cstddef>
+#include <tuple>
 #include <vector>
 
 #include "Config.h"
 
 class EntityList
 {
+private:
+	struct Vertex
+	{
+		sf::CircleShape circle{};
+		sf::Text label{};
+	};
+
 public:
 	EntityList();
 
-	void pushCircleEntity(sf::CircleShape&& circleEntity);
-	void pushLineEntity(sf::RectangleShape&& lineEntity);
+	void pushVertexEntity(sf::CircleShape&& circle, sf::Text& label);
+	void pushEdgeEntity(sf::RectangleShape&& edge);
 
-	void popCircleEntityAtIndex(std::size_t index);
-	void popLineEntityAtIndex(std::size_t index);
+	void popVertexEntityAtIndex(std::size_t index);
+	void popEdgeEntityAtIndex(std::size_t index);
 
-	void clearCircleEntities();
-	void clearLineEntities();
+	void clearVertexEntities();
+	void clearEdgeEntities();
 
-	std::size_t getCircleListSize() const;
-	std::size_t getLineListSize() const;
+	std::size_t getVertexListSize() const;
+	std::size_t getEdgeListSize() const;
 
-	sf::CircleShape getCircleEntityAtIndex(std::size_t index) const;
-	sf::RectangleShape getLineEntityAtIndex(std::size_t index) const;
+	Vertex getVertexEntityAtIndex(std::size_t index) const;
+	sf::RectangleShape getEdgeEntityAtIndex(std::size_t index) const;
 
-	void changeCircleEntityColorAtIndex(std::size_t index);
+	void changeVertexEntityColorAtIndex(std::size_t index);
 
 	void draw(sf::RenderWindow& window) const;
 
 private:
-	std::vector<sf::CircleShape> m_circleEntities{};
-	std::vector<sf::RectangleShape> m_lineEntities{};
+	std::vector<Vertex> m_vertexEntities{};
+	std::vector<sf::RectangleShape> m_edgeEntities{};
 
 	int m_numberOfChosenVertices{};
 };

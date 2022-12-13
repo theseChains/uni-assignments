@@ -1,82 +1,83 @@
 #include "EntityList.h"
 
-EntityList::EntityList() : m_circleEntities{}, m_lineEntities{}, m_numberOfChosenVertices{ 0 }
+EntityList::EntityList() : m_vertexEntities{}, m_edgeEntities{}, m_numberOfChosenVertices{ 0 }
 {
 }
 
-void EntityList::pushCircleEntity(sf::CircleShape&& circleEntity)
+void EntityList::pushVertexEntity(sf::CircleShape&& circle, sf::Text& label)
 {
-	m_circleEntities.push_back(circleEntity);
+	m_vertexEntities.push_back({ circle, label });
 }
 
-void EntityList::pushLineEntity(sf::RectangleShape&& lineEntity)
+void EntityList::pushEdgeEntity(sf::RectangleShape&& edge)
 {
-	m_lineEntities.push_back(lineEntity);
+	m_edgeEntities.push_back(edge);
 }
 
-void EntityList::popCircleEntityAtIndex(std::size_t index)
+void EntityList::popVertexEntityAtIndex(std::size_t index)
 {
-	m_circleEntities.erase(m_circleEntities.begin() + index);
+	m_vertexEntities.erase(m_vertexEntities.begin() + index);
 }
 
-void EntityList::popLineEntityAtIndex(std::size_t index)
+void EntityList::popEdgeEntityAtIndex(std::size_t index)
 {
-	m_lineEntities.erase(m_lineEntities.begin() + index);
+	m_edgeEntities.erase(m_edgeEntities.begin() + index);
 }
 
-void EntityList::clearCircleEntities()
+void EntityList::clearVertexEntities()
 {
-	m_circleEntities.clear();
+	m_vertexEntities.clear();
 }
 
-void EntityList::clearLineEntities()
+void EntityList::clearEdgeEntities()
 {
-	m_lineEntities.clear();
+	m_edgeEntities.clear();
 }
 
-std::size_t EntityList::getCircleListSize() const
+std::size_t EntityList::getVertexListSize() const
 {
-	return m_circleEntities.size();
+	return m_vertexEntities.size();
 }
 
-std::size_t EntityList::getLineListSize() const
+std::size_t EntityList::getEdgeListSize() const
 {
-	return m_lineEntities.size();
+	return m_edgeEntities.size();
 }
 
-sf::CircleShape EntityList::getCircleEntityAtIndex(std::size_t index) const
+EntityList::Vertex EntityList::getVertexEntityAtIndex(std::size_t index) const
 {
-	return m_circleEntities.at(index);
+	return m_vertexEntities.at(index);
 }
 
-sf::RectangleShape EntityList::getLineEntityAtIndex(std::size_t index) const
+sf::RectangleShape EntityList::getEdgeEntityAtIndex(std::size_t index) const
 {
-	return m_lineEntities.at(index);
+	return m_edgeEntities.at(index);
 }
 
-void EntityList::changeCircleEntityColorAtIndex(std::size_t index)
+void EntityList::changeVertexEntityColorAtIndex(std::size_t index)
 {
-	if (m_circleEntities.at(index).getFillColor() == chosen::color)
+	if (m_vertexEntities.at(index).circle.getFillColor() == chosen::color)
 	{
-		m_circleEntities.at(index).setFillColor(vertex::color);
+		m_vertexEntities.at(index).circle.setFillColor(vertex::color);
 		--m_numberOfChosenVertices;
 	}
 	else if (m_numberOfChosenVertices < 2)
 	{
-		m_circleEntities.at(index).setFillColor(chosen::color);
+		m_vertexEntities.at(index).circle.setFillColor(chosen::color);
 		++m_numberOfChosenVertices;
 	}
 }
 
 void EntityList::draw(sf::RenderWindow& window) const
 {
-	for (const auto& entity : m_circleEntities)
+	for (const auto& vertex : m_vertexEntities)
 	{
-		window.draw(entity);
+		window.draw(vertex.circle);
+		window.draw(vertex.label);
 	}
 
-	for (const auto& entity : m_lineEntities)
+	for (const auto& edge : m_edgeEntities)
 	{
-		window.draw(entity);
+		window.draw(edge);
 	}
 }

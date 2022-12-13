@@ -3,24 +3,34 @@
 #include "Config.h"
 
 #include <SFML/Graphics/CircleShape.hpp>
+#include <SFML/Graphics/Text.hpp>
 #include <SFML/Window/Mouse.hpp>
+
+#include <memory>
+
+sf::Font someFont{};
 
 struct VertexCreator
 {
 	void operator()(Context context)
 	{
 		if (MouseInfo::isMouseOnVertexPlane(context.m_window) ||
-				context.m_entityList.getCircleListSize() == 10)
+				context.m_entityList.getVertexListSize() == constants::maxNumberOfVertices)
 			return;
 
 		if (MouseInfo::mouseTooCloseToOtherVertex(context.m_entityList, context.m_window))
 			return;
 
-		sf::CircleShape vertex{ constants::vertexRadius };
-		vertex.setPosition(MouseInfo::getMousePosition(context.m_window) -
-				sf::Vector2f{ 15.0f, 15.0f });
-		vertex.setFillColor(vertex::color);
-		context.m_entityList.pushCircleEntity(std::move(vertex));
+		sf::CircleShape circle{ constants::vertexRadius };
+		circle.setPosition(MouseInfo::getMousePosition(context.m_window) -
+				sf::Vector2f{ constants::vertexRadius, constants::vertexRadius });
+		circle.setFillColor(vertex::color);
+
+		//sf::Font font{};
+		someFont.loadFromFile("../res/FiraMono-Medium.otf");
+		sf::Text label{ "v" + std::to_string(context.m_entityList.getVertexListSize()), someFont, 18 };
+		label.setPosition(circle.getPosition() - sf::Vector2f{ 20.0f, 0.0f });
+		context.m_entityList.pushVertexEntity(std::move(circle), label);
 	}
 };
 
@@ -30,12 +40,12 @@ struct VertexChooser
 	{
 		EntityList& entityList{ context.m_entityList };
 
-		for (std::size_t i{ 0 }; i < entityList.getCircleListSize(); ++i)
+		for (std::size_t i{ 0 }; i < entityList.getVertexListSize(); ++i)
 		{
-			sf::FloatRect bounds{ entityList.getCircleEntityAtIndex(i).getGlobalBounds() };
+			sf::FloatRect bounds{ entityList.getVertexEntityAtIndex(i).circle.getGlobalBounds() };
 			if (bounds.contains(MouseInfo::getMousePosition(context.m_window)))
 			{
-				entityList.changeCircleEntityColorAtIndex(i);
+				entityList.changeVertexEntityColorAtIndex(i);
 			}
 		}
 	}
@@ -47,12 +57,12 @@ struct VertexRemover
 	{
 		EntityList& entityList{ context.m_entityList };
 
-		for (std::size_t i{ 0 }; i < entityList.getCircleListSize(); ++i)
+		for (std::size_t i{ 0 }; i < entityList.getVertexListSize(); ++i)
 		{
-			sf::FloatRect bounds{ entityList.getCircleEntityAtIndex(i).getGlobalBounds() };
+			sf::FloatRect bounds{ entityList.getVertexEntityAtIndex(i).circle.getGlobalBounds() };
 			if (bounds.contains(MouseInfo::getMousePosition(context.m_window)))
 			{
-				entityList.popCircleEntityAtIndex(i);
+				entityList.popVertexEntityAtIndex(i);
 			}
 		}
 	}

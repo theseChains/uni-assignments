@@ -17,9 +17,9 @@ bool MouseInfo::isMouseOnVertexPlane(sf::RenderWindow& window)
 
 bool MouseInfo::mouseTooCloseToOtherVertex(EntityList& entityList, sf::RenderWindow& window)
 {
-	for (std::size_t i{ 0 }; i < entityList.getCircleListSize(); ++i)
+	for (std::size_t i{ 0 }; i < entityList.getVertexListSize(); ++i)
 	{
-		sf::FloatRect bounds{ entityList.getCircleEntityAtIndex(i).getGlobalBounds() };
+		sf::FloatRect bounds{ entityList.getVertexEntityAtIndex(i).circle.getGlobalBounds() };
 		bounds.top -= constants::minimumDistanceBetweenVertices;
 		bounds.left -= constants::minimumDistanceBetweenVertices;
 		bounds.height += constants::minimumDistanceBetweenVertices * 2;

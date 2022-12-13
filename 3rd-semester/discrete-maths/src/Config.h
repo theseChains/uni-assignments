@@ -3,6 +3,8 @@
 
 #include <array>
 
+#include <SFML/Graphics/Color.hpp>
+
 namespace constants
 {
 	inline constexpr int windowWidth{ 1280 };
@@ -12,35 +14,29 @@ namespace constants
 	inline constexpr int adjacencyMatrixHeight{ 310 };
 }
 
-namespace color
+namespace background
 {
-	namespace background
-	{
-		inline constexpr int red{ 20 };
-		inline constexpr int green{ 20 };
-		inline constexpr int blue{ 36 };
-	}
+	inline const sf::Color color{ 20, 20, 36 };
+}
 
-	namespace vertex
-	{
-		inline constexpr int red{ 200 };
-		inline constexpr int green{ 200 };
-		inline constexpr int blue{ 255 };
-	}
+namespace vertex
+{
+	inline const sf::Color color{ 200, 200, 255 };
+}
 
-	namespace text
-	{
-		inline constexpr int red{ 190 };
-		inline constexpr int green{ 190 };
-		inline constexpr int blue{ 255 };
-	}
+namespace text
+{
+	inline const sf::Color color{ 190, 190, 255 };
+}
 
-	namespace line
-	{
-		inline constexpr int red{ 65 };
-		inline constexpr int green{ 158 };
-		inline constexpr int blue{ 230 };
-	}
+namespace line
+{
+	inline const sf::Color color{ 65, 158, 230 };
+}
+
+namespace chosen
+{
+	inline const sf::Color color{ 0, 47, 108 };
 }
 
 namespace coords

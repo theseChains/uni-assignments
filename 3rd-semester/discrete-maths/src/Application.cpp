@@ -45,8 +45,7 @@ void Application::update([[maybe_unused]] sf::Time deltaTime)
 
 void Application::render()
 {
-	m_window.clear(sf::Color{ color::background::red, color::background::green,
-			color::background::blue });
+	m_window.clear(background::color);
 
 	m_entityList.draw(m_window);
 	m_adjacencyMatrix.draw(m_window);

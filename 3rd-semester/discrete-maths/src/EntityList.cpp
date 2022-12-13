@@ -1,6 +1,6 @@
 #include "EntityList.h"
 
-EntityList::EntityList() : m_circleEntities{}, m_lineEntities{}
+EntityList::EntityList() : m_circleEntities{}, m_lineEntities{}, m_numberOfChosenVertices{ 0 }
 {
 }
 
@@ -56,7 +56,16 @@ sf::RectangleShape EntityList::getLineEntityAtIndex(std::size_t index) const
 
 void EntityList::changeCircleEntityColorAtIndex(std::size_t index)
 {
-	m_circleEntities.at(index).setFillColor(sf::Color{ 0, 47, 108 });
+	if (m_circleEntities.at(index).getFillColor() == chosen::color)
+	{
+		m_circleEntities.at(index).setFillColor(vertex::color);
+		--m_numberOfChosenVertices;
+	}
+	else if (m_numberOfChosenVertices < 2)
+	{
+		m_circleEntities.at(index).setFillColor(chosen::color);
+		++m_numberOfChosenVertices;
+	}
 }
 
 void EntityList::draw(sf::RenderWindow& window) const

@@ -8,6 +8,8 @@
 #include <cstddef>
 #include <vector>
 
+#include "Config.h"
+
 class EntityList
 {
 public:
@@ -35,6 +37,8 @@ public:
 private:
 	std::vector<sf::CircleShape> m_circleEntities{};
 	std::vector<sf::RectangleShape> m_lineEntities{};
+
+	int m_numberOfChosenVertices{};
 };
 
 #endif

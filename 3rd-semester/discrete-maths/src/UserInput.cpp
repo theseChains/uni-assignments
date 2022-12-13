@@ -19,7 +19,7 @@ struct VertexCreator
 		sf::CircleShape vertex{ 15.0f };
 		vertex.setPosition(MouseInfo::getMousePosition(context.m_window) -
 				sf::Vector2f{ 15.0f, 15.0f });
-		vertex.setFillColor(sf::Color{ color::vertex::red, color::vertex::green, color::vertex::blue });
+		vertex.setFillColor(vertex::color);
 		context.m_entityList.pushCircleEntity(std::move(vertex));
 	}
 };

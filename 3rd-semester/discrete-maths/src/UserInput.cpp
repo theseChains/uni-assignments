@@ -10,8 +10,6 @@
 #include <memory>
 #include <string>
 
-sf::Font someFont{};
-
 struct VertexCreator
 {
 	void operator()(Context context)
@@ -24,7 +22,8 @@ struct VertexCreator
 			return;
 
 		sf::CircleShape circle{ createCircle(context.m_window) };
-		sf::Text label{ createLabel(context.m_entityList, circle.getPosition()) };
+		sf::Text label{ createLabel(context.m_entityList, context.m_fontHolder,
+				circle.getPosition()) };
 		context.m_entityList.pushVertexEntity(std::move(circle), std::move(label));
 	}
 
@@ -38,12 +37,11 @@ struct VertexCreator
 		return circle;
 	}
 
-	sf::Text createLabel(const EntityList& entityList, const sf::Vector2f& circlePosition)
+	sf::Text createLabel(const EntityList& entityList, const FontHolder& fontHolder,
+			const sf::Vector2f& circlePosition)
 	{
-		someFont.loadFromFile("../res/FiraMono-Medium.otf");
-
 		sf::Text label{};
-		label.setFont(someFont);
+		label.setFont(fontHolder.getFont(Fonts::ID::mono));
 		label.setFillColor(label::color);
 		label.setString("v" + std::to_string(entityList.getVertexListSize()));
 		label.setCharacterSize(18);

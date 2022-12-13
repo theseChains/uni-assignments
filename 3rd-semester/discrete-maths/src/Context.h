@@ -5,17 +5,23 @@
 
 #include "AdjacencyMatrix.h"
 #include "EntityList.h"
+#include "FontHolder.h"
 
 struct Context
 {
-	Context(sf::RenderWindow& window, AdjacencyMatrix& matrix, EntityList& entityList)
-		: m_window{ window }, m_adjacencyMatrix{ matrix }, m_entityList{ entityList }
+	Context(sf::RenderWindow& window, AdjacencyMatrix& matrix, EntityList& entityList,
+			FontHolder& FontHolder)
+		: m_window{ window }
+		, m_adjacencyMatrix{ matrix }
+		, m_entityList{ entityList }
+		, m_fontHolder{ FontHolder }
 	{
 	}
 
 	sf::RenderWindow& m_window;
 	AdjacencyMatrix& m_adjacencyMatrix;
 	EntityList& m_entityList;
+	FontHolder& m_fontHolder;
 };
 
 #endif

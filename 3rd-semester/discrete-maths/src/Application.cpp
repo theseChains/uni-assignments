@@ -7,10 +7,14 @@ Application::Application()
 		"assignment" } }
 	, m_adjacencyMatrix{}
 	, m_entityList{}
+	, m_fontHolder{}
 	, m_userInput{}
-	, m_context{ m_window, m_adjacencyMatrix, m_entityList }
+	, m_context{ m_window, m_adjacencyMatrix, m_entityList, m_fontHolder }
 {
 	m_window.setVerticalSyncEnabled(true);
+
+	m_fontHolder.loadFont(Fonts::ID::main, "../res/sansation.ttf");
+	m_fontHolder.loadFont(Fonts::ID::mono, "../res/FiraMono-Medium.otf");
 }
 
 void Application::run()

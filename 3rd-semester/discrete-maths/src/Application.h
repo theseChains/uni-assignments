@@ -7,6 +7,7 @@
 #include "AdjacencyMatrix.h"
 #include "Context.h"
 #include "EntityList.h"
+#include "FontHolder.h"
 #include "UserInput.h"
 
 class Application
@@ -22,8 +23,9 @@ private:
 
 private:
 	sf::RenderWindow m_window{};
-	AdjacencyMatrix m_adjacencyMatrix{};
+	AdjacencyMatrix m_adjacencyMatrix;
 	EntityList m_entityList{};
+	FontHolder m_fontHolder{};
 	UserInput m_userInput{};
 
 	Context m_context;

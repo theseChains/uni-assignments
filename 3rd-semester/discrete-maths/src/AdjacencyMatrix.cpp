@@ -24,7 +24,7 @@ AdjacencyMatrix::AdjacencyMatrix()
 	initializeBorderLines();
 }
 
-void AdjacencyMatrix::handleLeftMouseClick(sf::RenderWindow& window)
+std::optional<std::pair<int, int>> AdjacencyMatrix::handleLeftMouseClick(sf::RenderWindow& window)
 {
 	for (int rowIndex{ 0 }; const auto& row : m_matrixNumberBounds)
 	{
@@ -33,12 +33,14 @@ void AdjacencyMatrix::handleLeftMouseClick(sf::RenderWindow& window)
 			if (bound.contains(MouseInfo::getMousePosition(window)))
 			{
 				m_matrix[rowIndex][columnIndex] = !m_matrix[rowIndex][columnIndex];
-				return;
+				return std::pair{ rowIndex, columnIndex };
 			}
 			++columnIndex;
 		}
 		++rowIndex;
 	}
+
+	return std::nullopt;
 }
 
 void AdjacencyMatrix::update()

@@ -4,6 +4,7 @@
 #include "Constants.h"
 
 #include <SFML/Graphics/CircleShape.hpp>
+#include <SFML/Graphics/ConvexShape.hpp>
 #include <SFML/Graphics/Text.hpp>
 #include <SFML/Window/Mouse.hpp>
 
@@ -92,8 +93,25 @@ struct MatrixNumberChanger
 {
 	void operator()(Context context)
 	{
-		context.m_adjacencyMatrix.handleLeftMouseClick(context.m_window);
-		// entityList.makeEdge();
+		auto vertexIndices{ context.m_adjacencyMatrix.handleLeftMouseClick(context.m_window) };
+		if (vertexIndices)
+			makeEdge(*vertexIndices, context.m_entityList);
+	}
+
+	void makeEdge(std::pair<int, int>& vertexIndices, EntityList& entityList)
+	{
+		sf::ConvexShape edge{};
+		auto firstPosition{
+			entityList.getVertexEntityAtIndex(vertexIndices.first).circle.getPosition() };
+		auto secondPosition{
+			entityList.getVertexEntityAtIndex(vertexIndices.second).circle.getPosition() };
+		edge.setPointCount(4);
+		// todo: figure out the proper positions
+		edge.setPoint(0, firstPosition + sf::Vector2f{ 3.0f, 3.0f });
+		edge.setPoint(1, firstPosition + sf::Vector2f{ -3.0f, -3.0f });
+		edge.setPoint(2, secondPosition + sf::Vector2f{ 3.0f, 3.0f });
+		edge.setPoint(3, secondPosition + sf::Vector2f{ -3.0f, -3.0f });
+		entityList.pushEdgeEntity(std::move(edge));
 	}
 };
 

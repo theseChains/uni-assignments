@@ -8,6 +8,7 @@
 #include <SFML/Window/Event.hpp>
 
 #include <array>
+#include <optional>
 
 #include "FontHolder.h"
 
@@ -16,7 +17,7 @@ class AdjacencyMatrix
 public:
 	AdjacencyMatrix();
 
-	void handleLeftMouseClick(sf::RenderWindow& window);
+	std::optional<std::pair<int, int>> handleLeftMouseClick(sf::RenderWindow& window);
 	void update();
 	void draw(sf::RenderWindow& window) const;
 

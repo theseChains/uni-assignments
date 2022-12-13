@@ -10,7 +10,7 @@ void EntityList::pushVertexEntity(sf::CircleShape&& circle, sf::Text&& label)
 	m_vertexEntities.push_back({ circle, label });
 }
 
-void EntityList::pushEdgeEntity(sf::RectangleShape&& edge)
+void EntityList::pushEdgeEntity(sf::ConvexShape&& edge)
 {
 	m_edgeEntities.push_back(edge);
 }
@@ -50,7 +50,7 @@ EntityList::Vertex EntityList::getVertexEntityAtIndex(std::size_t index) const
 	return m_vertexEntities.at(index);
 }
 
-sf::RectangleShape EntityList::getEdgeEntityAtIndex(std::size_t index) const
+sf::ConvexShape EntityList::getEdgeEntityAtIndex(std::size_t index) const
 {
 	return m_edgeEntities.at(index);
 }
@@ -75,6 +75,12 @@ void EntityList::reorganizeVertexLabels()
 	{
 		vertex.label.setString("v" + std::to_string(vertexIndex++));
 	}
+}
+
+int EntityList::getIndexFromLabel(sf::Text& label)
+{
+	// the label is always 2 letters long, so just return the second character converted to int
+	return (label.getString()[1] - '0');
 }
 
 void EntityList::draw(sf::RenderWindow& window) const

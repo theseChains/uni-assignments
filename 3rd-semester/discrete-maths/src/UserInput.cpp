@@ -1,12 +1,14 @@
 #include "UserInput.h"
 #include "MouseInfo.h"
-#include "Config.h"
+#include "Colors.h"
+#include "Constants.h"
 
 #include <SFML/Graphics/CircleShape.hpp>
 #include <SFML/Graphics/Text.hpp>
 #include <SFML/Window/Mouse.hpp>
 
 #include <memory>
+#include <string>
 
 sf::Font someFont{};
 
@@ -14,23 +16,41 @@ struct VertexCreator
 {
 	void operator()(Context context)
 	{
-		if (MouseInfo::isMouseOnVertexPlane(context.m_window) ||
+		if (MouseInfo::mouseIsNotOnVertexPlane(context.m_window) ||
 				context.m_entityList.getVertexListSize() == constants::maxNumberOfVertices)
 			return;
 
 		if (MouseInfo::mouseTooCloseToOtherVertex(context.m_entityList, context.m_window))
 			return;
 
+		sf::CircleShape circle{ createCircle(context.m_window) };
+		sf::Text label{ createLabel(context.m_entityList, circle.getPosition()) };
+		context.m_entityList.pushVertexEntity(std::move(circle), std::move(label));
+	}
+
+	sf::CircleShape createCircle(sf::RenderWindow& window)
+	{
 		sf::CircleShape circle{ constants::vertexRadius };
-		circle.setPosition(MouseInfo::getMousePosition(context.m_window) -
+		circle.setPosition(MouseInfo::getMousePosition(window) -
 				sf::Vector2f{ constants::vertexRadius, constants::vertexRadius });
 		circle.setFillColor(vertex::color);
 
-		//sf::Font font{};
+		return circle;
+	}
+
+	sf::Text createLabel(const EntityList& entityList, const sf::Vector2f& circlePosition)
+	{
 		someFont.loadFromFile("../res/FiraMono-Medium.otf");
-		sf::Text label{ "v" + std::to_string(context.m_entityList.getVertexListSize()), someFont, 18 };
-		label.setPosition(circle.getPosition() - sf::Vector2f{ 20.0f, 0.0f });
-		context.m_entityList.pushVertexEntity(std::move(circle), label);
+
+		sf::Text label{};
+		label.setFont(someFont);
+		label.setFillColor(label::color);
+		label.setString("v" + std::to_string(entityList.getVertexListSize()));
+		label.setCharacterSize(18);
+		label.setPosition(circlePosition - sf::Vector2f{ constants::labelOffset,
+				-constants::vertexRadius / 2 });
+
+		return label;
 	}
 };
 

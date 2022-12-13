@@ -1,9 +1,5 @@
-#ifndef CONFIG_H
-#define CONFIG_H
-
-#include <array>
-
-#include <SFML/Graphics/Color.hpp>
+#ifndef CONSTANTS_H
+#define CONSTANTS_H
 
 namespace constants
 {
@@ -16,31 +12,8 @@ namespace constants
 	inline constexpr float minimumDistanceBetweenVertices{ 50.0f };
 	inline constexpr float vertexRadius{ 15.0f };
 	inline constexpr int maxNumberOfVertices{ 10 };
-}
 
-namespace background
-{
-	inline const sf::Color color{ 20, 20, 36 };
-}
-
-namespace vertex
-{
-	inline const sf::Color color{ 200, 200, 255 };
-}
-
-namespace text
-{
-	inline const sf::Color color{ 190, 190, 255 };
-}
-
-namespace line
-{
-	inline const sf::Color color{ 65, 158, 230 };
-}
-
-namespace chosen
-{
-	inline const sf::Color color{ 0, 47, 108 };
+	inline constexpr float labelOffset{ 25.0f };
 }
 
 namespace coords

@@ -16,7 +16,7 @@ struct VertexCreator
 		if (MouseInfo::mouseTooCloseToOtherVertex(context.m_entityList, context.m_window))
 			return;
 
-		sf::CircleShape vertex{ 15.0f };
+		sf::CircleShape vertex{ constants::vertexRadius };
 		vertex.setPosition(MouseInfo::getMousePosition(context.m_window) -
 				sf::Vector2f{ 15.0f, 15.0f });
 		vertex.setFillColor(vertex::color);
@@ -26,7 +26,7 @@ struct VertexCreator
 
 struct VertexChooser
 {
-	void operator()([[maybe_unused]] Context context)
+	void operator()(Context context)
 	{
 		EntityList& entityList{ context.m_entityList };
 

@@ -10,7 +10,7 @@ void EntityList::pushVertexEntity(sf::CircleShape&& circle, sf::Text&& label)
 	m_vertexEntities.push_back({ circle, label });
 }
 
-void EntityList::pushEdgeEntity(sf::ConvexShape&& edge)
+void EntityList::pushEdgeEntity(sf::RectangleShape && edge)
 {
 	m_edgeEntities.push_back(edge);
 }
@@ -50,7 +50,7 @@ EntityList::Vertex EntityList::getVertexEntityAtIndex(std::size_t index) const
 	return m_vertexEntities.at(index);
 }
 
-sf::ConvexShape EntityList::getEdgeEntityAtIndex(std::size_t index) const
+sf::RectangleShape EntityList::getEdgeEntityAtIndex(std::size_t index) const
 {
 	return m_edgeEntities.at(index);
 }
@@ -85,14 +85,14 @@ int EntityList::getIndexFromLabel(sf::Text& label)
 
 void EntityList::draw(sf::RenderWindow& window) const
 {
-	for (const auto& vertex : m_vertexEntities)
-	{
-		window.draw(vertex.circle);
-		window.draw(vertex.label);
-	}
-
 	for (const auto& edge : m_edgeEntities)
 	{
 		window.draw(edge);
+	}
+
+	for (const auto& vertex : m_vertexEntities)
+	{
+		window.draw(vertex.label);
+		window.draw(vertex.circle);
 	}
 }

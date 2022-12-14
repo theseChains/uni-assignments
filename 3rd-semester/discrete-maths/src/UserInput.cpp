@@ -4,11 +4,13 @@
 #include "Constants.h"
 
 #include <SFML/Graphics/CircleShape.hpp>
-#include <SFML/Graphics/ConvexShape.hpp>
+#include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/Graphics/Text.hpp>
 #include <SFML/Window/Mouse.hpp>
 
+#include <cmath>
 #include <memory>
+#include <numbers>
 #include <string>
 
 struct VertexCreator
@@ -93,24 +95,34 @@ struct MatrixNumberChanger
 {
 	void operator()(Context context)
 	{
-		auto vertexIndices{ context.m_adjacencyMatrix.handleLeftMouseClick(context.m_window) };
+		std::size_t numberOfActiveVertices{ context.m_entityList.getVertexListSize() };
+		auto vertexIndices{ context.m_adjacencyMatrix.handleLeftMouseClick(context.m_window,
+				numberOfActiveVertices) };
 		if (vertexIndices)
 			makeEdge(*vertexIndices, context.m_entityList);
 	}
 
 	void makeEdge(std::pair<int, int>& vertexIndices, EntityList& entityList)
 	{
-		sf::ConvexShape edge{};
-		auto firstPosition{
+		auto firstVertexPosition{
 			entityList.getVertexEntityAtIndex(vertexIndices.first).circle.getPosition() };
-		auto secondPosition{
+		auto secondVertexPosition{
 			entityList.getVertexEntityAtIndex(vertexIndices.second).circle.getPosition() };
-		edge.setPointCount(4);
-		// todo: figure out the proper positions
-		edge.setPoint(0, firstPosition + sf::Vector2f{ 3.0f, 3.0f });
-		edge.setPoint(1, firstPosition + sf::Vector2f{ -3.0f, -3.0f });
-		edge.setPoint(2, secondPosition + sf::Vector2f{ 3.0f, 3.0f });
-		edge.setPoint(3, secondPosition + sf::Vector2f{ -3.0f, -3.0f });
+
+		sf::RectangleShape edge{};
+		float edgeLength{ static_cast<float>(std::sqrt(std::pow((secondVertexPosition.x -
+			firstVertexPosition.x), 2) + std::pow((secondVertexPosition.y -
+				firstVertexPosition.y), 2))) };
+		edge.setSize({ edgeLength, 3.0f });
+		edge.setPosition(firstVertexPosition + sf::Vector2f{ constants::vertexRadius,
+				constants::vertexRadius });
+		auto slope{ (firstVertexPosition.y - secondVertexPosition.y) /
+				(firstVertexPosition.x - secondVertexPosition.x) };
+		edge.setRotation(static_cast<float>(atan(slope)) * 180.0f / std::numbers::pi_v<float>);
+
+		if (firstVertexPosition.x >= secondVertexPosition.x)
+			edge.rotate(180.0f);
+
 		entityList.pushEdgeEntity(std::move(edge));
 	}
 };

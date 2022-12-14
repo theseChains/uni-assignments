@@ -2,7 +2,7 @@
 #define ENTITY_LIST_H
 
 #include <SFML/Graphics/CircleShape.hpp>
-#include <SFML/Graphics/ConvexShape.hpp>
+#include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Graphics/Text.hpp>
 
@@ -23,7 +23,7 @@ public:
 	EntityList();
 
 	void pushVertexEntity(sf::CircleShape&& circle, sf::Text&& label);
-	void pushEdgeEntity(sf::ConvexShape&& edge);
+	void pushEdgeEntity(sf::RectangleShape&& edge);
 
 	void popVertexEntityAtIndex(std::size_t index);
 	void popEdgeEntityAtIndex(std::size_t index);
@@ -35,7 +35,7 @@ public:
 	std::size_t getEdgeListSize() const;
 
 	Vertex getVertexEntityAtIndex(std::size_t index) const;
-	sf::ConvexShape getEdgeEntityAtIndex(std::size_t index) const;
+	sf::RectangleShape getEdgeEntityAtIndex(std::size_t index) const;
 
 	void changeVertexEntityColorAtIndex(std::size_t index);
 
@@ -47,7 +47,7 @@ public:
 
 private:
 	std::vector<Vertex> m_vertexEntities{};
-	std::vector<sf::ConvexShape> m_edgeEntities{};
+	std::vector<sf::RectangleShape> m_edgeEntities{};
 
 	int m_numberOfChosenVertices{};
 };

@@ -17,7 +17,8 @@ class AdjacencyMatrix
 public:
 	AdjacencyMatrix();
 
-	std::optional<std::pair<int, int>> handleLeftMouseClick(sf::RenderWindow& window);
+	std::optional<std::pair<int, int>> handleLeftMouseClick(sf::RenderWindow& window,
+			std::size_t numberOfActiveVertices);
 	void update();
 	void draw(sf::RenderWindow& window) const;
 

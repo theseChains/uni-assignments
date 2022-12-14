@@ -24,13 +24,15 @@ AdjacencyMatrix::AdjacencyMatrix()
 	initializeBorderLines();
 }
 
-std::optional<std::pair<int, int>> AdjacencyMatrix::handleLeftMouseClick(sf::RenderWindow& window)
+std::optional<std::pair<int, int>> AdjacencyMatrix::handleLeftMouseClick(sf::RenderWindow& window,
+		std::size_t numberOfActiveVertices)
 {
-	for (int rowIndex{ 0 }; const auto& row : m_matrixNumberBounds)
+	for (std::size_t rowIndex{ 0 }; const auto& row : m_matrixNumberBounds)
 	{
-		for (int columnIndex{ 0 }; const auto& bound : row)
+		for (std::size_t columnIndex{ 0 }; const auto& bound : row)
 		{
-			if (bound.contains(MouseInfo::getMousePosition(window)))
+			if (bound.contains(MouseInfo::getMousePosition(window)) &&
+					rowIndex < numberOfActiveVertices && columnIndex < numberOfActiveVertices)
 			{
 				m_matrix[rowIndex][columnIndex] = !m_matrix[rowIndex][columnIndex];
 				return std::pair{ rowIndex, columnIndex };

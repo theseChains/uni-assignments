@@ -113,23 +113,7 @@ struct MatrixNumberChanger
 		auto secondVertexPosition{
 			entityList.getVertexEntityAtIndex(columnIndex).circle.getPosition() };
 
-		sf::RectangleShape line{};
-		line.setSize({ getEdgeLength(firstVertexPosition, secondVertexPosition), 3.0f });
-		line.setPosition(firstVertexPosition + sf::Vector2f{ constants::vertexRadius,
-				constants::vertexRadius });
-		line.setFillColor(getEdgeColor(entityList.getEdgeListSize()));
-		line.setRotation(getEdgeRotation(firstVertexPosition, secondVertexPosition));
-
-		sf::CircleShape triangle{};
-		triangle.setPointCount(3);
-		triangle.setRadius(15.0f);
-		triangle.setFillColor(getEdgeColor(entityList.getEdgeListSize()));
-		triangle.setRotation(getEdgeRotation(firstVertexPosition, secondVertexPosition) + 90.0f);
-		// todo: fix this
-		if (firstVertexPosition.x < secondVertexPosition.x)
-			triangle.setPosition(secondVertexPosition - sf::Vector2f{ 20.0f, 20.0f });
-		else
-			triangle.setPosition(secondVertexPosition + sf::Vector2f{ 20.0f, 20.0f });
+		auto [line, triangle]{ createEdgeShapes(firstVertexPosition, secondVertexPosition) };
 
 		entityList.pushEdgeEntity(std::move(line), std::move(triangle), rowIndex, columnIndex);
 	}
@@ -139,15 +123,41 @@ struct MatrixNumberChanger
 		entityList.popEdgeEntityAtIndices(rowIndex, columnIndex);
 	}
 
+	std::pair<sf::RectangleShape, sf::CircleShape> createEdgeShapes(
+			const sf::Vector2f& firstVertexPosition, const sf::Vector2f& secondVertexPosition)
+	{
+		sf::RectangleShape line{
+			{ getEdgeLength(firstVertexPosition, secondVertexPosition), 3.0f } };
+		sf::CircleShape triangle{ 10.0f, 3 };
+
+		sf::Color edgeColor{ getEdgeColor() };
+		float edgeRotationAngle{ getEdgeRotation(firstVertexPosition, secondVertexPosition) };
+
+		line.setPosition(firstVertexPosition + sf::Vector2f{ constants::vertexRadius,
+				constants::vertexRadius });
+		line.setFillColor(edgeColor);
+		line.setRotation(edgeRotationAngle);
+
+		triangle.setFillColor(edgeColor);
+		triangle.setRotation(edgeRotationAngle + 90.0f);
+		// todo: fix this
+		if (firstVertexPosition.x < secondVertexPosition.x)
+			triangle.setPosition(secondVertexPosition - sf::Vector2f{ 20.0f, 20.0f });
+		else
+			triangle.setPosition(secondVertexPosition + sf::Vector2f{ 20.0f, 20.0f });
+
+		return { line, triangle };
+	}
+
 	float getEdgeLength(const sf::Vector2f& firstPosition, const sf::Vector2f& secondPosition)
 	{
 		return (static_cast<float>(std::sqrt(std::pow((secondPosition.x - firstPosition.x), 2) +
 				std::pow((secondPosition.y - firstPosition.y), 2))));
 	}
 
-	sf::Color getEdgeColor(std::size_t edgeListSize)
+	sf::Color getEdgeColor()
 	{
-		sf::Color color{ rnd::getUchar(10, 150), rnd::getUchar(10, 150), rnd::getUchar(155, 255) };
+		sf::Color color{ rnd::getUchar(0, 200), rnd::getUchar(0, 200), rnd::getUchar(205, 255) };
 		return { color };
 	}
 

@@ -110,21 +110,36 @@ struct MatrixNumberChanger
 			entityList.getVertexEntityAtIndex(vertexIndices.second).circle.getPosition() };
 
 		sf::RectangleShape edge{};
-		float edgeLength{ static_cast<float>(std::sqrt(std::pow((secondVertexPosition.x -
-			firstVertexPosition.x), 2) + std::pow((secondVertexPosition.y -
-				firstVertexPosition.y), 2))) };
-		edge.setSize({ edgeLength, 3.0f });
+		edge.setSize({ getEdgeLength(firstVertexPosition, secondVertexPosition), 3.0f });
 		edge.setPosition(firstVertexPosition + sf::Vector2f{ constants::vertexRadius,
 				constants::vertexRadius });
-
-		auto slope{ (firstVertexPosition.y - secondVertexPosition.y) /
-				(firstVertexPosition.x - secondVertexPosition.x) };
-		edge.setRotation(static_cast<float>(atan(slope)) * 180.0f / std::numbers::pi_v<float>);
+		edge.setFillColor(getEdgeColor(entityList.getEdgeListSize()));
+		edge.setRotation(getEdgeRotation(firstVertexPosition, secondVertexPosition));
 
 		if (firstVertexPosition.x >= secondVertexPosition.x)
 			edge.rotate(180.0f);
 
 		entityList.pushEdgeEntity(std::move(edge));
+	}
+
+	float getEdgeLength(const sf::Vector2f& firstPosition, const sf::Vector2f& secondPosition)
+	{
+		return (static_cast<float>(std::sqrt(std::pow((secondPosition.x - firstPosition.x), 2) +
+				std::pow((secondPosition.y - firstPosition.y), 2))));
+	}
+
+	sf::Color getEdgeColor(std::size_t edgeListSize)
+	{
+		unsigned char numberOfEdges{ static_cast<unsigned char>(edgeListSize) };
+		sf::Color color{ numberOfEdges, numberOfEdges, numberOfEdges };
+		sf::Color colorMultiplier{ 10, 10, 10 };
+		return { color * colorMultiplier + color::edge };
+	}
+
+	float getEdgeRotation(const sf::Vector2f& firstPosition, const sf::Vector2f& secondPosition)
+	{
+		auto slope{ (firstPosition.y - secondPosition.y) / (firstPosition.x - secondPosition.x) };
+		return (static_cast<float>(atan(slope)) * 180.0f / std::numbers::pi_v<float>);
 	}
 };
 

@@ -72,7 +72,7 @@ void AdjacencyMatrix::initializeTopText()
 	m_topText.setString("Adjacency matrix");
 	m_topText.setPosition(70.0f, 0.0f);
 	m_topText.setCharacterSize(25);
-	m_topText.setFillColor(text::color);
+	m_topText.setFillColor(color::text);
 }
 
 void AdjacencyMatrix::initializeMatrixTextCoordinates()
@@ -133,11 +133,11 @@ void AdjacencyMatrix::initializeMatrixNumberBounds()
 void AdjacencyMatrix::initializeBorderLines()
 {
 	sf::RectangleShape verticalLine{ { 2.0f, constants::windowWidth } };
-	verticalLine.setFillColor(line::color);
+	verticalLine.setFillColor(color::line);
 	verticalLine.setPosition({ constants::adjacencyMatrixWidth, 0.0f });
 
 	sf::RectangleShape horizontalLine{ { constants::adjacencyMatrixWidth, 2.0f } };
-	horizontalLine.setFillColor(line::color);
+	horizontalLine.setFillColor(color::line);
 	horizontalLine.setPosition({ 0.0f, constants::adjacencyMatrixHeight });
 
 	m_borderLines[0] = verticalLine;

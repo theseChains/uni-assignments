@@ -36,7 +36,7 @@ struct VertexCreator
 		sf::CircleShape circle{ constants::vertexRadius };
 		circle.setPosition(MouseInfo::getMousePosition(window) -
 				sf::Vector2f{ constants::vertexRadius, constants::vertexRadius });
-		circle.setFillColor(vertex::color);
+		circle.setFillColor(color::vertex);
 
 		return circle;
 	}
@@ -46,7 +46,7 @@ struct VertexCreator
 	{
 		sf::Text label{};
 		label.setFont(fontHolder.getFont(Fonts::ID::mono));
-		label.setFillColor(label::color);
+		label.setFillColor(color::label);
 		label.setString("v" + std::to_string(entityList.getVertexListSize()));
 		label.setCharacterSize(18);
 		label.setPosition(circlePosition - sf::Vector2f{ constants::labelOffset,
@@ -116,6 +116,7 @@ struct MatrixNumberChanger
 		edge.setSize({ edgeLength, 3.0f });
 		edge.setPosition(firstVertexPosition + sf::Vector2f{ constants::vertexRadius,
 				constants::vertexRadius });
+
 		auto slope{ (firstVertexPosition.y - secondVertexPosition.y) /
 				(firstVertexPosition.x - secondVertexPosition.x) };
 		edge.setRotation(static_cast<float>(atan(slope)) * 180.0f / std::numbers::pi_v<float>);

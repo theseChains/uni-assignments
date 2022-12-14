@@ -50,7 +50,7 @@ void Application::update([[maybe_unused]] sf::Time deltaTime)
 
 void Application::render()
 {
-	m_window.clear(background::color);
+	m_window.clear(color::background);
 
 	m_entityList.draw(m_window);
 	m_adjacencyMatrix.draw(m_window);

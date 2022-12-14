@@ -57,14 +57,14 @@ sf::RectangleShape EntityList::getEdgeEntityAtIndex(std::size_t index) const
 
 void EntityList::changeVertexEntityColorAtIndex(std::size_t index)
 {
-	if (m_vertexEntities.at(index).circle.getFillColor() == chosen::color)
+	if (m_vertexEntities.at(index).circle.getFillColor() == color::chosenVertex)
 	{
-		m_vertexEntities.at(index).circle.setFillColor(vertex::color);
+		m_vertexEntities.at(index).circle.setFillColor(color::vertex);
 		--m_numberOfChosenVertices;
 	}
 	else if (m_numberOfChosenVertices < 2)
 	{
-		m_vertexEntities.at(index).circle.setFillColor(chosen::color);
+		m_vertexEntities.at(index).circle.setFillColor(color::chosenVertex);
 		++m_numberOfChosenVertices;
 	}
 }

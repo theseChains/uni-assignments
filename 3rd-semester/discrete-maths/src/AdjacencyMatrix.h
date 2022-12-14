@@ -30,8 +30,8 @@ public:
 	void update();
 	void draw(sf::RenderWindow& window) const;
 
-	void setMainFont(const sf::Font& font);
-	void setMonoFont(const sf::Font& font);
+	void setMainFontText(const sf::Font& font);
+	void setMonoFontText(const sf::Font& font);
 
 private:
 	void initializeTopText();

@@ -12,7 +12,6 @@ namespace color
 	inline const sf::Color chosenVertex{ 0, 47, 108 };
 	// king krule - baby blue
 	inline const sf::Color label{ 137, 207, 240 };
-	inline const sf::Color edge{ 20, 10, 150 };
 }
 
 #endif

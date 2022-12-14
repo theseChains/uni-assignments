@@ -62,13 +62,13 @@ void AdjacencyMatrix::draw(sf::RenderWindow& window) const
 		window.draw(line);
 }
 
-void AdjacencyMatrix::setMainFont(const sf::Font& font)
+void AdjacencyMatrix::setMainFontText(const sf::Font& font)
 {
 	m_mainFont = &font;
 	initializeTopText();
 }
 
-void AdjacencyMatrix::setMonoFont(const sf::Font& font)
+void AdjacencyMatrix::setMonoFontText(const sf::Font& font)
 {
 	m_monoFont = &font;
 	initializeMatrixText();

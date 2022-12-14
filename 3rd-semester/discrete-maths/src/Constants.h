@@ -1,6 +1,19 @@
 #ifndef CONSTANTS_H
 #define CONSTANTS_H
 
+#include <random>
+
+namespace rnd
+{
+	inline std::mt19937 mt{ std::random_device{}() };
+
+	inline unsigned char getUchar(int min, int max)
+	{
+		std::uniform_int_distribution range{ min, max };
+		return static_cast<unsigned char>(range(mt));
+	}
+}
+
 namespace constants
 {
 	inline constexpr int windowWidth{ 1280 };

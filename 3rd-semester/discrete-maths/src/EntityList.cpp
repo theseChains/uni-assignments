@@ -10,10 +10,10 @@ void EntityList::pushVertexEntity(sf::CircleShape&& circle, sf::Text&& label)
 	m_vertexEntities.push_back({ circle, label });
 }
 
-void EntityList::pushEdgeEntity(sf::RectangleShape&& line, std::size_t rowIndex,
-		std::size_t columnIndex)
+void EntityList::pushEdgeEntity(sf::RectangleShape&& line, sf::CircleShape&& triangle,
+		std::size_t rowIndex, std::size_t columnIndex)
 {
-	m_edgeEntities.push_back({ line, rowIndex, columnIndex });
+	m_edgeEntities.push_back({ line, triangle, rowIndex, columnIndex });
 }
 
 void EntityList::popVertexEntityAtIndex(std::size_t index)
@@ -92,6 +92,7 @@ void EntityList::draw(sf::RenderWindow& window) const
 	for (const auto& edge : m_edgeEntities)
 	{
 		window.draw(edge.line);
+		window.draw(edge.triangle);
 	}
 
 	for (const auto& vertex : m_vertexEntities)

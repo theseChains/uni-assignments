@@ -16,8 +16,8 @@ Application::Application()
 	m_fontHolder.loadFont(Fonts::ID::main, "../res/sansation.ttf");
 	m_fontHolder.loadFont(Fonts::ID::mono, "../res/FiraMono-Medium.otf");
 
-	m_adjacencyMatrix.setMainFont(m_fontHolder.getFont(Fonts::ID::main));
-	m_adjacencyMatrix.setMonoFont(m_fontHolder.getFont(Fonts::ID::mono));
+	m_adjacencyMatrix.setMainFontText(m_fontHolder.getFont(Fonts::ID::main));
+	m_adjacencyMatrix.setMonoFontText(m_fontHolder.getFont(Fonts::ID::mono));
 }
 
 void Application::run()

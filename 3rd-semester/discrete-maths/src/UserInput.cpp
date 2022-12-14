@@ -113,14 +113,25 @@ struct MatrixNumberChanger
 		auto secondVertexPosition{
 			entityList.getVertexEntityAtIndex(columnIndex).circle.getPosition() };
 
-		sf::RectangleShape edge{};
-		edge.setSize({ getEdgeLength(firstVertexPosition, secondVertexPosition), 3.0f });
-		edge.setPosition(firstVertexPosition + sf::Vector2f{ constants::vertexRadius,
+		sf::RectangleShape line{};
+		line.setSize({ getEdgeLength(firstVertexPosition, secondVertexPosition), 3.0f });
+		line.setPosition(firstVertexPosition + sf::Vector2f{ constants::vertexRadius,
 				constants::vertexRadius });
-		edge.setFillColor(getEdgeColor(entityList.getEdgeListSize()));
-		edge.setRotation(getEdgeRotation(firstVertexPosition, secondVertexPosition));
+		line.setFillColor(getEdgeColor(entityList.getEdgeListSize()));
+		line.setRotation(getEdgeRotation(firstVertexPosition, secondVertexPosition));
 
-		entityList.pushEdgeEntity(std::move(edge), rowIndex, columnIndex);
+		sf::CircleShape triangle{};
+		triangle.setPointCount(3);
+		triangle.setRadius(15.0f);
+		triangle.setFillColor(getEdgeColor(entityList.getEdgeListSize()));
+		triangle.setRotation(getEdgeRotation(firstVertexPosition, secondVertexPosition) + 90.0f);
+		// todo: fix this
+		if (firstVertexPosition.x < secondVertexPosition.x)
+			triangle.setPosition(secondVertexPosition - sf::Vector2f{ 20.0f, 20.0f });
+		else
+			triangle.setPosition(secondVertexPosition + sf::Vector2f{ 20.0f, 20.0f });
+
+		entityList.pushEdgeEntity(std::move(line), std::move(triangle), rowIndex, columnIndex);
 	}
 
 	void removeEdge(std::size_t rowIndex, std::size_t columnIndex, EntityList& entityList)
@@ -136,10 +147,8 @@ struct MatrixNumberChanger
 
 	sf::Color getEdgeColor(std::size_t edgeListSize)
 	{
-		unsigned char numberOfEdges{ static_cast<unsigned char>(edgeListSize) };
-		sf::Color color{ numberOfEdges, numberOfEdges, numberOfEdges };
-		sf::Color colorMultiplier{ 20, 20, 20 };
-		return { color + colorMultiplier + color::edge };
+		sf::Color color{ rnd::getUchar(10, 150), rnd::getUchar(10, 150), rnd::getUchar(155, 255) };
+		return { color };
 	}
 
 	float getEdgeRotation(const sf::Vector2f& firstPosition, const sf::Vector2f& secondPosition)

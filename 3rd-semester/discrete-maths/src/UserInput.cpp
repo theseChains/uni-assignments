@@ -12,6 +12,7 @@
 #include <memory>
 #include <numbers>
 #include <string>
+#include <iostream>
 
 struct VertexCreator
 {
@@ -96,18 +97,20 @@ struct MatrixNumberChanger
 	void operator()(Context context)
 	{
 		std::size_t numberOfActiveVertices{ context.m_entityList.getVertexListSize() };
-		auto vertexIndices{ context.m_adjacencyMatrix.handleLeftMouseClick(context.m_window,
+		auto indicesAndValue{ context.m_adjacencyMatrix.handleLeftMouseClick(context.m_window,
 				numberOfActiveVertices) };
-		if (vertexIndices)
-			makeEdge(*vertexIndices, context.m_entityList);
+		if (indicesAndValue && indicesAndValue->matrixValue)
+			makeEdge(*indicesAndValue, context.m_entityList);
+		else if (indicesAndValue && !indicesAndValue->matrixValue)
+			removeEdge(*indicesAndValue, context.m_entityList);
 	}
 
-	void makeEdge(std::pair<int, int>& vertexIndices, EntityList& entityList)
+	void makeEdge(AdjacencyMatrix::IndicesAndValue& indicesAndValue, EntityList& entityList)
 	{
 		auto firstVertexPosition{
-			entityList.getVertexEntityAtIndex(vertexIndices.first).circle.getPosition() };
+			entityList.getVertexEntityAtIndex(indicesAndValue.rowIndex).circle.getPosition() };
 		auto secondVertexPosition{
-			entityList.getVertexEntityAtIndex(vertexIndices.second).circle.getPosition() };
+			entityList.getVertexEntityAtIndex(indicesAndValue.columnIndex).circle.getPosition() };
 
 		sf::RectangleShape edge{};
 		edge.setSize({ getEdgeLength(firstVertexPosition, secondVertexPosition), 3.0f });
@@ -116,10 +119,14 @@ struct MatrixNumberChanger
 		edge.setFillColor(getEdgeColor(entityList.getEdgeListSize()));
 		edge.setRotation(getEdgeRotation(firstVertexPosition, secondVertexPosition));
 
-		if (firstVertexPosition.x >= secondVertexPosition.x)
-			edge.rotate(180.0f);
+		entityList.pushEdgeEntity(std::move(edge), indicesAndValue.rowIndex,
+				indicesAndValue.columnIndex);
+	}
 
-		entityList.pushEdgeEntity(std::move(edge));
+	void removeEdge(AdjacencyMatrix::IndicesAndValue& indicesAndValue, EntityList& entityList)
+	{
+		// todo: fix this
+		entityList.popEdgeEntityAtIndices(indicesAndValue.rowIndex, indicesAndValue.columnIndex);
 	}
 
 	float getEdgeLength(const sf::Vector2f& firstPosition, const sf::Vector2f& secondPosition)
@@ -132,14 +139,17 @@ struct MatrixNumberChanger
 	{
 		unsigned char numberOfEdges{ static_cast<unsigned char>(edgeListSize) };
 		sf::Color color{ numberOfEdges, numberOfEdges, numberOfEdges };
-		sf::Color colorMultiplier{ 10, 10, 10 };
-		return { color * colorMultiplier + color::edge };
+		sf::Color colorMultiplier{ 20, 20, 20 };
+		return { color + colorMultiplier + color::edge };
 	}
 
 	float getEdgeRotation(const sf::Vector2f& firstPosition, const sf::Vector2f& secondPosition)
 	{
 		auto slope{ (firstPosition.y - secondPosition.y) / (firstPosition.x - secondPosition.x) };
-		return (static_cast<float>(atan(slope)) * 180.0f / std::numbers::pi_v<float>);
+		float angle{ static_cast<float>(atan(slope)) * 180.0f / std::numbers::pi_v<float> };
+		if (firstPosition.x >= secondPosition.x)
+			angle += 180.0f;
+		return angle;
 	}
 };
 

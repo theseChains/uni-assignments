@@ -9,15 +9,23 @@
 
 #include <array>
 #include <optional>
+#include <tuple>
 
 #include "FontHolder.h"
 
 class AdjacencyMatrix
 {
 public:
+	struct IndicesAndValue
+	{
+		std::size_t rowIndex{};
+		std::size_t columnIndex{};
+		bool matrixValue{};
+	};
+
 	AdjacencyMatrix();
 
-	std::optional<std::pair<int, int>> handleLeftMouseClick(sf::RenderWindow& window,
+	std::optional<IndicesAndValue> handleLeftMouseClick(sf::RenderWindow& window,
 			std::size_t numberOfActiveVertices);
 	void update();
 	void draw(sf::RenderWindow& window) const;

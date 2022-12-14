@@ -10,9 +10,10 @@ void EntityList::pushVertexEntity(sf::CircleShape&& circle, sf::Text&& label)
 	m_vertexEntities.push_back({ circle, label });
 }
 
-void EntityList::pushEdgeEntity(sf::RectangleShape && edge)
+void EntityList::pushEdgeEntity(sf::RectangleShape&& line, std::size_t rowIndex,
+		std::size_t columnIndex)
 {
-	m_edgeEntities.push_back(edge);
+	m_edgeEntities.push_back({ line, rowIndex, columnIndex });
 }
 
 void EntityList::popVertexEntityAtIndex(std::size_t index)
@@ -20,9 +21,12 @@ void EntityList::popVertexEntityAtIndex(std::size_t index)
 	m_vertexEntities.erase(m_vertexEntities.begin() + index);
 }
 
-void EntityList::popEdgeEntityAtIndex(std::size_t index)
+void EntityList::popEdgeEntityAtIndices(std::size_t rowIndex, std::size_t columnIndex)
 {
-	m_edgeEntities.erase(m_edgeEntities.begin() + index);
+	std::erase_if(m_edgeEntities, [=](const Edge& edge)
+			{
+				return (edge.rowIndex == rowIndex && edge.columnIndex == columnIndex);
+			});
 }
 
 void EntityList::clearVertexEntities()
@@ -50,7 +54,7 @@ EntityList::Vertex EntityList::getVertexEntityAtIndex(std::size_t index) const
 	return m_vertexEntities.at(index);
 }
 
-sf::RectangleShape EntityList::getEdgeEntityAtIndex(std::size_t index) const
+EntityList::Edge EntityList::getEdgeEntityAtIndex(std::size_t index) const
 {
 	return m_edgeEntities.at(index);
 }
@@ -87,7 +91,7 @@ void EntityList::draw(sf::RenderWindow& window) const
 {
 	for (const auto& edge : m_edgeEntities)
 	{
-		window.draw(edge);
+		window.draw(edge.line);
 	}
 
 	for (const auto& vertex : m_vertexEntities)

@@ -19,14 +19,22 @@ private:
 		sf::Text label{};
 	};
 
+	struct Edge
+	{
+		sf::RectangleShape line{};
+		std::size_t rowIndex{};
+		std::size_t columnIndex{};
+	};
+
 public:
 	EntityList();
 
 	void pushVertexEntity(sf::CircleShape&& circle, sf::Text&& label);
-	void pushEdgeEntity(sf::RectangleShape&& edge);
+	void pushEdgeEntity(sf::RectangleShape&& line, std::size_t rowIndex, std::size_t columnIndex);
 
 	void popVertexEntityAtIndex(std::size_t index);
-	void popEdgeEntityAtIndex(std::size_t index);
+	// change this to find the proper edge by it's indices
+	void popEdgeEntityAtIndices(std::size_t rowIndex, std::size_t columnIndex);
 
 	void clearVertexEntities();
 	void clearEdgeEntities();
@@ -35,7 +43,7 @@ public:
 	std::size_t getEdgeListSize() const;
 
 	Vertex getVertexEntityAtIndex(std::size_t index) const;
-	sf::RectangleShape getEdgeEntityAtIndex(std::size_t index) const;
+	Edge getEdgeEntityAtIndex(std::size_t index) const;
 
 	void changeVertexEntityColorAtIndex(std::size_t index);
 
@@ -47,7 +55,7 @@ public:
 
 private:
 	std::vector<Vertex> m_vertexEntities{};
-	std::vector<sf::RectangleShape> m_edgeEntities{};
+	std::vector<Edge> m_edgeEntities{};
 
 	int m_numberOfChosenVertices{};
 };

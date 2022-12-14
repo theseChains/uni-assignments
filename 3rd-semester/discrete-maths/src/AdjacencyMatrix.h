@@ -30,6 +30,9 @@ public:
 	void update();
 	void draw(sf::RenderWindow& window) const;
 
+	void setMainFont(const sf::Font& font);
+	void setMonoFont(const sf::Font& font);
+
 private:
 	void initializeTopText();
 	void initializeMatrixTextCoordinates();
@@ -43,7 +46,8 @@ private:
 	using TextCoordinates = std::array<std::array<std::pair<float, float>, 10>, 10>;
 	std::array<std::array<bool, 10>, 10> m_matrix{};
 
-	sf::Font m_font{};
+	const sf::Font* m_mainFont{};
+	const sf::Font* m_monoFont{};
 	sf::Text m_topText{};
 	std::array<sf::Text, 11> m_matrixText{};
 

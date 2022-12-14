@@ -12,7 +12,6 @@
 #include <memory>
 #include <numbers>
 #include <string>
-#include <iostream>
 
 struct VertexCreator
 {
@@ -96,21 +95,23 @@ struct MatrixNumberChanger
 {
 	void operator()(Context context)
 	{
-		std::size_t numberOfActiveVertices{ context.m_entityList.getVertexListSize() };
+		EntityList& entityList{ context.m_entityList };
+
+		std::size_t numberOfActiveVertices{ entityList.getVertexListSize() };
 		auto indicesAndValue{ context.m_adjacencyMatrix.handleLeftMouseClick(context.m_window,
 				numberOfActiveVertices) };
 		if (indicesAndValue && indicesAndValue->matrixValue)
-			makeEdge(*indicesAndValue, context.m_entityList);
+			makeEdge(indicesAndValue->rowIndex, indicesAndValue->columnIndex, entityList);
 		else if (indicesAndValue && !indicesAndValue->matrixValue)
-			removeEdge(*indicesAndValue, context.m_entityList);
+			removeEdge(indicesAndValue->rowIndex, indicesAndValue->columnIndex, entityList);
 	}
 
-	void makeEdge(AdjacencyMatrix::IndicesAndValue& indicesAndValue, EntityList& entityList)
+	void makeEdge(std::size_t rowIndex, std::size_t columnIndex, EntityList& entityList)
 	{
 		auto firstVertexPosition{
-			entityList.getVertexEntityAtIndex(indicesAndValue.rowIndex).circle.getPosition() };
+			entityList.getVertexEntityAtIndex(rowIndex).circle.getPosition() };
 		auto secondVertexPosition{
-			entityList.getVertexEntityAtIndex(indicesAndValue.columnIndex).circle.getPosition() };
+			entityList.getVertexEntityAtIndex(columnIndex).circle.getPosition() };
 
 		sf::RectangleShape edge{};
 		edge.setSize({ getEdgeLength(firstVertexPosition, secondVertexPosition), 3.0f });
@@ -119,14 +120,12 @@ struct MatrixNumberChanger
 		edge.setFillColor(getEdgeColor(entityList.getEdgeListSize()));
 		edge.setRotation(getEdgeRotation(firstVertexPosition, secondVertexPosition));
 
-		entityList.pushEdgeEntity(std::move(edge), indicesAndValue.rowIndex,
-				indicesAndValue.columnIndex);
+		entityList.pushEdgeEntity(std::move(edge), rowIndex, columnIndex);
 	}
 
-	void removeEdge(AdjacencyMatrix::IndicesAndValue& indicesAndValue, EntityList& entityList)
+	void removeEdge(std::size_t rowIndex, std::size_t columnIndex, EntityList& entityList)
 	{
-		// todo: fix this
-		entityList.popEdgeEntityAtIndices(indicesAndValue.rowIndex, indicesAndValue.columnIndex);
+		entityList.popEdgeEntityAtIndices(rowIndex, columnIndex);
 	}
 
 	float getEdgeLength(const sf::Vector2f& firstPosition, const sf::Vector2f& secondPosition)

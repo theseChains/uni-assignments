@@ -10,23 +10,18 @@
 
 AdjacencyMatrix::AdjacencyMatrix()
 	: m_matrix{}
-	, m_font{}
+	, m_mainFont{}
 	, m_topText{}
 	, m_matrixText{}
 	, m_matrixNumberBounds{}
 {
-	m_font.loadFromFile("../res/FiraMono-Medium.otf");
-
-	initializeTopText();
 	initializeMatrixTextCoordinates();
-	initializeMatrixText();
 	initializeMatrixNumberBounds();
 	initializeBorderLines();
 }
 
 std::optional<AdjacencyMatrix::IndicesAndValue>
-AdjacencyMatrix::handleLeftMouseClick(sf::RenderWindow& window,
-		std::size_t numberOfActiveVertices)
+AdjacencyMatrix::handleLeftMouseClick(sf::RenderWindow& window, std::size_t numberOfActiveVertices)
 {
 	for (std::size_t rowIndex{ 0 }; const auto& row : m_matrixNumberBounds)
 	{
@@ -67,11 +62,23 @@ void AdjacencyMatrix::draw(sf::RenderWindow& window) const
 		window.draw(line);
 }
 
+void AdjacencyMatrix::setMainFont(const sf::Font& font)
+{
+	m_mainFont = &font;
+	initializeTopText();
+}
+
+void AdjacencyMatrix::setMonoFont(const sf::Font& font)
+{
+	m_monoFont = &font;
+	initializeMatrixText();
+}
+
 void AdjacencyMatrix::initializeTopText()
 {
-	m_topText.setFont(m_font);
+	m_topText.setFont(*m_mainFont);
 	m_topText.setString("Adjacency matrix");
-	m_topText.setPosition(70.0f, 0.0f);
+	m_topText.setPosition(90.0f, 0.0f);
 	m_topText.setCharacterSize(25);
 	m_topText.setFillColor(color::text);
 }
@@ -99,7 +106,7 @@ void AdjacencyMatrix::initializeMatrixText()
 {
 	for (auto& text : m_matrixText)
 	{
-		text.setFont(m_font);
+		text.setFont(*m_monoFont);
 		text.setCharacterSize(18);
 	}
 

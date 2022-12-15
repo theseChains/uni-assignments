@@ -12,6 +12,7 @@
 #include <memory>
 #include <numbers>
 #include <string>
+#include <iostream>
 
 struct VertexCreator
 {
@@ -100,6 +101,7 @@ struct MatrixNumberChanger
 		std::size_t numberOfActiveVertices{ entityList.getVertexListSize() };
 		auto indicesAndValue{ context.m_adjacencyMatrix.handleLeftMouseClick(context.m_window,
 				numberOfActiveVertices) };
+
 		if (indicesAndValue && indicesAndValue->matrixValue)
 			makeEdge(indicesAndValue->rowIndex, indicesAndValue->columnIndex, entityList);
 		else if (indicesAndValue && !indicesAndValue->matrixValue)
@@ -113,23 +115,24 @@ struct MatrixNumberChanger
 		auto secondVertexPosition{
 			entityList.getVertexEntityAtIndex(columnIndex).circle.getPosition() };
 
-		auto [line, triangle]{ createEdgeShapes(firstVertexPosition, secondVertexPosition) };
+		auto firstLine{ createEdgeShape(firstVertexPosition, secondVertexPosition) };
+		auto secondLine{ createEdgeShape(secondVertexPosition, firstVertexPosition) };
 
-		entityList.pushEdgeEntity(std::move(line), std::move(triangle), rowIndex, columnIndex);
+		entityList.pushEdgeEntity(std::move(firstLine), rowIndex, columnIndex);
+		entityList.pushEdgeEntity(std::move(secondLine), columnIndex, rowIndex);
 	}
 
 	void removeEdge(std::size_t rowIndex, std::size_t columnIndex, EntityList& entityList)
 	{
 		entityList.popEdgeEntityAtIndices(rowIndex, columnIndex);
+		entityList.popEdgeEntityAtIndices(columnIndex, rowIndex);
 	}
 
-	std::pair<sf::RectangleShape, sf::CircleShape> createEdgeShapes(
-			const sf::Vector2f& firstVertexPosition, const sf::Vector2f& secondVertexPosition)
+	sf::RectangleShape createEdgeShape(const sf::Vector2f& firstVertexPosition,
+			const sf::Vector2f& secondVertexPosition)
 	{
 		sf::RectangleShape line{
 			{ getEdgeLength(firstVertexPosition, secondVertexPosition), 3.0f } };
-		sf::CircleShape triangle{ 10.0f, 3 };
-
 		sf::Color edgeColor{ getEdgeColor() };
 		float edgeRotationAngle{ getEdgeRotation(firstVertexPosition, secondVertexPosition) };
 
@@ -138,15 +141,7 @@ struct MatrixNumberChanger
 		line.setFillColor(edgeColor);
 		line.setRotation(edgeRotationAngle);
 
-		triangle.setFillColor(edgeColor);
-		triangle.setRotation(edgeRotationAngle + 90.0f);
-		// todo: fix this
-		if (firstVertexPosition.x < secondVertexPosition.x)
-			triangle.setPosition(secondVertexPosition - sf::Vector2f{ 20.0f, 20.0f });
-		else
-			triangle.setPosition(secondVertexPosition + sf::Vector2f{ 20.0f, 20.0f });
-
-		return { line, triangle };
+		return line;
 	}
 
 	float getEdgeLength(const sf::Vector2f& firstPosition, const sf::Vector2f& secondPosition)

@@ -31,6 +31,7 @@ AdjacencyMatrix::handleLeftMouseClick(sf::RenderWindow& window, std::size_t numb
 					rowIndex < numberOfActiveVertices && columnIndex < numberOfActiveVertices)
 			{
 				m_matrix[rowIndex][columnIndex] = !m_matrix[rowIndex][columnIndex];
+				m_matrix[columnIndex][rowIndex] = !m_matrix[columnIndex][rowIndex];
 				return IndicesAndValue{ rowIndex, columnIndex, m_matrix[rowIndex][columnIndex] };
 			}
 			++columnIndex;

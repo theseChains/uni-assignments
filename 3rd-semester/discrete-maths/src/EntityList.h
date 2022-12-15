@@ -22,7 +22,6 @@ private:
 	struct Edge
 	{
 		sf::RectangleShape line{};
-		sf::CircleShape triangle{};
 		std::size_t rowIndex{};
 		std::size_t columnIndex{};
 	};
@@ -31,8 +30,7 @@ public:
 	EntityList();
 
 	void pushVertexEntity(sf::CircleShape&& circle, sf::Text&& label);
-	void pushEdgeEntity(sf::RectangleShape&& line, sf::CircleShape&& triangle,
-			std::size_t rowIndex, std::size_t columnIndex);
+	void pushEdgeEntity(sf::RectangleShape&& line, std::size_t rowIndex, std::size_t columnIndex);
 
 	void popVertexEntityAtIndex(std::size_t index);
 	// change this to find the proper edge by it's indices

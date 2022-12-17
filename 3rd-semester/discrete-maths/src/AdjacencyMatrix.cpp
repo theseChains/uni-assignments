@@ -5,7 +5,6 @@
 
 #include <SFML/Graphics/CircleShape.hpp>
 
-#include <iostream>
 #include <string>
 
 AdjacencyMatrix::AdjacencyMatrix()
@@ -42,6 +41,42 @@ AdjacencyMatrix::handleLeftMouseClick(sf::RenderWindow& window, std::size_t numb
 	return std::nullopt;
 }
 
+void AdjacencyMatrix::reorganizeMatrixAfterVertexRemoval(std::size_t indexOfDeletedVertex,
+		std::size_t numberOfActiveVertices)
+{
+	std::size_t newRow{ 0 };
+	std::size_t newColumn{ 0 };
+	for (std::size_t row{ 0 }; row < numberOfActiveVertices; ++row, ++newRow)
+	{
+		for (std::size_t column{ 0 }; column < numberOfActiveVertices; ++column, ++newColumn)
+		{
+			if (row == indexOfDeletedVertex)
+			{
+				++row;
+			}
+
+			if (column == indexOfDeletedVertex)
+			{
+				++column;
+			}
+
+			m_matrix[newRow][newColumn] = m_matrix[row][column];
+		}
+
+		newColumn = 0;
+	}
+
+	for (std::size_t row{ 0 }; row < numberOfActiveVertices; ++row)
+	{
+		m_matrix[row][numberOfActiveVertices - 1] = 0;
+	}
+
+	for (std::size_t column{ 0 }; column < numberOfActiveVertices; ++column)
+	{
+		m_matrix[numberOfActiveVertices - 1][column] = 0;
+	}
+}
+
 void AdjacencyMatrix::update()
 {
 	for (std::size_t i{ 1 }; i < m_matrixText.size(); ++i)
@@ -73,6 +108,11 @@ void AdjacencyMatrix::setMonoFontText(const sf::Font& font)
 {
 	m_monoFont = &font;
 	initializeMatrixText();
+}
+
+std::array<std::array<bool, 10>, 10> AdjacencyMatrix::getMatrix() const
+{
+	return m_matrix;
 }
 
 void AdjacencyMatrix::initializeTopText()

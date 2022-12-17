@@ -27,11 +27,15 @@ public:
 
 	std::optional<IndicesAndValue> handleLeftMouseClick(sf::RenderWindow& window,
 			std::size_t numberOfActiveVertices);
+	void reorganizeMatrixAfterVertexRemoval(std::size_t indexOfDeletedVertex,
+			std::size_t numberOfActiveVertices);
 	void update();
 	void draw(sf::RenderWindow& window) const;
 
 	void setMainFontText(const sf::Font& font);
 	void setMonoFontText(const sf::Font& font);
+
+	std::array<std::array<bool, 10>, 10> getMatrix() const;
 
 private:
 	void initializeTopText();

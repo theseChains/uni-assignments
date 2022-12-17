@@ -7,49 +7,25 @@
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/Graphics/Text.hpp>
 
-#include <cmath>
-#include <memory>
-#include <numbers>
-#include <string>
-
 void VertexCreator::operator()(Context context)
 {
-	if (MouseInfo::mouseIsNotOnVertexPlane(context.m_window) ||
-			context.m_entityList.getVertexListSize() == constants::maxNumberOfVertices)
+	sf::RenderWindow& window{ context.m_window };
+	EntityList& entityList{ context.m_entityList };
+	FontHolder& fontHolder{ context.m_fontHolder };
+
+	if (MouseInfo::mouseIsNotOnVertexPlane(window))
 		return;
 
-	if (MouseInfo::mouseTooCloseToOtherVertex(context.m_entityList, context.m_window))
+	if (MouseInfo::mouseTooCloseToOtherVertex(entityList, window))
 		return;
 
-	sf::CircleShape circle{ createCircle(context.m_window) };
-	sf::Text label{ createLabel(context.m_entityList, context.m_fontHolder,
-			circle.getPosition()) };
+	if (entityList.getVertexListSize() == constants::maxNumberOfVertices)
+		return;
 
-	context.m_entityList.pushVertexEntity(std::move(circle), std::move(label));
-}
+	Vertex newVertex{ MouseInfo::getMousePosition(window), fontHolder.getFont(Fonts::ID::mono),
+		entityList.getVertexListSize() };
 
-sf::CircleShape VertexCreator::createCircle(sf::RenderWindow& window)
-{
-	sf::CircleShape circle{ constants::vertexRadius };
-	circle.setPosition(MouseInfo::getMousePosition(window) -
-			sf::Vector2f{ constants::vertexRadius, constants::vertexRadius });
-	circle.setFillColor(color::vertex);
-
-	return circle;
-}
-
-sf::Text VertexCreator::createLabel(const EntityList& entityList,
-		const FontHolder& fontHolder, const sf::Vector2f& circlePosition)
-{
-	sf::Text label{};
-	label.setFont(fontHolder.getFont(Fonts::ID::mono));
-	label.setFillColor(color::label);
-	label.setString("v" + std::to_string(entityList.getVertexListSize()));
-	label.setCharacterSize(18);
-	label.setPosition(circlePosition - sf::Vector2f{ constants::labelOffset,
-			-constants::vertexRadius / 2 });
-
-	return label;
+	entityList.pushVertexEntity(newVertex);
 }
 
 void VertexChooser::operator()(Context context)
@@ -59,7 +35,7 @@ void VertexChooser::operator()(Context context)
 	for (std::size_t vertexIndex{ 0 }; vertexIndex < entityList.getVertexListSize(); ++vertexIndex)
 	{
 		sf::FloatRect bounds{
-			entityList.getVertexEntityAtIndex(vertexIndex).circle.getGlobalBounds() };
+			entityList.getVertexEntityAtIndex(vertexIndex).getCircle().getGlobalBounds() };
 		if (bounds.contains(MouseInfo::getMousePosition(context.m_window)))
 		{
 			entityList.changeVertexEntityColorAtIndex(vertexIndex);
@@ -77,7 +53,7 @@ void VertexRemover::operator()(Context context)
 	for (std::size_t vertexIndex{ 0 }; vertexIndex < numberOfActiveVertices; ++vertexIndex)
 	{
 		sf::FloatRect bounds{
-			entityList.getVertexEntityAtIndex(vertexIndex).circle.getGlobalBounds() };
+			entityList.getVertexEntityAtIndex(vertexIndex).getCircle().getGlobalBounds() };
 		if (bounds.contains(MouseInfo::getMousePosition(context.m_window)))
 		{
 			entityList.popVertexEntityAtIndex(vertexIndex);
@@ -107,9 +83,9 @@ void MatrixNumberChanger::makeEdge(std::size_t rowIndex, std::size_t columnIndex
 		EntityList& entityList)
 {
 	auto firstVertexPosition{
-		entityList.getVertexEntityAtIndex(rowIndex).circle.getPosition() };
+		entityList.getVertexEntityAtIndex(rowIndex).getCircle().getPosition() };
 	auto secondVertexPosition{
-		entityList.getVertexEntityAtIndex(columnIndex).circle.getPosition() };
+		entityList.getVertexEntityAtIndex(columnIndex).getCircle().getPosition() };
 
 	Edge newEdge{ rowIndex, columnIndex, firstVertexPosition, secondVertexPosition };
 

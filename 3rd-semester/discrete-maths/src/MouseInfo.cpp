@@ -20,7 +20,7 @@ bool MouseInfo::mouseTooCloseToOtherVertex(EntityList& entityList, sf::RenderWin
 {
 	for (std::size_t i{ 0 }; i < entityList.getVertexListSize(); ++i)
 	{
-		sf::FloatRect bounds{ entityList.getVertexEntityAtIndex(i).circle.getGlobalBounds() };
+		sf::FloatRect bounds{ entityList.getVertexEntityAtIndex(i).getCircle().getGlobalBounds() };
 		bounds.top -= constants::minimumDistanceBetweenVertices;
 		bounds.left -= constants::minimumDistanceBetweenVertices;
 		bounds.height += constants::minimumDistanceBetweenVertices * 2;

@@ -11,20 +11,14 @@
 #include <vector>
 
 #include "Edge.h"
+#include "Vertex.h"
 
 class EntityList
 {
-private:
-	struct Vertex
-	{
-		sf::CircleShape circle{};
-		sf::Text label{};
-	};
-
 public:
 	EntityList();
 
-	void pushVertexEntity(sf::CircleShape&& circle, sf::Text&& label);
+	void pushVertexEntity(const Vertex& vertex);
 	void pushEdgeEntity(const Edge& edge);
 
 	void popVertexEntityAtIndex(std::size_t index);

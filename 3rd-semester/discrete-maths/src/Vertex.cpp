@@ -27,8 +27,8 @@ sf::Text Vertex::createLabelText(const sf::Vector2f& circlePosition, const sf::F
 	label.setFillColor(color::label);
 	label.setString("v" + std::to_string(index));
 	label.setCharacterSize(18);
-	label.setPosition(circlePosition - sf::Vector2f{ constants::labelOffset,
-			-constants::vertexRadius / 2 });
+	label.setPosition(circlePosition + sf::Vector2f{ constants::vertexRadius / 2 - 3.0f,
+			constants::vertexRadius / 2 - 4.0f });
 
 	return label;
 }
@@ -46,4 +46,9 @@ sf::Text Vertex::getLabel() const
 void Vertex::setCircleColor(const sf::Color& color)
 {
 	m_circle.setFillColor(color);
+}
+
+void Vertex::setLabelColor(const sf::Color& color)
+{
+	m_label.setFillColor(color);
 }

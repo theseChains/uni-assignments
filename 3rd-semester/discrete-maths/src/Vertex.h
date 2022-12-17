@@ -16,6 +16,8 @@ public:
 	sf::CircleShape getCircle() const;
 	sf::Text getLabel() const;
 
+	void setCircleColor(const sf::Color& color);
+
 private:
 	sf::CircleShape createCircleShape(const sf::Vector2f& mousePosition);
 	sf::Text createLabelText(const sf::Vector2f& circlePosition, const sf::Font& labelFont,

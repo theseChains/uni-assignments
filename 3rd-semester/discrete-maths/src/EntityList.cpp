@@ -2,6 +2,7 @@
 #include "Colors.h"
 
 #include <array>
+#include <iostream>
 
 EntityList::EntityList() : m_vertexEntities{}, m_edgeEntities{}, m_numberOfChosenVertices{ 0 }
 {
@@ -64,13 +65,15 @@ void EntityList::changeVertexEntityColorAtIndex(std::size_t index)
 {
 	if (m_vertexEntities.at(index).getCircle().getFillColor() == color::chosenVertex)
 	{
-		m_vertexEntities.at(index).getCircle().setFillColor(color::vertex);
+		m_vertexEntities.at(index).setCircleColor(color::vertex);
 		--m_numberOfChosenVertices;
+		std::cout << "color changed\n";
 	}
 	else if (m_numberOfChosenVertices < 2)
 	{
-		m_vertexEntities.at(index).getCircle().setFillColor(color::chosenVertex);
+		m_vertexEntities.at(index).setCircleColor(color::chosenVertex);
 		++m_numberOfChosenVertices;
+		std::cout << "color changed to chosen\n";
 	}
 }
 

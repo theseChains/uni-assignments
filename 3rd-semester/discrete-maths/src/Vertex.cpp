@@ -42,3 +42,8 @@ sf::Text Vertex::getLabel() const
 {
 	return m_label;
 }
+
+void Vertex::setCircleColor(const sf::Color& color)
+{
+	m_circle.setFillColor(color);
+}

@@ -6,9 +6,11 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Graphics/Text.hpp>
 
+#include <array>
 #include <cstddef>
-#include <tuple>
 #include <vector>
+
+#include "Edge.h"
 
 class EntityList
 {
@@ -19,21 +21,13 @@ private:
 		sf::Text label{};
 	};
 
-	struct Edge
-	{
-		sf::RectangleShape line{};
-		std::size_t rowIndex{};
-		std::size_t columnIndex{};
-	};
-
 public:
 	EntityList();
 
 	void pushVertexEntity(sf::CircleShape&& circle, sf::Text&& label);
-	void pushEdgeEntity(sf::RectangleShape&& line, std::size_t rowIndex, std::size_t columnIndex);
+	void pushEdgeEntity(const Edge& edge);
 
 	void popVertexEntityAtIndex(std::size_t index);
-	// change this to find the proper edge by it's indices
 	void popEdgeEntityAtIndices(std::size_t rowIndex, std::size_t columnIndex);
 
 	void clearVertexEntities();
@@ -48,8 +42,8 @@ public:
 	void changeVertexEntityColorAtIndex(std::size_t index);
 
 	void reorganizeVertexLabels();
-
-	int getIndexFromLabel(sf::Text& label);
+	void reorganizeEdges(const std::array<std::array<bool, 10>, 10>& matrix,
+			std::size_t numberOfActiveVertices);
 
 	void draw(sf::RenderWindow& window) const;
 

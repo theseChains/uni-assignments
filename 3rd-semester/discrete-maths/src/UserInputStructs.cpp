@@ -56,12 +56,14 @@ void VertexChooser::operator()(Context context)
 {
 	EntityList& entityList{ context.m_entityList };
 
-	for (std::size_t i{ 0 }; i < entityList.getVertexListSize(); ++i)
+	for (std::size_t vertexIndex{ 0 }; vertexIndex < entityList.getVertexListSize(); ++vertexIndex)
 	{
-		sf::FloatRect bounds{ entityList.getVertexEntityAtIndex(i).circle.getGlobalBounds() };
+		sf::FloatRect bounds{
+			entityList.getVertexEntityAtIndex(vertexIndex).circle.getGlobalBounds() };
 		if (bounds.contains(MouseInfo::getMousePosition(context.m_window)))
 		{
-			entityList.changeVertexEntityColorAtIndex(i);
+			entityList.changeVertexEntityColorAtIndex(vertexIndex);
+			return;
 		}
 	}
 }
@@ -69,9 +71,10 @@ void VertexChooser::operator()(Context context)
 void VertexRemover::operator()(Context context)
 {
 	EntityList& entityList{ context.m_entityList };
+	AdjacencyMatrix& adjacencyMatrix{ context.m_adjacencyMatrix };
+	std::size_t numberOfActiveVertices{ entityList.getVertexListSize() };
 
-	for (std::size_t vertexIndex{ 0 }; vertexIndex < entityList.getVertexListSize();
-			++vertexIndex)
+	for (std::size_t vertexIndex{ 0 }; vertexIndex < numberOfActiveVertices; ++vertexIndex)
 	{
 		sf::FloatRect bounds{
 			entityList.getVertexEntityAtIndex(vertexIndex).circle.getGlobalBounds() };
@@ -79,7 +82,9 @@ void VertexRemover::operator()(Context context)
 		{
 			entityList.popVertexEntityAtIndex(vertexIndex);
 			entityList.reorganizeVertexLabels();
-			// adjacencyMatrix.reorganizeMatrix(indexOfDeletedVertex);
+			adjacencyMatrix.reorganizeMatrixAfterVertexRemoval(vertexIndex, numberOfActiveVertices);
+			entityList.reorganizeEdges(adjacencyMatrix.getMatrix(), numberOfActiveVertices - 1);
+			return;
 		}
 	}
 }
@@ -106,11 +111,11 @@ void MatrixNumberChanger::makeEdge(std::size_t rowIndex, std::size_t columnIndex
 	auto secondVertexPosition{
 		entityList.getVertexEntityAtIndex(columnIndex).circle.getPosition() };
 
-	auto firstLine{ createEdgeShape(firstVertexPosition, secondVertexPosition) };
-	auto secondLine{ createEdgeShape(secondVertexPosition, firstVertexPosition) };
+	Edge newEdge{ rowIndex, columnIndex, firstVertexPosition, secondVertexPosition };
+	Edge newReverseEdge{ columnIndex, rowIndex, firstVertexPosition, secondVertexPosition };
 
-	entityList.pushEdgeEntity(std::move(firstLine), rowIndex, columnIndex);
-	entityList.pushEdgeEntity(std::move(secondLine), columnIndex, rowIndex);
+	entityList.pushEdgeEntity(newEdge);
+	entityList.pushEdgeEntity(newReverseEdge);
 }
 
 void MatrixNumberChanger::removeEdge(std::size_t rowIndex, std::size_t columnIndex,
@@ -118,43 +123,4 @@ void MatrixNumberChanger::removeEdge(std::size_t rowIndex, std::size_t columnInd
 {
 	entityList.popEdgeEntityAtIndices(rowIndex, columnIndex);
 	entityList.popEdgeEntityAtIndices(columnIndex, rowIndex);
-}
-
-sf::RectangleShape MatrixNumberChanger::createEdgeShape(const sf::Vector2f& firstVertexPosition,
-		const sf::Vector2f& secondVertexPosition)
-{
-	sf::RectangleShape line{
-		{ getEdgeLength(firstVertexPosition, secondVertexPosition), 3.0f } };
-	sf::Color edgeColor{ getEdgeColor() };
-	float edgeRotationAngle{ getEdgeRotation(firstVertexPosition, secondVertexPosition) };
-
-	line.setPosition(firstVertexPosition + sf::Vector2f{ constants::vertexRadius,
-			constants::vertexRadius });
-	line.setFillColor(edgeColor);
-	line.setRotation(edgeRotationAngle);
-
-	return line;
-}
-
-float MatrixNumberChanger::getEdgeLength(const sf::Vector2f& firstPosition,
-		const sf::Vector2f& secondPosition)
-{
-	return (static_cast<float>(std::sqrt(std::pow((secondPosition.x - firstPosition.x), 2) +
-			std::pow((secondPosition.y - firstPosition.y), 2))));
-}
-
-sf::Color MatrixNumberChanger::getEdgeColor()
-{
-	sf::Color color{ rnd::getUchar(0, 200), rnd::getUchar(0, 200), rnd::getUchar(205, 255) };
-	return { color };
-}
-
-float MatrixNumberChanger::getEdgeRotation(const sf::Vector2f& firstPosition,
-		const sf::Vector2f& secondPosition)
-{
-	auto slope{ (firstPosition.y - secondPosition.y) / (firstPosition.x - secondPosition.x) };
-	float angle{ static_cast<float>(atan(slope)) * 180.0f / std::numbers::pi_v<float> };
-	if (firstPosition.x >= secondPosition.x)
-		angle += 180.0f;
-	return angle;
 }

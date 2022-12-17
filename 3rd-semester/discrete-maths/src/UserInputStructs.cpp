@@ -112,10 +112,8 @@ void MatrixNumberChanger::makeEdge(std::size_t rowIndex, std::size_t columnIndex
 		entityList.getVertexEntityAtIndex(columnIndex).circle.getPosition() };
 
 	Edge newEdge{ rowIndex, columnIndex, firstVertexPosition, secondVertexPosition };
-	Edge newReverseEdge{ columnIndex, rowIndex, firstVertexPosition, secondVertexPosition };
 
 	entityList.pushEdgeEntity(newEdge);
-	entityList.pushEdgeEntity(newReverseEdge);
 }
 
 void MatrixNumberChanger::removeEdge(std::size_t rowIndex, std::size_t columnIndex,

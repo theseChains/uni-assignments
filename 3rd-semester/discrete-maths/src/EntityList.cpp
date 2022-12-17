@@ -91,7 +91,7 @@ void EntityList::reorganizeEdges(const std::array<std::array<bool, 10>, 10>& mat
 	std::vector<Edge> newEdges{};
 	for (std::size_t row{ 0 }; row < numberOfActiveVertices; ++row)
 	{
-		for (std::size_t column{ 0 }; column < numberOfActiveVertices; ++column)
+		for (std::size_t column{ row + 1 }; column < numberOfActiveVertices; ++column)
 		{
 			std::cout << "row col: " << row << ' ' << column << '\n';
 			std::cout << "edge index: " << edgeIndex << '\n';

@@ -18,6 +18,7 @@ public:
 
 	void setCircleColor(const sf::Color& color);
 	void setLabelColor(const sf::Color& color);
+	void setCirclePointCount(std::size_t pointCount);
 
 private:
 	sf::CircleShape createCircleShape(const sf::Vector2f& mousePosition);

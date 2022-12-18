@@ -52,3 +52,8 @@ void Vertex::setLabelColor(const sf::Color& color)
 {
 	m_label.setFillColor(color);
 }
+
+void Vertex::setCirclePointCount(std::size_t pointCount)
+{
+	m_circle.setPointCount(pointCount);
+}

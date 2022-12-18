@@ -8,7 +8,12 @@ struct VertexCreator
 	void operator()(Context context);
 };
 
-struct VertexChooser
+struct VertexChooserForRoutes
+{
+	void operator()(Context context);
+};
+
+struct VertexChooserForDistance
 {
 	void operator()(Context context);
 };

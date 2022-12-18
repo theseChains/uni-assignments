@@ -3,7 +3,11 @@
 
 #include <array>
 
-EntityList::EntityList() : m_vertexEntities{}, m_edgeEntities{}, m_numberOfChosenVertices{ 0 }
+EntityList::EntityList()
+	: m_vertexEntities{}
+	, m_edgeEntities{}
+	, m_numberOfChosenDistanceVerteices{ 0 }
+	, m_numberOfChosenRouteVertices{ 0 }
 {
 }
 
@@ -62,17 +66,37 @@ Edge EntityList::getEdgeEntityAtIndex(std::size_t index) const
 
 void EntityList::changeVertexEntityColorAtIndex(std::size_t index)
 {
+	if (getVertexEntityAtIndex(index).getCircle().getPointCount() == 4)
+		return;
+
 	if (m_vertexEntities.at(index).getCircle().getFillColor() == color::chosenVertex)
 	{
 		m_vertexEntities.at(index).setCircleColor(color::vertex);
 		m_vertexEntities.at(index).setLabelColor(color::label);
-		--m_numberOfChosenVertices;
+		--m_numberOfChosenRouteVertices;
 	}
-	else if (m_numberOfChosenVertices < 2)
+	else if (m_numberOfChosenRouteVertices < 2)
 	{
 		m_vertexEntities.at(index).setCircleColor(color::chosenVertex);
 		m_vertexEntities.at(index).setLabelColor(color::chosenLabel);
-		++m_numberOfChosenVertices;
+		++m_numberOfChosenRouteVertices;
+	}
+}
+
+void EntityList::changeVertexEntityPointCount(std::size_t index)
+{
+	if (getVertexEntityAtIndex(index).getCircle().getFillColor() == color::chosenVertex)
+		return;
+
+	if (m_vertexEntities.at(index).getCircle().getPointCount() == 4)
+	{
+		m_vertexEntities.at(index).setCirclePointCount(30);
+		--m_numberOfChosenDistanceVerteices;
+	}
+	else if (m_numberOfChosenDistanceVerteices < 2)
+	{
+		m_vertexEntities.at(index).setCirclePointCount(4);
+		++m_numberOfChosenDistanceVerteices;
 	}
 }
 

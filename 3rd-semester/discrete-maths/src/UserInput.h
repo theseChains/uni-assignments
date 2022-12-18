@@ -17,8 +17,9 @@ public:
 	enum class Action
 	{
 		createVertex,
-		chooseVertex,
 		removeVertex,
+		chooseVertexForDistance,
+		chooseVertexForNumberOfRoutes,
 		changeMatrixNumber,
 
 		numberOfActions

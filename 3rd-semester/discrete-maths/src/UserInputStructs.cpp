@@ -28,7 +28,7 @@ void VertexCreator::operator()(Context context)
 	entityList.pushVertexEntity(newVertex);
 }
 
-void VertexChooser::operator()(Context context)
+void VertexChooserForRoutes::operator()(Context context)
 {
 	EntityList& entityList{ context.m_entityList };
 
@@ -39,6 +39,22 @@ void VertexChooser::operator()(Context context)
 		if (bounds.contains(MouseInfo::getMousePosition(context.m_window)))
 		{
 			entityList.changeVertexEntityColorAtIndex(vertexIndex);
+			return;
+		}
+	}
+}
+
+void VertexChooserForDistance::operator()(Context context)
+{
+	EntityList& entityList{ context.m_entityList };
+
+	for (std::size_t vertexIndex{ 0 }; vertexIndex < entityList.getVertexListSize(); ++vertexIndex)
+	{
+		sf::FloatRect bounds{
+			entityList.getVertexEntityAtIndex(vertexIndex).getCircle().getGlobalBounds() };
+		if (bounds.contains(MouseInfo::getMousePosition(context.m_window)))
+		{
+			entityList.changeVertexEntityPointCount(vertexIndex);
 			return;
 		}
 	}

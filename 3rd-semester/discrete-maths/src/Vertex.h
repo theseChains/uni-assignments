@@ -20,6 +20,9 @@ public:
 	void setLabelColor(const sf::Color& color);
 	void setCirclePointCount(std::size_t pointCount);
 
+	const sf::Color& getCircleFillColor() const;
+	std::size_t getCirclePointCount() const;
+
 private:
 	sf::CircleShape createCircleShape(const sf::Vector2f& mousePosition);
 	sf::Text createLabelText(const sf::Vector2f& circlePosition, const sf::Font& labelFont,

@@ -67,10 +67,10 @@ Edge EntityList::getEdgeEntityAtIndex(std::size_t index) const
 
 void EntityList::changeVertexEntityColorAtIndex(std::size_t index)
 {
-	if (getVertexEntityAtIndex(index).getCircle().getPointCount() == constants::chosenVertexPointCount)
+	if (getVertexEntityAtIndex(index).getCirclePointCount() == constants::chosenVertexPointCount)
 		return;
 
-	if (m_vertexEntities.at(index).getCircle().getFillColor() == color::chosenVertex)
+	if (m_vertexEntities.at(index).getCircleFillColor() == color::chosenVertex)
 	{
 		m_vertexEntities.at(index).setCircleColor(color::vertex);
 		m_vertexEntities.at(index).setLabelColor(color::label);
@@ -86,10 +86,10 @@ void EntityList::changeVertexEntityColorAtIndex(std::size_t index)
 
 void EntityList::changeVertexEntityPointCount(std::size_t index)
 {
-	if (getVertexEntityAtIndex(index).getCircle().getFillColor() == color::chosenVertex)
+	if (getVertexEntityAtIndex(index).getCircleFillColor() == color::chosenVertex)
 		return;
 
-	if (m_vertexEntities.at(index).getCircle().getPointCount() == constants::chosenVertexPointCount)
+	if (m_vertexEntities.at(index).getCirclePointCount() == constants::chosenVertexPointCount)
 	{
 		m_vertexEntities.at(index).setCirclePointCount(constants::defaultVertexPointCount);
 		--m_numberOfChosenDistanceVerteices;

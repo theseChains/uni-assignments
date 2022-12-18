@@ -57,3 +57,13 @@ void Vertex::setCirclePointCount(std::size_t pointCount)
 {
 	m_circle.setPointCount(pointCount);
 }
+
+const sf::Color& Vertex::getCircleFillColor() const
+{
+	return m_circle.getFillColor();
+}
+
+std::size_t Vertex::getCirclePointCount() const
+{
+	return m_circle.getPointCount();
+}

@@ -27,6 +27,9 @@ namespace constants
 	inline constexpr int maxNumberOfVertices{ 10 };
 
 	inline constexpr float labelOffset{ 25.0f };
+
+	inline constexpr int chosenVertexPointCount{ 4 };
+	inline constexpr int defaultVertexPointCount{ 30 };
 }
 
 namespace coords

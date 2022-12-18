@@ -1,5 +1,6 @@
 #include "EntityList.h"
 #include "Colors.h"
+#include "Constants.h"
 
 #include <array>
 
@@ -66,7 +67,7 @@ Edge EntityList::getEdgeEntityAtIndex(std::size_t index) const
 
 void EntityList::changeVertexEntityColorAtIndex(std::size_t index)
 {
-	if (getVertexEntityAtIndex(index).getCircle().getPointCount() == 4)
+	if (getVertexEntityAtIndex(index).getCircle().getPointCount() == constants::chosenVertexPointCount)
 		return;
 
 	if (m_vertexEntities.at(index).getCircle().getFillColor() == color::chosenVertex)
@@ -88,14 +89,14 @@ void EntityList::changeVertexEntityPointCount(std::size_t index)
 	if (getVertexEntityAtIndex(index).getCircle().getFillColor() == color::chosenVertex)
 		return;
 
-	if (m_vertexEntities.at(index).getCircle().getPointCount() == 4)
+	if (m_vertexEntities.at(index).getCircle().getPointCount() == constants::chosenVertexPointCount)
 	{
-		m_vertexEntities.at(index).setCirclePointCount(30);
+		m_vertexEntities.at(index).setCirclePointCount(constants::defaultVertexPointCount);
 		--m_numberOfChosenDistanceVerteices;
 	}
 	else if (m_numberOfChosenDistanceVerteices < 2)
 	{
-		m_vertexEntities.at(index).setCirclePointCount(4);
+		m_vertexEntities.at(index).setCirclePointCount(constants::chosenVertexPointCount);
 		++m_numberOfChosenDistanceVerteices;
 	}
 }

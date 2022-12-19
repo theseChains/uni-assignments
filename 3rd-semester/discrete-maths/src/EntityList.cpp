@@ -105,7 +105,7 @@ void EntityList::reorganizeVertexLabels()
 {
 	for (int vertexIndex{ 0 }; auto& vertex : m_vertexEntities)
 	{
-		vertex.getLabel().setString("v" + std::to_string(vertexIndex++));
+		vertex.setLabelText("v" + std::to_string(vertexIndex++));
 	}
 }
 

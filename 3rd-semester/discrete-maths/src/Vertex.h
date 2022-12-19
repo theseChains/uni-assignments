@@ -19,6 +19,7 @@ public:
 	void setCircleColor(const sf::Color& color);
 	void setLabelColor(const sf::Color& color);
 	void setCirclePointCount(std::size_t pointCount);
+	void setLabelText(const std::string& text);
 
 	const sf::Color& getCircleFillColor() const;
 	std::size_t getCirclePointCount() const;

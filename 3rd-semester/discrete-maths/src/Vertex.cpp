@@ -58,6 +58,11 @@ void Vertex::setCirclePointCount(std::size_t pointCount)
 	m_circle.setPointCount(pointCount);
 }
 
+void Vertex::setLabelText(const std::string& text)
+{
+	m_label.setString(text);
+}
+
 const sf::Color& Vertex::getCircleFillColor() const
 {
 	return m_circle.getFillColor();

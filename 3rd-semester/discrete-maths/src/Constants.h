@@ -22,7 +22,7 @@ namespace constants
 	inline constexpr int adjacencyMatrixWidth{ 390 };
 	inline constexpr int adjacencyMatrixHeight{ 310 };
 
-	inline constexpr float minimumDistanceBetweenVertices{ 50.0f };
+	inline constexpr float minimumDistanceBetweenVertices{ 35.0f };
 	inline constexpr float vertexRadius{ 15.0f };
 	inline constexpr int maxNumberOfVertices{ 10 };
 

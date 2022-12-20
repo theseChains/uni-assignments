@@ -75,6 +75,7 @@ void VertexRemover::operator()(Context context)
 			entityList.popVertexEntityAtIndex(vertexIndex);
 			entityList.reorganizeVertexLabels();
 			adjacencyMatrix.reorganizeMatrixAfterVertexRemoval(vertexIndex, numberOfActiveVertices);
+			// reorganize edges with one of the vertices gone
 			entityList.reorganizeEdges(adjacencyMatrix.getMatrix(), numberOfActiveVertices - 1);
 			return;
 		}
@@ -110,5 +111,4 @@ void MatrixNumberChanger::removeEdge(std::size_t rowIndex, std::size_t columnInd
 		EntityList& entityList)
 {
 	entityList.popEdgeEntityAtIndices(rowIndex, columnIndex);
-	entityList.popEdgeEntityAtIndices(columnIndex, rowIndex);
 }

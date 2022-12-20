@@ -23,6 +23,8 @@ public:
 
 	const sf::Color& getCircleFillColor() const;
 	std::size_t getCirclePointCount() const;
+	const sf::Vector2f& getCirclePosition() const;
+	sf::FloatRect getCircleGlobalBounds() const;
 
 private:
 	sf::CircleShape createCircleShape(const sf::Vector2f& mousePosition);

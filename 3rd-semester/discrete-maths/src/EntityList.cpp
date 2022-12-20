@@ -119,8 +119,8 @@ void EntityList::reorganizeEdges(const std::array<std::array<bool, 10>, 10>& mat
 		{
 			if (matrix[row][column] == 1)
 			{
-				auto firstVertexPos{ getVertexEntityAtIndex(row).getCircle().getPosition() };
-				auto secondVertexPos{ getVertexEntityAtIndex(column).getCircle().getPosition() };
+				auto firstVertexPos{ getVertexEntityAtIndex(row).getCirclePosition() };
+				auto secondVertexPos{ getVertexEntityAtIndex(column).getCirclePosition() };
 				Edge newEdge{ row, column, firstVertexPos, secondVertexPos };
 				newEdges.push_back(newEdge);
 			}

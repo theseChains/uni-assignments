@@ -35,7 +35,7 @@ void VertexChooserForRoutes::operator()(Context context)
 	for (std::size_t vertexIndex{ 0 }; vertexIndex < entityList.getVertexListSize(); ++vertexIndex)
 	{
 		sf::FloatRect bounds{
-			entityList.getVertexEntityAtIndex(vertexIndex).getCircle().getGlobalBounds() };
+			entityList.getVertexEntityAtIndex(vertexIndex).getCircleGlobalBounds() };
 		if (bounds.contains(MouseInfo::getMousePosition(context.m_window)))
 		{
 			entityList.changeVertexEntityColorAtIndex(vertexIndex);
@@ -51,7 +51,7 @@ void VertexChooserForDistance::operator()(Context context)
 	for (std::size_t vertexIndex{ 0 }; vertexIndex < entityList.getVertexListSize(); ++vertexIndex)
 	{
 		sf::FloatRect bounds{
-			entityList.getVertexEntityAtIndex(vertexIndex).getCircle().getGlobalBounds() };
+			entityList.getVertexEntityAtIndex(vertexIndex).getCircleGlobalBounds() };
 		if (bounds.contains(MouseInfo::getMousePosition(context.m_window)))
 		{
 			entityList.changeVertexEntityPointCount(vertexIndex);
@@ -69,7 +69,7 @@ void VertexRemover::operator()(Context context)
 	for (std::size_t vertexIndex{ 0 }; vertexIndex < numberOfActiveVertices; ++vertexIndex)
 	{
 		sf::FloatRect bounds{
-			entityList.getVertexEntityAtIndex(vertexIndex).getCircle().getGlobalBounds() };
+			entityList.getVertexEntityAtIndex(vertexIndex).getCircleGlobalBounds() };
 		if (bounds.contains(MouseInfo::getMousePosition(context.m_window)))
 		{
 			entityList.popVertexEntityAtIndex(vertexIndex);
@@ -98,10 +98,8 @@ void MatrixNumberChanger::operator()(Context context)
 void MatrixNumberChanger::makeEdge(std::size_t rowIndex, std::size_t columnIndex,
 		EntityList& entityList)
 {
-	auto firstVertexPosition{
-		entityList.getVertexEntityAtIndex(rowIndex).getCircle().getPosition() };
-	auto secondVertexPosition{
-		entityList.getVertexEntityAtIndex(columnIndex).getCircle().getPosition() };
+	auto firstVertexPosition{ entityList.getVertexEntityAtIndex(rowIndex).getCirclePosition() };
+	auto secondVertexPosition{ entityList.getVertexEntityAtIndex(columnIndex).getCirclePosition() };
 
 	Edge newEdge{ rowIndex, columnIndex, firstVertexPosition, secondVertexPosition };
 

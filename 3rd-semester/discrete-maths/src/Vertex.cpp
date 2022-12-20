@@ -72,3 +72,13 @@ std::size_t Vertex::getCirclePointCount() const
 {
 	return m_circle.getPointCount();
 }
+
+const sf::Vector2f& Vertex::getCirclePosition() const
+{
+	return m_circle.getPosition();
+}
+
+sf::FloatRect Vertex::getCircleGlobalBounds() const
+{
+	return m_circle.getGlobalBounds();
+}

@@ -22,11 +22,8 @@ sf::CircleShape Vertex::createCircleShape(const sf::Vector2f& mousePosition)
 sf::Text Vertex::createLabelText(const sf::Vector2f& circlePosition, const sf::Font& labelFont,
 		std::size_t index)
 {
-	sf::Text label{};
-	label.setFont(labelFont);
+	sf::Text label{ "v" + std::to_string(index), labelFont, constants::vertexLabelFontSize };
 	label.setFillColor(color::label);
-	label.setString("v" + std::to_string(index));
-	label.setCharacterSize(18);
 	label.setPosition(circlePosition + sf::Vector2f{ constants::vertexRadius / 2 - 3.0f,
 			constants::vertexRadius / 2 - 4.0f });
 

@@ -25,6 +25,7 @@ namespace constants
 	inline constexpr float minimumDistanceBetweenVertices{ 35.0f };
 	inline constexpr float vertexRadius{ 15.0f };
 	inline constexpr int maxNumberOfVertices{ 10 };
+	inline constexpr int vertexLabelFontSize{ 18 };
 
 	inline constexpr int chosenVertexPointCount{ 4 };
 	inline constexpr int defaultVertexPointCount{ 30 };

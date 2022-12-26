@@ -25,11 +25,11 @@ public:
 	std::size_t getColumn() const;
 
 private:
-	float getLineLength(const sf::Vector2f& firstVertexPosition,
+	float calculateLineLength(const sf::Vector2f& firstVertexPosition,
 			const sf::Vector2f& secondVertexPosition);
-	float getLineRotation(const sf::Vector2f& firstVertexPosition,
+	float calculateLineRotation(const sf::Vector2f& firstVertexPosition,
 			const sf::Vector2f& secondVertexPosition);
-	sf::Color getLineColor();
+	sf::Color calculateLineColor();
 };
 
 #endif

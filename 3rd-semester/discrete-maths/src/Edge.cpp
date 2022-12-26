@@ -12,9 +12,9 @@ sf::RectangleShape Edge::createLineShape(const sf::Vector2f& firstVertexPosition
 		const sf::Vector2f& secondVertexPosition)
 {
 	sf::RectangleShape line{
-		{ getLineLength(firstVertexPosition, secondVertexPosition), 3.0f } };
-	sf::Color edgeColor{ getLineColor() };
-	float edgeRotationAngle{ getLineRotation(firstVertexPosition, secondVertexPosition) };
+		{ calculateLineLength(firstVertexPosition, secondVertexPosition), 3.0f } };
+	sf::Color edgeColor{ calculateLineColor() };
+	float edgeRotationAngle{ calculateLineRotation(firstVertexPosition, secondVertexPosition) };
 
 	line.setPosition(firstVertexPosition + sf::Vector2f{ constants::vertexRadius,
 			constants::vertexRadius });
@@ -24,14 +24,14 @@ sf::RectangleShape Edge::createLineShape(const sf::Vector2f& firstVertexPosition
 	return line;
 }
 
-float Edge::getLineLength(const sf::Vector2f& firstPosition,
+float Edge::calculateLineLength(const sf::Vector2f& firstPosition,
 		const sf::Vector2f& secondPosition)
 {
 	return (static_cast<float>(std::sqrt(std::pow((secondPosition.x - firstPosition.x), 2) +
 			std::pow((secondPosition.y - firstPosition.y), 2))));
 }
 
-float Edge::getLineRotation(const sf::Vector2f& firstPosition,
+float Edge::calculateLineRotation(const sf::Vector2f& firstPosition,
 		const sf::Vector2f& secondPosition)
 {
 	auto slope{ (firstPosition.y - secondPosition.y) / (firstPosition.x - secondPosition.x) };
@@ -41,7 +41,7 @@ float Edge::getLineRotation(const sf::Vector2f& firstPosition,
 	return angle;
 }
 
-sf::Color Edge::getLineColor()
+sf::Color Edge::calculateLineColor()
 {
 	sf::Color color{ rnd::getUchar(0, 200), rnd::getUchar(0, 200), rnd::getUchar(205, 255) };
 	return { color };

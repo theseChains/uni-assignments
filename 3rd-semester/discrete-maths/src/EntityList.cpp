@@ -7,7 +7,7 @@
 EntityList::EntityList()
 	: m_vertexEntities{}
 	, m_edgeEntities{}
-	, m_numberOfChosenDistanceVerteices{ 0 }
+	, m_numberOfChosenDistanceVertices{ 0 }
 	, m_numberOfChosenRouteVertices{ 0 }
 {
 }
@@ -92,12 +92,12 @@ void EntityList::changeVertexEntityPointCount(std::size_t index)
 	if (m_vertexEntities.at(index).getCirclePointCount() == constants::chosenVertexPointCount)
 	{
 		m_vertexEntities.at(index).setCirclePointCount(constants::defaultVertexPointCount);
-		--m_numberOfChosenDistanceVerteices;
+		--m_numberOfChosenDistanceVertices;
 	}
-	else if (m_numberOfChosenDistanceVerteices < 2)
+	else if (m_numberOfChosenDistanceVertices < 2)
 	{
 		m_vertexEntities.at(index).setCirclePointCount(constants::chosenVertexPointCount);
-		++m_numberOfChosenDistanceVerteices;
+		++m_numberOfChosenDistanceVertices;
 	}
 }
 

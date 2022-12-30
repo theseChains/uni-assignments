@@ -46,7 +46,7 @@ private:
 	std::vector<Vertex> m_vertexEntities{};
 	std::vector<Edge> m_edgeEntities{};
 
-	int m_numberOfChosenDistanceVerteices{};
+	int m_numberOfChosenDistanceVertices{};
 	int m_numberOfChosenRouteVertices{};
 };
 

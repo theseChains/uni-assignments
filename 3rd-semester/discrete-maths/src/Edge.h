@@ -20,7 +20,7 @@ public:
 	sf::RectangleShape createLineShape(const sf::Vector2f& firstVertexPosition,
 			const sf::Vector2f& secondVertexPosition);
 
-	sf::RectangleShape getLine() const;
+	const sf::RectangleShape& getLine() const;
 	std::size_t getRow() const;
 	std::size_t getColumn() const;
 

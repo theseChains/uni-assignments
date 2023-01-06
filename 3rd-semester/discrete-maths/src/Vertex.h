@@ -13,8 +13,8 @@ private:
 public:
 	Vertex(const sf::Vector2f& mousePosition, const sf::Font& labelFont, std::size_t index);
 
-	sf::CircleShape getCircle() const;
-	sf::Text getLabel() const;
+	const sf::CircleShape& getCircle() const;
+	const sf::Text& getLabel() const;
 
 	void setCircleColor(const sf::Color& color);
 	void setLabelColor(const sf::Color& color);

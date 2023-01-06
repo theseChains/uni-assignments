@@ -5,6 +5,7 @@
 
 #include <SFML/Graphics/CircleShape.hpp>
 
+#include <ranges>
 #include <string>
 
 AdjacencyMatrix::AdjacencyMatrix()
@@ -66,12 +67,12 @@ void AdjacencyMatrix::reorganizeMatrixAfterVertexRemoval(std::size_t indexOfDele
 		newColumn = 0;
 	}
 
-	for (std::size_t row{ 0 }; row < numberOfActiveVertices; ++row)
+	for (auto row : std::views::iota(0ull, numberOfActiveVertices))
 	{
 		m_matrix[row][numberOfActiveVertices - 1] = 0;
 	}
 
-	for (std::size_t column{ 0 }; column < numberOfActiveVertices; ++column)
+	for (auto column : std::views::iota(0ull, numberOfActiveVertices))
 	{
 		m_matrix[numberOfActiveVertices - 1][column] = 0;
 	}
@@ -126,11 +127,9 @@ void AdjacencyMatrix::initializeTopText()
 
 void AdjacencyMatrix::initializeMatrixTextCoordinates()
 {
-	int rowIndex{ 1 };
-	for (auto& row : m_matrixTextCoordinates)
+	for (int rowIndex{ 1 }; auto& row : m_matrixTextCoordinates)
 	{
-		int columnIndex{ 1 };
-		for (auto& [x, y] : row)
+		for (int columnIndex{ 1 }; auto& [x, y] : row)
 		{
 			x = coords::columnOffsetBetweenValues * static_cast<float>(columnIndex) +
 				coords::columnScreenOffset;
@@ -196,7 +195,7 @@ void AdjacencyMatrix::initializeBorderLines()
 std::string AdjacencyMatrix::getNumbersFromMatrix(std::size_t row)
 {
 	std::string matrixRowString{ "   " };
-	for (std::size_t j{ 0 }; j < 10; ++j)
+	for (std::size_t j{ 0 }; j < constants::maxNumberOfVertices; ++j)
 	{
 		// retreive numbers from the string
 		matrixRowString += std::to_string(m_matrix[row - 1][j]) + "  ";

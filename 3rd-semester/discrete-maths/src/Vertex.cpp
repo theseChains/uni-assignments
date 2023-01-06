@@ -30,12 +30,12 @@ sf::Text Vertex::createLabelText(const sf::Vector2f& circlePosition, const sf::F
 	return label;
 }
 
-sf::CircleShape Vertex::getCircle() const
+const sf::CircleShape& Vertex::getCircle() const
 {
 	return m_circle;
 }
 
-sf::Text Vertex::getLabel() const
+const sf::Text& Vertex::getLabel() const
 {
 	return m_label;
 }

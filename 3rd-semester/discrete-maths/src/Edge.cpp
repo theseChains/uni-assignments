@@ -43,11 +43,11 @@ float Edge::calculateLineRotation(const sf::Vector2f& firstPosition,
 
 sf::Color Edge::calculateLineColor()
 {
-	sf::Color color{ rnd::getUchar(0, 200), rnd::getUchar(0, 200), rnd::getUchar(205, 255) };
+	sf::Color color{ rnd::getUchar(0, 180), rnd::getUchar(0, 180), rnd::getUchar(225, 255) };
 	return { color };
 }
 
-sf::RectangleShape Edge::getLine() const
+const sf::RectangleShape& Edge::getLine() const
 {
 	return m_line;
 }

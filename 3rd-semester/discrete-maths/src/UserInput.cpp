@@ -44,6 +44,5 @@ void UserInput::initializeActionBindings()
 	m_actionBinding[Action::removeVertex] = VertexRemover{};
 	m_actionBinding[Action::chooseVertexForNumberOfRoutes] = VertexChooserForRoutes{};
 	m_actionBinding[Action::chooseVertexForDistance] = VertexChooserForDistance{};
-
 	m_actionBinding[Action::changeMatrixNumber] = MatrixNumberChanger{};
 }

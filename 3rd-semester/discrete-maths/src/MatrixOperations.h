@@ -3,11 +3,12 @@
 
 #include <array>
 
+using Matrix = std::array<std::array<int, 10>, 10>;
+
 class MatrixOperations
 {
 public:
-	using Matrix = std::array<std::array<bool, 10>, 10>;
-	static Matrix raiseMatrixToPower(const Matrix& matrix, int power);
+	static Matrix raiseMatrixToPower(Matrix& matrix, int power);
 };
 
 #endif

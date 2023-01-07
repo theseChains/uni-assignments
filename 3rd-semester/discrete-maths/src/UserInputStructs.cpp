@@ -2,10 +2,13 @@
 #include "MouseInfo.h"
 #include "Constants.h"
 #include "Colors.h"
+#include "MatrixOperations.h"
 
 #include <SFML/Graphics/CircleShape.hpp>
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/Graphics/Text.hpp>
+
+#include <iostream>
 
 void VertexCreator::operator()(Context context)
 {
@@ -111,4 +114,27 @@ void MatrixNumberChanger::removeEdge(std::size_t rowIndex, std::size_t columnInd
 		EntityList& entityList)
 {
 	entityList.popEdgeEntityAtIndices(rowIndex, columnIndex);
+}
+
+void AnswerIndicator::operator()(Context context)
+{
+	EntityList& entityList{ context.m_entityList };
+	if (!entityList.allVerticesAreChosen())
+		return;
+
+	Matrix matrix{ context.m_adjacencyMatrix.getMatrix() };
+	std::size_t numberOfVertices{ entityList.getVertexListSize() };
+	std::size_t numberOfEdges{ entityList.getEdgeListSize() };
+	int routeDistance{ static_cast<int>(numberOfEdges - numberOfVertices + 3) };
+
+	std::vector<Vertex> chosenRouteVertices{ entityList.getChosenRouteVertices() };
+	std::array<int, 2> indices{};
+	for (int index{ 0 }; const auto& vertex : chosenRouteVertices)
+	{
+		indices[index++] = vertex.getIndexFromLabel();
+	}
+	Matrix matrixRaisedToPower{ MatrixOperations::getMatrixRaisedToPower(matrix, routeDistance) };
+	std::cout << "number of routes of distance " << routeDistance << " between vertices " <<
+		indices[0] << " and " << indices[1] << " is: " <<
+		matrixRaisedToPower[indices[0],indices[1]] << '\n';
 }

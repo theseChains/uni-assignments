@@ -21,6 +21,7 @@ public:
 		chooseVertexForDistance,
 		chooseVertexForNumberOfRoutes,
 		changeMatrixNumber,
+		getAnswer,
 
 		numberOfActions
 	};

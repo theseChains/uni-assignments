@@ -31,4 +31,9 @@ struct MatrixNumberChanger
 	void removeEdge(std::size_t rowIndex, std::size_t columnIndex, EntityList& entityList);
 };
 
+struct AnswerIndicator
+{
+	void operator()(Context context);
+};
+
 #endif

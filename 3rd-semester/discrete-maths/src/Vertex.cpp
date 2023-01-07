@@ -79,3 +79,13 @@ sf::FloatRect Vertex::getCircleGlobalBounds() const
 {
 	return m_circle.getGlobalBounds();
 }
+
+int Vertex::getIndexFromLabel() const
+{
+	return m_label.getString()[1] - '0';
+}
+
+bool Vertex::operator==(const Vertex& other) const
+{
+	return (m_label.getString() == other.m_label.getString());
+}

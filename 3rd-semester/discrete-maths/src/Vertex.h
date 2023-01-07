@@ -25,6 +25,9 @@ public:
 	std::size_t getCirclePointCount() const;
 	const sf::Vector2f& getCirclePosition() const;
 	sf::FloatRect getCircleGlobalBounds() const;
+	int getIndexFromLabel() const;
+
+	bool operator==(const Vertex& other) const;
 
 private:
 	sf::CircleShape createCircleShape(const sf::Vector2f& mousePosition);

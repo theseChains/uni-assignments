@@ -31,8 +31,12 @@ public:
 	std::size_t getVertexListSize() const;
 	std::size_t getEdgeListSize() const;
 
-	Vertex getVertexEntityAtIndex(std::size_t index) const;
-	Edge getEdgeEntityAtIndex(std::size_t index) const;
+	Vertex& getVertexEntityAtIndex(std::size_t index);
+	Edge& getEdgeEntityAtIndex(std::size_t index);
+	const std::vector<Vertex>& getChosenRouteVertices() const;
+	const std::vector<Vertex>& getChosenDistanceVertices() const;
+
+	bool allVerticesAreChosen() const;
 
 	void changeVertexEntityColorAtIndex(std::size_t index);
 	void changeVertexEntityPointCount(std::size_t index);
@@ -46,6 +50,8 @@ private:
 	std::vector<Vertex> m_vertexEntities{};
 	std::vector<Edge> m_edgeEntities{};
 
+	std::vector<Vertex> m_chosenDistanceVertices{};
+	std::vector<Vertex> m_chosenRouteVertices{};
 	int m_numberOfChosenDistanceVertices{};
 	int m_numberOfChosenRouteVertices{};
 };

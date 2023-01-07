@@ -36,6 +36,7 @@ void UserInput::initializeBindings()
 	m_keyBinding[sf::Keyboard::R] = Action::removeVertex;
 	m_keyBinding[sf::Keyboard::D] = Action::chooseVertexForDistance;
 	m_keyBinding[sf::Keyboard::N] = Action::chooseVertexForNumberOfRoutes;
+	m_keyBinding[sf::Keyboard::A] = Action::getAnswer;
 }
 
 void UserInput::initializeActionBindings()
@@ -45,4 +46,5 @@ void UserInput::initializeActionBindings()
 	m_actionBinding[Action::chooseVertexForNumberOfRoutes] = VertexChooserForRoutes{};
 	m_actionBinding[Action::chooseVertexForDistance] = VertexChooserForDistance{};
 	m_actionBinding[Action::changeMatrixNumber] = MatrixNumberChanger{};
+	m_actionBinding[Action::getAnswer] = AnswerIndicator{};
 }

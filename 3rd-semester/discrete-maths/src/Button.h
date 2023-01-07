@@ -13,13 +13,14 @@
 class Button
 {
 public:
-	Button() = default;
 	Button(const std::string& text, const sf::Vector2f& position, const sf::Font& font);
 
 	bool isMouseOnButton(sf::RenderWindow& window) const;
 
 	void handleEvent(const sf::Event& event, sf::RenderWindow& window) const;
 	void draw(sf::RenderWindow& window) const;
+
+	bool operator<(const Button& other) const;
 
 private:
 	sf::RectangleShape m_button{};

@@ -31,7 +31,6 @@ private:
 	AdjacencyMatrix m_adjacencyMatrix;
 	EntityList m_entityList{};
 	UserInput m_userInput{};
-	std::vector<Button> m_buttons{};
 
 	Context m_context;
 };

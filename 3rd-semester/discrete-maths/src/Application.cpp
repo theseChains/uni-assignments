@@ -9,7 +9,6 @@ Application::Application()
 	, m_adjacencyMatrix{}
 	, m_entityList{}
 	, m_userInput{}
-	, m_buttons{}
 	, m_context{ m_window, m_adjacencyMatrix, m_entityList, m_fontHolder }
 {
 	m_window.setVerticalSyncEnabled(true);
@@ -20,8 +19,7 @@ Application::Application()
 	m_adjacencyMatrix.setMainFontText(m_fontHolder.getFont(Fonts::ID::main));
 	m_adjacencyMatrix.setMonoFontText(m_fontHolder.getFont(Fonts::ID::mono));
 
-	m_buttons.push_back({ "click me", { 15.0f, 350.0f }, m_fontHolder.getFont(Fonts::ID::main) });
-	m_buttons.push_back({ "clik me!", { 175.0f, 350.0f }, m_fontHolder.getFont(Fonts::ID::mono) });
+	m_userInput.initializeButtons(m_fontHolder.getFont(Fonts::ID::mono));
 }
 
 void Application::run()
@@ -40,10 +38,7 @@ void Application::processInput()
 	sf::Event event{};
 	while (m_window.pollEvent(event))
 	{
-		m_userInput.handleEvent(event, m_context/*, m_buttons*/);
-
-		for (const auto& button : m_buttons)
-			button.handleEvent(event, m_window);
+		m_userInput.handleEvent(event, m_context);
 
 		if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape)
 			m_window.close();
@@ -64,9 +59,8 @@ void Application::render()
 
 	m_entityList.draw(m_window);
 	m_adjacencyMatrix.draw(m_window);
-	
-	for (const auto& button : m_buttons)
-		button.draw(m_window);
+
+	m_userInput.drawButtons(m_window);
 
 	m_window.display();
 }

@@ -26,10 +26,12 @@ void UserInput::handleEvent(const sf::Event& event, Context context)
 			m_actionBinding[found->second](context);
 		}
 	}
-	// maybe make the 2 buttons a part of this struct?
-	// then write here something like if (button1.isPressed): print out the answer or something
-	// maybe even make an array of buttons and just run that if statement for each button
-	// that would be better i guess
+}
+
+void UserInput::drawButtons(sf::RenderWindow& window)
+{
+	for (const auto& [button, action] : m_buttonBinding)
+		button.draw(window);
 }
 
 void UserInput::initializeBindings()
@@ -40,6 +42,15 @@ void UserInput::initializeBindings()
 	m_keyBinding[sf::Keyboard::R] = Action::removeVertex;
 	m_keyBinding[sf::Keyboard::D] = Action::chooseVertexForDistance;
 	m_keyBinding[sf::Keyboard::N] = Action::chooseVertexForNumberOfRoutes;
+}
+
+void UserInput::initializeButtons(const sf::Font& font)
+{
+	Button distanceAnswerButton{ "distance", { 15.0f, 350.0f }, font };
+	Button numberOfRoutesAnswerButton{ "routes", { 175.0f, 350.0f }, font };
+
+	m_buttonBinding[distanceAnswerButton] = Action::getDistance;
+	m_buttonBinding[numberOfRoutesAnswerButton] = Action::getNumberOfRoutes;
 }
 
 void UserInput::initializeActionBindings()

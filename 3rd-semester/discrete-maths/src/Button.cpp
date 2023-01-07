@@ -37,3 +37,9 @@ void Button::draw(sf::RenderWindow& window) const
 	window.draw(m_button);
 	window.draw(m_text);
 }
+
+bool Button::operator<(const Button& other) const
+{
+	// implemented just so that i can put it into an std::map... is this bad design?
+	return m_text.getString().getSize() < other.m_text.getString().getSize();
+}

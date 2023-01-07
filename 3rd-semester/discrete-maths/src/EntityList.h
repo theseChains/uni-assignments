@@ -36,7 +36,8 @@ public:
 	std::array<int, 2> getChosenRouteVerticesIndices() const;
 	std::array<int, 2> getChosenDistanceVerticesIndices() const;
 
-	bool allVerticesAreChosen() const;
+	bool allDistanceVerticesAreChosen() const;
+	bool allRouteVerticesAreChosen() const;
 
 	void changeVertexEntityColorAtIndex(std::size_t index);
 	void changeVertexEntityPointCount(std::size_t index);

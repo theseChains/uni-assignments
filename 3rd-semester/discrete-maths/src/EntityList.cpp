@@ -63,9 +63,14 @@ Edge& EntityList::getEdgeEntityAtIndex(std::size_t index)
 	return m_edgeEntities.at(index);
 }
 
-bool EntityList::allVerticesAreChosen() const
+bool EntityList::allDistanceVerticesAreChosen() const
 {
-	return (m_numberOfChosenRouteVertices == 2 && m_numberOfChosenDistanceVertices == 2);
+	return m_numberOfChosenDistanceVertices == 2;
+}
+
+bool EntityList::allRouteVerticesAreChosen() const
+{
+	return m_numberOfChosenRouteVertices == 2;
 }
 
 std::array<int, 2> EntityList::getChosenRouteVerticesIndices() const

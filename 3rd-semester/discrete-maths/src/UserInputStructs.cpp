@@ -119,7 +119,7 @@ void MatrixNumberChanger::removeEdge(std::size_t rowIndex, std::size_t columnInd
 void AnswerIndicator::operator()(Context context)
 {
 	EntityList& entityList{ context.m_entityList };
-	if (!entityList.allVerticesAreChosen())
+	if (!entityList.allRouteVerticesAreChosen())
 		return;
 
 	// i'm thinking of splitting this into two structs, each of which will be called

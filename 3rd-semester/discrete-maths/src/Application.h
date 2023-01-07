@@ -5,10 +5,13 @@
 #include <SFML/System/Time.hpp>
 
 #include "AdjacencyMatrix.h"
+#include "Button.h"
 #include "Context.h"
 #include "EntityList.h"
 #include "FontHolder.h"
 #include "UserInput.h"
+
+#include <vector>
 
 class Application
 {
@@ -28,6 +31,7 @@ private:
 	AdjacencyMatrix m_adjacencyMatrix;
 	EntityList m_entityList{};
 	UserInput m_userInput{};
+	std::vector<Button> m_buttons{};
 
 	Context m_context;
 };

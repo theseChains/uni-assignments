@@ -28,7 +28,7 @@ AdjacencyMatrix::handleLeftMouseClick(sf::RenderWindow& window, std::size_t numb
 		for (std::size_t columnIndex{ 0 }; const auto& bound : row)
 		{
 			if (bound.contains(MouseInfo::getMousePosition(window)) &&
-					rowIndex < numberOfActiveVertices && columnIndex < numberOfActiveVertices)
+				rowIndex < numberOfActiveVertices && columnIndex < numberOfActiveVertices)
 			{
 				m_matrix[rowIndex,columnIndex] = !m_matrix[rowIndex,columnIndex];
 				m_matrix[columnIndex,rowIndex] = !m_matrix[columnIndex,rowIndex];
@@ -52,14 +52,10 @@ void AdjacencyMatrix::reorganizeMatrixAfterVertexRemoval(std::size_t indexOfDele
 		for (std::size_t column{ 0 }; column < numberOfActiveVertices; ++column, ++newColumn)
 		{
 			if (row == indexOfDeletedVertex)
-			{
 				++row;
-			}
 
 			if (column == indexOfDeletedVertex)
-			{
 				++column;
-			}
 
 			m_matrix[newRow,newColumn] = m_matrix[row,column];
 		}
@@ -196,10 +192,7 @@ std::string AdjacencyMatrix::getNumbersFromMatrix(std::size_t row)
 {
 	std::string matrixRowString{ "   " };
 	for (std::size_t j{ 0 }; j < constants::maxNumberOfVertices; ++j)
-	{
-		// retreive numbers from the string
 		matrixRowString += std::to_string(m_matrix[row - 1,j]) + "  ";
-	}
 
 	return matrixRowString;
 }

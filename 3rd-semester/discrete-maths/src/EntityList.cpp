@@ -68,14 +68,16 @@ bool EntityList::allVerticesAreChosen() const
 	return (m_numberOfChosenRouteVertices == 2 && m_numberOfChosenDistanceVertices == 2);
 }
 
-const std::vector<Vertex>& EntityList::getChosenRouteVertices() const
+std::array<int, 2> EntityList::getChosenRouteVerticesIndices() const
 {
-	return m_chosenRouteVertices;
+	return { m_chosenRouteVertices[0].getIndexFromLabel(),
+			 m_chosenRouteVertices[1].getIndexFromLabel() };
 }
 
-const std::vector<Vertex>& EntityList::getChosenDistanceVertices() const
+std::array<int, 2> EntityList::getChosenDistanceVerticesIndices() const
 {
-	return m_chosenDistanceVertices;
+	return { m_chosenDistanceVertices[0].getIndexFromLabel(),
+			 m_chosenDistanceVertices[1].getIndexFromLabel() };
 }
 
 void EntityList::changeVertexEntityColorAtIndex(std::size_t index)

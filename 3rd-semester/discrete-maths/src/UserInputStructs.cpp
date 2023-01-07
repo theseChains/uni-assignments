@@ -122,27 +122,24 @@ void AnswerIndicator::operator()(Context context)
 	if (!entityList.allVerticesAreChosen())
 		return;
 
+	// i'm thinking of splitting this into two structs, each of which will be called
+	// on a press of a corresponding button
+	// what needs to be done here is:
+	// 1. calculate answer(s) with the algorithm(s)
+	// 2. show the answer(s) and the matrix
+
 	Matrix matrix{ context.m_adjacencyMatrix.getMatrix() };
 	std::size_t numberOfVertices{ entityList.getVertexListSize() };
 	std::size_t numberOfEdges{ entityList.getEdgeListSize() };
 	int routeDistance{ static_cast<int>(numberOfEdges - numberOfVertices + 3) };
 
-	std::vector<Vertex> chosenRouteVertices{ entityList.getChosenRouteVertices() };
-	std::array<int, 2> indices{};
-	for (int index{ 0 }; const auto& vertex : chosenRouteVertices)
-	{
-		indices[index++] = vertex.getIndexFromLabel();
-	}
+	std::array<int, 2> indices{ entityList.getChosenRouteVerticesIndices() };
 	Matrix matrixRaisedToPower{ MatrixOperations::getMatrixRaisedToPower(matrix, routeDistance) };
 	std::cout << "number of routes of distance " << routeDistance << " between vertices " <<
 		indices[0] << " and " << indices[1] << " is: " <<
-		matrixRaisedToPower[indices[0],indices[1]] << '\n';
+			matrixRaisedToPower[indices[0],indices[1]] << '\n';
 
-	std::vector<Vertex> chosenDistanceVertices{ entityList.getChosenDistanceVertices() };
-	for (int index{ 0 }; const auto& vertex : chosenDistanceVertices)
-	{
-		indices[index++] = vertex.getIndexFromLabel();
-	}
+	indices = entityList.getChosenDistanceVerticesIndices();
 	Matrix newMatrix{ context.m_adjacencyMatrix.getMatrix() };
 	int power{ 1 };
 	while (!newMatrix[indices[0],indices[1]])

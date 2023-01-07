@@ -33,8 +33,8 @@ public:
 
 	Vertex& getVertexEntityAtIndex(std::size_t index);
 	Edge& getEdgeEntityAtIndex(std::size_t index);
-	const std::vector<Vertex>& getChosenRouteVertices() const;
-	const std::vector<Vertex>& getChosenDistanceVertices() const;
+	std::array<int, 2> getChosenRouteVerticesIndices() const;
+	std::array<int, 2> getChosenDistanceVerticesIndices() const;
 
 	bool allVerticesAreChosen() const;
 

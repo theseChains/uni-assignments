@@ -137,4 +137,20 @@ void AnswerIndicator::operator()(Context context)
 	std::cout << "number of routes of distance " << routeDistance << " between vertices " <<
 		indices[0] << " and " << indices[1] << " is: " <<
 		matrixRaisedToPower[indices[0],indices[1]] << '\n';
+
+	std::vector<Vertex> chosenDistanceVertices{ entityList.getChosenDistanceVertices() };
+	for (int index{ 0 }; const auto& vertex : chosenDistanceVertices)
+	{
+		indices[index++] = vertex.getIndexFromLabel();
+	}
+	Matrix newMatrix{ context.m_adjacencyMatrix.getMatrix() };
+	int power{ 1 };
+	while (!newMatrix[indices[0],indices[1]])
+	{
+		++power;
+		newMatrix = MatrixOperations::getMatrixRaisedToPower(newMatrix, power);
+	}
+
+	std::cout << "distance between vertices " << indices[0] << " and " << indices[1] << " is: " <<
+		power << '\n';
 }

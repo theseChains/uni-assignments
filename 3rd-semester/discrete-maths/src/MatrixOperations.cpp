@@ -1,45 +1,36 @@
 #include "MatrixOperations.h"
 
-#include <iostream>
 #include <ranges>
+#include <stdexcept>
 
-// todo: make a matrix class bro
-
-Matrix operator*(const Matrix& first, const Matrix& second)
+Matrix getIdentityMatrix()
 {
-	Matrix result{};
-	// 3 цикла, итерирующие от 0 до 9
+	Matrix identityMatrix{};
+
 	for (int row : std::views::iota(0, 10))
 	{
 		for (int column : std::views::iota(0, 10))
 		{
-			// todo: change something to a more meaningful name
-			for (int something : std::views::iota(0, 10))
-			{
-				// todo: explain this, i guess?
-				result[row][column] += first[row][something] * second[something][column];
-			}
+			identityMatrix[row,column] = (row == column);
 		}
 	}
 
-	return result;
+	return identityMatrix;
 }
 
-[[nodiscard]] Matrix MatrixOperations::raiseMatrixToPower(Matrix& matrix, int power)
+[[nodiscard]] Matrix MatrixOperations::getMatrixRaisedToPower(Matrix matrix, int power)
 {
-	// todo: if power == 0 then return identity matrix
-	// если степень равна 1, то возвращаем данную матрицу
-	if (power == 1)
-		return matrix;
+	// в нашем случае степень - это длина маршрута, отрицательная степень не имеет смысла
+	if (power < 0)
+		throw std::runtime_error{ "Matrix::raiseMatrixToPower: power is less than 0" };
 
-	// определяем результирующую матрицу, инициализируем её данной матрицей
-	Matrix result{ matrix };
+	// определяем результирующую матрицу, инициализируем её единичной матрицей
+	Matrix result{ getIdentityMatrix() };
 	// также определяем вспомогательную временную матрицу для сохранения результатов произведений
 	Matrix temporary{};
 
 	// можем использовать алгоритм бинарного возведения в степень
-	// вычитаем из степени единичку, так как в результате уже находится исходная матрица
-	--power;
+	// таким образом, асимптотика алгоритма равна O(n^3 * logk), n - размер матрицы, k - степень
 	while (power)
 	{
 		// степень нечётная, вычитаем из степени 1
@@ -59,7 +50,7 @@ Matrix operator*(const Matrix& first, const Matrix& second)
 			return result;
 
 		// возводим данную матрицу в квадрат
-		matrix = matrix * matrix;
+		matrix *= matrix;
 	}
 
 	return result;

@@ -11,6 +11,7 @@
 #include <vector>
 
 #include "Edge.h"
+#include "Matrix.h"
 #include "Vertex.h"
 
 class EntityList
@@ -37,8 +38,7 @@ public:
 	void changeVertexEntityPointCount(std::size_t index);
 
 	void reorganizeVertexLabels();
-	void reorganizeEdges(const std::array<std::array<bool, 10>, 10>& matrix,
-			std::size_t numberOfActiveVertices);
+	void reorganizeEdges(const Matrix& matrix, std::size_t numberOfActiveVertices);
 
 	void draw(sf::RenderWindow& window) const;
 

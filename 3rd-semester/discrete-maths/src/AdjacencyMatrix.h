@@ -12,6 +12,7 @@
 #include <tuple>
 
 #include "FontHolder.h"
+#include "Matrix.h"
 
 class AdjacencyMatrix
 {
@@ -20,7 +21,7 @@ public:
 	{
 		std::size_t rowIndex{};
 		std::size_t columnIndex{};
-		bool matrixValue{};
+		int matrixValue{};
 	};
 
 	AdjacencyMatrix();
@@ -35,7 +36,7 @@ public:
 	void setMainFontText(const sf::Font& font);
 	void setMonoFontText(const sf::Font& font);
 
-	std::array<std::array<bool, 10>, 10> getMatrix() const;
+	const Matrix& getMatrix() const;
 
 private:
 	void initializeTopText();
@@ -48,7 +49,7 @@ private:
 
 private:
 	using TextCoordinates = std::array<std::array<std::pair<float, float>, 10>, 10>;
-	std::array<std::array<bool, 10>, 10> m_matrix{};
+	Matrix m_matrix{};
 
 	const sf::Font* m_mainFont{};
 	const sf::Font* m_monoFont{};

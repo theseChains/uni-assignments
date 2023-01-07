@@ -30,9 +30,9 @@ AdjacencyMatrix::handleLeftMouseClick(sf::RenderWindow& window, std::size_t numb
 			if (bound.contains(MouseInfo::getMousePosition(window)) &&
 					rowIndex < numberOfActiveVertices && columnIndex < numberOfActiveVertices)
 			{
-				m_matrix[rowIndex][columnIndex] = !m_matrix[rowIndex][columnIndex];
-				m_matrix[columnIndex][rowIndex] = !m_matrix[columnIndex][rowIndex];
-				return IndicesAndValue{ rowIndex, columnIndex, m_matrix[rowIndex][columnIndex] };
+				m_matrix[rowIndex,columnIndex] = !m_matrix[rowIndex,columnIndex];
+				m_matrix[columnIndex,rowIndex] = !m_matrix[columnIndex,rowIndex];
+				return IndicesAndValue{ rowIndex, columnIndex, m_matrix[rowIndex,columnIndex] };
 			}
 			++columnIndex;
 		}
@@ -61,7 +61,7 @@ void AdjacencyMatrix::reorganizeMatrixAfterVertexRemoval(std::size_t indexOfDele
 				++column;
 			}
 
-			m_matrix[newRow][newColumn] = m_matrix[row][column];
+			m_matrix[newRow,newColumn] = m_matrix[row,column];
 		}
 
 		newColumn = 0;
@@ -69,12 +69,12 @@ void AdjacencyMatrix::reorganizeMatrixAfterVertexRemoval(std::size_t indexOfDele
 
 	for (auto row : std::views::iota(0ull, numberOfActiveVertices))
 	{
-		m_matrix[row][numberOfActiveVertices - 1] = 0;
+		m_matrix[row,numberOfActiveVertices - 1] = 0;
 	}
 
 	for (auto column : std::views::iota(0ull, numberOfActiveVertices))
 	{
-		m_matrix[numberOfActiveVertices - 1][column] = 0;
+		m_matrix[numberOfActiveVertices - 1,column] = 0;
 	}
 }
 
@@ -111,7 +111,7 @@ void AdjacencyMatrix::setMonoFontText(const sf::Font& font)
 	initializeMatrixText();
 }
 
-std::array<std::array<bool, 10>, 10> AdjacencyMatrix::getMatrix() const
+const Matrix& AdjacencyMatrix::getMatrix() const
 {
 	return m_matrix;
 }
@@ -198,7 +198,7 @@ std::string AdjacencyMatrix::getNumbersFromMatrix(std::size_t row)
 	for (std::size_t j{ 0 }; j < constants::maxNumberOfVertices; ++j)
 	{
 		// retreive numbers from the string
-		matrixRowString += std::to_string(m_matrix[row - 1][j]) + "  ";
+		matrixRowString += std::to_string(m_matrix[row - 1,j]) + "  ";
 	}
 
 	return matrixRowString;

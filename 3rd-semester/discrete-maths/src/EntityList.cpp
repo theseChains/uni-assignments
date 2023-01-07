@@ -109,15 +109,14 @@ void EntityList::reorganizeVertexLabels()
 	}
 }
 
-void EntityList::reorganizeEdges(const std::array<std::array<bool, 10>, 10>& matrix,
-		std::size_t numberOfActiveVertices)
+void EntityList::reorganizeEdges(const Matrix& matrix, std::size_t numberOfActiveVertices)
 {
 	std::vector<Edge> newEdges{};
 	for (std::size_t row{ 0 }; row < numberOfActiveVertices; ++row)
 	{
 		for (std::size_t column{ row + 1 }; column < numberOfActiveVertices; ++column)
 		{
-			if (matrix[row][column] == 1)
+			if (matrix[row,column] == 1)
 			{
 				auto firstVertexPos{ getVertexEntityAtIndex(row).getCirclePosition() };
 				auto secondVertexPos{ getVertexEntityAtIndex(column).getCirclePosition() };

@@ -8,8 +8,6 @@
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/Graphics/Text.hpp>
 
-#include <iostream>
-
 void VertexCreator::operator()(Context context)
 {
 	sf::RenderWindow& window{ context.m_window };
@@ -116,38 +114,35 @@ void MatrixNumberChanger::removeEdge(std::size_t rowIndex, std::size_t columnInd
 	entityList.popEdgeEntityAtIndices(rowIndex, columnIndex);
 }
 
-void AnswerIndicator::operator()(Context context)
+void DistanceSolver::operator()(Context context)
 {
 	EntityList& entityList{ context.m_entityList };
 	if (!entityList.allRouteVerticesAreChosen())
 		return;
 
-	// i'm thinking of splitting this into two structs, each of which will be called
-	// on a press of a corresponding button
-	// what needs to be done here is:
-	// 1. calculate answer(s) with the algorithm(s)
-	// 2. show the answer(s) and the matrix
+	std::array<int, 2> indices{ entityList.getChosenDistanceVerticesIndices() };
+	Matrix matrix{ context.m_adjacencyMatrix.getMatrix() };
+	int power{ 1 };
+	while (!matrix[indices[0],indices[1]])
+	{
+		++power;
+		matrix = MatrixOperations::getMatrixRaisedToPower(matrix, power);
+	}
+	// power is the answer
+}
+
+void NumberOfRoutesSolver::operator()(Context context)
+{
+	EntityList& entityList{ context.m_entityList };
+	if (!entityList.allDistanceVerticesAreChosen())
+		return;
 
 	Matrix matrix{ context.m_adjacencyMatrix.getMatrix() };
 	std::size_t numberOfVertices{ entityList.getVertexListSize() };
 	std::size_t numberOfEdges{ entityList.getEdgeListSize() };
 	int routeDistance{ static_cast<int>(numberOfEdges - numberOfVertices + 3) };
 
-	std::array<int, 2> indices{ entityList.getChosenRouteVerticesIndices() };
+	[[maybe_unused]] std::array<int, 2> indices{ entityList.getChosenRouteVerticesIndices() };
 	Matrix matrixRaisedToPower{ MatrixOperations::getMatrixRaisedToPower(matrix, routeDistance) };
-	std::cout << "number of routes of distance " << routeDistance << " between vertices " <<
-		indices[0] << " and " << indices[1] << " is: " <<
-			matrixRaisedToPower[indices[0],indices[1]] << '\n';
-
-	indices = entityList.getChosenDistanceVerticesIndices();
-	Matrix newMatrix{ context.m_adjacencyMatrix.getMatrix() };
-	int power{ 1 };
-	while (!newMatrix[indices[0],indices[1]])
-	{
-		++power;
-		newMatrix = MatrixOperations::getMatrixRaisedToPower(newMatrix, power);
-	}
-
-	std::cout << "distance between vertices " << indices[0] << " and " << indices[1] << " is: " <<
-		power << '\n';
+	// matrixRaisedToPower[indices[0],indices[1]] is the answer
 }

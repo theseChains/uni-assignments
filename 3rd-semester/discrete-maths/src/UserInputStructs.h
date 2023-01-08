@@ -36,4 +36,14 @@ struct AnswerIndicator
 	void operator()(Context context);
 };
 
+struct DistanceSolver
+{
+	void operator()(Context context);
+};
+
+struct NumberOfRoutesSolver
+{
+	void operator()(Context context);
+};
+
 #endif

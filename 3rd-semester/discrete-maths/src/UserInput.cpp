@@ -17,6 +17,12 @@ void UserInput::handleEvent(const sf::Event& event, Context context)
 		{
 			m_actionBinding[found->second](context);
 		}
+
+		for (const auto& [button, buttonAction] : m_buttonBinding)
+		{
+			if (button.isMouseOnButton(context.m_window))
+				m_actionBinding[buttonAction](context);
+		}
 	}
 	else if (event.type == sf::Event::KeyPressed)
 	{
@@ -60,4 +66,6 @@ void UserInput::initializeActionBindings()
 	m_actionBinding[Action::chooseVertexForNumberOfRoutes] = VertexChooserForRoutes{};
 	m_actionBinding[Action::chooseVertexForDistance] = VertexChooserForDistance{};
 	m_actionBinding[Action::changeMatrixNumber] = MatrixNumberChanger{};
+	m_actionBinding[Action::getDistance] = DistanceSolver{};
+	m_actionBinding[Action::getNumberOfRoutes] = NumberOfRoutesSolver{};
 }

@@ -24,12 +24,9 @@ bool Button::isMouseOnButton(sf::RenderWindow& window) const
 	return buttonBounds.contains(mousePosition);
 }
 
-void Button::handleEvent(const sf::Event& event, sf::RenderWindow& window) const
+bool Button::isClicked(const sf::Event& event, sf::RenderWindow& window) const
 {
-	if (event.type == sf::Event::MouseButtonPressed && isMouseOnButton(window))
-	{
-		std::cout << "button clicked\n";
-	}
+	return (event.type == sf::Event::MouseButtonPressed && isMouseOnButton(window));
 }
 
 void Button::draw(sf::RenderWindow& window) const

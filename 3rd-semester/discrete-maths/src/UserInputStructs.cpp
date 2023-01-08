@@ -127,6 +127,9 @@ void DistanceSolver::operator()(Context context)
 	{
 		++power;
 		matrix = MatrixOperations::getMatrixRaisedToPower(matrix, power);
+		// the vertices probably cannot be connected by that point
+		if (power > 20)
+			return;
 	}
 	context.m_answerDisplay.setDistanceAnswer(indices, power);
 }

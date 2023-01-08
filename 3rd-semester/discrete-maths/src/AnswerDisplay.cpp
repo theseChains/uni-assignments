@@ -20,7 +20,7 @@ void AnswerDisplay::setAnswerFont(const sf::Font& font)
 void AnswerDisplay::setDistanceAnswer(const std::array<int, 2>& indices, int power)
 {
 	std::ostringstream stream{};
-	stream << "Distance between vertices v" + std::to_string(indices[0]) + "and v" +
+	stream << "Distance between vertices v" + std::to_string(indices[0]) + " and v" +
 			std::to_string(indices[1]) + '\n' << std::setw(35) << "is equal to " +
 					std::to_string(power);
 	m_answerText.setString(stream.str());

@@ -1,27 +1,23 @@
 #include "Button.h"
 #include "MouseInfo.h"
-
-#include <iostream>
+#include "Colors.h"
 
 Button::Button(const std::string& text, const sf::Vector2f& position, const sf::Font& font)
 {
 	m_button.setSize({ 150.0f, 50.0f });
-	m_button.setFillColor({ 100, 100, 100 });
+	m_button.setFillColor(color::button);
 	m_button.setPosition(position);
 
 	m_text.setFont(font);
 	m_text.setString(text);
 	m_text.setCharacterSize(18);
 	m_text.setPosition(position + sf::Vector2f{ 35.0f, 15.0f });
-	m_text.setFillColor({ 200, 255, 100 });
+	m_text.setFillColor(color::buttonText);
 }
 
 bool Button::isMouseOnButton(sf::RenderWindow& window) const
 {
-	auto buttonBounds{ m_button.getGlobalBounds() };
-	auto mousePosition{ MouseInfo::getMousePosition(window) };
-
-	return buttonBounds.contains(mousePosition);
+	return m_button.isMouseOnShape(MouseInfo::getMousePosition(window));
 }
 
 bool Button::isClicked(const sf::Event& event, sf::RenderWindow& window) const
@@ -31,7 +27,7 @@ bool Button::isClicked(const sf::Event& event, sf::RenderWindow& window) const
 
 void Button::draw(sf::RenderWindow& window) const
 {
-	window.draw(m_button);
+	m_button.draw(window);
 	window.draw(m_text);
 }
 

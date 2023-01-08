@@ -1,6 +1,8 @@
 #ifndef BUTTON_H
 #define BUTTON_H
 
+#include "RoundedRectangle.h"
+
 #include <SFML/Graphics/Font.hpp>
 #include <SFML/Graphics/Text.hpp>
 #include <SFML/Graphics/RectangleShape.hpp>
@@ -23,7 +25,7 @@ public:
 	bool operator<(const Button& other) const;
 
 private:
-	sf::RectangleShape m_button{};
+	RoundedRectangle m_button{};
 	sf::Text m_text{};
 };
 

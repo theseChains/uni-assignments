@@ -5,12 +5,14 @@
 
 Matrix getIdentityMatrix()
 {
+  // получаем единичную матрицу
 	Matrix identityMatrix{};
 
 	for (int row : std::views::iota(0, 10))
 	{
 		for (int column : std::views::iota(0, 10))
 		{
+      // если строка и столбец равны, присваиваем единичку
 			identityMatrix[row,column] = (row == column);
 		}
 	}

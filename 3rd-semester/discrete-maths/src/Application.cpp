@@ -7,9 +7,10 @@ Application::Application()
 		"assignment" } }
 	, m_fontHolder{}
 	, m_adjacencyMatrix{}
+	, m_answerDisplay{}
 	, m_entityList{}
 	, m_userInput{}
-	, m_context{ m_window, m_adjacencyMatrix, m_entityList, m_fontHolder }
+	, m_context{ m_window, m_adjacencyMatrix, m_entityList, m_fontHolder, m_answerDisplay }
 {
 	m_window.setVerticalSyncEnabled(true);
 
@@ -18,6 +19,8 @@ Application::Application()
 
 	m_adjacencyMatrix.setMainFontText(m_fontHolder.getFont(Fonts::ID::main));
 	m_adjacencyMatrix.setMonoFontText(m_fontHolder.getFont(Fonts::ID::mono));
+
+	m_answerDisplay.setAnswerFont(m_fontHolder.getFont(Fonts::ID::main));
 
 	m_userInput.initializeButtons(m_fontHolder.getFont(Fonts::ID::mono));
 }
@@ -59,8 +62,8 @@ void Application::render()
 
 	m_entityList.draw(m_window);
 	m_adjacencyMatrix.draw(m_window);
-
 	m_userInput.drawButtons(m_window);
+	m_answerDisplay.draw(m_window);
 
 	m_window.display();
 }

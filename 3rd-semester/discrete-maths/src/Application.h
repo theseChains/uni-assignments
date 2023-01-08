@@ -5,6 +5,7 @@
 #include <SFML/System/Time.hpp>
 
 #include "AdjacencyMatrix.h"
+#include "AnswerDisplay.h"
 #include "Button.h"
 #include "Context.h"
 #include "EntityList.h"
@@ -29,6 +30,7 @@ private:
 	FontHolder m_fontHolder{};
 
 	AdjacencyMatrix m_adjacencyMatrix;
+	AnswerDisplay m_answerDisplay{};
 	EntityList m_entityList{};
 	UserInput m_userInput{};
 

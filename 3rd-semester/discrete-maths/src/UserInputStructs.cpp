@@ -114,49 +114,36 @@ void MatrixNumberChanger::removeEdge(std::size_t rowIndex, std::size_t columnInd
 	entityList.popEdgeEntityAtIndices(rowIndex, columnIndex);
 }
 
-// вычисление расстояния между вершинами
 void DistanceSolver::operator()(Context context)
 {
 	EntityList& entityList{ context.m_entityList };
 	if (!entityList.allDistanceVerticesAreChosen())
 		return;
 
-	// получаем индексы выбранных вершин
 	std::array<int, 2> indices{ entityList.getChosenDistanceVerticesIndices() };
-	// получаем матрицу смежности
 	Matrix matrix{ context.m_adjacencyMatrix.getMatrix() };
 	int power{ 1 };
-	// возводим матрицу смежности в степень power, начиная с 2, до тех пор, пока элемент
-	// матрицы с индексами выбранных вершин не будет отличен от нуля
 	while (!matrix[indices[0],indices[1]])
 	{
 		++power;
 		matrix = MatrixOperations::getMatrixRaisedToPower(matrix, power);
 	}
-	// полученная степень и будет являться наименьшим расстоянием между вершинами
 	context.m_answerDisplay.setDistanceAnswer(indices, power);
 }
 
-// вычисление количества маршрутов длины (q - p + 3) между вершинами
 void NumberOfRoutesSolver::operator()(Context context)
 {
 	EntityList& entityList{ context.m_entityList };
 	if (!entityList.allRouteVerticesAreChosen())
 		return;
 
-	// получаем матрицу смежности
 	Matrix matrix{ context.m_adjacencyMatrix.getMatrix() };
-	// получаем количество вершин
 	std::size_t numberOfVertices{ entityList.getVertexListSize() };
-	// получаем количество рёбер
 	std::size_t numberOfEdges{ entityList.getEdgeListSize() };
-	// вычисляем искомую длину маршрутов по формуле (q - p + 3)
 	int routeDistance{ static_cast<int>(numberOfEdges - numberOfVertices + 3) };
-	// возводим матрицу в степень длины маршрута
+
 	matrix = MatrixOperations::getMatrixRaisedToPower(matrix, routeDistance);
-	// получаем индексы выбранных вершин
-	[[maybe_unused]] std::array<int, 2> indices{ entityList.getChosenRouteVerticesIndices() };
-	// значение элемента матрицы с индексами выбранны вершин и будет являться количеством маршрутов
+	std::array<int, 2> indices{ entityList.getChosenRouteVerticesIndices() };
 	context.m_answerDisplay.setNumberOfRoutesAnswer(indices, routeDistance,
 			matrix[indices[0],indices[1]]);
 }

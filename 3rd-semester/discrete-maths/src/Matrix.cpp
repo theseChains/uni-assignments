@@ -27,15 +27,12 @@ const int& Matrix::operator[](int row, int column) const
 Matrix Matrix::operator*(const Matrix& multiplier)
 {
 	Matrix result{};
-	// 3 цикла, итерирующие от 0 до 9
 	for (int row : std::views::iota(0, 10))
 	{
 		for (int column : std::views::iota(0, 10))
 		{
 			for (int index : std::views::iota(0, 10))
 			{
-				// элемент [row][column] результирующей матрицы считаем как сумму произведений
-				// элементов строки row первой матрицы на элементы столбца column второй матрицы
 				result[row,column] += m_matrix[row][index] * multiplier[index,column];
 			}
 		}

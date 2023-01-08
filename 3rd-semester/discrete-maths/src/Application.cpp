@@ -22,7 +22,7 @@ Application::Application()
 
 	m_answerDisplay.setAnswerFont(m_fontHolder.getFont(Fonts::ID::main));
 
-	m_userInput.initializeButtons(m_fontHolder.getFont(Fonts::ID::mono));
+	m_userInput.initializeButtons(m_fontHolder.getFont(Fonts::ID::main));
 }
 
 void Application::run()

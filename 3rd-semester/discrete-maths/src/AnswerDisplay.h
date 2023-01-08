@@ -19,7 +19,8 @@ public:
 	void draw(sf::RenderWindow& window) const;
 
 private:
-	sf::Text m_answerText{};
+	sf::Text m_distanceAnswerText{};
+	sf::Text m_numberOfRoutesAnswerText{};
 	const sf::Font* m_font{};
 };
 

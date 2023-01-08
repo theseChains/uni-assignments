@@ -11,7 +11,8 @@ Button::Button(const std::string& text, const sf::Vector2f& position, const sf::
 	m_text.setFont(font);
 	m_text.setString(text);
 	m_text.setCharacterSize(18);
-	m_text.setPosition(position + sf::Vector2f{ 35.0f, 15.0f });
+	float textHeight{ m_text.getGlobalBounds().height };
+	m_text.setPosition(position + sf::Vector2f{ 30.0f, (50.0f - textHeight) / 2.0f - 5.0f });
 	m_text.setFillColor(color::buttonText);
 }
 

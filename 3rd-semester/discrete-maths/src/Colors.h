@@ -14,8 +14,9 @@ namespace color
 	// king krule - midnight 01
 	inline const sf::Color label{ 25, 25, 112 };
 	inline const sf::Color chosenLabel{ 55, 198, 255 };
-	inline const sf::Color button{ 255, 222, 0 };
-	inline const sf::Color buttonText{ 75, 0, 130 };
+	inline const sf::Color button{ 130, 163, 255 };
+	inline const sf::Color buttonText{ 33, 46, 82 };
+	inline const sf::Color answerText{ 200, 255, 100 };
 }
 
 #endif

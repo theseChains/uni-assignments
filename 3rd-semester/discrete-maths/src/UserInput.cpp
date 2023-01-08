@@ -52,8 +52,8 @@ void UserInput::initializeBindings()
 
 void UserInput::initializeButtons(const sf::Font& font)
 {
-	Button distanceAnswerButton{ "distance", { 15.0f, 350.0f }, font };
-	Button numberOfRoutesAnswerButton{ "routes", { 175.0f, 350.0f }, font };
+	Button distanceAnswerButton{ "Get distance", { 120.0f, 330.0f }, font };
+	Button numberOfRoutesAnswerButton{ "Get number\n  of routes", { 120.0f, 530.0f }, font };
 
 	m_buttonBinding[distanceAnswerButton] = Action::getDistance;
 	m_buttonBinding[numberOfRoutesAnswerButton] = Action::getNumberOfRoutes;

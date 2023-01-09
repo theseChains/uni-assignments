@@ -16,7 +16,7 @@ namespace color
 	inline const sf::Color chosenLabel{ 55, 198, 255 };
 	inline const sf::Color button{ 130, 163, 255 };
 	inline const sf::Color buttonText{ 33, 46, 82 };
-	inline const sf::Color answerText{ 200, 255, 100 };
+	inline const sf::Color answerText{ 254, 219, 0 };
 }
 
 #endif

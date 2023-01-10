@@ -123,15 +123,19 @@ void DistanceSolver::operator()(Context context)
 	std::array<int, 2> indices{ entityList.getChosenDistanceVerticesIndices() };
 	Matrix matrix{ context.m_adjacencyMatrix.getMatrix() };
 	int power{ 1 };
+	AnswerDisplay& answerDisplay{ context.m_answerDisplay };
 	while (!matrix[indices[0],indices[1]])
 	{
 		++power;
 		matrix = MatrixOperations::getMatrixRaisedToPower(matrix, power);
-		// the vertices probably cannot be connected by that point
-		if (power > 20)
+		// the vertex cannot be reached by that point
+		if (power > 9)
+		{
+			answerDisplay.setUnreachableAnswer(indices);
 			return;
+		}
 	}
-	context.m_answerDisplay.setDistanceAnswer(indices, power);
+	answerDisplay.setDistanceAnswer(indices, power);
 }
 
 void NumberOfRoutesSolver::operator()(Context context)

@@ -12,6 +12,7 @@ public:
 	AnswerDisplay();
 
 	void setAnswerFont(const sf::Font& font);
+	void setUnreachableAnswer(const std::array<int, 2>& indices);
 	void setDistanceAnswer(const std::array<int, 2>& indices, int power);
 	void setNumberOfRoutesAnswer(const std::array<int, 2>& indices, int routeDistance,
 			int numberOfRoutes);

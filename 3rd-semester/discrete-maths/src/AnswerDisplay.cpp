@@ -31,6 +31,14 @@ void AnswerDisplay::setAnswerFont(const sf::Font& font)
 	m_numberOfRoutesAnswerText.setFont(*m_font);
 }
 
+void AnswerDisplay::setUnreachableAnswer(const std::array<int, 2>& indices)
+{
+	std::ostringstream stream{};
+	stream << std::setw(45) << "Vertices v" + std::to_string(indices[0]) + " and v" +
+			std::to_string(indices[1]) + " are not connected";
+	m_distanceAnswerText.setString(stream.str());
+}
+
 void AnswerDisplay::setDistanceAnswer(const std::array<int, 2>& indices, int power)
 {
 	std::ostringstream stream{};

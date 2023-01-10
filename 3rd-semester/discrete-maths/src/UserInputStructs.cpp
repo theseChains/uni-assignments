@@ -8,6 +8,8 @@
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/Graphics/Text.hpp>
 
+#include <iostream>
+
 void VertexCreator::operator()(Context context)
 {
 	sf::RenderWindow& window{ context.m_window };
@@ -124,11 +126,15 @@ void DistanceSolver::operator()(Context context)
 	Matrix matrix{ context.m_adjacencyMatrix.getMatrix() };
 	int power{ 1 };
 	AnswerDisplay& answerDisplay{ context.m_answerDisplay };
-	while (!matrix[indices[0],indices[1]])
+	// messed up here a little, surprised this stuff even works sometimes lmfao
+	// so i was raising the matrix to the power and assigning it to itself, which is obviously
+	// incorrect, and now i have to deal with this matrix[indices] stuff, case im not doing
+	// anything to the matrix itself
+	Matrix matrixRaisedToPower{};
+	while (!matrixRaisedToPower[indices[0],indices[1]])
 	{
 		++power;
-		matrix = MatrixOperations::getMatrixRaisedToPower(matrix, power);
-		// the vertex cannot be reached by that point
+		matrixRaisedToPower = MatrixOperations::getMatrixRaisedToPower(matrix, power);
 		if (power > 9)
 		{
 			answerDisplay.setUnreachableAnswer(indices);

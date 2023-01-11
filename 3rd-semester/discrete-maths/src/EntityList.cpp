@@ -22,6 +22,17 @@ void EntityList::pushEdgeEntity(const Edge& edge)
 
 void EntityList::popVertexEntityAtIndex(std::size_t index)
 {
+	Vertex vertexToDelete{ getVertexEntityAtIndex(index) };
+	if (vertexToDelete.getCircleFillColor() == color::chosenVertex)
+	{
+		--m_numberOfChosenRouteVertices;
+		std::erase(m_chosenRouteVertices, vertexToDelete);
+	}
+	else if (vertexToDelete.getCirclePointCount() == constants::chosenVertexPointCount)
+	{
+		--m_numberOfChosenDistanceVertices;
+		std::erase(m_chosenDistanceVertices, vertexToDelete);
+	}
 	m_vertexEntities.erase(m_vertexEntities.begin() + index);
 }
 
@@ -131,7 +142,20 @@ void EntityList::reorganizeVertexLabels()
 {
 	for (int vertexIndex{ 0 }; auto& vertex : m_vertexEntities)
 	{
-		vertex.setLabelText("v" + std::to_string(vertexIndex++));
+		// also the index to string conversion should be encapsulated in the vertex class
+		vertex.setLabelText("v" + std::to_string(vertexIndex));
+
+		auto chosenDistanceVertex{ std::ranges::find(m_chosenDistanceVertices, vertex) };
+		if (chosenDistanceVertex != m_chosenDistanceVertices.end())
+		{
+			chosenDistanceVertex->setLabelText("v" + std::to_string(vertexIndex));
+		}
+
+		auto chosenRouteVertex{ std::ranges::find(m_chosenRouteVertices, vertex) };
+		if (chosenRouteVertex != m_chosenRouteVertices.end())
+			chosenRouteVertex->setLabelText("v" + std::to_string(vertexIndex));
+
+		++vertexIndex;
 	}
 }
 

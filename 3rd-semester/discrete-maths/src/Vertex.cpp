@@ -87,5 +87,5 @@ int Vertex::getIndexFromLabel() const
 
 bool Vertex::operator==(const Vertex& other) const
 {
-	return (m_label.getString() == other.m_label.getString());
+	return getCirclePosition() == other.getCirclePosition();
 }

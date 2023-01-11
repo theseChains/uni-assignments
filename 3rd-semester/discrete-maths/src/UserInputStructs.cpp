@@ -8,8 +8,6 @@
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/Graphics/Text.hpp>
 
-#include <iostream>
-
 void VertexCreator::operator()(Context context)
 {
 	sf::RenderWindow& window{ context.m_window };
@@ -126,12 +124,12 @@ void DistanceSolver::operator()(Context context)
 	Matrix matrix{ context.m_adjacencyMatrix.getMatrix() };
 	int power{ 1 };
 	AnswerDisplay& answerDisplay{ context.m_answerDisplay };
+	// could also just initialize this with matrix and get the old code back, but whatever
 	Matrix matrixRaisedToPower{};
 	while (!matrixRaisedToPower[indices[0],indices[1]])
 	{
 		matrixRaisedToPower = MatrixOperations::getMatrixRaisedToPower(matrix, power);
 		++power;
-		matrixRaisedToPower.printMatrix();
 		if (power > 9)
 		{
 			answerDisplay.setUnreachableAnswer(indices);

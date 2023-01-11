@@ -129,15 +129,16 @@ void DistanceSolver::operator()(Context context)
 	Matrix matrixRaisedToPower{};
 	while (!matrixRaisedToPower[indices[0],indices[1]])
 	{
-		++power;
 		matrixRaisedToPower = MatrixOperations::getMatrixRaisedToPower(matrix, power);
+		++power;
+		matrixRaisedToPower.printMatrix();
 		if (power > 9)
 		{
 			answerDisplay.setUnreachableAnswer(indices);
 			return;
 		}
 	}
-	answerDisplay.setDistanceAnswer(indices, power);
+	answerDisplay.setDistanceAnswer(indices, power - 1);
 }
 
 void NumberOfRoutesSolver::operator()(Context context)

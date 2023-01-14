@@ -145,11 +145,10 @@ void EntityList::reorganizeVertexLabels()
 		// also the index to string conversion should be encapsulated in the vertex class
 		vertex.setLabelText("v" + std::to_string(vertexIndex));
 
+		// update the chosen vertex labels too
 		auto chosenDistanceVertex{ std::ranges::find(m_chosenDistanceVertices, vertex) };
 		if (chosenDistanceVertex != m_chosenDistanceVertices.end())
-		{
 			chosenDistanceVertex->setLabelText("v" + std::to_string(vertexIndex));
-		}
 
 		auto chosenRouteVertex{ std::ranges::find(m_chosenRouteVertices, vertex) };
 		if (chosenRouteVertex != m_chosenRouteVertices.end())

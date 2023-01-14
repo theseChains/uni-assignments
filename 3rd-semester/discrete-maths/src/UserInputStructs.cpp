@@ -130,7 +130,8 @@ void DistanceSolver::operator()(Context context)
 	{
 		matrixRaisedToPower = MatrixOperations::getMatrixRaisedToPower(matrix, power);
 		++power;
-		if (power > 9)
+		// the vertex cannot be reached by that point
+		if (power > entityList.getVertexListSize() - 1)
 		{
 			answerDisplay.setUnreachableAnswer(indices);
 			return;

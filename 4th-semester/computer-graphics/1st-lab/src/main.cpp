@@ -13,7 +13,7 @@ int main()
 	Window window{};
 	Shader shader{ "../shaders/triangle.vert", "../shaders/triangle.frag" };
 
-	GraphType graphType{ GraphType::first };
+	GraphType graphType{ GraphType::sixth };
 	std::array<float, 4> constants{};
 	setUpConstants(graphType, constants);
 
@@ -28,6 +28,7 @@ int main()
 	{
 		window.processInput(graphType, constants, graphVertices, xVertices);
 		firstGraph = Mesh{ graphVertices, sizeof(graphVertices), 2 };
+		secondGraph = Mesh{ xVertices, sizeof(xVertices), 2 };
 
 		glClearColor(0.1f, 0.1f, 0.2f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);

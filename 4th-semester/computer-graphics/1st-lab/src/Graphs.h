@@ -18,10 +18,10 @@ void makeGraph(float* vertices, GraphType graphType, const std::array<float, 4>&
 void setUpConstants(GraphType graphType, std::array<float, 4>& constants);
 
 void makeFirstGraph(float* vertices, const std::array<float, 4>& constants);
-void makeSecondGraph(float* vertices);
-void makeThirdGraph(float* vertices);
-void makeFourthGraph(float* xVertices, float* yVertices);
-void makeFifthGraph(float* xVertices, float* yVertices);
-void makeSixthGraph(float* vertices);
+void makeSecondGraph(float* vertices, const std::array<float, 4>& constants);
+void makeThirdGraph(float* vertices, const std::array<float, 4>& constants);
+void makeFourthGraph(float* xVertices, float* yVertices, const std::array<float, 4>& constants);
+void makeFifthGraph(float* xVertices, float* yVertices, const std::array<float, 4>& constants);
+void makeSixthGraph(float* vertices, const std::array<float, 4>& constants);
 
 #endif

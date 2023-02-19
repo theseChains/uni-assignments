@@ -1,4 +1,5 @@
 #include "Window.h"
+#include "GraphInput.h"
 
 #include <iostream>
 
@@ -39,31 +40,38 @@ void Window::processInput(GraphType graphType, std::array<float, 4>& constants, 
 	{
 		case GraphType::first:
 		{
-			if (glfwGetKey(m_window, GLFW_KEY_H) == GLFW_PRESS)
-			{
-				constants[0] += 0.1f;
-				makeFirstGraph(vertices, constants);
-			}
+			handleFirstOrFourthGraphInput(m_window, constants);
+			makeFirstGraph(vertices, constants);
 			break;
 		}
 		case GraphType::second:
 		{
+			handleSecondOrThirdGraphInput(m_window, constants);
+			makeSecondGraph(vertices, constants);
 			break;
 		}
 		case GraphType::third:
 		{
+			handleSecondOrThirdGraphInput(m_window, constants);
+			makeThirdGraph(vertices, constants);
 			break;
 		}
 		case GraphType::fourth:
 		{
+			handleFirstOrFourthGraphInput(m_window, constants);
+			makeFourthGraph(xVertices, vertices, constants);
 			break;
 		}
 		case GraphType::fifth:
 		{
+			handleFifthGraphInput(m_window, constants);
+			makeFifthGraph(xVertices, vertices, constants);
 			break;
 		}
 		case GraphType::sixth:
 		{
+			handleSixthGraphInput(m_window, constants);
+			makeSixthGraph(vertices, constants);
 			break;
 		}
 	}

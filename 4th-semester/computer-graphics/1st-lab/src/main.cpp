@@ -1,40 +1,47 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
-#include <iostream>
+#include <array>
+
+#include "Graphs.h"
+#include "Mesh.h"
+#include "Shader.h"
+#include "Window.h"
 
 int main()
 {
-	glfwInit();
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-	glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);
+	Window window{};
+	Shader shader{ "../shaders/triangle.vert", "../shaders/triangle.frag" };
 
-	GLFWwindow* window{ glfwCreateWindow(800, 600, "program", nullptr, nullptr) };
-	if (window == nullptr)
+	GraphType graphType{ GraphType::first };
+	std::array<float, 4> constants{};
+	setUpConstants(graphType, constants);
+
+	float graphVertices[2000]{};
+	[[maybe_unused]] float xVertices[2000]{};
+	makeGraph(graphVertices, graphType, constants, xVertices);
+
+	Mesh firstGraph{ graphVertices, sizeof(graphVertices), 2 };
+	[[maybe_unused]] Mesh secondGraph{ xVertices, sizeof(xVertices), 2 };
+
+	while (!window.windowShouldClose())
 	{
-		std::cout << "Failed to create GLFW window\n";
-		glfwTerminate();
-		return 1;
-	}
-	glfwMakeContextCurrent(window);
+		window.processInput(graphType, constants, graphVertices, xVertices);
+		firstGraph = Mesh{ graphVertices, sizeof(graphVertices), 2 };
 
-	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
-	{
-		std::cout << "Failed to initialize GLAD\n";
-		return 1;
-	}
+		glClearColor(0.1f, 0.1f, 0.2f, 1.0f);
+		glClear(GL_COLOR_BUFFER_BIT);
 
-	glViewport(0, 0, 800, 600);
+		shader.use();
+		glBindVertexArray(firstGraph.getVAO());
+		glDrawArrays(GL_LINE_STRIP, 0, 1000);
+		glBindVertexArray(secondGraph.getVAO());
+		glDrawArrays(GL_LINE_STRIP, 0, 1000);
 
-	while (!glfwWindowShouldClose(window))
-	{
-		glfwSwapBuffers(window);
+		window.swapBuffers();
 		glfwPollEvents();
 	}
 
 	glfwTerminate();
-
 	return 0;
 }

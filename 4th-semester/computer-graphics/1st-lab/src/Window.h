@@ -10,8 +10,8 @@
 
 namespace window
 {
-	inline constexpr int width{ 1366 };
-	inline constexpr int height{ 768 };
+	inline constexpr int width{ 1200 };
+	inline constexpr int height{ 720 };
 }
 
 class Window

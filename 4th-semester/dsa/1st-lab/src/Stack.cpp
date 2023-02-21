@@ -7,15 +7,15 @@ bool stackIsEmpty(Stack* top)
 	return (top == nullptr);
 }
 
-void pushToStack(Stack** top, int newValue)
+void pushToStack(Stack*& top, int newValue)
 {
 	Stack* newElement{ new Stack{} };
 	newElement->value = newValue;
-	newElement->next = *top;
-	*top = newElement;
+	newElement->next = top;
+	top = newElement;
 }
 
-void popFromStack(Stack* top)
+void popFromStack(Stack*& top)
 {
 	if (stackIsEmpty(top))
 	{
@@ -44,4 +44,19 @@ void printStack(Stack* top)
 		current = current->next;
 	}
 	std::cout << '\n';
+}
+
+void destructStack(Stack* top)
+{
+	if (!stackIsEmpty(top))
+	{
+		Stack* previous{ top };
+		Stack* current{ top };
+		while (current != nullptr)
+		{
+			current = current->next;
+			delete previous;
+			previous = current;
+		}
+	}
 }

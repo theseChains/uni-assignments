@@ -8,7 +8,7 @@ struct Stack
 };
 
 bool stackIsEmpty(Stack* top);
-void pushToStack(Stack* top, int newValue);
+void pushToStack(Stack** top, int newValue);
 void popFromStack(Stack* top);
 void printStack(Stack* top);
 

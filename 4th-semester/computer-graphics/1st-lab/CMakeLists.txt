@@ -23,3 +23,4 @@ find_package(OpenGL REQUIRED)
 
 target_link_libraries(app OpenGL::GL)
 
+target_compile_options(app PRIVATE -Wall -Wextra -Werror -Wshadow)

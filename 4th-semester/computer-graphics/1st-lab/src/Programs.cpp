@@ -15,7 +15,7 @@ void runFirstProgram()
 	Window window{};
 	Shader shader{ "../shaders/2dShader.vert", "../shaders/2dShader.frag" };
 
-	GraphType graphType{ GraphType::sixth };
+	GraphType graphType{ GraphType::second };
 	std::array<float, 4> constants{};
 	setUpConstants(graphType, constants);
 
@@ -54,15 +54,17 @@ void runSecondProgram()
 	Shader shader{ "../shaders/2dShader.vert", "../shaders/2dShader.frag" };
 
 	float vertices[]{
-		-0.5f, -0.5f,
-		 0.5f, -0.5f,
-		 0.0f,  0.5f
+		-1.0f,  1.0f,
+		 0.0f, -1.0f,
+		 1.0f,  1.0f
 	};
 
 	Mesh triangle{ vertices, sizeof(vertices), 2 };
 
 	int width{ 60 };
 	int height{ 60 };
+
+	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
 	while (!window.windowShouldClose())
 	{

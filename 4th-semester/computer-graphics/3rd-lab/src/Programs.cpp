@@ -54,91 +54,47 @@ void runFirstProgram()
 	const float ratio{ std::numbers::phi_v<float> };
 
 	float icosahedron[]{
-		// upper part
-		0.0f, ratio, 1.0f,
-		0.0f, ratio, -1.0f,
-		ratio, 1.0f, 0.0f,
-
-		0.0f, ratio, 1.0f,
-		0.0f, ratio, -1.0f,
-		-ratio, 1.0f, 0.0f,
-
-		0.0f, ratio, 1.0f,
-		ratio, 1.0f, 0.0f,
-		1.0f, 0.0f, ratio,
-
-		0.0f, ratio, 1.0f,
-		-ratio, 1.0f, 0.0f,
-		-1.0f, 0.0f, ratio,
-
-		0.0f, ratio, -1.0f,
-		ratio, 1.0f, 0.0f,
-		1.0f, 0.0f, -ratio,
-
-		0.0f, ratio, -1.0f,
-		-ratio, 1.0f, 0.0f,
-		-1.0f, 0.0f, -ratio,
-
-		0.0f, ratio, 1.0f,
-		1.0f, 0.0f, ratio,
-		-1.0f, 0.0f, ratio,
-
-		0.0f, ratio, -1.0f,
-		1.0f, 0.0f, -ratio,
-		-1.0f, 0.0f, -ratio,
-
-		// middle 4 triangles
-		ratio, 1.0f, 0.0f,
-		1.0f, 0.0f, ratio,
-		ratio, -1.0f, 0.0f,
-
-		ratio, 1.0f, 0.0f,
-		1.0f, 0.0f, -ratio,
-		ratio, -1.0f, 0.0f,
-
-		-ratio, 1.0f, 0.0f,
-		-1.0f, 0.0f, ratio,
-		-ratio, -1.0f, 0.0f,
-
-		-ratio, 1.0f, 0.0f,
-		-1.0f, 0.0f, -ratio,
-		-ratio, -1.0f, 0.0f,
-
-		// lower part
-		0.0f, -ratio, 1.0f,
-		0.0f, -ratio, -1.0f,
-		ratio, -1.0f, 0.0f,
-
-		0.0f, -ratio, 1.0f,
-		0.0f, -ratio, -1.0f,
-		-ratio, -1.0f, 0.0f,
-
-		0.0f, -ratio, 1.0f,
-		ratio, -1.0f, 0.0f,
-		1.0f, 0.0f, ratio,
-
-		0.0f, -ratio, 1.0f,
-		-ratio, -1.0f, 0.0f,
-		-1.0f, 0.0f, ratio,
-
-		0.0f, -ratio, -1.0f,
-		ratio, -1.0f, 0.0f,
-		1.0f, 0.0f, -ratio,
-
-		0.0f, -ratio, -1.0f,
-		-ratio, -1.0f, 0.0f,
-		-1.0f, 0.0f, -ratio,
-
-		0.0f, -ratio, 1.0f,
-		1.0f, 0.0f, ratio,
-		-1.0f, 0.0f, ratio,
-
-		0.0f, -ratio, -1.0f,
-		1.0f, 0.0f, -ratio,
-		-1.0f, 0.0f, -ratio,
+		ratio, 1.0f, 0.0f,		// 0
+		ratio, -1.0f, 0.0f,	    // 1
+		-ratio, -1.0f, 0.0f,	// 2
+		-ratio, 1.0f, 0.0f,		// 3
+		1.0f, 0.0f, ratio,		// 4
+		-1.0f, 0.0f, ratio,		// 5
+		-1.0f, 0.0f, -ratio,	// 6
+		1.0f, 0.0f, -ratio,		// 7
+		0.0f, ratio, 1.0f,		// 8
+		0.0f, ratio, -1.0f,		// 9
+		0.0f, -ratio, -1.0f,	// 10
+		0.0f, -ratio, 1.0f		// 11
 	};
 
-	Mesh cube{ icosahedron, sizeof(icosahedron), 3 };
+	int icosahedronIndices[]{
+		// upper part
+		9, 8, 0,
+		9, 8, 3,
+		9, 6, 7,
+		8, 4, 5,
+		9, 6, 3,
+		9, 7, 0,
+		8, 4, 0,
+		8, 5, 3,
+		// 4 middle triangles
+		0, 1, 4,
+		0, 1, 7,
+		2, 3, 5,
+		2, 3, 6,
+		// lower part
+		4, 11, 5,
+		7, 10, 6,
+		11, 4, 1,
+		11, 5, 2,
+		10, 7, 1,
+		10, 6, 2,
+		10, 11, 1,
+		10, 11, 2
+	};
+
+	Mesh cube{ icosahedron, sizeof(icosahedron), icosahedronIndices, sizeof(icosahedronIndices), 3 };
 
     glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
@@ -163,10 +119,12 @@ void runFirstProgram()
 		shader.setMat4("view", view);
 
 		glm::mat4 model{ glm::mat4{ 1.0f } };
+		model = glm::rotate(model, static_cast<float>(glfwGetTime()) * glm::radians(50.0f),
+				glm::vec3{ 0.5f, 1.0f, 0.0f });
 		shader.setMat4("model", model);
 
 		glBindVertexArray(cube.getVAO());
-		glDrawArrays(GL_TRIANGLES, 0, 60);
+        glDrawElements(GL_TRIANGLES, 60, GL_UNSIGNED_INT, 0);
 
 		window.swapBuffers();
 		glfwPollEvents();

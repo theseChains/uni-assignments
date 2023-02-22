@@ -15,17 +15,20 @@ void pushToStack(Stack*& top, int newValue)
 	top = newElement;
 }
 
-void popFromStack(Stack*& top)
+int popFromStack(Stack*& top)
 {
 	if (stackIsEmpty(top))
 	{
 		std::cerr << "Cannot pop from empty stack\n";
-		return;
+		return 0;
 	}
 
 	Stack* temporary{ top };
+	int value{ top->value };
 	top = top->next;
 	delete temporary;
+
+	return value;
 }
 
 void printStack(Stack* top)

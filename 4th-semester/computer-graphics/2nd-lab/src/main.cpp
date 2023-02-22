@@ -2,7 +2,7 @@
 
 int main()
 {
-	runSecondProgram();
+	runFirstProgram();
 
 	return 0;
 }

@@ -2,7 +2,7 @@
 
 #include <iostream>
 
-Window::Window()
+Window::Window(int windowWidth, int windowHeight)
 {
 	glfwInit();
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
@@ -10,7 +10,7 @@ Window::Window()
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 	glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);
 
-	m_window = glfwCreateWindow(window::width, window::height, "openglStudy", nullptr, nullptr);
+	m_window = glfwCreateWindow(windowWidth, windowHeight, "openglStudy", nullptr, nullptr);
 	if (m_window == nullptr)
 	{
 		std::cerr << "failed to create GLFW window\n";
@@ -24,7 +24,10 @@ Window::Window()
 		glfwTerminate();
 	}
 
-	glViewport(0, 0, window::width, window::height);
+	glViewport(0, 0, windowWidth, windowHeight);
+
+	m_width = windowWidth;
+	m_height = windowHeight;
 
 	//glfwSetInputMode(m_window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 }

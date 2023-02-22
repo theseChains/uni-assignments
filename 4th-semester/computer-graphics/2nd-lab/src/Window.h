@@ -4,18 +4,10 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
-#include <array>
-
-namespace window
-{
-	inline constexpr int width{ 1200 };
-	inline constexpr int height{ 720 };
-}
-
 class Window
 {
 public:
-	Window();
+	Window(int windowWidth, int windowHeight);
 
 	void processInput();
 	bool windowShouldClose();
@@ -24,6 +16,9 @@ public:
 
 private:
 	GLFWwindow* m_window{};
+
+	int m_width{};
+	int m_height{};
 };
 
 #endif

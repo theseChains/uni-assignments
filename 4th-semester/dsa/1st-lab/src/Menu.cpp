@@ -2,6 +2,18 @@
 #include "Stack.h"
 
 #include <iostream>
+#include <random>
+
+namespace rnd
+{
+	std::mt19937 mt{ std::random_device{}() };
+
+	int get(int min, int max)
+	{
+		std::uniform_int_distribution range{ min, max };
+		return range(mt);
+	}
+}
 
 void printMenu()
 {
@@ -70,6 +82,16 @@ void handleStackPop(Stack*& mainTop, Stack*& auxiliaryTop)
 	}
 }
 
+void handleRandomStackPush(Stack*& mainTop)
+{
+	std::cout << "\nenter number of elements to push: ";
+	int numberOfElementsToPush{ getNumber() };
+	for (int i{ 0 }; i < numberOfElementsToPush; ++i)
+	{
+		pushToStack(mainTop, rnd::get(1, 100));
+	}
+}
+
 void handleStackPrint(Stack* top)
 {
 	std::cout << '\n';
@@ -87,6 +109,7 @@ void handleCommand(Stack*& mainTop, Stack*& auxiliaryTop, int command)
 			handleStackPop(mainTop, auxiliaryTop);
 			break;
 		case 3:
+			handleRandomStackPush(mainTop);
 			break;
 		case 4:
 			handleStackPrint(mainTop);

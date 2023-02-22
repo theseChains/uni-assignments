@@ -4,12 +4,14 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
+#include "Camera.h"
+
 class Window
 {
 public:
 	Window(int windowWidth, int windowHeight);
 
-	void processInput();
+	void processInput(Camera& camera, float deltaTime);
 	bool windowShouldClose();
 	void swapBuffers();
 	GLFWwindow* getWindow() const;

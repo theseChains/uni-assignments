@@ -29,13 +29,30 @@ Window::Window(int windowWidth, int windowHeight)
 	m_width = windowWidth;
 	m_height = windowHeight;
 
-	//glfwSetInputMode(m_window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+	glfwSetInputMode(m_window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 }
 
-void Window::processInput()
+void Window::processInput(Camera& camera, float deltaTime)
 {
 	if (glfwGetKey(m_window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
 		glfwSetWindowShouldClose(m_window, true);
+
+	if (glfwGetKey(m_window, GLFW_KEY_W) == GLFW_PRESS)
+	{
+		camera.processKeyboard(Movement::forward, deltaTime);
+	}
+	if (glfwGetKey(m_window, GLFW_KEY_S) == GLFW_PRESS)
+	{
+		camera.processKeyboard(Movement::backward, deltaTime);
+	}
+	if (glfwGetKey(m_window, GLFW_KEY_A) == GLFW_PRESS)
+	{
+		camera.processKeyboard(Movement::left, deltaTime);
+	}
+	if (glfwGetKey(m_window, GLFW_KEY_D) == GLFW_PRESS)
+	{
+		camera.processKeyboard(Movement::right, deltaTime);
+	}
 }
 
 bool Window::windowShouldClose()

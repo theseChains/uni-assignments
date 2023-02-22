@@ -45,10 +45,35 @@ void handleStackPush(Stack*& mainTop, Stack*& auxiliaryTop)
 	}
 }
 
-void handleStackPrint(Stack* mainTop)
+void handleStackPop(Stack*& mainTop, Stack*& auxiliaryTop)
+{
+	int popCommand{};
+	std::cout << "\n1: delete element from main stack\n";
+	std::cout << "2: push element to auxiliary stack from main stack\n";
+	popCommand = getNumber();
+	switch (popCommand)
+	{
+		case 1:
+		{
+			int poppedValue{ popFromStack(mainTop) };
+			std::cout << "\npopped element with value " << poppedValue << " from main stack\n";
+			break;
+		}
+		case 2:
+		{
+			Stack* nodeToMove{ mainTop };
+			std::cout << "\nmoved element with value " << mainTop->value << " to auxiliary stack\n";
+			mainTop = mainTop->next;
+			nodeToMove->next = auxiliaryTop;
+			auxiliaryTop = nodeToMove;
+		}
+	}
+}
+
+void handleStackPrint(Stack* top)
 {
 	std::cout << '\n';
-	printStack(mainTop);
+	printStack(top);
 }
 
 void handleCommand(Stack*& mainTop, Stack*& auxiliaryTop, int command)
@@ -59,6 +84,7 @@ void handleCommand(Stack*& mainTop, Stack*& auxiliaryTop, int command)
 			handleStackPush(mainTop, auxiliaryTop);
 			break;
 		case 2:
+			handleStackPop(mainTop, auxiliaryTop);
 			break;
 		case 3:
 			break;
@@ -66,6 +92,7 @@ void handleCommand(Stack*& mainTop, Stack*& auxiliaryTop, int command)
 			handleStackPrint(mainTop);
 			break;
 		case 5:
+			handleStackPrint(auxiliaryTop);
 			break;
 	}
 }

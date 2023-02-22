@@ -7,6 +7,8 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
+#include <numbers>
+
 #include "Camera.h"
 #include "Mesh.h"
 #include "Shader.h"
@@ -49,51 +51,96 @@ void runFirstProgram()
 	glfwSetCursorPosCallback(window.getWindow(), mouseCallback);
 	Shader shader{ "../shaders/shader.vert", "../shaders/shader.frag" };
 
-	float vertices[] = {
-        -0.5f, -0.5f, -0.5f,
-         0.5f, -0.5f, -0.5f,
-         0.5f,  0.5f, -0.5f, 
-         0.5f,  0.5f, -0.5f, 
-        -0.5f,  0.5f, -0.5f, 
-        -0.5f, -0.5f, -0.5f, 
+	const float ratio{ std::numbers::phi_v<float> };
 
-        -0.5f, -0.5f,  0.5f, 
-         0.5f, -0.5f,  0.5f, 
-         0.5f,  0.5f,  0.5f, 
-         0.5f,  0.5f,  0.5f, 
-        -0.5f,  0.5f,  0.5f, 
-        -0.5f, -0.5f,  0.5f, 
+	float icosahedron[]{
+		// upper part
+		0.0f, ratio, 1.0f,
+		0.0f, ratio, -1.0f,
+		ratio, 1.0f, 0.0f,
 
-        -0.5f,  0.5f,  0.5f, 
-        -0.5f,  0.5f, -0.5f, 
-        -0.5f, -0.5f, -0.5f, 
-        -0.5f, -0.5f, -0.5f, 
-        -0.5f, -0.5f,  0.5f, 
-        -0.5f,  0.5f,  0.5f, 
+		0.0f, ratio, 1.0f,
+		0.0f, ratio, -1.0f,
+		-ratio, 1.0f, 0.0f,
 
-         0.5f,  0.5f,  0.5f, 
-         0.5f,  0.5f, -0.5f, 
-         0.5f, -0.5f, -0.5f, 
-         0.5f, -0.5f, -0.5f, 
-         0.5f, -0.5f,  0.5f, 
-         0.5f,  0.5f,  0.5f, 
+		0.0f, ratio, 1.0f,
+		ratio, 1.0f, 0.0f,
+		1.0f, 0.0f, ratio,
 
-        -0.5f, -0.5f, -0.5f, 
-         0.5f, -0.5f, -0.5f, 
-         0.5f, -0.5f,  0.5f, 
-         0.5f, -0.5f,  0.5f, 
-        -0.5f, -0.5f,  0.5f, 
-        -0.5f, -0.5f, -0.5f, 
+		0.0f, ratio, 1.0f,
+		-ratio, 1.0f, 0.0f,
+		-1.0f, 0.0f, ratio,
 
-        -0.5f,  0.5f, -0.5f, 
-         0.5f,  0.5f, -0.5f, 
-         0.5f,  0.5f,  0.5f, 
-         0.5f,  0.5f,  0.5f, 
-        -0.5f,  0.5f,  0.5f, 
-        -0.5f,  0.5f, -0.5f  
-    };
+		0.0f, ratio, -1.0f,
+		ratio, 1.0f, 0.0f,
+		1.0f, 0.0f, -ratio,
 
-	Mesh cube{ vertices, sizeof(vertices), 3 };
+		0.0f, ratio, -1.0f,
+		-ratio, 1.0f, 0.0f,
+		-1.0f, 0.0f, -ratio,
+
+		0.0f, ratio, 1.0f,
+		1.0f, 0.0f, ratio,
+		-1.0f, 0.0f, ratio,
+
+		0.0f, ratio, -1.0f,
+		1.0f, 0.0f, -ratio,
+		-1.0f, 0.0f, -ratio,
+
+		// middle 4 triangles
+		ratio, 1.0f, 0.0f,
+		1.0f, 0.0f, ratio,
+		ratio, -1.0f, 0.0f,
+
+		ratio, 1.0f, 0.0f,
+		1.0f, 0.0f, -ratio,
+		ratio, -1.0f, 0.0f,
+
+		-ratio, 1.0f, 0.0f,
+		-1.0f, 0.0f, ratio,
+		-ratio, -1.0f, 0.0f,
+
+		-ratio, 1.0f, 0.0f,
+		-1.0f, 0.0f, -ratio,
+		-ratio, -1.0f, 0.0f,
+
+		// lower part
+		0.0f, -ratio, 1.0f,
+		0.0f, -ratio, -1.0f,
+		ratio, -1.0f, 0.0f,
+
+		0.0f, -ratio, 1.0f,
+		0.0f, -ratio, -1.0f,
+		-ratio, -1.0f, 0.0f,
+
+		0.0f, -ratio, 1.0f,
+		ratio, -1.0f, 0.0f,
+		1.0f, 0.0f, ratio,
+
+		0.0f, -ratio, 1.0f,
+		-ratio, -1.0f, 0.0f,
+		-1.0f, 0.0f, ratio,
+
+		0.0f, -ratio, -1.0f,
+		ratio, -1.0f, 0.0f,
+		1.0f, 0.0f, -ratio,
+
+		0.0f, -ratio, -1.0f,
+		-ratio, -1.0f, 0.0f,
+		-1.0f, 0.0f, -ratio,
+
+		0.0f, -ratio, 1.0f,
+		1.0f, 0.0f, ratio,
+		-1.0f, 0.0f, ratio,
+
+		0.0f, -ratio, -1.0f,
+		1.0f, 0.0f, -ratio,
+		-1.0f, 0.0f, -ratio,
+	};
+
+	Mesh cube{ icosahedron, sizeof(icosahedron), 3 };
+
+    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
 	while (!window.windowShouldClose())
 	{
@@ -119,7 +166,7 @@ void runFirstProgram()
 		shader.setMat4("model", model);
 
 		glBindVertexArray(cube.getVAO());
-		glDrawArrays(GL_TRIANGLES, 0, 36);
+		glDrawArrays(GL_TRIANGLES, 0, 60);
 
 		window.swapBuffers();
 		glfwPollEvents();

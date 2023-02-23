@@ -53,7 +53,7 @@ void runFirstProgram()
 
 	const float ratio{ std::numbers::phi_v<float> };
 
-	float icosahedron[]{
+	[[maybe_unused]] float icosahedron[]{
 		ratio, 1.0f, 0.0f,		// 0
 		ratio, -1.0f, 0.0f,	    // 1
 		-ratio, -1.0f, 0.0f,	// 2
@@ -68,7 +68,7 @@ void runFirstProgram()
 		0.0f, -ratio, 1.0f		// 11
 	};
 
-	int icosahedronIndices[]{
+	[[maybe_unused]] int icosahedronIndices[]{
 		// upper part
 		9, 8, 0,
 		9, 8, 3,
@@ -94,7 +94,84 @@ void runFirstProgram()
 		10, 11, 2
 	};
 
-	Mesh cube{ icosahedron, sizeof(icosahedron), icosahedronIndices, sizeof(icosahedronIndices), 3 };
+	float dodecahedron[]{
+		// blue
+		-(1.0f / ratio), 0.0f, ratio,	// 0
+		-(1.0f / ratio), 0.0f, -ratio,	// 1
+		(1.0f / ratio), 0.0f, -ratio,   // 2
+		(1.0f / ratio), 0.0f, ratio,    // 3
+		// green
+		0.0f, -ratio, (1.0f / ratio),	// 4
+		0.0f, ratio, (1.0f / ratio),	// 5
+		0.0f, -ratio, -(1.0f / ratio),	// 6
+		0.0f, ratio, -(1.0f / ratio),	// 7
+		// red
+		-ratio, (1.0f / ratio), 0.0f,	// 8
+		-ratio, -(1.0f / ratio), 0.0f,	// 9
+		ratio, (1.0f / ratio), 0.0f,	// 10
+		ratio, -(1.0f / ratio), 0.0f,	// 11
+		// orange
+		-1.0f, -1.0f, -1.0f,			// 12
+		1.0f, -1.0f, -1.0f,				// 13
+		-1.0f, 1.0f, -1.0f,				// 14
+		-1.0f, -1.0f, 1.0f,				// 15
+		1.0f, 1.0f, -1.0f,				// 16
+		-1.0f, 1.0f, 1.0f,				// 17
+		1.0f, -1.0f, 1.0f,				// 18
+		1.0f, 1.0f, 1.0f,				// 19
+	};
+
+	int dodecahedronIndices[]{
+		3, 18, 11,
+		3, 19, 10,
+		3, 10, 11,
+
+		3, 18, 4,
+		0, 15, 4,
+		0, 3, 4,
+		
+		3, 19, 5,
+		0, 17, 5,
+		5, 3, 0,
+
+		0, 15, 9,
+		0, 17, 8,
+		0, 9, 8,
+
+		18, 4, 6,
+		18, 11, 13,
+		6, 18, 13,
+
+		15, 4, 6,
+		15, 9, 12,
+		12, 15, 6,
+
+		17, 8, 14,
+		17, 5, 7,
+		14, 17, 7,
+
+		19, 10, 16,
+		19, 5, 7,
+		7, 16, 19,
+
+		11, 13, 2,
+		11, 10, 16,
+		2, 11, 16,
+
+		8, 9, 12,
+		8, 14, 1,
+		8, 12, 1,
+
+		6, 12, 1,
+		6, 13, 2,
+		1, 6, 2,
+
+		7, 14, 1,
+		7, 16, 2,
+		7, 1, 2
+	};
+
+	Mesh mesh{ dodecahedron, sizeof(dodecahedron), dodecahedronIndices, sizeof(dodecahedronIndices), 3 };
 
     glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
@@ -123,8 +200,8 @@ void runFirstProgram()
 				glm::vec3{ 0.5f, 1.0f, 0.0f });
 		shader.setMat4("model", model);
 
-		glBindVertexArray(cube.getVAO());
-        glDrawElements(GL_TRIANGLES, 60, GL_UNSIGNED_INT, 0);
+		glBindVertexArray(mesh.getVAO());
+        glDrawElements(GL_TRIANGLES, 108, GL_UNSIGNED_INT, 0);
 
 		window.swapBuffers();
 		glfwPollEvents();

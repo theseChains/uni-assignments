@@ -50,6 +50,7 @@ void runFirstProgram()
 	Window window{ 1200, 720 };
 	glfwSetCursorPosCallback(window.getWindow(), mouseCallback);
 	Shader shader{ "../shaders/shader.vert", "../shaders/shader.frag" };
+	Shader lightShader{ "../shaders/shader.vert", "../shaders/shader.frag" };
 
 	const float ratio{ std::numbers::phi_v<float> };
 
@@ -171,7 +172,34 @@ void runFirstProgram()
 		7, 1, 2
 	};
 
+	float lightVertices[]{
+		-1.0f, -1.0f, -1.0f,	// 0
+		1.0f, -1.0f, -1.0f,		// 1
+		-1.0f, 1.0f, -1.0f,		// 2
+		-1.0f, -1.0f, 1.0f,		// 3
+		1.0f, 1.0f, -1.0f,		// 4
+		-1.0f, 1.0f, 1.0f,		// 5
+		1.0f, -1.0f, 1.0f,		// 6
+		1.0f, 1.0f, 1.0f		// 7
+	};
+
+	int lightIndices[]{
+		0, 1, 2,
+		1, 2, 4,
+		0, 3, 1,
+		3, 1, 6,
+		0, 2, 5,
+		0, 3, 5,
+		3, 5, 6,
+		5, 6, 7,
+		2, 5, 7,
+		7, 2, 4,
+		1, 6, 7,
+		1, 4, 7
+	};
+
 	Mesh mesh{ dodecahedron, sizeof(dodecahedron), dodecahedronIndices, sizeof(dodecahedronIndices), 3 };
+	Mesh light{ lightVertices, sizeof(lightVertices), lightIndices, sizeof(lightIndices), 3 };
 
     glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
@@ -202,6 +230,17 @@ void runFirstProgram()
 
 		glBindVertexArray(mesh.getVAO());
         glDrawElements(GL_TRIANGLES, 108, GL_UNSIGNED_INT, 0);
+
+		lightShader.use();
+		lightShader.setMat4("projection", projection);
+		lightShader.setMat4("view", view);
+		model = glm::mat4{ 1.0f };
+		model = glm::translate(model, glm::vec3{ 1.2f, 1.0f, 3.0f });
+		model = glm::scale(model, glm::vec3{ 0.2f });
+		lightShader.setMat4("model", model);
+
+		glBindVertexArray(light.getVAO());
+		glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
 
 		window.swapBuffers();
 		glfwPollEvents();

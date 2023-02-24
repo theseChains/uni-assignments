@@ -13,9 +13,9 @@ struct Queue
 	int backIndex{ -1 };
 };
 
-bool isEmpty(const Queue& queue);
-bool isFull(const Queue& queue);
-void pushToQueue(Queue& queue);
+bool isQueueEmpty(const Queue& queue);
+bool isQueueFull(const Queue& queue);
+void pushToQueue(Queue& queue, int newElement);
 int removeFromQueue(Queue& queue);
 void printQueue(const Queue& queue);
 

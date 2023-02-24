@@ -2,12 +2,12 @@
 
 #include <iostream>
 
-bool isEmpty(const Queue& queue)
+bool isQueueEmpty(const Queue& queue)
 {
 	return (queue.frontIndex == -1);
 }
 
-bool isFull(const Queue& queue)
+bool isQueueFull(const Queue& queue)
 {
 	return (queue.frontIndex == queue.backIndex + 1 ||
 			queue.frontIndex == 0 && queue.backIndex == constants::maxSize - 1);
@@ -15,7 +15,7 @@ bool isFull(const Queue& queue)
 
 void pushToQueue(Queue& queue, int newElement)
 {
-	if (isFull(queue))
+	if (isQueueFull(queue))
 	{
 		std::cerr << "The queue is full\n";
 		return;
@@ -30,7 +30,7 @@ void pushToQueue(Queue& queue, int newElement)
 
 int removeFromQueue(Queue& queue)
 {
-	if (isEmpty(queue))
+	if (isQueueEmpty(queue))
 	{
 		std::cerr << "The queue is empty\n";
 		return -1;
@@ -52,7 +52,7 @@ int removeFromQueue(Queue& queue)
 
 void printQueue(const Queue& queue)
 {
-	if (isEmpty(queue))
+	if (isQueueEmpty(queue))
 	{
 		std::cerr << "The queue is empty\n";
 		return;

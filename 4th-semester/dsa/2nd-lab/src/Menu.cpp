@@ -1,19 +1,8 @@
 #include "Menu.h"
-#include "Queue.cpp"
+#include "Queue.h"
 
 #include <iostream>
 #include <random>
-
-namespace rnd
-{
-	std::mt19937 mt{ std::random_device{}() };
-
-	int get(int min, int max)
-	{
-		std::uniform_int_distribution range{ min, max };
-		return range(mt);
-	}
-}
 
 void printMenu()
 {
@@ -30,104 +19,50 @@ int getNumber()
 	return number;
 }
 
-void handleStackPush(Queue*& queue)
+void handleQueuePush(Queue& queue)
 {
-	int pushCommand{};
-	std::cout << "\n1: create new element\n";
-	std::cout << "2: push element from auxiliary stack to main stack\n";
-	pushCommand = getNumber();
-	switch (pushCommand)
-	{
-		case 1:
-		{
-			std::cout << "\nenter new value: ";
-			int newValue = getNumber();
-			pushToStack(mainTop, newValue);
-			break;
-		}
-		case 2:
-		{
-			if (stackIsEmpty(auxiliaryTop))
-				std::cout << "\nauxiliary stack is empty\n";
-			else
-				pushToStack(mainTop, auxiliaryTop->value);
-		}
-	}
+	std::cout << "\nenter new value: ";
+	int newValue = getNumber();
+	pushToQueue(queue, newValue);
 }
 
-void handleStackPop(Stack*& mainTop, Stack*& auxiliaryTop)
+void handleQueueRemoval(Queue& queue)
 {
-	int popCommand{};
-	std::cout << "\n1: delete element from main stack\n";
-	std::cout << "2: push element to auxiliary stack from main stack\n";
-	popCommand = getNumber();
-	switch (popCommand)
-	{
-		case 1:
-		{
-			int poppedValue{ popFromStack(mainTop) };
-			std::cout << "\npopped element with value " << poppedValue << " from main stack\n";
-			break;
-		}
-		case 2:
-		{
-			Stack* nodeToMove{ mainTop };
-			std::cout << "\nmoved element with value " << mainTop->value << " to auxiliary stack\n";
-			mainTop = mainTop->next;
-			nodeToMove->next = auxiliaryTop;
-			auxiliaryTop = nodeToMove;
-		}
-	}
+	int removedValue{ removeFromQueue(queue) };
+	std::cout << "\nremoved element with value " << removedValue << " from queue\n";
 }
 
-void handleRandomStackPush(Stack*& mainTop)
-{
-	std::cout << "\nenter number of elements to push: ";
-	int numberOfElementsToPush{ getNumber() };
-	for (int i{ 0 }; i < numberOfElementsToPush; ++i)
-	{
-		pushToStack(mainTop, rnd::get(1, 100));
-	}
-}
-
-void handleStackPrint(Stack* top)
+void handleQueuePrint(const Queue& queue)
 {
 	std::cout << '\n';
-	printStack(top);
+	printQueue(queue);
 }
 
-void handleCommand(Stack*& mainTop, Stack*& auxiliaryTop, int command)
+void handleCommand(Queue& queue, int command)
 {
 	switch (command)
 	{
 		case 1:
-			handleStackPush(mainTop, auxiliaryTop);
+			handleQueuePush(queue);
 			break;
 		case 2:
-			handleStackPop(mainTop, auxiliaryTop);
+			handleQueueRemoval(queue);
 			break;
 		case 3:
-			handleRandomStackPush(mainTop);
-			break;
-		case 4:
-			handleStackPrint(mainTop);
-			break;
-		case 5:
-			handleStackPrint(auxiliaryTop);
+			handleQueuePrint(queue);
 			break;
 	}
 }
 
 void runMenuLoop()
 {
-	Stack* mainTop{ nullptr };
-	Stack* auxiliaryTop{ nullptr };
+	Queue queue{};
 
 	int command{};
 	while (command != -1)
 	{
 		printMenu();
 		command = getNumber();
-		handleCommand(mainTop, auxiliaryTop, command);
+		handleCommand(queue, command);
 	}
 }

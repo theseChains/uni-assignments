@@ -9,8 +9,8 @@ bool isQueueEmpty(const Queue& queue)
 
 bool isQueueFull(const Queue& queue)
 {
-	return (queue.frontIndex == queue.backIndex + 1 ||
-			queue.frontIndex == 0 && queue.backIndex == constants::maxSize - 1);
+	return ((queue.frontIndex == queue.backIndex + 1) ||
+			(queue.frontIndex == 0 && queue.backIndex == constants::maxSize - 1));
 }
 
 void pushToQueue(Queue& queue, int newElement)
@@ -58,9 +58,10 @@ void printQueue(const Queue& queue)
 		return;
 	}
 
-	for (int i{ queue.frontIndex }; i < queue.backIndex; i = (i + 1) % constants::maxSize)
+	int i{};
+	for (i = queue.frontIndex; i < queue.backIndex; i = (i + 1) % constants::maxSize)
 	{
 		std::cout << queue.array[i] << ' ';
 	}
-	std::cout << '\n';
+	std::cout << queue.array[i] << '\n';
 }

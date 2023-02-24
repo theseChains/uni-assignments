@@ -45,14 +45,50 @@ void mouseCallback([[maybe_unused]] GLFWwindow* window, double xposIn, double yp
 	config::camera.processMouseMovement(xOffset, yOffset);
 }
 
+void normalize(float* vector)
+{
+	float length{ static_cast<float>(
+			sqrt(vector[0] * vector[0] + vector[1] * vector[1] + vector[2] * vector[2])) };
+
+	for (int i{ 0 }; i < 3; ++i)
+	{
+		vector[i] = vector[i] / length;
+	}
+}
+
+void crossProduct(float* result, float* first, float* second)
+{
+	result[0] = first[1] * second[2] - first[2] * second[1];
+	result[1] = -(first[0] * second[2] - first[2] * second[0]);
+	result[2] = first[0] * second[1] - first[1] * second[0];
+
+	normalize(result);
+}
+
+void calculateNormal(float* result, float* first, float* second, float* third)
+{
+	float x[]{ second[0] - first[0], second[1] - first[1], second[2] - first[2] };
+	float y[]{ third[0] - first[0], third[1] - first[1], third[2] - first[2] };
+
+	crossProduct(result, x, y);
+}
+
 void runFirstProgram()
 {
 	Window window{ 1200, 720 };
 	glfwSetCursorPosCallback(window.getWindow(), mouseCallback);
 	Shader shader{ "../shaders/shader.vert", "../shaders/shader.frag" };
-	Shader lightShader{ "../shaders/shader.vert", "../shaders/shader.frag" };
+	Shader lightShader{ "../shaders/lightCube.vert", "../shaders/lightCube.frag" };
 
 	const float ratio{ std::numbers::phi_v<float> };
+
+	float first[]{ 0.0f, -ratio, -1.0f };
+	float second[]{ 0.0f, -ratio, 1.0f };
+	float third[]{ -ratio, -1.0f, 0.0f };
+
+	float result[3]{};
+	calculateNormal(result, first, second, third);
+	std::cout << "result: " << result[0] << ' ' << result[1] << ' ' << result[2] << '\n';
 
 	[[maybe_unused]] float icosahedron[]{
 		ratio, 1.0f, 0.0f,		// 0
@@ -67,6 +103,94 @@ void runFirstProgram()
 		0.0f, ratio, -1.0f,		// 9
 		0.0f, -ratio, -1.0f,	// 10
 		0.0f, -ratio, 1.0f		// 11
+	};
+
+	float icosahedronVertices[]{
+		0.0f, ratio, -1.0f, 0.357f, 0.934f, 0.0f,	// 9
+		0.0f, ratio, 1.0f, 0.357f, 0.934f, 0.0f,	// 8
+		ratio, 1.0f, 0.0f, 0.357f, 0.934f, 0.0f,	// 0
+
+		0.0f, ratio, -1.0f,	0.357f, -0.934f, 0.0f,	// 9
+		0.0f, ratio, 1.0f, 0.357f, -0.934f, 0.0f,	// 8
+		-ratio, 1.0f, 0.0f,	0.357f, -0.934f, 0.0f,	// 3
+
+		0.0f, ratio, -1.0f, 0.0f, -0.357f, 0.934f,	// 9
+		-1.0f, 0.0f, -ratio, 0.0f, -0.357f, 0.934f,	// 6
+		1.0f, 0.0f, -ratio,	0.0f, -0.357f, 0.934f,	// 7
+
+		0.0f, ratio, 1.0f,	0.0f, -0.357f, -0.934f,	// 8
+		1.0f, 0.0f, ratio,	0.0f, -0.357f, -0.934f,	// 4
+		-1.0f, 0.0f, ratio,	0.0f, -0.357f, -0.934f,	// 5
+
+		0.0f, ratio, -1.0f, -0.577f, 0.577f, -0.577f,	// 9
+		-1.0f, 0.0f, -ratio, -0.577f, 0.577f, -0.577f,	// 6
+		-ratio, 1.0f, 0.0f,	-0.577f, 0.577f, -0.577f,	// 3
+
+		0.0f, ratio, -1.0f,	-0.577f, -0.577f, 0.577f,	// 9
+		1.0f, 0.0f, -ratio,	-0.577f, -0.577f, 0.577f,	// 7
+		ratio, 1.0f, 0.0f,	-0.577f, -0.577f, 0.577f,	// 0
+
+		0.0f, ratio, 1.0f,	0.577f, 0.577f, 0.577f,	// 8
+		1.0f, 0.0f, ratio,	0.577f, 0.577f, 0.577f,	// 4
+		ratio, 1.0f, 0.0f,	0.577f, 0.577f, 0.577f,	// 0
+
+		0.0f, ratio, 1.0f,	0.577f, -0.577f, -0.577f,	// 8
+		-1.0f, 0.0f, ratio,	0.577f, -0.577f, -0.577f,	// 5
+		-ratio, 1.0f, 0.0f,	0.577f, -0.577f, -0.577f,	// 3
+
+		ratio, 1.0f, 0.0f,  -0.934f, 0.0f, -0.357f,		// 0
+		ratio, -1.0f, 0.0f,	-0.934f, 0.0f, -0.357f,   // 1
+		1.0f, 0.0f, ratio,	-0.934f, 0.0f, -0.357f,	// 4
+
+		ratio, 1.0f, 0.0f,	0.934f, 0.0f, -0.357f,	// 0
+		ratio, -1.0f, 0.0f,	0.934f, 0.0f, -0.357f,   // 1
+		1.0f, 0.0f, -ratio,	0.934f, 0.0f, -0.357f,	// 7
+
+		// not sure about normals here
+		-ratio, -1.0f, 0.0f, 0.934f, 0.0f, -0.357f,	// 2
+		-ratio, 1.0f, 0.0f,	0.934f, 0.0f, -0.357f,	// 3
+		-1.0f, 0.0f, ratio,	0.934f, 0.0f, -0.357f,	// 5
+
+		// not sure about normals here
+		-ratio, -1.0f, 0.0f, -0.934f, 0.0f, -0.357f,// 2
+		-ratio, 1.0f, 0.0f,	-0.934f, 0.0f, -0.357f,// 3
+		-1.0f, 0.0f, -ratio, -0.934f, 0.0f, -0.357f,// 6
+
+		1.0f, 0.0f, ratio,	0.0f, 0.357f, -0.934f,	// 4
+		0.0f, -ratio, 1.0f,	0.0f, 0.357f, -0.934f,	// 11
+		-1.0f, 0.0f, ratio,	0.0f, 0.357f, -0.934f,	// 5
+
+		// not sure about normals here
+		1.0f, 0.0f, -ratio,	0.0f, -0.357f, -0.934f,	// 7
+		0.0f, -ratio, -1.0f, 0.0f, -0.357f, -0.934f,// 10
+		-1.0f, 0.0f, -ratio, 0.0f, -0.357f, -0.934f,	// 6
+
+		// not sure about normals here
+		0.0f, -ratio, 1.0f,	-0.577f, 0.577f, -0.577f,	// 11
+		1.0f, 0.0f, ratio,	-0.577f, 0.577f, -0.577f,	// 4
+		ratio, -1.0f, 0.0f,	-0.577f, 0.577f, -0.577f,   // 1
+		
+		0.0f, -ratio, 1.0f,	-0.577f, -0.577f, -0.577f,	// 11
+		-1.0f, 0.0f, ratio,	-0.577f, -0.577f, -0.577f,	// 5
+		-ratio, -1.0f, 0.0f, -0.577f, -0.577f, -0.577f,// 2
+
+		// not sure about normals here
+		0.0f, -ratio, -1.0f, 0.577f, -0.577f, -0.577f,	// 10
+		1.0f, 0.0f, -ratio,	0.577f, -0.577f, -0.577f,	// 7
+		ratio, -1.0f, 0.0f,	0.577f, -0.577f, -0.577f,   // 1
+
+		// not sure about normals here
+		0.0f, -ratio, -1.0f, 0.577f, 0.577f, 0.577f,	// 10
+		-1.0f, 0.0f, -ratio, 0.577f, 0.577f, 0.577f,	// 6
+		-ratio, -1.0f, 0.0f, 0.577f, 0.577f, 0.577f,	// 2
+
+		0.0f, -ratio, -1.0f, -0.357f, 0.934f, 0.0f,	// 10
+		0.0f, -ratio, 1.0f,	-0.357f, 0.934f, 0.0f,	// 11
+		ratio, -1.0f, 0.0f,	-0.357f, 0.934f, 0.0f,   // 1
+
+		0.0f, -ratio, -1.0f, -0.357f, -0.934f, 0.0f,	// 10
+		0.0f, -ratio, 1.0f,	-0.357f, -0.934f, 0.0f,	// 11
+		-ratio, -1.0f, 0.0f, -0.357f, -0.934f, 0.0f	// 2
 	};
 
 	[[maybe_unused]] int icosahedronIndices[]{
@@ -198,10 +322,13 @@ void runFirstProgram()
 		1, 4, 7
 	};
 
+    glEnable(GL_DEPTH_TEST);
+
 	Mesh mesh{ dodecahedron, sizeof(dodecahedron), dodecahedronIndices, sizeof(dodecahedronIndices), 3 };
 	Mesh light{ lightVertices, sizeof(lightVertices), lightIndices, sizeof(lightIndices), 3 };
+	Mesh icosahedronMesh{ icosahedronVertices, sizeof(icosahedronVertices), 3, 6 };
 
-    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+    //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
 	while (!window.windowShouldClose())
 	{
@@ -212,9 +339,14 @@ void runFirstProgram()
 		window.processInput(config::camera, config::deltaTime);
 
 		glClearColor(0.1f, 0.1f, 0.2f, 1.0f);
-		glClear(GL_COLOR_BUFFER_BIT);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		shader.use();
+		shader.setVec3("objectColor", glm::vec3{ 0.5f, 0.9f, 0.8f });
+		shader.setVec3("lightPos", glm::vec3{ 1.2f, 1.0f, 3.0f });
+		shader.setVec3("lightColor", 1.0f, 1.0f, 1.0f);
+		shader.setVec3("viewPos", config::camera.getPosition());
+
 		glm::mat4 projection{ glm::mat4{ 1.0f } };
 		projection = glm::perspective(glm::radians(config::camera.getZoom()),
 			static_cast<float>(1200) / static_cast<float>(720), 0.1f, 100.0f);
@@ -224,12 +356,12 @@ void runFirstProgram()
 		shader.setMat4("view", view);
 
 		glm::mat4 model{ glm::mat4{ 1.0f } };
-		model = glm::rotate(model, static_cast<float>(glfwGetTime()) * glm::radians(50.0f),
+		model = glm::rotate(model, static_cast<float>(glfwGetTime()) * glm::radians(20.0f),
 				glm::vec3{ 0.5f, 1.0f, 0.0f });
 		shader.setMat4("model", model);
 
-		glBindVertexArray(mesh.getVAO());
-        glDrawElements(GL_TRIANGLES, 108, GL_UNSIGNED_INT, 0);
+		glBindVertexArray(icosahedronMesh.getVAO());
+		glDrawArrays(GL_TRIANGLES, 0, 60);
 
 		lightShader.use();
 		lightShader.setMat4("projection", projection);

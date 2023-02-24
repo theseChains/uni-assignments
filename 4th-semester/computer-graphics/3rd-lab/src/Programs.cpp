@@ -10,6 +10,7 @@
 #include <numbers>
 
 #include "Camera.h"
+#include "Coordinates.h"
 #include "Mesh.h"
 #include "Shader.h"
 #include "Window.h"
@@ -53,129 +54,6 @@ void runFirstProgram()
 	Shader lightShader{ "../shaders/lightCube.vert", "../shaders/lightCube.frag" };
 
 	const float ratio{ std::numbers::phi_v<float> };
-
-	[[maybe_unused]] float icosahedron[]{
-		ratio, 1.0f, 0.0f,		// 0
-		ratio, -1.0f, 0.0f,	    // 1
-		-ratio, -1.0f, 0.0f,	// 2
-		-ratio, 1.0f, 0.0f,		// 3
-		1.0f, 0.0f, ratio,		// 4
-		-1.0f, 0.0f, ratio,		// 5
-		-1.0f, 0.0f, -ratio,	// 6
-		1.0f, 0.0f, -ratio,		// 7
-		0.0f, ratio, 1.0f,		// 8
-		0.0f, ratio, -1.0f,		// 9
-		0.0f, -ratio, -1.0f,	// 10
-		0.0f, -ratio, 1.0f		// 11
-	};
-
-	float icosahedronVertices[]{
-		0.0f, ratio, -1.0f, 0.357f, 0.934f, 0.0f,	// 9
-		0.0f, ratio, 1.0f, 0.357f, 0.934f, 0.0f,	// 8
-		ratio, 1.0f, 0.0f, 0.357f, 0.934f, 0.0f,	// 0
-
-		0.0f, ratio, -1.0f,	-0.357f, 0.934f, 0.0f,	// 9
-		0.0f, ratio, 1.0f, -0.357f, 0.934f, 0.0f,	// 8
-		-ratio, 1.0f, 0.0f,	-0.357f, 0.934f, 0.0f,	// 3
-
-		0.0f, ratio, -1.0f, 0.0f, 0.357f, -0.934f,	// 9
-		-1.0f, 0.0f, -ratio, 0.0f, 0.357f, -0.934f,	// 6
-		1.0f, 0.0f, -ratio,	0.0f, 0.357f, -0.934f,	// 7
-
-		0.0f, ratio, 1.0f,	0.0f, 0.357f, 0.934f,	// 8
-		1.0f, 0.0f, ratio,	0.0f, 0.357f, 0.934f,	// 4
-		-1.0f, 0.0f, ratio,	0.0f, 0.357f, 0.934f,	// 5
-
-		0.0f, ratio, -1.0f, -0.577f, 0.577f, -0.577f,	// 9
-		-1.0f, 0.0f, -ratio, -0.577f, 0.577f, -0.577f,	// 6
-		-ratio, 1.0f, 0.0f,	-0.577f, 0.577f, -0.577f,	// 3
-
-		0.0f, ratio, -1.0f,	0.577f, 0.577f, -0.577f,	// 9
-		1.0f, 0.0f, -ratio,	0.577f, 0.577f, -0.577f,	// 7
-		ratio, 1.0f, 0.0f,	0.577f, 0.577f, -0.577f,	// 0
-
-		0.0f, ratio, 1.0f,	0.577f, 0.577f, 0.577f,	// 8
-		1.0f, 0.0f, ratio,	0.577f, 0.577f, 0.577f,	// 4
-		ratio, 1.0f, 0.0f,	0.577f, 0.577f, 0.577f,	// 0
-
-		0.0f, ratio, 1.0f,	-0.577f, 0.577f, 0.577f,	// 8
-		-1.0f, 0.0f, ratio,	-0.577f, 0.577f, 0.577f,	// 5
-		-ratio, 1.0f, 0.0f,	-0.577f, 0.577f, 0.577f,	// 3
-
-		ratio, 1.0f, 0.0f,  0.934f, 0.0f, 0.357f,		// 0
-		ratio, -1.0f, 0.0f,	0.934f, 0.0f, 0.357f,   // 1
-		1.0f, 0.0f, ratio,	0.934f, 0.0f, 0.357f,	// 4
-
-		ratio, 1.0f, 0.0f,	0.934f, 0.0f, -0.357f,	// 0
-		ratio, -1.0f, 0.0f,	0.934f, 0.0f, -0.357f,   // 1
-		1.0f, 0.0f, -ratio,	0.934f, 0.0f, -0.357f,	// 7
-
-		-ratio, -1.0f, 0.0f, -0.934f, 0.0f, 0.357f,	// 2
-		-ratio, 1.0f, 0.0f,	-0.934f, 0.0f, 0.357f,	// 3
-		-1.0f, 0.0f, ratio,	-0.934f, 0.0f, 0.357f,	// 5
-
-		-ratio, -1.0f, 0.0f, -0.934f, 0.0f, -0.357f,// 2
-		-ratio, 1.0f, 0.0f,	-0.934f, 0.0f, -0.357f,// 3
-		-1.0f, 0.0f, -ratio, -0.934f, 0.0f, -0.357f,// 6
-
-		1.0f, 0.0f, ratio,	0.0f, -0.357f, 0.934f,	// 4
-		0.0f, -ratio, 1.0f,	0.0f, -0.357f, 0.934f,	// 11
-		-1.0f, 0.0f, ratio,	0.0f, -0.357f, 0.934f,	// 5
-
-		1.0f, 0.0f, -ratio,	0.0f, -0.357f, -0.934f,	// 7
-		0.0f, -ratio, -1.0f, 0.0f, -0.357f, -0.934f,// 10
-		-1.0f, 0.0f, -ratio, 0.0f, -0.357f, -0.934f,	// 6
-
-		0.0f, -ratio, 1.0f,	0.577f, -0.577f, 0.577f,	// 11
-		1.0f, 0.0f, ratio,	0.577f, -0.577f, 0.577f,	// 4
-		ratio, -1.0f, 0.0f,	0.577f, -0.577f, 0.577f,   // 1
-		
-		0.0f, -ratio, 1.0f,	-0.577f, -0.577f, 0.577f,	// 11
-		-1.0f, 0.0f, ratio,	-0.577f, -0.577f, 0.577f,	// 5
-		-ratio, -1.0f, 0.0f, -0.577f, -0.577f, 0.577f,// 2
-
-		0.0f, -ratio, -1.0f, 0.577f, -0.577f, -0.577f,	// 10
-		1.0f, 0.0f, -ratio,	0.577f, -0.577f, -0.577f,	// 7
-		ratio, -1.0f, 0.0f,	0.577f, -0.577f, -0.577f,   // 1
-
-		0.0f, -ratio, -1.0f, -0.577f, -0.577f, -0.577f,	// 10
-		-1.0f, 0.0f, -ratio, -0.577f, -0.577f, -0.577f,	// 6
-		-ratio, -1.0f, 0.0f, -0.577f, -0.577f, -0.577f,	// 2
-
-		0.0f, -ratio, -1.0f, 0.357f, -0.934f, 0.0f,	// 10
-		0.0f, -ratio, 1.0f,	0.357f, -0.934f, 0.0f,	// 11
-		ratio, -1.0f, 0.0f,	0.357f, -0.934f, 0.0f,   // 1
-
-		0.0f, -ratio, -1.0f, -0.357f, -0.934f, 0.0f,	// 10
-		0.0f, -ratio, 1.0f,	-0.357f, -0.934f, 0.0f,	// 11
-		-ratio, -1.0f, 0.0f, -0.357f, -0.934f, 0.0f	// 2
-	};
-
-	[[maybe_unused]] int icosahedronIndices[]{
-		// upper part
-		9, 8, 0,
-		9, 8, 3,
-		9, 6, 7,
-		8, 4, 5,
-		9, 6, 3,
-		9, 7, 0,
-		8, 4, 0,
-		8, 5, 3,
-		// 4 middle triangles
-		0, 1, 4,
-		0, 1, 7,
-		2, 3, 5,
-		2, 3, 6,
-		// lower part
-		4, 11, 5,
-		7, 10, 6,
-		11, 4, 1,
-		11, 5, 2,
-		10, 7, 1,
-		10, 6, 2,
-		10, 11, 1,
-		10, 11, 2
-	};
 
 	float dodecahedron[]{
 		// blue
@@ -284,7 +162,7 @@ void runFirstProgram()
 
 	Mesh mesh{ dodecahedron, sizeof(dodecahedron), dodecahedronIndices, sizeof(dodecahedronIndices), 3 };
 	Mesh light{ lightVertices, sizeof(lightVertices), lightIndices, sizeof(lightIndices), 3 };
-	Mesh icosahedronMesh{ icosahedronVertices, sizeof(icosahedronVertices), 3, 6 };
+	Mesh icosahedronMesh{ coords::icosahedron, sizeof(coords::icosahedron), 3, 6 };
 
     //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 

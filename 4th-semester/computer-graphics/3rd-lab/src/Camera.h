@@ -19,7 +19,7 @@ namespace cfg
 	inline constexpr float pitch{ 0.0f };
 	inline constexpr float speed{ 2.5f };
 	inline constexpr float sensitivity{ 0.1f };
-	inline constexpr float zoom{ 60.0f };
+	inline constexpr float zoom{ 75.0f };
 }
 
 class Camera

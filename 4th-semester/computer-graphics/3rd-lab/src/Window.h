@@ -11,7 +11,7 @@ class Window
 public:
 	Window(int windowWidth, int windowHeight);
 
-	void processInput(Camera& camera, float deltaTime);
+	void processInput(Camera& camera, float deltaTime, bool& rotate, bool& renderIcosahedron);
 	bool windowShouldClose();
 	void swapBuffers();
 	GLFWwindow* getWindow() const;

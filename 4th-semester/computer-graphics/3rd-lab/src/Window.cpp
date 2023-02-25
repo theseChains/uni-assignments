@@ -32,27 +32,29 @@ Window::Window(int windowWidth, int windowHeight)
 	glfwSetInputMode(m_window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 }
 
-void Window::processInput(Camera& camera, float deltaTime)
+void Window::processInput(Camera& camera, float deltaTime, bool& rotate, bool& renderIcosahedron)
 {
 	if (glfwGetKey(m_window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
 		glfwSetWindowShouldClose(m_window, true);
 
 	if (glfwGetKey(m_window, GLFW_KEY_W) == GLFW_PRESS)
-	{
 		camera.processKeyboard(Movement::forward, deltaTime);
-	}
 	if (glfwGetKey(m_window, GLFW_KEY_S) == GLFW_PRESS)
-	{
 		camera.processKeyboard(Movement::backward, deltaTime);
-	}
 	if (glfwGetKey(m_window, GLFW_KEY_A) == GLFW_PRESS)
-	{
 		camera.processKeyboard(Movement::left, deltaTime);
-	}
 	if (glfwGetKey(m_window, GLFW_KEY_D) == GLFW_PRESS)
-	{
 		camera.processKeyboard(Movement::right, deltaTime);
-	}
+
+	if (glfwGetKey(m_window, GLFW_KEY_X) == GLFW_PRESS)
+		rotate = false;
+	if (glfwGetKey(m_window, GLFW_KEY_X) == GLFW_PRESS && glfwGetKey(m_window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS)
+		rotate = true;
+
+	if (glfwGetMouseButton(m_window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS)
+		renderIcosahedron = false;
+	if (glfwGetMouseButton(m_window, GLFW_MOUSE_BUTTON_RIGHT) == GLFW_PRESS)
+		renderIcosahedron = true;
 }
 
 bool Window::windowShouldClose()

@@ -28,12 +28,11 @@ void pushToQueue(Queue& queue, int newElement)
 	queue.array[queue.backIndex] = newElement;
 }
 
-int removeFromQueue(Queue& queue)
+std::optional<int> removeFromQueue(Queue& queue)
 {
 	if (isQueueEmpty(queue))
 	{
-		std::cerr << "The queue is empty\n";
-		return -1;
+		return std::nullopt;
 	}
 
 	int elementToRemove{ queue.array[queue.frontIndex] };

@@ -1,6 +1,8 @@
 #ifndef QUEUE_H
 #define QUEUE_H
 
+#include <optional>
+
 namespace constants
 {
 	inline constexpr int maxSize{ 10 };
@@ -16,7 +18,7 @@ struct Queue
 bool isQueueEmpty(const Queue& queue);
 bool isQueueFull(const Queue& queue);
 void pushToQueue(Queue& queue, int newElement);
-int removeFromQueue(Queue& queue);
+std::optional<int> removeFromQueue(Queue& queue);
 void printQueue(const Queue& queue);
 
 #endif

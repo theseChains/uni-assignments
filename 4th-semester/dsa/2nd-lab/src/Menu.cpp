@@ -28,8 +28,11 @@ void handleQueuePush(Queue& queue)
 
 void handleQueueRemoval(Queue& queue)
 {
-	int removedValue{ removeFromQueue(queue) };
-	std::cout << "\nremoved element with value " << removedValue << " from queue\n";
+	std::optional<int> removed{ removeFromQueue(queue) };
+	if (removed)
+		std::cout << "\nremoved element with value " << removed.value() << " from queue\n";
+	else
+		std::cout << "\ncannot remove from empty queue\n";
 }
 
 void handleQueuePrint(const Queue& queue)

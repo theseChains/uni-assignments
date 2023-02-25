@@ -15,7 +15,7 @@ void pushToStack(Stack*& top, int newValue)
 	top = newElement;
 }
 
-int popFromStack(Stack*& top)
+std::optional<int> popFromStack(Stack*& top)
 {
 	if (stackIsEmpty(top))
 	{
@@ -35,7 +35,7 @@ void printStack(Stack* top)
 {
 	if (stackIsEmpty(top))
 	{
-		std::cout << "The stack is empty\n";
+		std::cerr << "The stack is empty\n";
 		return;
 	}
 

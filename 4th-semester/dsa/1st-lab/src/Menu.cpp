@@ -67,12 +67,21 @@ void handleStackPop(Stack*& mainTop, Stack*& auxiliaryTop)
 	{
 		case 1:
 		{
-			int poppedValue{ popFromStack(mainTop) };
-			std::cout << "\npopped element with value " << poppedValue << " from main stack\n";
+			std::optional<int> popped{ popFromStack(mainTop) };
+			if (popped)
+				std::cout << "\npopped element with value " << popped.value() << " from main stack\n";
+			else
+				std::cout << "\ncannot pop from empty stack\n";
 			break;
 		}
 		case 2:
 		{
+			if (stackIsEmpty(mainTop))
+			{
+				std::cout << "\ncannot move an element from empty stack\n";
+				return;
+			}
+
 			Stack* nodeToMove{ mainTop };
 			std::cout << "\nmoved element with value " << mainTop->value << " to auxiliary stack\n";
 			mainTop = mainTop->next;

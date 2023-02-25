@@ -87,6 +87,8 @@ void handleStackPop(Stack*& mainTop, Stack*& auxiliaryTop)
 			mainTop = mainTop->next;
 			nodeToMove->next = auxiliaryTop;
 			auxiliaryTop = nodeToMove;
+
+			break;
 		}
 	}
 }

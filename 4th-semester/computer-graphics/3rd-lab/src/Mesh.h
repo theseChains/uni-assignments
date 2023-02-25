@@ -10,6 +10,7 @@ class Mesh
 {
 public:
 	Mesh(float* vertices, int verticesSize, int* indices, int indicesSize, int numberOfVertices);
+	Mesh(float* vertices, int verticesSize, int numberOfVertices, int offset);
 
 	unsigned int getVAO() const;
 	unsigned int getVBO() const;

@@ -11,6 +11,7 @@ void pushToQueue(Queue& queue, char newItem)
 {
 	Node* newNode{ new Node{} };
 	newNode->item = newItem;
+	newNode->next = nullptr;
 	if (queue.front == nullptr && queue.back == nullptr)
 	{
 		queue.front = newNode;
@@ -54,7 +55,7 @@ void printQueue(const Queue& queue)
 {
 	if (isQueueEmpty(queue))
 	{
-		std::cerr << "The queue is empty\n";
+		std::cerr << "The queue is empty";
 		return;
 	}
 

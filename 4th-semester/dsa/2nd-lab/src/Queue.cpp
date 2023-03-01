@@ -58,7 +58,7 @@ void printQueue(const Queue& queue)
 	}
 
 	int i{};
-	for (i = queue.frontIndex; i < queue.backIndex; i = (i + 1) % constants::maxSize)
+	for (i = queue.frontIndex; i != queue.backIndex; i = (i + 1) % constants::maxSize)
 	{
 		std::cout << queue.array[i] << ' ';
 	}

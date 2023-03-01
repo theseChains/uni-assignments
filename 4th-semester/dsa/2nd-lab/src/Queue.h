@@ -5,7 +5,7 @@
 
 namespace constants
 {
-	inline constexpr int maxSize{ 10 };
+	inline constexpr int maxSize{ 4 };
 }
 
 struct Queue

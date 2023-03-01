@@ -6,21 +6,41 @@
 
 void printMenu()
 {
-	std::cout << "\n1:  push element to queue\n";
-	std::cout << "2:  remove element from queue\n";
-	std::cout << "3:  print queue\n";
-	std::cout << "-1: exit\n";
+	std::cout << "\n1: push element to queue\n";
+	std::cout << "2: remove element from queue\n";
+	std::cout << "3: print queue\n";
+	std::cout << "4: exit\n";
 }
 
 int getNumber()
 {
-	int number{};
-	std::cin >> number;
-	return number;
+	while (true)
+	{
+		int number{};
+		std::cin >> number;
+
+		if (!std::cin)
+		{
+			std::cin.clear();
+			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+			std::cerr << "invalid input, enter a number between 1 and 4: ";
+		}
+		else
+		{
+			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+			return number;
+		}
+	}
 }
 
 void handleQueuePush(Queue& queue)
 {
+	if (isQueueFull(queue))
+	{
+		std::cout << "the queue is full\n";
+		return;
+	}
+
 	std::cout << "\nenter new value: ";
 	int newValue = getNumber();
 	pushToQueue(queue, newValue);
@@ -62,7 +82,7 @@ void runMenuLoop()
 	Queue queue{};
 
 	int command{};
-	while (command != -1)
+	while (command != 4)
 	{
 		printMenu();
 		command = getNumber();

@@ -55,9 +55,10 @@ void runFirstProgram()
 	Shader lightShader{ "../shaders/lightCube.vert", "../shaders/lightCube.frag" };
 
     glEnable(GL_DEPTH_TEST);
-	glEnable(GL_CULL_FACE);
+	//glEnable(GL_CULL_FACE);
 
 	Mesh tetrahedronMesh{ coords::tetrahedron, sizeof(coords::tetrahedron), 3, 6 };
+	Mesh prismMesh{ coords::prism, sizeof(coords::prism), 3, 6 };
 	Mesh lightMesh{ coords::light, sizeof(coords::light), 3, 3 };
 
 	bool rotateLight{ false };
@@ -126,7 +127,7 @@ void runFirstProgram()
 		}
 		shader.setMat4("model", model);
 
-		glBindVertexArray(tetrahedronMesh.getVAO());
+		glBindVertexArray(prismMesh.getVAO());
 		glDrawArrays(GL_TRIANGLES, 0, 24);
 
 		lightShader.use();

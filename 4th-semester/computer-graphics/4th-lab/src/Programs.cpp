@@ -55,15 +55,17 @@ void runFirstProgram()
 	Shader lightShader{ "../shaders/lightCube.vert", "../shaders/lightCube.frag" };
 
     glEnable(GL_DEPTH_TEST);
+	glEnable(GL_CULL_FACE);
 
 	Mesh tetrahedronMesh{ coords::tetrahedron, sizeof(coords::tetrahedron), 3, 6 };
-	Mesh light{ coords::light, sizeof(coords::light), coords::lightIndices,
-			sizeof(coords::lightIndices), 3 };
+	Mesh lightMesh{ coords::light, sizeof(coords::light), 3, 3 };
 
 	bool rotateLight{ false };
 	bool oPressed{ false };
 	bool rotateTetrahedron{ false };
 	bool lPressed{ false };
+	bool fPressed{ false };
+	bool bPressed{ false };
 
 	while (!window.windowShouldClose())
 	{
@@ -82,6 +84,22 @@ void runFirstProgram()
 		if (!lPressed && lCurrentlyPressed)
 			rotateLight = !rotateLight;
 		lPressed = lCurrentlyPressed;
+
+		bool fCurrentlyPressed{ glfwGetKey(window.getWindow(), GLFW_KEY_F) == GLFW_PRESS };
+		if (!fPressed && fCurrentlyPressed)
+		{
+			glCullFace(GL_BACK);
+			glEnable(GL_CULL_FACE);
+		}
+		fPressed = fCurrentlyPressed;
+
+		bool bCurrentlyPressed{ glfwGetKey(window.getWindow(), GLFW_KEY_B) == GLFW_PRESS };
+		if (!bPressed && bCurrentlyPressed)
+		{
+			glCullFace(GL_FRONT);
+			glEnable(GL_CULL_FACE);
+		}
+		bPressed = bCurrentlyPressed;
 
 		glClearColor(0.1f, 0.1f, 0.2f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -128,8 +146,8 @@ void runFirstProgram()
 		model = glm::scale(model, glm::vec3{ 0.2f });
 		lightShader.setMat4("model", model);
 
-		glBindVertexArray(light.getVAO());
-		glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
+		glBindVertexArray(lightMesh.getVAO());
+		glDrawArrays(GL_TRIANGLES, 0, 36);
 
 		window.swapBuffers();
 		glfwPollEvents();

@@ -55,7 +55,7 @@ void runFirstProgram()
 	Shader lightShader{ "../shaders/lightCube.vert", "../shaders/lightCube.frag" };
 
     glEnable(GL_DEPTH_TEST);
-	//glEnable(GL_CULL_FACE);
+	glEnable(GL_CULL_FACE);
 
 	Mesh tetrahedronMesh{ coords::tetrahedron, sizeof(coords::tetrahedron), 3, 6 };
 	Mesh prismMesh{ coords::prism, sizeof(coords::prism), 3, 6 };

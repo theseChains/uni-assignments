@@ -62,7 +62,13 @@ void runFirstProgram()
 	Texture container{};
 	unsigned int containerTexture{ container.loadTexture("../res/container.jpg") };
 
-	Mesh prismMesh{ coords::prism, sizeof(coords::prism), 3, 8 };
+	Texture marble{};
+	unsigned int marbleTexture{ marble.loadTexture("../res/marble.jpg") };
+
+	Mesh firstPart{ coords::firstPart, sizeof(coords::firstPart), 3, 8 };
+	Mesh secondPart{ coords::secondPart, sizeof(coords::secondPart), 3, 8 };
+	Mesh thirdPart{ coords::thirdPart, sizeof(coords::thirdPart), 3, 8 };
+
 	Mesh lightMesh{ coords::light, sizeof(coords::light), 3, 3 };
 
 	bool rotateLight{ false };
@@ -74,6 +80,10 @@ void runFirstProgram()
 
 	shader.setInt("material.diffuse", 0);
 	shader.setInt("material.specular", 0);
+
+	glm::vec3 lightAmbient{ glm::vec3{ 1.0f } };
+	glm::vec3 lightDiffuse{ glm::vec3{ 1.0f } };
+	glm::vec3 lightSpecular{ glm::vec3{ 1.0f } };
 
 	while (!window.windowShouldClose())
 	{
@@ -96,16 +106,18 @@ void runFirstProgram()
 		bool fCurrentlyPressed{ glfwGetKey(window.getWindow(), GLFW_KEY_F) == GLFW_PRESS };
 		if (!fPressed && fCurrentlyPressed)
 		{
-			glCullFace(GL_BACK);
-			glEnable(GL_CULL_FACE);
+			lightAmbient = glm::vec3{ 0.1f };
+			lightDiffuse = glm::vec3{ 0.8f };
+			lightSpecular = glm::vec3{ 1.0f };
 		}
 		fPressed = fCurrentlyPressed;
 
 		bool bCurrentlyPressed{ glfwGetKey(window.getWindow(), GLFW_KEY_B) == GLFW_PRESS };
 		if (!bPressed && bCurrentlyPressed)
 		{
-			glCullFace(GL_FRONT);
-			glEnable(GL_CULL_FACE);
+			lightAmbient = glm::vec3{ 1.0f };
+			lightDiffuse = glm::vec3{ 1.0f };
+			lightSpecular = glm::vec3{ 1.0f };
 		}
 		bPressed = bCurrentlyPressed;
 
@@ -117,9 +129,9 @@ void runFirstProgram()
 		shader.setVec3("lightColor", glm::vec3{ 1.0f });
 		shader.setVec3("viewPos", config::camera.getPosition());
 
-        shader.setVec3("light.ambient", glm::vec3{ 1.0f });
-        shader.setVec3("light.diffuse", glm::vec3{ 1.0f });
-        shader.setVec3("light.specular", glm::vec3{ 1.0f });
+        shader.setVec3("light.ambient", lightAmbient);
+        shader.setVec3("light.diffuse", lightDiffuse);
+        shader.setVec3("light.specular", lightSpecular);
 
         // material properties
         shader.setVec3("material.ambient", 0.25f, 0.25f, 0.25f);
@@ -146,8 +158,20 @@ void runFirstProgram()
 		glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D, metalTexture);
 
-		glBindVertexArray(prismMesh.getVAO());
-		glDrawArrays(GL_TRIANGLES, 0, 24);
+		glBindVertexArray(firstPart.getVAO());
+		glDrawArrays(GL_TRIANGLES, 0, 12);
+
+		glActiveTexture(GL_TEXTURE0);
+        glBindTexture(GL_TEXTURE_2D, marbleTexture);
+
+		glBindVertexArray(secondPart.getVAO());
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+
+		glActiveTexture(GL_TEXTURE0);
+        glBindTexture(GL_TEXTURE_2D, containerTexture);
+
+		glBindVertexArray(thirdPart.getVAO());
+		glDrawArrays(GL_TRIANGLES, 0, 6);
 
 		lightShader.use();
 		lightShader.setMat4("projection", projection);

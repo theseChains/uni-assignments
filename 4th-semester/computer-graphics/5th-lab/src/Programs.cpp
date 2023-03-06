@@ -11,6 +11,7 @@
 #include "Coordinates.h"
 #include "Mesh.h"
 #include "Shader.h"
+#include "Texture.h"
 #include "Window.h"
 
 namespace config
@@ -55,8 +56,13 @@ void runFirstProgram()
     glEnable(GL_DEPTH_TEST);
 	glEnable(GL_CULL_FACE);
 
-	Mesh tetrahedronMesh{ coords::tetrahedron, sizeof(coords::tetrahedron), 3, 6 };
-	Mesh prismMesh{ coords::prism, sizeof(coords::prism), 3, 6 };
+	Texture metal{};
+	unsigned int metalTexture{ metal.loadTexture("../res/metal.png") };
+
+	Texture container{};
+	unsigned int containerTexture{ container.loadTexture("../res/container.jpg") };
+
+	Mesh prismMesh{ coords::prism, sizeof(coords::prism), 3, 8 };
 	Mesh lightMesh{ coords::light, sizeof(coords::light), 3, 3 };
 
 	bool rotateLight{ false };
@@ -65,6 +71,9 @@ void runFirstProgram()
 	bool lPressed{ false };
 	bool fPressed{ false };
 	bool bPressed{ false };
+
+	shader.setInt("material.diffuse", 0);
+	shader.setInt("material.specular", 0);
 
 	while (!window.windowShouldClose())
 	{
@@ -133,6 +142,9 @@ void runFirstProgram()
 					glm::vec3{ 0.0f, 1.0f, 0.0f });
 		}
 		shader.setMat4("model", model);
+
+		glActiveTexture(GL_TEXTURE0);
+        glBindTexture(GL_TEXTURE_2D, metalTexture);
 
 		glBindVertexArray(prismMesh.getVAO());
 		glDrawArrays(GL_TRIANGLES, 0, 24);

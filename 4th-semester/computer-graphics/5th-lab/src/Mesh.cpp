@@ -36,6 +36,13 @@ Mesh::Mesh(float* vertices, int verticesSize, int numberOfVertices, int offset)
 	glVertexAttribPointer(1, numberOfVertices, GL_FLOAT, GL_FALSE,
 			offset * sizeof(float), reinterpret_cast<void*>(3 * sizeof(float)));
 	glEnableVertexAttribArray(1);
+
+	if (offset == 8)
+	{
+		glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE,
+				offset * sizeof(float), reinterpret_cast<void*>(6 * sizeof(float)));
+		glEnableVertexAttribArray(2);
+	}
 }
 
 unsigned int Mesh::getVAO() const

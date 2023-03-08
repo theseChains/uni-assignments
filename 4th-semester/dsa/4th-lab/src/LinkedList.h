@@ -1,16 +1,22 @@
-#ifndef LINKED_LIST_H 
-#define LINKED_LIST_H 
+#ifndef LINKED_LIST_H
+#define LINKED_LIST_H
 
-struct Node
+namespace constants
 {
-	int item{};
-	int nextIndex{};
+	inline constexpr int maxSize{ 5 };
+}
+
+struct LinkedList
+{
+	int array[constants::maxSize]{};
+	int numberOfElements{ 0 };
 };
 
-bool isListEmpty(const Node& head);
-void addToList(Node& head);
-void removeFromList(Node& head, int itemToRemove);
-Node findInList(Node& head, int itemToFind);
-void printList(Node& head);
+bool isListEmpty(const LinkedList& list);
+bool isListFull(const LinkedList& list);
+void addToList(LinkedList& list, int newElement);
+void removeFromList(LinkedList& list, int itemToRemove);
+int findInList(LinkedList& list, int itemToFind);
+void printList(const LinkedList& list);
 
 #endif

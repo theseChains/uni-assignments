@@ -9,12 +9,19 @@ namespace constants
 	inline constexpr int maxSize{ 5 };
 }
 
-struct LinkedList
+struct Node
 {
-	int array[constants::maxSize]{};
-	int numberOfElements{ 0 };
+	int value{};
+	int next{};
 };
 
+struct LinkedList
+{
+	Node array[constants::maxSize + 1]{};
+	int size{ 0 };
+};
+
+void initializeList(LinkedList& list);
 bool isListEmpty(const LinkedList& list);
 bool isListFull(const LinkedList& list);
 void addToList(LinkedList& list, int newElement);

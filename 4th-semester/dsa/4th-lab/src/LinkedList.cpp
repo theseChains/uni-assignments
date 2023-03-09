@@ -35,8 +35,6 @@ void addToList(LinkedList& list, int newItem)
 			++index;
 		}
 
-		std::cout << "new item index: " << newItemIndex << '\n';
-
 		// append
 		if (newItemIndex == constants::maxSize - 1)
 		{
@@ -54,6 +52,37 @@ void addToList(LinkedList& list, int newItem)
 	}
 }
 
+void removeFromList(LinkedList& list, int itemToRemove)
+{
+	if (isListEmpty(list))
+	{
+		std::cout << "the list is empty, cannot remove\n";
+		return;
+	}
+
+	auto found{ findInList(list, itemToRemove) };
+	if (found)
+	{
+		--list.numberOfElements;
+		for (int i{ found->second }; i < list.numberOfElements; ++i)
+			list.array[i] = list.array[i + 1];
+	}
+	else
+	{
+		std::cout << "\ncouldn't find an element with given value\n";
+	}
+}
+
+std::optional<std::pair<int, int>> findInList(const LinkedList& list, int itemToFind)
+{
+	for (int i{ 0 }; i < list.numberOfElements; ++i)
+	{
+		if (list.array[i] == itemToFind)
+			return std::make_pair(list.array[i], i);
+	}
+
+	return std::nullopt;
+}
 
 void printList(const LinkedList& list)
 {

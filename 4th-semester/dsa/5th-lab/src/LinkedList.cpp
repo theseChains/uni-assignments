@@ -34,7 +34,7 @@ int findPreviousIndex(const LinkedList& list, int itemToFind)
 	return previousIndex;
 }
 
-void addToList(LinkedList& list, int newItem, AddOption option)
+void addToList(LinkedList& list, AddOption option)
 {
 	if (isListFull(list))
 	{
@@ -44,6 +44,10 @@ void addToList(LinkedList& list, int newItem, AddOption option)
 
 	if (isListEmpty(list))
 	{
+		std::cout << "\nenter new value: ";
+		int newItem{};
+		std::cin >> newItem;
+
 		list.array[0].next = 1;
 		list.array[1].value = newItem;
 		list.array[1].next = 0;
@@ -64,10 +68,13 @@ void addToList(LinkedList& list, int newItem, AddOption option)
 			}
 			int previousIndex{ findPreviousIndex(list, value) };
 
+			std::cout << "\nenter new value: ";
+			int newItem{};
+			std::cin >> newItem;
+
 			int freeIndex{ 1 };
 			for (; freeIndex < constants::maxSize + 1; ++freeIndex)
-				if (list.array[freeIndex].next == -1)
-					break;
+				if (list.array[freeIndex].next == -1) break;
 
 			list.array[freeIndex].next = valueIndex;
 			list.array[freeIndex].value = newItem;
@@ -75,6 +82,28 @@ void addToList(LinkedList& list, int newItem, AddOption option)
 		}
 		else if (option == AddOption::afterElement)
 		{
+			std::cout << "\nenter value after which to insert the element: ";
+			int value{};
+			std::cin >> value;
+
+			int valueIndex{ findInList(list, value) };
+			if (valueIndex == -1)
+			{
+				std::cout << "\nthe value was not found\n";
+				return;
+			}
+
+			std::cout << "\nenter new value: ";
+			int newItem{};
+			std::cin >> newItem;
+
+			int freeIndex{ 1 };
+			for (; freeIndex < constants::maxSize + 1; ++freeIndex)
+				if (list.array[freeIndex].next == -1) break;
+
+			list.array[freeIndex].next = list.array[valueIndex].next;
+			list.array[valueIndex].next = freeIndex;
+			list.array[freeIndex].value = newItem;
 		}
 	}
 

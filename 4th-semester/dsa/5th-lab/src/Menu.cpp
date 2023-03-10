@@ -31,7 +31,7 @@ std::optional<AddOption> getOption()
 		case 1:
 			return AddOption::afterElement;
 		default:
-			std::cout << "\nincorrect addition option\n";
+			std::cout << "\nincorrect addition option, try again\n";
 			return std::nullopt;
 	}
 }
@@ -45,20 +45,15 @@ void handleListAddition(LinkedList& list)
 	}
 
 	if (isListEmpty(list))
-	{
-		std::cout << "\nenter new value: ";
-		int newValue{ getNumber() };
-		addToList(list, newValue);
-	}
+		addToList(list);
 	else
 	{
 		std::cout << "\n0 - add before specified element\n1 - add after specified element\n";
 		auto option{ getOption() };
-		if (!option)
-			return;
-		std::cout << "\nenter new value: ";
-		int newValue{ getNumber() };
-		addToList(list, newValue, option.value());
+		while (!option)
+			option = getOption();
+
+		addToList(list, option.value());
 	}
 }
 
@@ -85,7 +80,12 @@ void handleListSearch(const LinkedList& list)
 
 	std::cout << "enter item to find: ";
 	int itemToFind{ getNumber() };
-	[[maybe_unused]] int found{ findInList(list, itemToFind) };
+	int found{ findInList(list, itemToFind) };
+
+	if (found != -1)
+		std::cout << "\nvalue " << itemToFind << " found at index " << found << '\n';
+	else
+		std::cout << "\nvalue " << itemToFind << " is not in the list\n";
 }
 
 void handleListPrinting(const LinkedList& list)

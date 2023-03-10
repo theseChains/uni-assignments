@@ -9,6 +9,12 @@ namespace constants
 	inline constexpr int maxSize{ 5 };
 }
 
+enum class AddOption
+{
+	beforeElement,
+	afterElement
+};
+
 struct Node
 {
 	int value{};
@@ -24,9 +30,9 @@ struct LinkedList
 void initializeList(LinkedList& list);
 bool isListEmpty(const LinkedList& list);
 bool isListFull(const LinkedList& list);
-void addToList(LinkedList& list, int newElement);
+void addToList(LinkedList& list, int newElement, AddOption option = AddOption::afterElement);
 void removeFromList(LinkedList& list, int itemToRemove);
-std::optional<std::pair<int, int>> findInList(const LinkedList& list, int itemToFind);
+int findInList(const LinkedList& list, int itemToFind);
 void printList(const LinkedList& list);
 
 #endif

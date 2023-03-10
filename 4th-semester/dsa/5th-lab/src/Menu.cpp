@@ -2,6 +2,7 @@
 #include "LinkedList.h"
 
 #include <iostream>
+#include <optional>
 #include <random>
 
 void printMenu()
@@ -20,6 +21,21 @@ int getNumber()
 	return number;
 }
 
+std::optional<AddOption> getOption()
+{
+	int number{ getNumber() };
+	switch (number)
+	{
+		case 0:
+			return AddOption::beforeElement;
+		case 1:
+			return AddOption::afterElement;
+		default:
+			std::cout << "\nincorrect addition option\n";
+			return std::nullopt;
+	}
+}
+
 void handleListAddition(LinkedList& list)
 {
 	if (isListFull(list))
@@ -28,9 +44,22 @@ void handleListAddition(LinkedList& list)
 		return;
 	}
 
-	std::cout << "\nenter new value: ";
-	int newValue{ getNumber() };
-	addToList(list, newValue);
+	if (isListEmpty(list))
+	{
+		std::cout << "\nenter new value: ";
+		int newValue{ getNumber() };
+		addToList(list, newValue);
+	}
+	else
+	{
+		std::cout << "\n0 - add before specified element\n1 - add after specified element\n";
+		auto option{ getOption() };
+		if (!option)
+			return;
+		std::cout << "\nenter new value: ";
+		int newValue{ getNumber() };
+		addToList(list, newValue, option.value());
+	}
 }
 
 void handleListRemoval(LinkedList& list)
@@ -56,12 +85,7 @@ void handleListSearch(const LinkedList& list)
 
 	std::cout << "enter item to find: ";
 	int itemToFind{ getNumber() };
-	auto found{ findInList(list, itemToFind) };
-	if (found)
-		std::cout << "\nfound element with value " << found->first << " at index "<<
-			found->second << '\n';
-	else
-		std::cout << "\ncouldn't find element with value " << itemToFind << '\n';
+	[[maybe_unused]] int found{ findInList(list, itemToFind) };
 }
 
 void handleListPrinting(const LinkedList& list)
@@ -93,6 +117,7 @@ void handleCommand(LinkedList& list, int command)
 void runMenuLoop()
 {
 	LinkedList list{};
+	initializeList(list);
 
 	int command{};
 	while (command != -1)

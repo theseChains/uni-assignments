@@ -30,7 +30,7 @@ struct LinkedList
 void initializeList(LinkedList& list);
 bool isListEmpty(const LinkedList& list);
 bool isListFull(const LinkedList& list);
-void addToList(LinkedList& list, int newElement, AddOption option = AddOption::afterElement);
+void addToList(LinkedList& list, AddOption option = AddOption::afterElement);
 void removeFromList(LinkedList& list, int itemToRemove);
 int findInList(const LinkedList& list, int itemToFind);
 void printList(const LinkedList& list);

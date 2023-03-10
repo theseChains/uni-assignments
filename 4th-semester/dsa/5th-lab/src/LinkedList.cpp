@@ -118,7 +118,17 @@ void removeFromList(LinkedList& list, int itemToRemove)
 		return;
 	}
 
-	[[maybe_unused]] int foundIndex{ findInList(list, itemToRemove) };
+	int foundIndex{ findInList(list, itemToRemove) };
+	if (foundIndex == -1)
+	{
+		std::cout << "\ncouldn't find the value " << itemToRemove << " in list\n";
+		return;
+	}
+
+	int previousIndex{ findPreviousIndex(list, itemToRemove) };
+	list.array[previousIndex].next = list.array[foundIndex].next;
+	list.array[foundIndex].next = -1;
+	--list.size;
 }
 
 int findInList(const LinkedList& list, int itemToFind)

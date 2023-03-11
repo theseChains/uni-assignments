@@ -8,8 +8,9 @@ void printMenu()
 {
 	std::cout << "\n1:  add element to list\n";
 	std::cout << "2:  remove element from list\n";
-	std::cout << "3:  print list\n";
-	std::cout << "4:  search for value in list\n";
+	std::cout << "3:  print main list\n";
+	std::cout << "4:  print auxiliary list\n";
+	std::cout << "5:  search for value in list\n";
 	std::cout << "-1: exit\n";
 }
 
@@ -45,7 +46,7 @@ void handleListAddition(Node* head)
 	addToList(head, option.value());
 }
 
-void handleListRemoval(Node* head)
+void handleListRemoval(Node* head, Node* auxiliary)
 {
 	if (isListEmpty(head))
 	{
@@ -53,7 +54,42 @@ void handleListRemoval(Node* head)
 		return;
 	}
 
-	removeFromList(head);
+	std::cout << "\n0 - delete the element from list\n1 - move element to auxiliary list\n";
+	int option{};
+	std::cin >> option;
+
+	std::cout << "\nenter value to remove: ";
+	int valueToRemove{};
+	std::cin >> valueToRemove;
+
+	if (option == 0)
+		removeFromList(head, valueToRemove);
+	else if (option == 1)
+	{
+		// code duplication, i don't care
+		Node* current{ head->next };
+		Node* previous{ head };
+		while (current != nullptr && current->value != valueToRemove)
+		{
+			current = current->next;
+			previous = previous->next;
+		}
+
+		if (current == nullptr)
+		{
+			std::cout << "\ncouldn't find element with value " << valueToRemove << " in list\n";
+			return;
+		}
+
+		Node* temporary{ current };
+		previous->next = current->next;
+		temporary->next = auxiliary->next;
+		auxiliary->next = temporary;
+	}
+	else
+	{
+		std::cout << "\nincorrect option\n";
+	}
 }
 
 void handleListSearch(const Node* head)
@@ -76,7 +112,7 @@ void handleListPrinting(Node* head)
 	std::cout << '\n';
 }
 
-void handleCommand(Node* head, int command)
+void handleCommand(Node* head, Node* auxiliary, int command)
 {
 	switch (command)
 	{
@@ -84,12 +120,15 @@ void handleCommand(Node* head, int command)
 			handleListAddition(head);
 			break;
 		case 2:
-			handleListRemoval(head);
+			handleListRemoval(head, auxiliary);
 			break;
 		case 3:
 			handleListPrinting(head);
 			break;
 		case 4:
+			handleListPrinting(auxiliary);
+			break;
+		case 5:
 			handleListSearch(head);
 			break;
 	}
@@ -98,12 +137,13 @@ void handleCommand(Node* head, int command)
 void runMenuLoop()
 {
 	Node* head{ new Node{} };
+	Node* auxiliary{ new Node{} };
 
 	int command{};
 	while (command != -1)
 	{
 		printMenu();
 		command = getNumber();
-		handleCommand(head, command);
+		handleCommand(head, auxiliary, command);
 	}
 }

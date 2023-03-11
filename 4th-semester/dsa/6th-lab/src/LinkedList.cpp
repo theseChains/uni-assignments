@@ -83,13 +83,30 @@ void addToList(Node* head, AddOption option)
 	}
 }
 
-void removeFromList(Node* head)
+void removeFromList(Node* head, int itemToRemove)
 {
 	if (isListEmpty(head))
 	{
 		std::cout << "the list is empty, cannot remove\n";
 		return;
 	}
+
+	Node* current{ head->next };
+	Node* previous{ head };
+	while (current != nullptr && current->value != itemToRemove)
+	{
+		current = current->next;
+		previous = previous->next;
+	}
+
+	if (current == nullptr)
+	{
+		std::cout << "\ncouldn't find element with value " << itemToRemove << " in list\n";
+		return;
+	}
+
+	previous->next = current->next;
+	delete current;
 }
 
 void findInList(const Node* head, int itemToFind)

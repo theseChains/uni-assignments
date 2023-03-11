@@ -15,7 +15,7 @@ struct Node
 
 bool isListEmpty(const Node* head);
 void addToList(Node* head, AddOption option = AddOption::afterElement);
-void removeFromList(Node* head);
+void removeFromList(Node* head, int valueToRemove);
 void findInList(const Node* head, int itemToFind);
 void printList(Node* head);
 

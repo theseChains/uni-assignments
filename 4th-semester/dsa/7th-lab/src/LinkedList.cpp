@@ -107,14 +107,47 @@ void removeFromList(Node* head, int itemToRemove)
 	delete current;
 }
 
-void findInList(const Node* head, int itemToFind)
+int getNumberOfElementsInList(const Node* head)
 {
 	Node* current{ head->next };
-	int index{ 0 };
-	while (current != head && current->value != itemToFind)
+	int numberOfElements{ 0 };
+	while (current != head)
 	{
 		current = current->next;
-		++index;
+		++numberOfElements;
+	}
+
+	return numberOfElements;
+}
+
+void findInList(const Node* head, int itemToFind, int mode)
+{
+	Node* current{ nullptr };
+	int index{};
+	if (mode == 0)
+	{
+		current = head->next;
+		index = 0;
+		while (current != head && current->value != itemToFind)
+		{
+			current = current->next;
+			++index;
+		}
+	}
+	else if (mode == 1)
+	{
+		current = head->prev;
+		index = getNumberOfElementsInList(head) - 1;
+		while (current != head && current->value != itemToFind)
+		{
+			current = current->prev;
+			--index;
+		}
+	}
+	else
+	{
+		std::cout << "\nincorrect search option\n";
+		return;
 	}
 
 	if (current == head)

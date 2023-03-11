@@ -67,14 +67,18 @@ void handleListSearch(const Node* head)
 		return;
 	}
 
+	std::cout << "\n0 - search in normal order\n1 - search in reverse order\n";
+	int option{};
+	std::cin >> option;
+
 	std::cout << "enter item to find: ";
 	int itemToFind{ getNumber() };
-	findInList(head, itemToFind);
+	findInList(head, itemToFind, option);
 }
 
 void handleListPrinting(Node* head)
 {
-	std::cout << "\n0 - normal order\n1 - reverse order\n";
+	std::cout << "\n0 - print in normal order\n1 - print in reverse order\n";
 	int option{};
 	std::cin >> option;
 

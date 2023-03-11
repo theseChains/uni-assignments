@@ -126,7 +126,7 @@ void findInList(const Node* head, int itemToFind)
 	std::cout << "\nvalue " << itemToFind << " was found at index " << index << '\n';
 }
 
-void printList(Node* head)
+void printList(Node* head, int mode)
 {
 	if (isListEmpty(head))
 	{
@@ -134,10 +134,26 @@ void printList(Node* head)
 		return;
 	}
 
-	Node* current{ head->next };
-	while (current != head)
+	if (mode == 0)
 	{
-		std::cout << current->value << ' ';
-		current = current->next;
+		Node* current{ head->next };
+		while (current != head)
+		{
+			std::cout << current->value << ' ';
+			current = current->next;
+		}
+	}
+	else if (mode == 1)
+	{
+		Node* current{ head->prev };
+		while (current != head)
+		{
+			std::cout << current->value << ' ';
+			current = current->prev;
+		}
+	}
+	else
+	{
+		std::cout << "\nincorrect print mode\n";
 	}
 }

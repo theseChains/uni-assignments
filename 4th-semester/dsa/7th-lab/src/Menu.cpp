@@ -74,8 +74,12 @@ void handleListSearch(const Node* head)
 
 void handleListPrinting(Node* head)
 {
+	std::cout << "\n0 - normal order\n1 - reverse order\n";
+	int option{};
+	std::cin >> option;
+
 	std::cout << '\n';
-	printList(head);
+	printList(head, option);
 	std::cout << '\n';
 }
 

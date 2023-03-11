@@ -143,3 +143,14 @@ void printList(Node* head)
 		current = current->next;
 	}
 }
+
+void destroyList(Node* head)
+{
+	Node* current{};
+	while (head != nullptr)
+	{
+		current = head;
+		head = head->next;
+		delete current;
+	}
+}

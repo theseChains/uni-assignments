@@ -186,7 +186,17 @@ void printList(Node* head, int mode)
 		}
 	}
 	else
-	{
 		std::cout << "\nincorrect print mode\n";
+}
+
+void destroyList(Node* head)
+{
+	Node* current{};
+	head->prev->next = nullptr;
+	while (head != nullptr)
+	{
+		current = head;
+		head = head->next;
+		delete current;
 	}
 }

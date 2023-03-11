@@ -19,5 +19,6 @@ void addToList(Node* head, AddOption option = AddOption::afterElement);
 void removeFromList(Node* head, int valueToRemove);
 void findInList(const Node* head, int itemToFind, int mode);
 void printList(Node* head, int mode);
+void destroyList(Node* head);
 
 #endif

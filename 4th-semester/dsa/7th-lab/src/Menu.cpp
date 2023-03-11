@@ -119,4 +119,6 @@ void runMenuLoop()
 		command = getNumber();
 		handleCommand(head, command);
 	}
+
+	destroyList(head);
 }

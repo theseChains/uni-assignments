@@ -21,9 +21,11 @@ struct NodeList
 };
 
 bool isListEmpty(const Node* head);
+bool isNodeListEmpty(const NodeList* head);
 void addToList(Node* head, AddOption option);
 void addToNodeList(NodeList* head, AddOption option);
 void removeFromList(Node* head, int valueToRemove);
+void removeFromNodeList(NodeList* head, int listIdToRemove);
 void findInList(const Node* head, int itemToFind, int mode);
 void printList(Node* head);
 void printNodeList(NodeList* head);

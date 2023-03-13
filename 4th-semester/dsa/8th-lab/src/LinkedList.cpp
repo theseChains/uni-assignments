@@ -93,7 +93,7 @@ void addToNodeList(NodeList* head, AddOption option)
 {
 	if (option == AddOption::afterElement && isNodeListEmpty(head))
 	{
-		std::cout << "\nenter new value: ";
+		std::cout << "\nenter new list id: ";
 		int newValue{};
 		std::cin >> newValue;
 
@@ -120,7 +120,7 @@ void addToNodeList(NodeList* head, AddOption option)
 			return;
 		}
 
-		std::cout << "\nenter new value: ";
+		std::cout << "\nenter new list id: ";
 		int newValue{};
 		std::cin >> newValue;
 
@@ -158,7 +158,7 @@ void addToNodeList(NodeList* head, AddOption option)
 			return;
 		}
 
-		std::cout << "\nenter new value: ";
+		std::cout << "\nenter new list id: ";
 		int newValue{};
 		std::cin >> newValue;
 
@@ -169,6 +169,34 @@ void addToNodeList(NodeList* head, AddOption option)
 		newList->head->next = newList->head;
 		previous->next = newList;
 	}
+}
+
+void removeFromNodeList(NodeList* head, int listIdToRemove)
+{
+	if (isNodeListEmpty(head))
+	{
+		std::cout << "the list of lists is empty, cannot remove\n";
+		return;
+	}
+
+	NodeList* current{ head->next };
+	NodeList* previous{ head };
+	while (current != nullptr && current->head->value != listIdToRemove)
+	{
+		current = current->next;
+		previous = previous->next;
+	}
+
+	if (current == nullptr)
+	{
+		std::cout << "\ncouldn't find list with id " << listIdToRemove << " in list of lists\n";
+		return;
+	}
+
+	previous->next = current->next;
+	if (!isListEmpty(current->head))
+		destroyList(current->head);
+	delete current;
 }
 
 void removeFromList(Node* head, int itemToRemove)

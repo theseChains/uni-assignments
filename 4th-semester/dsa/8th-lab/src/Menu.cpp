@@ -9,7 +9,8 @@ void printMenu()
 	std::cout << "\n1:  add new list\n";
 	std::cout << "2:  add element to list\n";
 	std::cout << "3:  print main list\n";
-	std::cout << "4:  search for value in list\n";
+	std::cout << "4:  remove a list by id\n";
+	std::cout << "5:  remove an element from a list\n";
 	std::cout << "-1: exit\n";
 }
 
@@ -47,7 +48,6 @@ void handleNodeListAddition(NodeList* head)
 
 void handleListAddition(NodeList* head)
 {
-	// todo: gotta find the list in which you wanna add the value first
 	std::cout << "\n0 - add before specified element\n1 - add after specified element\n";
 	auto option{ getOption() };
 	while (!option)
@@ -70,18 +70,46 @@ void handleListAddition(NodeList* head)
 	addToList(current->head, option.value());
 }
 
-void handleListRemoval(Node* head)
+void handleNodeListRemoval(NodeList* head)
 {
-	if (isListEmpty(head))
+	if (isNodeListEmpty(head))
 	{
-		std::cout << "\nthe list is empty, cannot remove\n";
+		std::cout << "\nthe list of lists is empty, cannot remove\n";
+		return;
+	}
+
+	std::cout << "\nenter id of list to remove: ";
+	int listId{};
+	std::cin >> listId;
+	removeFromNodeList(head, listId);
+}
+
+void handleListRemoval(NodeList* head)
+{
+	if (isNodeListEmpty(head))
+	{
+		std::cout << "\nthe list of lists is empty, cannot remove\n";
+		return;
+	}
+
+	std::cout << "\nenter the id of list from which to remove the element: ";
+	int listId{};
+	std::cin >> listId;
+
+	NodeList* current{ head->next };
+	while (current != nullptr && current->head->value != listId)
+		current = current->next;
+
+	if (current == nullptr)
+	{
+		std::cout << "\ncouldn't find list with id " << listId << " in the list of lists\n";
 		return;
 	}
 
 	std::cout << "\nenter value to remove: ";
 	int valueToRemove{};
 	std::cin >> valueToRemove;
-	removeFromList(head, valueToRemove);
+	removeFromList(current->head, valueToRemove);
 }
 
 void handleListSearch(const Node* head)
@@ -122,6 +150,10 @@ void handleCommand(NodeList* head, int command)
 			handleListPrinting(head);
 			break;
 		case 4:
+			handleNodeListRemoval(head);
+			break;
+		case 5:
+			handleListRemoval(head);
 			break;
 	}
 }

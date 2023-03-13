@@ -45,14 +45,29 @@ void handleNodeListAddition(NodeList* head)
 	addToNodeList(head, option.value());
 }
 
-void handleListAddition(Node* head)
+void handleListAddition(NodeList* head)
 {
+	// todo: gotta find the list in which you wanna add the value first
 	std::cout << "\n0 - add before specified element\n1 - add after specified element\n";
 	auto option{ getOption() };
 	while (!option)
 		option = getOption();
 
-	addToList(head, option.value());
+	std::cout << "\nenter the id of the list: ";
+	int listId{};
+	std::cin >> listId;
+
+	NodeList* current{ head->next };
+	while (current != nullptr && current->head->value != listId)
+		current = current->next;
+
+	if (current == nullptr)
+	{
+		std::cout << "\ncouldn't find the list with the given id\n";
+		return;
+	}
+
+	addToList(current->head, option.value());
 }
 
 void handleListRemoval(Node* head)
@@ -101,7 +116,7 @@ void handleCommand(NodeList* head, int command)
 			handleNodeListAddition(head);
 			break;
 		case 2:
-			handleListAddition(head->head);
+			handleListAddition(head);
 			break;
 		case 3:
 			handleListPrinting(head);

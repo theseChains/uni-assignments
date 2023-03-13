@@ -4,7 +4,7 @@
 
 bool isListEmpty(const Node* head)
 {
-	return (head->next == nullptr);
+	return (head->next == head);
 }
 
 bool isNodeListEmpty(const NodeList* listHead)
@@ -100,7 +100,7 @@ void addToNodeList(NodeList* head, AddOption option)
 		NodeList* newList{ new NodeList{} };
 		newList->head = new Node{};
 		newList->next = nullptr;
-		newList->head->next = nullptr;
+		newList->head->next = newList->head;
 		newList->head->value = newValue;
 		head->next = newList;
 	}
@@ -128,7 +128,7 @@ void addToNodeList(NodeList* head, AddOption option)
 		newList->head = new Node{};
 		newList->next = current->next;
 		newList->head->value = newValue;
-		newList->head->next = nullptr;
+		newList->head->next = newList->head;
 		current->next = newList;
 	}
 	else if (option == AddOption::beforeElement)
@@ -166,6 +166,7 @@ void addToNodeList(NodeList* head, AddOption option)
 		newList->head = new Node{};
 		newList->next = current;
 		newList->head->value = newValue;
+		newList->head->next = newList->head;
 		previous->next = newList;
 	}
 }

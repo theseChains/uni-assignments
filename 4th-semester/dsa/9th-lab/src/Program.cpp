@@ -1,11 +1,12 @@
 #include "Program.h"
+#include "BinaryTree.h"
 
 #include <iostream>
-#include <random>
 
 void runProgram()
 {
 	int command{};
+	TreeNode* root{};
 	while (command != -1)
 	{
 		std::cout << "\n\n\n";
@@ -13,13 +14,18 @@ void runProgram()
 		int numberOfElements{};
 		std::cin >> numberOfElements;
 
+		addToTree(root, numberOfElements);
+
 		std::cout << "\ndirect order:\n";
+		printTreeInDirectOrder(root);
 
 		std::cout << "\nsymmetric order:\n";
+		printTreeInSymmetricOrder(root);
 
 		std::cout << "\nbackward-symmetric order:\n";
+		printTreeInBackwardSymmetricOrder(root);
 
-		std::cout << "\n-1: exit\nelse: continue: ";
+		std::cout << "\n\n-1:   exit\nelse: continue\n";
 		std::cin >> command;
 	}
 }

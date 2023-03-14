@@ -22,6 +22,9 @@ void runProgram()
 		std::cout << "\nsymmetric order:\n";
 		printTreeInSymmetricOrder(root);
 
+		std::cout << "\nnon-recursive symmetric order:\n";
+		printTreeInSymmetricOrderNonRecursive(root);
+
 		std::cout << "\nbackward-symmetric order:\n";
 		printTreeInBackwardSymmetricOrder(root);
 

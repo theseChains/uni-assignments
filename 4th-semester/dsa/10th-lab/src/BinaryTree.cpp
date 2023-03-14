@@ -49,6 +49,42 @@ void printTreeInSymmetricOrder(TreeNode* root, int level)
 	printTreeInSymmetricOrder(root->right, level + 4);
 }
 
+void printTreeInSymmetricOrderNonRecursive(TreeNode* root)
+{
+	Stack* top{ new Stack{} };
+	top->traversedNode = root;
+	top->level = -1;
+	top->next = nullptr;
+
+	TreeNode* current{ root };
+	int currentLevel{ 0 };
+	while (current != nullptr || top->level >= 0)
+	{
+		while (current != nullptr)
+		{
+			Stack* newNode{ new Stack{} };
+			newNode->level = currentLevel;
+			newNode->traversedNode = current;
+			newNode->next = top;
+			top = newNode;
+			current = current->left;
+			++currentLevel;
+		}
+
+		currentLevel = top->level;
+
+		current = top->traversedNode;
+		Stack* temporary{ top };
+		top = top->next;
+		delete temporary;
+
+		std::cout << std::string(currentLevel * 4, ' ') << current->value << '\n';
+
+		current = current->right;
+		++currentLevel;
+	}
+}
+
 void printTreeInBackwardSymmetricOrder(TreeNode* root, int level)
 {
 	if (root == nullptr)

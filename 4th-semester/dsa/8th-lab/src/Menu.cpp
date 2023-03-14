@@ -11,6 +11,7 @@ void printMenu()
 	std::cout << "3:  print main list\n";
 	std::cout << "4:  remove a list by id\n";
 	std::cout << "5:  remove an element from a list\n";
+	std::cout << "6:  find an element by value\n";
 	std::cout << "-1: exit\n";
 }
 
@@ -58,7 +59,7 @@ void handleListAddition(NodeList* head)
 	std::cin >> listId;
 
 	NodeList* current{ head->next };
-	while (current != nullptr && current->head->value != listId)
+	while (current != nullptr && current->listValue != listId)
 		current = current->next;
 
 	if (current == nullptr)
@@ -86,23 +87,23 @@ void handleNodeListRemoval(NodeList* head)
 
 void handleListRemoval(NodeList* head)
 {
-	if (isNodeListEmpty(head))
-	{
-		std::cout << "\nthe list of lists is empty, cannot remove\n";
-		return;
-	}
-
 	std::cout << "\nenter the id of list from which to remove the element: ";
 	int listId{};
 	std::cin >> listId;
 
 	NodeList* current{ head->next };
-	while (current != nullptr && current->head->value != listId)
+	while (current != nullptr && current->listValue != listId)
 		current = current->next;
 
 	if (current == nullptr)
 	{
 		std::cout << "\ncouldn't find list with id " << listId << " in the list of lists\n";
+		return;
+	}
+
+	if (isListEmpty(current->head))
+	{
+		std::cout << "\nthe list is empty, cannot remove\n";
 		return;
 	}
 
@@ -112,21 +113,33 @@ void handleListRemoval(NodeList* head)
 	removeFromList(current->head, valueToRemove);
 }
 
-void handleListSearch(const Node* head)
+void handleListSearch(const NodeList* head)
 {
-	if (isListEmpty(head))
+	if (isNodeListEmpty(head))
 	{
 		std::cout << "\nthe list is empty, cannot search for elements\n";
 		return;
 	}
 
-	std::cout << "\n0 - search in normal order\n1 - search in reverse order\n";
-	int option{};
-	std::cin >> option;
-
 	std::cout << "enter item to find: ";
 	int itemToFind{ getNumber() };
-	findInList(head, itemToFind, option);
+	NodeList* current{ head->next };
+	int numberOfFoundElements{ 0 };
+	while (current != nullptr)
+	{
+		if (findInList(current->head, itemToFind))
+		{
+			std::cout << "found element with value " << itemToFind << " in list with id " <<
+				current->listValue << '\n';
+			++numberOfFoundElements;
+		}
+		current = current->next;
+	}
+
+	if (numberOfFoundElements == 0)
+		std::cout << "\ncouldn't find value " << itemToFind << " in any of the lists\n";
+	else
+		std::cout << "\nfound " << numberOfFoundElements << " elements in total\n";
 }
 
 void handleListPrinting(NodeList* head)
@@ -155,12 +168,17 @@ void handleCommand(NodeList* head, int command)
 		case 5:
 			handleListRemoval(head);
 			break;
+		case 6:
+			handleListSearch(head);
 	}
 }
 
 void runMenuLoop()
 {
 	NodeList* head{ new NodeList{} };
+	head->head = new Node{};
+	head->head->next = head->head;
+	head->head->prev = head->head;
 
 	int command{};
 	while (command != -1)
@@ -168,5 +186,14 @@ void runMenuLoop()
 		printMenu();
 		command = getNumber();
 		handleCommand(head, command);
+	}
+
+	NodeList* current{};
+	while (head != nullptr)
+	{
+		current = head;
+		head = head->next;
+		destroyList(current->head);
+		delete current;
 	}
 }

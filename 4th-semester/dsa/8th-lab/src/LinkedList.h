@@ -16,6 +16,7 @@ struct Node
 
 struct NodeList
 {
+	int listValue{};
 	Node* head{ nullptr };
 	NodeList* next{ nullptr };
 };
@@ -26,7 +27,7 @@ void addToList(Node* head, AddOption option);
 void addToNodeList(NodeList* head, AddOption option);
 void removeFromList(Node* head, int valueToRemove);
 void removeFromNodeList(NodeList* head, int listIdToRemove);
-void findInList(const Node* head, int itemToFind, int mode);
+bool findInList(const Node* head, int itemToFind);
 void printList(Node* head);
 void printNodeList(NodeList* head);
 void destroyList(Node* head);

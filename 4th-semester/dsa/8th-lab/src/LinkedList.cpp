@@ -101,7 +101,8 @@ void addToNodeList(NodeList* head, AddOption option)
 		newList->head = new Node{};
 		newList->next = nullptr;
 		newList->head->next = newList->head;
-		newList->head->value = newValue;
+		newList->head->prev = newList->head;
+		newList->listValue = newValue;
 		head->next = newList;
 	}
 	else if (option == AddOption::afterElement && !isNodeListEmpty(head))
@@ -111,7 +112,7 @@ void addToNodeList(NodeList* head, AddOption option)
 		std::cin >> value;
 
 		NodeList* current{ head->next };
-		while (current != nullptr && current->head->value != value)
+		while (current != nullptr && current->listValue != value)
 			current = current->next;
 
 		if (current == nullptr)
@@ -127,8 +128,9 @@ void addToNodeList(NodeList* head, AddOption option)
 		NodeList* newList{ new NodeList{} };
 		newList->head = new Node{};
 		newList->next = current->next;
-		newList->head->value = newValue;
+		newList->listValue = newValue;
 		newList->head->next = newList->head;
+		newList->head->prev = newList->head;
 		current->next = newList;
 	}
 	else if (option == AddOption::beforeElement)
@@ -146,7 +148,7 @@ void addToNodeList(NodeList* head, AddOption option)
 		NodeList* previous{ head };
 		NodeList* current{ head->next };
 
-		while (current != nullptr && current->head->value != value)
+		while (current != nullptr && current->listValue != value)
 		{
 			current = current->next;
 			previous = previous->next;
@@ -165,8 +167,9 @@ void addToNodeList(NodeList* head, AddOption option)
 		NodeList* newList{ new NodeList{} };
 		newList->head = new Node{};
 		newList->next = current;
-		newList->head->value = newValue;
+		newList->listValue = newValue;
 		newList->head->next = newList->head;
+		newList->head->prev = newList->head;
 		previous->next = newList;
 	}
 }
@@ -181,7 +184,7 @@ void removeFromNodeList(NodeList* head, int listIdToRemove)
 
 	NodeList* current{ head->next };
 	NodeList* previous{ head };
-	while (current != nullptr && current->head->value != listIdToRemove)
+	while (current != nullptr && current->listValue != listIdToRemove)
 	{
 		current = current->next;
 		previous = previous->next;
@@ -194,8 +197,7 @@ void removeFromNodeList(NodeList* head, int listIdToRemove)
 	}
 
 	previous->next = current->next;
-	if (!isListEmpty(current->head))
-		destroyList(current->head);
+	destroyList(current->head);
 	delete current;
 }
 
@@ -235,43 +237,23 @@ int getNumberOfElementsInList(const Node* head)
 	return numberOfElements;
 }
 
-void findInList(const Node* head, int itemToFind, int mode)
+bool findInList(const Node* head, int itemToFind)
 {
 	Node* current{ nullptr };
 	int index{};
-	if (mode == 0)
+	current = head->next;
+	index = 0;
+	while (current != head && current->value != itemToFind)
 	{
-		current = head->next;
-		index = 0;
-		while (current != head && current->value != itemToFind)
-		{
-			current = current->next;
-			++index;
-		}
-	}
-	else if (mode == 1)
-	{
-		current = head->prev;
-		index = getNumberOfElementsInList(head) - 1;
-		while (current != head && current->value != itemToFind)
-		{
-			current = current->prev;
-			--index;
-		}
-	}
-	else
-	{
-		std::cout << "\nincorrect search option\n";
-		return;
+		current = current->next;
+		++index;
 	}
 
 	if (current == head)
-	{
-		std::cout << "\ncouldn't find an element with value " << itemToFind << " in the list\n";
-		return;
-	}
+		return false;
 
 	std::cout << "\nvalue " << itemToFind << " was found at index " << index << '\n';
+	return true;
 }
 
 void printList(Node* head)
@@ -301,7 +283,7 @@ void printNodeList(NodeList* head)
 	NodeList* current{ head->next };
 	while (current != nullptr)
 	{
-		std::cout << current->head->value << ": ";
+		std::cout << current->listValue << ": ";
 		printList(current->head);
 		current = current->next;
 		std::cout << '\n';

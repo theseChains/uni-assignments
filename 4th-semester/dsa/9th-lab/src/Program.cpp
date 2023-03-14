@@ -27,5 +27,8 @@ void runProgram()
 
 		std::cout << "\n\n-1:   exit\nelse: continue\n";
 		std::cin >> command;
+
+		destroyTree(root);
+		root = nullptr;
 	}
 }

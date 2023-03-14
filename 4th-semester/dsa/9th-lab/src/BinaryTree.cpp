@@ -58,3 +58,13 @@ void printTreeInBackwardSymmetricOrder(TreeNode* root, int level)
 	std::cout << std::string(level, ' ') << root->value << '\n';
 	printTreeInBackwardSymmetricOrder(root->left, level + 4);
 }
+
+void destroyTree(TreeNode* root)
+{
+	if (root == nullptr)
+		return;
+
+	destroyTree(root->left);
+	destroyTree(root->right);
+	delete root;
+}

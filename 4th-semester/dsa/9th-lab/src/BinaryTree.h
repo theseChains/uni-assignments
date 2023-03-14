@@ -8,9 +8,9 @@ struct TreeNode
 	TreeNode* right{};
 };
 
-void addToTree(TreeNode* root, int value);
-void printTreeInDirectOrder(TreeNode* root);
-void printTreeInSymmetricOrder(TreeNode* root);
-void printTreeInBackwardSymmetricOrder(TreeNode* root);
+void addToTree(TreeNode*& root, int numberOfElements);
+void printTreeInDirectOrder(TreeNode* root, int level = 0);
+void printTreeInSymmetricOrder(TreeNode* root, int level = 0);
+void printTreeInBackwardSymmetricOrder(TreeNode* root, int level = 0);
 
 #endif

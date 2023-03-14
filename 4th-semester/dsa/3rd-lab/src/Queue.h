@@ -11,8 +11,8 @@ struct Node
 
 struct Queue
 {
-	struct Node* front{};
-	struct Node* back{};
+	Node* front{ nullptr };
+	Node* back{ nullptr };
 };
 
 bool isQueueEmpty(const Queue& queue);

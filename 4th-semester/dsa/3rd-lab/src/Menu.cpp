@@ -97,7 +97,12 @@ void handleRealTimeQueueRemoval(Queue& queue)
 
 void handleRealTimeAction(Queue& queue, int randomNumber)
 {
-	if (randomNumber % 2 == 0)
+	if (isQueueEmpty(queue))
+	{
+		handleRealTimeQueuePush(queue);
+		handleQueuePrint(queue);
+	}
+	else if (randomNumber % 2 == 0)
 	{
 		handleRealTimeQueuePush(queue);
 		handleQueuePrint(queue);
@@ -140,6 +145,7 @@ void handleRealTimeQueueModel(Queue& queue)
 			int randomNumber{ rnd::getNumber(1, 100) };
 			handleRealTimeAction(queue, randomNumber);
 			sleep(1);
+			std::cout << "(press q to exit)\n";
 		}
 	}
 

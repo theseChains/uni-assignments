@@ -25,7 +25,7 @@ void runProgram()
 		std::cout << "\nbackward-symmetric order:\n";
 		printTreeInBackwardSymmetricOrder(root);
 
-		std::cout << "\n\n-1:   exit\nelse: continue\n";
+		std::cout << "\n\n-1: exit\n0:  continue\n";
 		std::cin >> command;
 
 		destroyTree(root);

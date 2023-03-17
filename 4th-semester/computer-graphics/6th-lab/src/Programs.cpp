@@ -92,6 +92,8 @@ void runFirstProgram()
 	bool fPressed{ false };
 	bool showOnlyRedAndGreen{ false };
 	bool rPressed{ false };
+	bool invert{ false };
+	bool iPressed{ false };
 
 	while (!window.windowShouldClose())
 	{
@@ -116,6 +118,14 @@ void runFirstProgram()
 			shader.setBool("showOnlyRedAndGreen", showOnlyRedAndGreen);
 		}
 		rPressed = rCurrentlyPressed;
+
+		bool iCurrentlyPressed{ glfwGetKey(window.getWindow(), GLFW_KEY_I) == GLFW_PRESS };
+		if (!iPressed && iCurrentlyPressed)
+		{
+			invert = !invert;
+			shader.setBool("invert", invert);
+		}
+		iPressed = iCurrentlyPressed;
 
 		glClearColor(0.1f, 0.1f, 0.2f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);

@@ -7,6 +7,10 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
+#include "stb_image_write.h"
+
+#include <vector>
+
 #include "Camera.h"
 #include "Coordinates.h"
 #include "Mesh.h"
@@ -44,6 +48,23 @@ void mouseCallback([[maybe_unused]] GLFWwindow* window, double xposIn, double yp
 	config::lastY = ypos;
 
 	config::camera.processMouseMovement(xOffset, yOffset);
+}
+
+void saveImage(GLFWwindow* window, const char* filepath)
+{
+	int width{};
+	int height{};
+	glfwGetFramebufferSize(window, &width, &height);
+	int numberOfChannels{ 3 };
+	int stride{ numberOfChannels * width };
+	stride += (stride % 4) ? (4 - stride % 4) : 0;
+ 	int bufferSize = stride * height;
+ 	std::vector<char> buffer(bufferSize);
+ 	glPixelStorei(GL_PACK_ALIGNMENT, 4);
+ 	glReadBuffer(GL_FRONT);
+ 	glReadPixels(0, 0, width, height, GL_RGB, GL_UNSIGNED_BYTE, buffer.data());
+ 	stbi_flip_vertically_on_write(true);
+ 	stbi_write_png(filepath, width, height, numberOfChannels, buffer.data(), stride);
 }
 
 void runFirstProgram()
@@ -98,6 +119,8 @@ void runFirstProgram()
 		window.swapBuffers();
 		glfwPollEvents();
 	}
+
+	saveImage(window.getWindow(), "../res/anotherOne.png");
 
 	glfwTerminate();
 }

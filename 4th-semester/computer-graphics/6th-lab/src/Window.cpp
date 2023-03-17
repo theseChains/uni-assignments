@@ -28,8 +28,6 @@ Window::Window(int windowWidth, int windowHeight)
 
 	m_width = windowWidth;
 	m_height = windowHeight;
-
-	glfwSetInputMode(m_window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 }
 
 void Window::processInput(Camera& camera, float deltaTime)

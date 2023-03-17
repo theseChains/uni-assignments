@@ -58,19 +58,18 @@ void saveImage(GLFWwindow* window, const char* filepath)
 	int numberOfChannels{ 3 };
 	int stride{ numberOfChannels * width };
 	stride += (stride % 4) ? (4 - stride % 4) : 0;
- 	int bufferSize = stride * height;
- 	std::vector<char> buffer(bufferSize);
- 	glPixelStorei(GL_PACK_ALIGNMENT, 4);
- 	glReadBuffer(GL_FRONT);
- 	glReadPixels(0, 0, width, height, GL_RGB, GL_UNSIGNED_BYTE, buffer.data());
- 	stbi_flip_vertically_on_write(true);
- 	stbi_write_png(filepath, width, height, numberOfChannels, buffer.data(), stride);
+	int bufferSize = stride * height;
+	std::vector<char> buffer(bufferSize);
+	glPixelStorei(GL_PACK_ALIGNMENT, 4);
+	glReadBuffer(GL_FRONT);
+	glReadPixels(0, 0, width, height, GL_RGB, GL_UNSIGNED_BYTE, buffer.data());
+	stbi_flip_vertically_on_write(true);
+	stbi_write_png(filepath, width, height, numberOfChannels, buffer.data(), stride);
 }
 
 void runFirstProgram()
 {
 	Window window{ 1200, 720 };
-	glfwSetCursorPosCallback(window.getWindow(), mouseCallback);
 	Shader shader{ "../shaders/shader.vert", "../shaders/shader.frag" };
 
 	Texture container{};
@@ -80,10 +79,13 @@ void runFirstProgram()
 		-1.0f, -1.0f, 0.0f, 0.0f,
 		 1.0f, -1.0f, 1.0f, 0.0f,
 		-1.0f,  1.0f, 0.0f, 1.0f,
-		 1.0f,  1.0f, 1.0f, 1.0f
+
+		 1.0f,  1.0f, 1.0f, 1.0f,
+		 1.0f, -1.0f, 1.0f, 0.0f,
+		-1.0f,  1.0f, 0.0f, 1.0f
 	};
 
-	Mesh imageMesh{ imageVertices, sizeof(imageVertices), 2, 2 };
+	Mesh imageMesh{ imageVertices, sizeof(imageVertices), 2, 4 };
 	shader.setInt("texture", 0);
 
 	while (!window.windowShouldClose())
@@ -99,28 +101,17 @@ void runFirstProgram()
 
 		shader.use();
 
-		glm::mat4 projection{ glm::mat4{ 1.0f } };
-		projection = glm::perspective(glm::radians(config::camera.getZoom()),
-				static_cast<float>(1200) / static_cast<float>(720), 0.1f, 100.0f);
-		shader.setMat4("projection", projection);
-
-		glm::mat4 view{ config::camera.getLookAtMatrix() };
-		shader.setMat4("view", view);
-
-		glm::mat4 model{ glm::mat4{ 1.0f } };
-		shader.setMat4("model", model);
-
 		glActiveTexture(GL_TEXTURE0);
 		glBindTexture(GL_TEXTURE_2D, containerTexture);
 
 		glBindVertexArray(imageMesh.getVAO());
-		glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+		glDrawArrays(GL_TRIANGLES, 0, 6);
 
 		window.swapBuffers();
 		glfwPollEvents();
 	}
 
-	saveImage(window.getWindow(), "../res/anotherOne.png");
+	//saveImage(window.getWindow(), "../res/anotherOne.png");
 
 	glfwTerminate();
 }

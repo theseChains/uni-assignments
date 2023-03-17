@@ -7,6 +7,10 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
+#include "imgui.h"
+#include "imgui_impl_glfw.h"
+#include "imgui_impl_opengl3.h"
+
 #include "stb_image_write.h"
 
 #include <vector>
@@ -70,6 +74,20 @@ void saveImage(GLFWwindow* window, const char* filepath)
 void runFirstProgram()
 {
 	Window window{ 1200, 720 };
+
+	// Setup Dear ImGui context
+	IMGUI_CHECKVERSION();
+	ImGui::CreateContext();
+	ImGuiIO& io = ImGui::GetIO(); (void)io;
+	io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
+	io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
+
+	ImGui::StyleColorsDark();
+
+	// Setup Platform/Renderer backends
+	ImGui_ImplGlfw_InitForOpenGL(window.getWindow(), true);
+	ImGui_ImplOpenGL3_Init("#version 330");
+
 	Shader shader{ "../shaders/shader.vert", "../shaders/shader.frag" };
 
 	Texture container{};
@@ -95,8 +113,18 @@ void runFirstProgram()
 	bool invert{ false };
 	bool iPressed{ false };
 
+	// Our state
+	bool show_demo_window{ true };
+
 	while (!window.windowShouldClose())
 	{
+		// Start the Dear ImGui frame
+		ImGui_ImplOpenGL3_NewFrame();
+		ImGui_ImplGlfw_NewFrame();
+		ImGui::NewFrame();
+
+		ImGui::ShowDemoWindow(&show_demo_window);
+
 		float currentFrame{ static_cast<float>(glfwGetTime()) };
 		config::deltaTime = currentFrame - config::lastFrame;
 		config::lastFrame = currentFrame;
@@ -137,6 +165,9 @@ void runFirstProgram()
 
 		glBindVertexArray(imageMesh.getVAO());
 		glDrawArrays(GL_TRIANGLES, 0, 6);
+
+		ImGui::Render();
+		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
 		window.swapBuffers();
 		glfwPollEvents();

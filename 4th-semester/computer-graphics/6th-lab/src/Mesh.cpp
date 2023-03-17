@@ -34,7 +34,7 @@ Mesh::Mesh(float* vertices, int verticesSize, int numberOfVertices, int offset)
 	glEnableVertexAttribArray(0);
 
 	glVertexAttribPointer(1, numberOfVertices, GL_FLOAT, GL_FALSE,
-			offset * sizeof(float), reinterpret_cast<void*>(3 * sizeof(float)));
+			offset * sizeof(float), reinterpret_cast<void*>(2 * sizeof(float)));
 	glEnableVertexAttribArray(1);
 
 	if (offset == 8)

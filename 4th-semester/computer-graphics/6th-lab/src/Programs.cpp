@@ -71,7 +71,6 @@ void runFirstProgram()
 {
 	Window window{ 1200, 720 };
 	Shader shader{ "../shaders/shader.vert", "../shaders/shader.frag" };
-	Shader flipped{ "../shaders/flipped.vert", "../shaders/shader.frag" };
 
 	Texture container{};
 	unsigned int containerTexture{ container.loadTexture("../res/container.jpg") };
@@ -88,10 +87,11 @@ void runFirstProgram()
 
 	Mesh imageMesh{ imageVertices, sizeof(imageVertices), 2, 4 };
 	shader.setInt("texture", 0);
-	flipped.setInt("texture", 0);
 
 	bool flip{ false };
 	bool fPressed{ false };
+	bool showOnlyRedAndGreen{ false };
+	bool rPressed{ false };
 
 	while (!window.windowShouldClose())
 	{
@@ -103,16 +103,24 @@ void runFirstProgram()
 
 		bool fCurrentlyPressed{ glfwGetKey(window.getWindow(), GLFW_KEY_F) == GLFW_PRESS };
 		if (!fPressed && fCurrentlyPressed)
+		{
 			flip = !flip;
+			shader.setBool("flip", flip);
+		}
 		fPressed = fCurrentlyPressed;
+
+		bool rCurrentlyPressed{ glfwGetKey(window.getWindow(), GLFW_KEY_R) == GLFW_PRESS };
+		if (!rPressed && rCurrentlyPressed)
+		{
+			showOnlyRedAndGreen = !showOnlyRedAndGreen;
+			shader.setBool("showOnlyRedAndGreen", showOnlyRedAndGreen);
+		}
+		rPressed = rCurrentlyPressed;
 
 		glClearColor(0.1f, 0.1f, 0.2f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		if (flip)
-			flipped.use();
-		else
-			shader.use();
+		shader.use();
 
 		glActiveTexture(GL_TEXTURE0);
 		glBindTexture(GL_TEXTURE_2D, containerTexture);

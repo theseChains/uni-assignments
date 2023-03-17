@@ -107,14 +107,8 @@ void runFirstProgram()
 	shader.setInt("texture", 0);
 
 	bool flip{ false };
-	bool fPressed{ false };
 	bool showOnlyRedAndGreen{ false };
-	bool rPressed{ false };
 	bool invert{ false };
-	bool iPressed{ false };
-
-	// Our state
-	bool show_demo_window{ true };
 
 	while (!window.windowShouldClose())
 	{
@@ -123,37 +117,20 @@ void runFirstProgram()
 		ImGui_ImplGlfw_NewFrame();
 		ImGui::NewFrame();
 
-		ImGui::ShowDemoWindow(&show_demo_window);
+		ImGui::Begin("menu");
+		if (ImGui::Checkbox("flip image", &flip))
+			shader.setBool("flip", flip);
+        if (ImGui::Checkbox("show only red and green components", &showOnlyRedAndGreen))
+			shader.setBool("showOnlyRedAndGreen", showOnlyRedAndGreen);
+        if (ImGui::Checkbox("invert red and green components", &invert))
+			shader.setBool("invert", invert);
+		ImGui::End();
 
 		float currentFrame{ static_cast<float>(glfwGetTime()) };
 		config::deltaTime = currentFrame - config::lastFrame;
 		config::lastFrame = currentFrame;
 
 		window.processInput(config::camera, config::deltaTime);
-
-		bool fCurrentlyPressed{ glfwGetKey(window.getWindow(), GLFW_KEY_F) == GLFW_PRESS };
-		if (!fPressed && fCurrentlyPressed)
-		{
-			flip = !flip;
-			shader.setBool("flip", flip);
-		}
-		fPressed = fCurrentlyPressed;
-
-		bool rCurrentlyPressed{ glfwGetKey(window.getWindow(), GLFW_KEY_R) == GLFW_PRESS };
-		if (!rPressed && rCurrentlyPressed)
-		{
-			showOnlyRedAndGreen = !showOnlyRedAndGreen;
-			shader.setBool("showOnlyRedAndGreen", showOnlyRedAndGreen);
-		}
-		rPressed = rCurrentlyPressed;
-
-		bool iCurrentlyPressed{ glfwGetKey(window.getWindow(), GLFW_KEY_I) == GLFW_PRESS };
-		if (!iPressed && iCurrentlyPressed)
-		{
-			invert = !invert;
-			shader.setBool("invert", invert);
-		}
-		iPressed = iCurrentlyPressed;
 
 		glClearColor(0.1f, 0.1f, 0.2f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);

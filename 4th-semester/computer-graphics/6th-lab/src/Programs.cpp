@@ -79,8 +79,8 @@ void runFirstProgram()
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
 	ImGuiIO& io = ImGui::GetIO(); (void)io;
-	io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
-	io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
+	io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
+	io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;
 
 	ImGui::StyleColorsDark();
 
@@ -109,10 +109,17 @@ void runFirstProgram()
 	bool flip{ false };
 	bool showOnlyRedAndGreen{ false };
 	bool invert{ false };
+	bool renderImGui{ true };
+	bool saveNow{ false };
 
 	while (!window.windowShouldClose())
 	{
-		// Start the Dear ImGui frame
+		if (saveNow)
+		{
+			saveImage(window.getWindow(), "../res/newImage.png");
+			saveNow = false;
+		}
+
 		ImGui_ImplOpenGL3_NewFrame();
 		ImGui_ImplGlfw_NewFrame();
 		ImGui::NewFrame();
@@ -124,6 +131,11 @@ void runFirstProgram()
 			shader.setBool("showOnlyRedAndGreen", showOnlyRedAndGreen);
         if (ImGui::Checkbox("invert red and green components", &invert))
 			shader.setBool("invert", invert);
+		if (ImGui::Button("write to file 'res/newImage.png'"))
+		{
+			renderImGui = false;
+			saveNow = true;
+		}
 		ImGui::End();
 
 		float currentFrame{ static_cast<float>(glfwGetTime()) };
@@ -143,8 +155,16 @@ void runFirstProgram()
 		glBindVertexArray(imageMesh.getVAO());
 		glDrawArrays(GL_TRIANGLES, 0, 6);
 
-		ImGui::Render();
-		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+		if (renderImGui)
+		{
+			ImGui::Render();
+			ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+		}
+		else
+		{
+			ImGui::Render();
+			renderImGui = true;
+		}
 
 		window.swapBuffers();
 		glfwPollEvents();

@@ -3,11 +3,6 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
 
-#define STB_IMAGE_WRITE_IMPLEMENTATION
-#include "stb_image_write.h"
-
-#include <vector>
-
 void Texture::bind()
 {
 	glBindTexture(GL_TEXTURE_2D, m_id);

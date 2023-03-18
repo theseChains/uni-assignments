@@ -3,56 +3,19 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
-#include <glm/gtc/type_ptr.hpp>
-
 #include "imgui.h"
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
 
+#define STB_IMAGE_WRITE_IMPLEMENTATION
 #include "stb_image_write.h"
 
 #include <vector>
 
-#include "Camera.h"
-#include "Coordinates.h"
 #include "Mesh.h"
 #include "Shader.h"
 #include "Texture.h"
 #include "Window.h"
-
-namespace config
-{
-	float deltaTime{ 0.0f }; // time between current frame and last frame
-	float lastFrame{ 0.0f };
-	float lastX{ 1200 / 2.0f };
-	float lastY{ 720 / 2.0f };
-	bool firstMouse{ true };
-	Camera camera{ glm::vec3{ 0.0f, 0.0f, 1.0f } };
-	glm::vec3 lightPos{ 1.0f, 2.0f, 2.0f };
-}
-
-void mouseCallback([[maybe_unused]] GLFWwindow* window, double xposIn, double yposIn)
-{
-	float xpos{ static_cast<float>(xposIn) };
-	float ypos{ static_cast<float>(yposIn) };
-	// initial set up
-	if (config::firstMouse)
-	{
-		config::lastX = xpos;
-		config::lastY = ypos;
-		config::firstMouse = false;
-	}
-	// calculate coordinate offset between last frame and current frame
-	float xOffset{ xpos - config::lastX };
-	float yOffset{ config::lastY - ypos }; // reversed since y coords range from bottom to top
-
-	config::lastX = xpos;
-	config::lastY = ypos;
-
-	config::camera.processMouseMovement(xOffset, yOffset);
-}
 
 void saveImage(GLFWwindow* window, const char* filepath)
 {
@@ -138,11 +101,7 @@ void runFirstProgram()
 		}
 		ImGui::End();
 
-		float currentFrame{ static_cast<float>(glfwGetTime()) };
-		config::deltaTime = currentFrame - config::lastFrame;
-		config::lastFrame = currentFrame;
-
-		window.processInput(config::camera, config::deltaTime);
+		window.processInput();
 
 		glClearColor(0.1f, 0.1f, 0.2f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);

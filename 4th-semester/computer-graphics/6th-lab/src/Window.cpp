@@ -30,19 +30,10 @@ Window::Window(int windowWidth, int windowHeight)
 	m_height = windowHeight;
 }
 
-void Window::processInput(Camera& camera, float deltaTime)
+void Window::processInput()
 {
 	if (glfwGetKey(m_window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
 		glfwSetWindowShouldClose(m_window, true);
-
-	if (glfwGetKey(m_window, GLFW_KEY_W) == GLFW_PRESS)
-		camera.processKeyboard(Movement::forward, deltaTime);
-	if (glfwGetKey(m_window, GLFW_KEY_S) == GLFW_PRESS)
-		camera.processKeyboard(Movement::backward, deltaTime);
-	if (glfwGetKey(m_window, GLFW_KEY_A) == GLFW_PRESS)
-		camera.processKeyboard(Movement::left, deltaTime);
-	if (glfwGetKey(m_window, GLFW_KEY_D) == GLFW_PRESS)
-		camera.processKeyboard(Movement::right, deltaTime);
 }
 
 bool Window::windowShouldClose()

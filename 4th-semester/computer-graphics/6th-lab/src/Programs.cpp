@@ -74,6 +74,7 @@ void runFirstProgram()
 	bool invert{ false };
 	bool renderImGui{ true };
 	bool saveNow{ false };
+	bool loaded{ false };
 
 	while (!window.windowShouldClose())
 	{
@@ -88,6 +89,8 @@ void runFirstProgram()
 		ImGui::NewFrame();
 
 		ImGui::Begin("menu");
+		if (ImGui::Button("load image from file 'res/container.jpg'"))
+			loaded = true;
 		if (ImGui::Checkbox("flip image", &flip))
 			shader.setBool("flip", flip);
         if (ImGui::Checkbox("show only red and green components", &showOnlyRedAndGreen))
@@ -106,13 +109,16 @@ void runFirstProgram()
 		glClearColor(0.1f, 0.1f, 0.2f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		shader.use();
+		if (loaded)
+		{
+			shader.use();
 
-		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, containerTexture);
+			glActiveTexture(GL_TEXTURE0);
+			glBindTexture(GL_TEXTURE_2D, containerTexture);
 
-		glBindVertexArray(imageMesh.getVAO());
-		glDrawArrays(GL_TRIANGLES, 0, 6);
+			glBindVertexArray(imageMesh.getVAO());
+			glDrawArrays(GL_TRIANGLES, 0, 6);
+		}
 
 		if (renderImGui)
 		{

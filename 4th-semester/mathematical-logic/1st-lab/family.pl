@@ -28,7 +28,7 @@ mother(X, Y) :- parent(X, Y), female(X).
 sister(X, Y) :- parent(Z, X), parent(Z, Y), female(X).
 brother(X, Y) :- parent(Z, X), parent(Z, Y), male(X).
 grandfather(X, Y) :- parent(X, Z), parent(Z, Y), male(X).
-grandmother(X, Y) :- parent(X, Z), parent(Z, Y), female(X).
+grandmother(X, Y) :- mother(X, Z), parent(Z, Y).
 
 % is rasim aygul's son?
 goal1 :- parent(aygul, rasim), male(rasim).
@@ -47,3 +47,6 @@ goal4 :- parent(sonya, X), parent(X, razit), writeln("Razit is Sonya's grandson.
 % who are the children of fagim?
 goal5 :- (writeln("Fagim's children are:");
 		parent(fagim, X), writeln(X)), fail.
+
+% which people are mothers?
+goal6(X) :- mother(X, _), writef("%t is a mother\n", [X]), fail.

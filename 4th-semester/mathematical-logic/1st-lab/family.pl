@@ -25,8 +25,8 @@ female(sonya).
 % complex predicates (rules)
 father(X, Y) :- parent(X, Y), male(X).
 mother(X, Y) :- parent(X, Y), female(X).
-sister(X, Y) :- parent(Z, X), parent(Z, Y), female(X).
-brother(X, Y) :- parent(Z, X), parent(Z, Y), male(X).
+sister(X, Y) :- parent(Z, X), parent(Z, Y), female(X), not(X = Y).
+brother(X, Y) :- parent(Z, X), parent(Z, Y), male(X), not(X = Y).
 grandfather(X, Y) :- parent(X, Z), parent(Z, Y), male(X).
 grandmother(X, Y) :- mother(X, Z), parent(Z, Y).
 

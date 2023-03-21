@@ -27,9 +27,11 @@ father(X, Y) :- parent(X, Y), male(X).
 mother(X, Y) :- parent(X, Y), female(X).
 sister(X, Y) :- parent(Z, X), parent(Z, Y), female(X).
 brother(X, Y) :- parent(Z, X), parent(Z, Y), male(X).
+grandfather(X, Y) :- parent(X, Z), parent(Z, Y), male(X).
+grandmother(X, Y) :- parent(X, Z), parent(Z, Y), female(X).
 
 % is rasim aygul's son?
-goal1 :- parent(aygul,rasim), male(rasim).
+goal1 :- parent(aygul, rasim), male(rasim).
 
 % is fagim a father?
 goal2 :- parent(fagim, _), male(fagim).
@@ -40,7 +42,7 @@ goal3 :- (writeln("Minnur's grandchildren are:");
 
 % is razit a grandchild or a son of sonya?
 goal4 :- parent(sonya, X), parent(X, razit), writeln("Razit is Sonya's grandson.");
-							parent(sonya, razit), writeln("Razit is Sonya's son.").
+		parent(sonya, razit), writeln("Razit is Sonya's son.").
 
 % who are the children of fagim?
 goal5 :- (writeln("Fagim's children are:");

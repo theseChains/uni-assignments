@@ -12,11 +12,14 @@ struct TreeNode
 
 bool isTreeEmpty(const TreeNode* root);
 void addToTree(TreeNode*& root, int newValue);
-void findElementInTree(TreeNode* root, TreeNode*& foundParent, int valueToFind,
-		bool continueSearching = true);
+TreeNode* addToTreeRecursive(TreeNode*& root, int newValue, TreeNode* parent = nullptr);
+TreeNode* findElementInTree(TreeNode* root, int valueToFind);
+void removeFromTree(TreeNode*& root, int valueToRemove);
+
 void printTreeInDirectOrder(const TreeNode* root, int level = 0);
 void printTreeInSymmetricOrder(const TreeNode* root, int level = 0);
 void printTreeInBackwardSymmetricOrder(const TreeNode* root, int level = 0);
+
 void destroyTree(TreeNode* root);
 
 #endif

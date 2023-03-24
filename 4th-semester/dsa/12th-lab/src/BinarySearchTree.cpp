@@ -32,6 +32,7 @@ void addToTree(TreeNode*& root, int newValue)
 	newNode = new TreeNode{};
 	newNode->parent = parent;
 	newNode->value = newValue;
+	newNode->count = 1;
 
 	if (parent == nullptr)
 		root = newNode;
@@ -41,20 +42,95 @@ void addToTree(TreeNode*& root, int newValue)
 		parent->right = newNode;
 }
 
-void findElementInTree(TreeNode* root, TreeNode*& foundParent, int valueToFind, bool continueSearching)
+TreeNode* addToTreeRecursive(TreeNode*& current, int newValue, TreeNode* parent)
 {
-	if (!continueSearching || root == nullptr)
-		return;
-
-	if (root->value != valueToFind)
+	if (current == nullptr)
 	{
-		findElementInTree(root->left, foundParent, valueToFind, continueSearching);
-		findElementInTree(root->right, foundParent, valueToFind, continueSearching);
+		current = new TreeNode{};
+		current->value = newValue;
+		current->count = 1;
+		current->parent = parent;
 	}
-	else if (root->value == valueToFind)
+	else
 	{
-		continueSearching = false;
-		foundParent = root;
+		parent = current;
+		if (newValue < current->value)
+			current->left = addToTreeRecursive(current->left, newValue, parent);
+		else if (newValue > current->value)
+			current->right = addToTreeRecursive(current->right, newValue, parent);
+		else
+		{
+			std::cout << "\nelement " << newValue << " is already in the tree, increasing count\n";
+			++current->count;
+		}
+	}
+
+	return current;
+}
+
+TreeNode* findElementInTree(TreeNode* current, int valueToFind)
+{
+	if (current == nullptr || current->value == valueToFind)
+		return current;
+
+	if (current->value < valueToFind)
+		return findElementInTree(current->right, valueToFind);
+	else
+		return findElementInTree(current->left, valueToFind);
+}
+
+TreeNode* minimum(TreeNode* current)
+{
+	while (current->left != nullptr)
+		current = current->left;
+
+	return current;
+}
+
+void transplant(TreeNode*& root, TreeNode*& first, TreeNode*& second)
+{
+	if (first->parent == nullptr)
+		root = second;
+	else if (first == first->parent->left)
+		first->parent->left = second;
+	else
+		first->parent->right = second;
+
+	if (second != nullptr)
+		second->parent = first->parent;
+}
+
+void removeFromTree(TreeNode*& root, int valueToRemove)
+{
+	TreeNode* nodeToRemove{ findElementInTree(root, valueToRemove) };
+	if (!nodeToRemove)
+	{
+		std::cout << "\nvalue " << valueToRemove << " was not found in the tree, cannot remove\n";
+		return;
+	}
+
+	if (nodeToRemove->left == nullptr)
+		// replace by right child
+		transplant(root, nodeToRemove, nodeToRemove->right);
+	else if (nodeToRemove->right == nullptr)
+		// replace by left child
+		transplant(root, nodeToRemove, nodeToRemove->left);
+	else
+	{
+		// both children exist
+		// the successor is the minimum of the right subtree
+		TreeNode* nodeToRemoveSuccessor{ minimum(nodeToRemove->right) };
+
+		if (nodeToRemoveSuccessor->parent != nodeToRemove)
+		{
+			transplant(root, nodeToRemoveSuccessor, nodeToRemoveSuccessor->right);
+			nodeToRemoveSuccessor->right = nodeToRemove->right;
+			nodeToRemoveSuccessor->right->parent = nodeToRemoveSuccessor;
+		}
+
+		transplant(root, nodeToRemove, nodeToRemoveSuccessor);
+		nodeToRemoveSuccessor->left = nodeToRemove->left;
+		nodeToRemoveSuccessor->left->parent = nodeToRemoveSuccessor;
 	}
 }
 

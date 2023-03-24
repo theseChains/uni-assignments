@@ -23,6 +23,7 @@ void printMenu()
 	std::cout << "4:  remove element from tree\n";
 	std::cout << "5:  destroy tree\n";
 	std::cout << "6:  add multiple elements\n";
+	std::cout << "7:  print tree with the counter of elements\n";
 	std::cout << "-1: exit\n";
 }
 
@@ -72,11 +73,6 @@ void handleTreePrint(const TreeNode* root)
 		return;
 	}
 
-	std::cout << "\ndirect order:\n";
-	printTreeInDirectOrder(root);
-	std::cout << "\nsymmetric order:\n";
-	printTreeInSymmetricOrder(root);
-	std::cout << "\nbackward symmetric order:\n";
 	printTreeInBackwardSymmetricOrder(root);
 }
 
@@ -93,6 +89,13 @@ void handleTreeCreation(TreeNode*& root)
 	int numberOfElementsToAdd{ getNumber() };
 	for (int i{ 0 }; i < numberOfElementsToAdd; ++i)
 		addToTree(root, rnd::get(0, 99));
+}
+
+void handleTreePrintWithCount(const TreeNode* root)
+{
+	std::cout << '\n';
+	printTreeInSymmetricOrderWithCount(root);
+	std::cout << '\n';
 }
 
 void handleCommand(TreeNode*& root, int command)
@@ -116,6 +119,9 @@ void handleCommand(TreeNode*& root, int command)
 			break;
 		case 6:
 			handleTreeCreation(root);
+			break;
+		case 7:
+			handleTreePrintWithCount(root);
 			break;
 	}
 }

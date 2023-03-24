@@ -134,24 +134,14 @@ void removeFromTree(TreeNode*& root, int valueToRemove)
 	}
 }
 
-void printTreeInDirectOrder(const TreeNode* root, int level)
+void printTreeInSymmetricOrderWithCount(const TreeNode* root)
 {
 	if (root == nullptr)
 		return;
 
-	std::cout << std::string(level, ' ') << root->value << '\n';
-	printTreeInDirectOrder(root->left, level + 4);
-	printTreeInDirectOrder(root->right, level + 4);
-}
-
-void printTreeInSymmetricOrder(const TreeNode* root, int level)
-{
-	if (root == nullptr)
-		return;
-
-	printTreeInSymmetricOrder(root->left, level + 4);
-	std::cout << std::string(level, ' ') << root->value << '\n';
-	printTreeInSymmetricOrder(root->right, level + 4);
+	printTreeInSymmetricOrderWithCount(root->left);
+	std::cout << root->value << '(' << root->count << ") ";
+	printTreeInSymmetricOrderWithCount(root->right);
 }
 
 void printTreeInBackwardSymmetricOrder(const TreeNode* root, int level)

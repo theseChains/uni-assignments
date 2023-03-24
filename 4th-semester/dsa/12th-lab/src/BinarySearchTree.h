@@ -16,8 +16,7 @@ TreeNode* addToTreeRecursive(TreeNode*& root, int newValue, TreeNode* parent = n
 TreeNode* findElementInTree(TreeNode* root, int valueToFind);
 void removeFromTree(TreeNode*& root, int valueToRemove);
 
-void printTreeInDirectOrder(const TreeNode* root, int level = 0);
-void printTreeInSymmetricOrder(const TreeNode* root, int level = 0);
+void printTreeInSymmetricOrderWithCount(const TreeNode* root);
 void printTreeInBackwardSymmetricOrder(const TreeNode* root, int level = 0);
 
 void destroyTree(TreeNode* root);

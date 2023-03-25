@@ -88,3 +88,54 @@ void insertionSort(std::vector<int> numbers)
 	std::cout << "number of comparisons: " << numberOfComparisons << '\n';
 	std::cout << "number of swaps: " << numberOfSwaps << '\n';
 }
+
+void heapify(std::vector<int>& numbers, int size, int i, int& numberOfComparisons, int& numberOfSwaps)
+{
+	// find largest among root, left child and right child
+	int largest{ i };
+	int left{ 2 * i + 1 };
+	int right{ 2 * i + 2 };
+
+	++numberOfComparisons;
+	if (left < size && numbers[left] > numbers[largest])
+		largest = left;
+
+	++numberOfComparisons;
+	if (right < size && numbers[right] > numbers[largest])
+		largest = right;
+
+	++numberOfComparisons;
+	if (largest != i)
+	{
+		std::swap(numbers[i], numbers[largest]);
+		++numberOfSwaps;
+		heapify(numbers, size, largest, numberOfComparisons, numberOfSwaps);
+	}
+}
+
+void heapSort(std::vector<int> numbers)
+{
+	int numberOfComparisons{ 0 };
+	int numberOfSwaps{ 0 };
+
+	int numbersSize{ static_cast<int>(numbers.size()) };
+	// build max heap
+	for (int i{ numbersSize }; i >= 0; --i)
+		heapify(numbers, numbersSize, i, numberOfComparisons, numberOfSwaps);
+
+	for (int i{ numbersSize - 1 }; i >= 0; --i)
+	{
+		std::swap(numbers[0], numbers[i]);
+		++numberOfSwaps;
+		heapify(numbers, i, 0, numberOfComparisons, numberOfSwaps);
+	}
+
+	std::cout << "\nsorted:\n";
+	printVector(numbers);
+	std::cout << "number of comparisons: " << numberOfComparisons << '\n';
+	std::cout << "number of swaps: " << numberOfSwaps << '\n';
+}
+
+void quickSort(std::vector<int> numbers);
+
+void shellSort(std::vector<int> numbers);

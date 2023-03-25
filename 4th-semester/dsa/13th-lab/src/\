@@ -67,11 +67,10 @@ void insertionSort(std::vector<int> numbers)
 
 	for (std::size_t i{ 1 }; i < numbers.size(); ++i)
 	{
-		int current{ numbers[i] };
+		int key{ numbers[i] };
 		int j{ static_cast<int>(i - 1) };
 
-		++numberOfComparisons;
-		while (j >= 0 && numbers[j] > current)
+		while (j >= 0 && numbers[j] > key)
 		{
 			++numberOfComparisons;
 			++numberOfSwaps;
@@ -80,7 +79,7 @@ void insertionSort(std::vector<int> numbers)
 		}
 
 		++numberOfSwaps;
-		numbers[j + 1] = current;
+		numbers[j + 1] = key;
 	}
 
 	std::cout << "\nsorted:\n";

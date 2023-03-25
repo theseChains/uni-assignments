@@ -21,7 +21,7 @@ void printMenu()
 	std::cout << "\n1:  sort using bubble sort algorithm\n";
 	std::cout << "2:  sort using selection sort algorithm\n";
 	std::cout << "3:  sort using insertion sort algorithm\n";
-	std::cout << "4:  generate array\n";
+	std::cout << "4:  generate vector\n";
 	std::cout << "-1: exit\n";
 }
 
@@ -34,7 +34,6 @@ int getNumber()
 
 void generateVector(std::vector<int>& numbers)
 {
-	numbers.clear();
 	std::cout << "\nenter number of elements to generate: ";
 	int numberOfElements{ getNumber() };
 	numbers.reserve(numberOfElements);

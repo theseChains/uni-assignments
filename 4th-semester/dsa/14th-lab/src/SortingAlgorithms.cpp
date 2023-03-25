@@ -136,6 +136,44 @@ void heapSort(std::vector<int> numbers)
 	std::cout << "number of swaps: " << numberOfSwaps << '\n';
 }
 
-void quickSort(std::vector<int> numbers);
+int partition(std::vector<int>& numbers, int low, int high, int& numberOfComparisons,
+		int& numberOfSwaps)
+{
+	int pivot{ numbers[high] };
+	int pivotIndex{ low - 1 };
+
+	for (int current{ low }; current <= high - 1; ++current)
+	{
+		++numberOfComparisons;
+		if (numbers[current] < pivot)
+		{
+			++pivotIndex;
+			std::swap(numbers[pivotIndex], numbers[current]);
+			++numberOfSwaps;
+		}
+	}
+
+	std::swap(numbers[pivotIndex + 1], numbers[high]);
+	++numberOfSwaps;
+	return pivotIndex + 1;
+}
+
+void quickSort(std::vector<int>& numbers, int low, int high)
+{
+	int numberOfComparisons{ 0 };
+	int numberOfSwaps{ 0 };
+
+	if (low < high)
+	{
+		int pivotIndex{ partition(numbers, low, high, numberOfComparisons, numberOfSwaps) };
+		quickSort(numbers, low, pivotIndex - 1);
+		quickSort(numbers, pivotIndex + 1, high);
+	}
+
+	std::cout << "\nsorted:\n";
+	printVector(numbers);
+	std::cout << "number of comparisons: " << numberOfComparisons << '\n';
+	std::cout << "number of swaps: " << numberOfSwaps << '\n';
+}
 
 void shellSort(std::vector<int> numbers);

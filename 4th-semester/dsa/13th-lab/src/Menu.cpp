@@ -19,7 +19,9 @@ namespace rnd
 void printMenu()
 {
 	std::cout << "\n1:  sort using bubble sort algorithm\n";
-	std::cout << "\n4:  generate vector\n";
+	std::cout << "2:  sort using selection sort algorithm\n";
+	std::cout << "3:  sort using insertion sort algorithm\n";
+	std::cout << "4:  generate vector\n";
 	std::cout << "-1: exit\n";
 }
 
@@ -47,6 +49,9 @@ void handleSorting(const std::vector<int>& numbers, int command)
 		std::cout << "\nthe array is empty, cannot sort\n";
 		return;
 	}
+
+	std::cout << "\noriginal:\n";
+	printVector(numbers);
 
 	switch (command)
 	{

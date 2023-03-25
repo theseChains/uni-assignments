@@ -3,6 +3,8 @@
 
 #include <vector>
 
+void printVector(const std::vector<int>& numbers);
+
 void bubbleSort(std::vector<int> numbers);
 void selectionSort(std::vector<int> numbers);
 void insertionSort(std::vector<int> numbers);

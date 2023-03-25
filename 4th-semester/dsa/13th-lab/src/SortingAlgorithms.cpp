@@ -46,5 +46,20 @@ void selectionSort(std::vector<int> numbers)
 
 void insertionSort(std::vector<int> numbers)
 {
+	for (std::size_t i{ 1 }; i < numbers.size(); ++i)
+	{
+		int key{ numbers[i] };
+		int j{ static_cast<int>(i - 1) };
 
+		while (j >= 0 && numbers[j] > key)
+		{
+			numbers[j + 1] = numbers[j];
+			--j;
+		}
+
+		numbers[j + 1] = key;
+	}
+
+	std::cout << "\nsorted:\n";
+	printVector(numbers);
 }

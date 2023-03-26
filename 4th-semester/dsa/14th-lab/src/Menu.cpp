@@ -37,6 +37,7 @@ int getNumber()
 
 void generateVector(std::vector<int>& numbers)
 {
+	numbers.clear();
 	std::cout << "\nenter number of elements to generate: ";
 	int numberOfElements{ getNumber() };
 	numbers.reserve(numberOfElements);

@@ -77,7 +77,7 @@ void handleSorting(const std::vector<int>& numbers, int command)
 				break;
 			}
 		case 6:
-			//shellSort(numbers);
+			shellSort(numbers);
 			break;
 	}
 }

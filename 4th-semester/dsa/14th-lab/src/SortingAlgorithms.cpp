@@ -176,4 +176,32 @@ void quickSort(std::vector<int>& numbers, int low, int high)
 	std::cout << "number of swaps: " << numberOfSwaps << '\n';
 }
 
-void shellSort(std::vector<int> numbers);
+void shellSort(std::vector<int> numbers)
+{
+	int numberOfComparisons{ 0 };
+	int numberOfSwaps{ 0 };
+
+	int numbersSize{ static_cast<int>(numbers.size()) };
+	for (int gap{ numbersSize }; gap > 0; gap /= 2)
+	{
+		for (int i{ gap }; i < numbersSize; ++i)
+		{
+			int temporary{ numbers[i] };
+			int j{};
+			++numberOfComparisons;
+			for (j = i; j >= gap && numbers[j - gap] > temporary; j -= gap)
+			{
+				numbers[j] = numbers[j - gap];
+				++numberOfSwaps;
+			}
+
+			numbers[j] = temporary;
+			++numberOfSwaps;
+		}
+	}
+
+	std::cout << "\nsorted:\n";
+	printVector(numbers);
+	std::cout << "number of comparisons: " << numberOfComparisons << '\n';
+	std::cout << "number of swaps: " << numberOfSwaps << '\n';
+}

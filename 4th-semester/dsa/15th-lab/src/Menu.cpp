@@ -20,7 +20,7 @@ namespace rnd
 void printMenu()
 {
 	std::cout << "\n1:  sort using bucket sort algorithm\n";
-	std::cout << "2:  sort using selection sort algorithm\n";
+	std::cout << "2:  sort using generic bucket sort algorithm\n";
 	std::cout << "3:  sort using insertion sort algorithm\n";
 	std::cout << "4:  generate vector\n";
 	std::cout << "-1: exit\n";
@@ -67,7 +67,7 @@ void handleSorting(const std::vector<int>& numbers, int command)
 			break;
 		}
 		case 2:
-			//selectionSort(numbers);
+			genericBucketSort(numbers);
 			break;
 		case 3:
 			//insertionSort(numbers);

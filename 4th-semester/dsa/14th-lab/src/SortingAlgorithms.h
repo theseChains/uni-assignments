@@ -10,7 +10,8 @@ void selectionSort(std::vector<int> numbers);
 void insertionSort(std::vector<int> numbers);
 
 void heapSort(std::vector<int> numbers);
-void quickSort(std::vector<int>& numbers, int low, int high);
+void quickSort(std::vector<int>& numbers, int low, int high, int& numberOfComparisons,
+		int& numberOfSwaps);
 void shellSort(std::vector<int> numbers);
 
 #endif

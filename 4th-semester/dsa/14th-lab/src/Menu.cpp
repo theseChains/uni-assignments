@@ -73,7 +73,16 @@ void handleSorting(const std::vector<int>& numbers, int command)
 		case 5:
 			{
 				std::vector<int> numbersCopy{ numbers };
-				quickSort(numbersCopy, 0, static_cast<int>(numbersCopy.size() - 1));
+				int numberOfComparisons{ 0 };
+				int numberOfSwaps{ 0 };
+
+				quickSort(numbersCopy, 0, static_cast<int>(numbersCopy.size() - 1),
+						numberOfComparisons, numberOfSwaps);
+
+				std::cout << "\nsorted:\n";
+				printVector(numbersCopy);
+				std::cout << "number of comparisons: " << numberOfComparisons << '\n';
+				std::cout << "number of swaps: " << numberOfSwaps << '\n';
 				break;
 			}
 		case 6:

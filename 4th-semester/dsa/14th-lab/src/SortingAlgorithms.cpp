@@ -158,22 +158,15 @@ int partition(std::vector<int>& numbers, int low, int high, int& numberOfCompari
 	return pivotIndex + 1;
 }
 
-void quickSort(std::vector<int>& numbers, int low, int high)
+void quickSort(std::vector<int>& numbers, int low, int high, int& numberOfComparisons,
+		int& numberOfSwaps)
 {
-	int numberOfComparisons{ 0 };
-	int numberOfSwaps{ 0 };
-
 	if (low < high)
 	{
 		int pivotIndex{ partition(numbers, low, high, numberOfComparisons, numberOfSwaps) };
-		quickSort(numbers, low, pivotIndex - 1);
-		quickSort(numbers, pivotIndex + 1, high);
+		quickSort(numbers, low, pivotIndex - 1, numberOfComparisons, numberOfSwaps);
+		quickSort(numbers, pivotIndex + 1, high, numberOfComparisons, numberOfSwaps);
 	}
-
-	std::cout << "\nsorted:\n";
-	printVector(numbers);
-	std::cout << "number of comparisons: " << numberOfComparisons << '\n';
-	std::cout << "number of swaps: " << numberOfSwaps << '\n';
 }
 
 void shellSort(std::vector<int> numbers)

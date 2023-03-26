@@ -1,5 +1,6 @@
 #include "SortingAlgorithms.h"
 
+#include <algorithm>
 #include <iostream>
 #include <utility>
 
@@ -138,6 +139,39 @@ void genericBucketSort(std::vector<int> numbers)
 			node = node->next;
 		}
 	}
+
+	std::cout << "\nsorted:\n";
+	printVector(numbers);
+}
+
+void countingSortForRadix(std::vector<int>& numbers, int size, int digit)
+{
+	// working with 10 digits
+	std::vector<int> workingStorage(10);
+	std::vector<int> result(numbers.size());
+
+	for (int i{ 0 }; i < size; ++i)
+		++workingStorage[(numbers[i] / digit) % 10];
+
+	for (int i{ 1 }; i <= 10; ++i)
+		workingStorage[i] += workingStorage[i - 1];
+
+	for (int i{ size - 1 }; i >= 0; --i)
+	{
+		result[workingStorage[(numbers[i] / digit) % 10] - 1] = numbers[i];
+		--workingStorage[(numbers[i] / digit) % 10];
+	}
+
+	numbers = result;
+}
+
+void radixSort(std::vector<int> numbers)
+{
+	int size{ static_cast<int>(numbers.size()) };
+	int maximum{ *std::ranges::max_element(numbers.begin(), numbers.end()) };
+
+	for (int digitPlace{ 1 }; maximum / digitPlace > 0; digitPlace *= 10)
+		countingSortForRadix(numbers, size, digitPlace);
 
 	std::cout << "\nsorted:\n";
 	printVector(numbers);

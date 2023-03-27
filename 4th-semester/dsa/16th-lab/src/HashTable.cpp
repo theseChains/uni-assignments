@@ -42,11 +42,7 @@ void addToTable(HashTable& table, const std::string& newValue)
 		return;
 	}
 
-	int index{};
-	for (const auto& character : newValue)
-		index += static_cast<int>(character);
-	hashFunction(index);
-
+	int index{ getValueIndex(newValue) };
 	table.array[index] = newValue;
 }
 
@@ -56,7 +52,26 @@ std::pair<bool, int> findInTable(const HashTable& table, const std::string& valu
 	if (table.array[valueIndex] == valueToFind)
 		return { true, valueIndex };
 	else
-		return { false, -1 };
+		return { false, valueIndex };
+}
+
+void removeFromTable(HashTable& table, const std::string& valueToRemove)
+{
+	if (!isKeyValid(valueToRemove))
+	{
+		std::cout << "\nvalue " << valueToRemove << " is not in the list of keys\n";
+		return;
+	}
+
+	auto [found, foundIndex]{ findInTable(table, valueToRemove) };
+	if (!found)
+	{
+		std::cout << "\ncouldn't find element with value " << valueToRemove << " in the table\n";
+		return;
+	}
+
+	int valueIndex{ getValueIndex(valueToRemove) };
+	table.array[valueIndex] = "EMPTY";
 }
 
 void printTable(const HashTable& table)

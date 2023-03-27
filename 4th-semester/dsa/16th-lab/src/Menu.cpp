@@ -37,8 +37,10 @@ void handleTableSearch(const HashTable& table)
 {
 	std::cout << "\nenter value to find: ";
 	std::string valueToFind{ getString() };
-	if (findInTable(table, valueToFind))
-		std::cout << "\nvalue " << valueToFind << " was found in the table\n";
+	auto [found, index]{ findInTable(table, valueToFind) };
+	if (found)
+		std::cout << "\nvalue " << valueToFind << " was found in the table at index " <<
+			index << '\n';
 	else
 		std::cout << "\nvalue " << valueToFind << " was not found in the table\n";
 }

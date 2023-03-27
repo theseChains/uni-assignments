@@ -35,6 +35,13 @@ void addToTable(HashTable& table, const std::string& newValue)
 		return;
 	}
 
+	auto [found, foundIndex]{ findInTable(table, newValue) };
+	if (found)
+	{
+		std::cout << "\nelement with value " << newValue << " is already in the table\n";
+		return;
+	}
+
 	int index{};
 	for (const auto& character : newValue)
 		index += static_cast<int>(character);
@@ -43,13 +50,13 @@ void addToTable(HashTable& table, const std::string& newValue)
 	table.array[index] = newValue;
 }
 
-bool findInTable(const HashTable& table, const std::string& valueToFind)
+std::pair<bool, int> findInTable(const HashTable& table, const std::string& valueToFind)
 {
 	int valueIndex{ getValueIndex(valueToFind) };
 	if (table.array[valueIndex] == valueToFind)
-		return true;
+		return { true, valueIndex };
 	else
-		return false;
+		return { false, -1 };
 }
 
 void printTable(const HashTable& table)

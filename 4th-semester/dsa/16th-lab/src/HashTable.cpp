@@ -43,7 +43,7 @@ void addToTable(HashTable& table, const std::string& newValue)
 	table.array[index] = newValue;
 }
 
-bool findInTable(HashTable& table, const std::string& valueToFind)
+bool findInTable(const HashTable& table, const std::string& valueToFind)
 {
 	int valueIndex{ getValueIndex(valueToFind) };
 	if (table.array[valueIndex] == valueToFind)

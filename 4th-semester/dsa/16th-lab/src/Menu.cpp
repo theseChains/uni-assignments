@@ -7,6 +7,7 @@
 void printMenu()
 {
 	std::cout << "\n1:  add key to table\n";
+	std::cout << "2:  find element in table\n";
 	std::cout << "3:  print table\n";
 	std::cout << "-1: exit\n";
 }
@@ -32,6 +33,16 @@ void hanldeTableAddition(HashTable& table)
 	addToTable(table, value);
 }
 
+void handleTableSearch(const HashTable& table)
+{
+	std::cout << "\nenter value to find: ";
+	std::string valueToFind{ getString() };
+	if (findInTable(table, valueToFind))
+		std::cout << "\nvalue " << valueToFind << " was found in the table\n";
+	else
+		std::cout << "\nvalue " << valueToFind << " was not found in the table\n";
+}
+
 void handleTablePrinting(const HashTable& table)
 {
 	std::cout << '\n';
@@ -46,6 +57,7 @@ void handleCommand(HashTable& table, int command)
 			hanldeTableAddition(table);
 			break;
 		case 2:
+			handleTableSearch(table);
 			break;
 		case 3:
 			handleTablePrinting(table);

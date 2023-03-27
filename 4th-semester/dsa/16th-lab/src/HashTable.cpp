@@ -14,7 +14,7 @@ int hashFunction(const std::string& value)
 
 void addToTable(HashTable& table, const std::string& newValue)
 {
-	if (std::ranges::find(config::keys, newValue) == std::end(table.array))
+	if (std::ranges::find(table.array, newValue) == std::end(table.array))
 	{
 		std::cout << "\ncouldn't find key " << newValue << " in the list of keys\n";
 		return;

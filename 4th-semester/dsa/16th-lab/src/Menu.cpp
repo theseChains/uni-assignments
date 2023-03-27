@@ -4,17 +4,6 @@
 #include <iostream>
 #include <random>
 
-namespace rnd
-{
-	std::mt19937 mt{ std::random_device{}() };
-
-	int get(int min, int max)
-	{
-		std::uniform_int_distribution range{ min, max };
-		return range(mt);
-	}
-}
-
 void printMenu()
 {
 	std::cout << "\n1:  add key to table\n";
@@ -45,8 +34,8 @@ void hanldeTableAddition(HashTable& table)
 
 void handleTablePrinting(const HashTable& table)
 {
-	printTable(table);
 	std::cout << '\n';
+	printTable(table);
 }
 
 void handleCommand(HashTable& table, int command)

@@ -3,25 +3,53 @@
 #include <iostream>
 #include <ranges>
 
-int hashFunction(const std::string& value)
+void hashFunction(int& index)
+{
+	index %= 10;
+}
+
+int getValueIndex(const std::string& value)
 {
 	int index{};
 	for (const auto& character : value)
 		index += static_cast<int>(character);
+	hashFunction(index);
 
-	return (index % 10);
+	return index;
+}
+
+bool isKeyValid(const std::string& value)
+{
+	for (const auto& key : config::keys)
+		if (key == value)
+			return true;
+
+	return false;
 }
 
 void addToTable(HashTable& table, const std::string& newValue)
 {
-	if (std::ranges::find(table.array, newValue) == std::end(table.array))
+	if (!isKeyValid(newValue))
 	{
 		std::cout << "\ncouldn't find key " << newValue << " in the list of keys\n";
 		return;
 	}
 
-	int keyIndex{ hashFunction(newValue) };
-	table.array[keyIndex] = newValue;
+	int index{};
+	for (const auto& character : newValue)
+		index += static_cast<int>(character);
+	hashFunction(index);
+
+	table.array[index] = newValue;
+}
+
+bool findInTable(HashTable& table, const std::string& valueToFind)
+{
+	int valueIndex{ getValueIndex(valueToFind) };
+	if (table.array[valueIndex] == valueToFind)
+		return true;
+	else
+		return false;
 }
 
 void printTable(const HashTable& table)

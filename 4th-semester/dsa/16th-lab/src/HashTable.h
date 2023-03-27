@@ -31,6 +31,7 @@ struct HashTable
 };
 
 void addToTable(HashTable& table, const std::string& newValue);
+bool findInTable(HashTable& table, const std::string& valueToFind);
 void printTable(const HashTable& table);
 
 #endif

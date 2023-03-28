@@ -63,10 +63,26 @@ std::optional<int> addToTable(HashTable& table, const std::string& newValue)
 std::pair<bool, int> findInTable(const HashTable& table, const std::string& valueToFind)
 {
 	int valueIndex{ getValueIndex(valueToFind) };
-	if (table.array[valueIndex] == valueToFind)
-		return { true, valueIndex };
-	else
-		return { false, valueIndex };
+	int iteration{ 1 };
+	int numberOfComaprisons{ 0 };
+	while (iteration <= constants::maxTableSize - 1)
+	{
+		++numberOfComaprisons;
+		if (table.array[valueIndex] == valueToFind)
+		{
+			std::cout << "\nnumber of comparisons while searching: " << numberOfComaprisons
+				<< '\n';
+			return { true, valueIndex };
+		}
+
+		++valueIndex;
+		valueIndex %= constants::maxTableSize;
+
+		++iteration;
+	}
+
+	std::cout << "\nnumber of comparisons while searching: " << numberOfComaprisons << '\n';
+	return { false, valueIndex };
 }
 
 void printTable(const HashTable& table)

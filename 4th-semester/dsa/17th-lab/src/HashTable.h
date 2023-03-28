@@ -2,6 +2,7 @@
 #define HASH_TABLE_H
 
 #include <array>
+#include <optional>
 #include <string>
 #include <tuple>
 
@@ -33,9 +34,11 @@ struct HashTable
 	int size{ 0 };
 };
 
-void addToTable(HashTable& table, const std::string& newValue);
+std::optional<int> addToTable(HashTable& table, const std::string& newValue);
 std::pair<bool, int> findInTable(const HashTable& table, const std::string& valueToFind);
 void removeFromTable(HashTable& table, const std::string& valueToRemove);
 void printTable(const HashTable& table);
+
+void fillTable(HashTable& table);
 
 #endif

@@ -10,6 +10,7 @@ void printMenu()
 	std::cout << "2:  find element in table\n";
 	std::cout << "3:  print table\n";
 	std::cout << "4:  remove element from table\n";
+	std::cout << "5:  fill table\n";
 	std::cout << "-1: exit\n";
 }
 
@@ -31,7 +32,9 @@ void hanldeTableAddition(HashTable& table)
 {
 	std::cout << "\nenter key value to add: ";
 	std::string value{ getString() };
-	addToTable(table, value);
+	auto added{ addToTable(table, value) };
+	if (added)
+		std::cout << "number of comparisons: " << added.value() << '\n';
 }
 
 void handleTableSearch(const HashTable& table)
@@ -75,13 +78,16 @@ void handleCommand(HashTable& table, int command)
 		case 4:
 			handleTableRemoval(table);
 			break;
+		case 5:
+			fillTable(table);
+			break;
 	}
 }
 
 void runMenuLoop()
 {
 	HashTable table{};
-	for (int i{ 0 }; i < constants::maxSize; ++i)
+	for (int i{ 0 }; i < constants::maxTableSize; ++i)
 		table.array[i] = "EMPTY";
 
 	int command{};

@@ -27,31 +27,37 @@ bool isKeyValid(const std::string& value)
 	return false;
 }
 
-void addToTable(HashTable& table, const std::string& newValue)
+std::optional<int> addToTable(HashTable& table, const std::string& newValue)
 {
 	if (!isKeyValid(newValue))
 	{
 		std::cout << "\ncouldn't find key " << newValue << " in the list of keys\n";
-		return;
+		return std::nullopt;
 	}
 
 	if (table.size == constants::maxTableSize)
 	{
 		std::cout << "\nthe table is full\n";
-		return;
+		return std::nullopt;
 	}
+
+	int numberOfComaprisons{ 0 };
 
 	int index{ getValueIndex(newValue) };
 	int iteration{ 1 };
 	int currentIndex{ index };
+	++numberOfComaprisons;
 	while (table.array[currentIndex] != "EMPTY" && iteration <= constants::maxTableSize - 2)
 	{
+		++numberOfComaprisons;
 		currentIndex = (index + iteration) % constants::maxTableSize;
 		++iteration;
 	}
 
 	table.array[currentIndex] = newValue;
 	++table.size;
+
+	return numberOfComaprisons;
 }
 
 std::pair<bool, int> findInTable(const HashTable& table, const std::string& valueToFind)
@@ -88,4 +94,18 @@ void printTable(const HashTable& table)
 	for (const auto& element : table.array)
 		std::cout << element << ' ';
 	std::cout << '\n';
+}
+
+void fillTable(HashTable& table)
+{
+	int numberOfComaprisons{ 0 };
+	for (const auto& key : config::keys)
+	{
+		auto added{ addToTable(table, key) };
+		if (added)
+			numberOfComaprisons += added.value();
+	}
+
+	std::cout << "\ntotal number of comparisons after filling the table: "
+		<< numberOfComaprisons << '\n';
 }

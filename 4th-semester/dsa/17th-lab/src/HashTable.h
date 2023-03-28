@@ -30,6 +30,7 @@ namespace config
 struct HashTable
 {
 	std::string array[constants::maxTableSize]{};
+	int size{ 0 };
 };
 
 void addToTable(HashTable& table, const std::string& newValue);

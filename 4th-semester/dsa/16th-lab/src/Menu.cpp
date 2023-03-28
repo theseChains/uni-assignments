@@ -10,6 +10,7 @@ void printMenu()
 	std::cout << "2:  find element in table\n";
 	std::cout << "3:  print table\n";
 	std::cout << "4:  remove element from table\n";
+	std::cout << "5:  fill table with all of the keys\n";
 	std::cout << "-1: exit\n";
 }
 
@@ -74,6 +75,9 @@ void handleCommand(HashTable& table, int command)
 			break;
 		case 4:
 			handleTableRemoval(table);
+			break;
+		case 5:
+			fillTable(table);
 			break;
 	}
 }

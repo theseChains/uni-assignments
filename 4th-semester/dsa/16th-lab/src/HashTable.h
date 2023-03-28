@@ -36,4 +36,6 @@ std::pair<bool, int> findInTable(const HashTable& table, const std::string& valu
 void removeFromTable(HashTable& table, const std::string& valueToRemove);
 void printTable(const HashTable& table);
 
+void fillTable(HashTable& table);
+
 #endif

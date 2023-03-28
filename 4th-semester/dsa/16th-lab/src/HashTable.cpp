@@ -80,3 +80,9 @@ void printTable(const HashTable& table)
 		std::cout << element << ' ';
 	std::cout << '\n';
 }
+
+void fillTable(HashTable& table)
+{
+	for (const auto& key : config::keys)
+		addToTable(table, key);
+}

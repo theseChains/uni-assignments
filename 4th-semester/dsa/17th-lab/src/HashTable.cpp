@@ -69,26 +69,6 @@ std::pair<bool, int> findInTable(const HashTable& table, const std::string& valu
 		return { false, valueIndex };
 }
 
-void removeFromTable(HashTable& table, const std::string& valueToRemove)
-{
-	if (!isKeyValid(valueToRemove))
-	{
-		std::cout << "\nvalue " << valueToRemove << " is not in the list of keys\n";
-		return;
-	}
-
-	auto [found, foundIndex]{ findInTable(table, valueToRemove) };
-	if (!found)
-	{
-		std::cout << "\ncouldn't find element with value " << valueToRemove << " in the table\n";
-		return;
-	}
-
-	int valueIndex{ getValueIndex(valueToRemove) };
-	table.array[valueIndex] = "EMPTY";
-	--table.size;
-}
-
 void printTable(const HashTable& table)
 {
 	for (const auto& element : table.array)

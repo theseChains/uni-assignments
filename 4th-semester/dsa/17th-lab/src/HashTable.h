@@ -36,7 +36,6 @@ struct HashTable
 
 std::optional<int> addToTable(HashTable& table, const std::string& newValue);
 std::pair<bool, int> findInTable(const HashTable& table, const std::string& valueToFind);
-void removeFromTable(HashTable& table, const std::string& valueToRemove);
 void printTable(const HashTable& table);
 
 void fillTable(HashTable& table);

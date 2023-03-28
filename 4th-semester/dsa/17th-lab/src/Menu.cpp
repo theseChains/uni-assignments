@@ -9,8 +9,7 @@ void printMenu()
 	std::cout << "\n1:  add key to table\n";
 	std::cout << "2:  find element in table\n";
 	std::cout << "3:  print table\n";
-	std::cout << "4:  remove element from table\n";
-	std::cout << "5:  fill table\n";
+	std::cout << "4:  fill table\n";
 	std::cout << "-1: exit\n";
 }
 
@@ -55,13 +54,6 @@ void handleTablePrinting(const HashTable& table)
 	printTable(table);
 }
 
-void handleTableRemoval(HashTable& table)
-{
-	std::cout << "\nenter value to remove: ";
-	std::string valueToRemove{ getString() };
-	removeFromTable(table, valueToRemove);
-}
-
 void handleCommand(HashTable& table, int command)
 {
 	switch (command)
@@ -76,9 +68,6 @@ void handleCommand(HashTable& table, int command)
 			handleTablePrinting(table);
 			break;
 		case 4:
-			handleTableRemoval(table);
-			break;
-		case 5:
 			fillTable(table);
 			break;
 	}

@@ -5,7 +5,7 @@
 
 void hashFunction(int& index)
 {
-	index %= 10;
+	index %= constants::maxTableSize;
 }
 
 int getValueIndex(const std::string& value)
@@ -35,15 +35,23 @@ void addToTable(HashTable& table, const std::string& newValue)
 		return;
 	}
 
-	auto [found, foundIndex]{ findInTable(table, newValue) };
-	if (found)
+	if (table.size == constants::maxTableSize)
 	{
-		std::cout << "\nelement with value " << newValue << " is already in the table\n";
+		std::cout << "\nthe table is full\n";
 		return;
 	}
 
 	int index{ getValueIndex(newValue) };
-	table.array[index] = newValue;
+	int iteration{ 1 };
+	int currentIndex{ index };
+	while (table.array[currentIndex] != "EMPTY" && iteration <= constants::maxTableSize - 2)
+	{
+		currentIndex = (index + iteration) % constants::maxTableSize;
+		++iteration;
+	}
+
+	table.array[currentIndex] = newValue;
+	++table.size;
 }
 
 std::pair<bool, int> findInTable(const HashTable& table, const std::string& valueToFind)
@@ -72,6 +80,7 @@ void removeFromTable(HashTable& table, const std::string& valueToRemove)
 
 	int valueIndex{ getValueIndex(valueToRemove) };
 	table.array[valueIndex] = "EMPTY";
+	--table.size;
 }
 
 void printTable(const HashTable& table)

@@ -92,6 +92,67 @@ std::pair<bool, int> findInTable(const HashTable& table, const std::string& valu
 	return { true, valueIndex };
 }
 
+bool findInAuxiliaryList(Node* head, const std::string& valueToFind)
+{
+	Node* current{ head };
+	while (current != nullptr)
+	{
+		if (current->value == valueToFind)
+			return true;
+		current = current->next;
+	}
+
+	return false;
+}
+
+void removeFromAuxiliaryList(Node*& head, const std::string& valueToRemove)
+{
+	Node* current{ head };
+	Node* previous{};
+
+	if (current != nullptr && current->value == valueToRemove)
+	{
+		head = head->next;
+		delete current;
+		return;
+	}
+
+	while (current != nullptr && current->value != valueToRemove)
+	{
+		previous = current;
+		current = current->next;
+	}
+
+	if (current == nullptr)
+		return;
+
+	previous->next = current->next;
+	delete current;
+}
+
+void removeFromTable(HashTable& table, const std::string& valueToRemove)
+{
+	int valueIndex{ getValueIndex(valueToRemove) };
+	std::string& tableValue{ table.array[valueIndex].value };
+	if (tableValue == valueToRemove)
+	{
+		if (table.array[valueIndex].head == nullptr)
+			tableValue = "EMPTY";
+		else
+		{
+			Node*& tableElementHead{ table.array[valueIndex].head };
+			Node* temporary{ tableElementHead };
+			tableValue = tableElementHead->value;
+			tableElementHead = tableElementHead->next;
+			delete temporary;
+		}
+	}
+	else if (findInAuxiliaryList(table.array[valueIndex].head, valueToRemove))
+		removeFromAuxiliaryList(table.array[valueIndex].head, valueToRemove);
+	else
+		std::cout << "\ncouldn't find element " << valueToRemove << " in the table\n";
+}
+
 void printAuxiliaryList(Node* head)
 {
 	Node* current{ head };

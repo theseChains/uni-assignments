@@ -36,10 +36,16 @@ void hanldeTableAddition(HashTable& table)
 		std::cout << "number of comparisons: " << added.value() << '\n';
 }
 
-void handleTableSearch([[maybe_unused]] const HashTable& table)
+void handleTableSearch(const HashTable& table)
 {
 	std::cout << "\nenter value to find: ";
 	std::string valueToFind{ getString() };
+	auto [found, index]{ findInTable(table, valueToFind) };
+	if (found)
+		std::cout << "\nvalue " << valueToFind << " was found in the table at index " <<
+			index << '\n';
+	else
+		std::cout << "\nvalue " << valueToFind << " was not found in the table\n";
 }
 
 void handleTablePrinting(const HashTable& table)

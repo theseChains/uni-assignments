@@ -8,7 +8,7 @@
 
 namespace constants
 {
-	inline constexpr int maxTableSize{ 13 };
+	inline constexpr int maxTableSize{ 6 };
 	inline constexpr int maxKeysSize{ 10 };
 }
 
@@ -30,7 +30,7 @@ namespace config
 
 struct Node
 {
-	Node* next{};
+	Node* next{ nullptr };
 	std::string value{};
 };
 
@@ -44,7 +44,6 @@ struct Element
 struct HashTable
 {
 	Element array[constants::maxTableSize]{};
-	int size{ 0 };
 };
 
 std::optional<int> addToTable(HashTable& table, const std::string& newValue);

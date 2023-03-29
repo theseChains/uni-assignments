@@ -27,15 +27,28 @@ bool isKeyValid(const std::string& value)
 	return false;
 }
 
-void addToAuxiliaryList(Node*& head, const std::string& newValue)
+void addToAuxiliaryList(Node*& head, const std::string& newValue, int& numberOfComaprisons)
 {
+	if (head == nullptr)
+	{
+		head = new Node{};
+		head->value = newValue;
+		head->next = nullptr;
+
+		return;
+	}
+
+	Node* current{ head };
+	while (current->next != nullptr)
+	{
+		++numberOfComaprisons;
+		current = current->next;
+	}
+
 	Node* newElement{ new Node{} };
 	newElement->value = newValue;
 	newElement->next = nullptr;
-	if (head == nullptr)
-		head = newElement;
-	else
-		head->next = newElement;
+	current->next = newElement;
 }
 
 std::optional<int> addToTable(HashTable& table, const std::string& newValue)
@@ -46,29 +59,37 @@ std::optional<int> addToTable(HashTable& table, const std::string& newValue)
 		return std::nullopt;
 	}
 
-	if (table.size == constants::maxTableSize)
-	{
-		std::cout << "\nthe table is full\n";
-		return std::nullopt;
-	}
-
 	int numberOfComaprisons{ 0 };
 
 	int index{ getValueIndex(newValue) };
 	int currentIndex{ index };
 	++numberOfComaprisons;
-
 	if (table.array[currentIndex].value != "EMPTY")
-	{
-		addToAuxiliaryList(table.array[currentIndex].head, newValue);
-	}
+		addToAuxiliaryList(table.array[currentIndex].head, newValue, numberOfComaprisons);
 	else
-	{
 		table.array[currentIndex].value = newValue;
-		++table.size;
-	}
 
 	return numberOfComaprisons;
+}
+
+std::pair<bool, int> findInTable(const HashTable& table, const std::string& valueToFind)
+{
+	int numberOfComaprisons{ 0 };
+	int valueIndex{ getValueIndex(valueToFind) };
+	Element tableElement{ table.array[valueIndex] };
+
+	++numberOfComaprisons;
+	if (tableElement.value == valueToFind)
+		return { true, valueIndex };
+
+	Node* current{ tableElement.head };
+	while (current != nullptr && current->value != valueToFind)
+		current = current->next;
+
+	if (current == nullptr)
+		return { false, valueIndex };
+
+	return { true, valueIndex };
 }
 
 void printAuxiliaryList(Node* head)

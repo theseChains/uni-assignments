@@ -17,9 +17,9 @@ public:
 	Airline(const std::string& name);
 
 	void addAirport(const std::string& airportName);
-	void findAirport(const std::string& airportName);
+	bool findAirport(const std::string& airportName) const;
 	void removeAirport(const std::string& airportName);
-	void showAirports() const;
+	void printAirports() const;
 
 	void setName(const std::string& name);
 

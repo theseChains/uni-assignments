@@ -7,7 +7,8 @@
 void printMenu()
 {
 	std::cout << "\n1:  add new airport\n";
-	std::cout << "2:  print airports\n";
+	std::cout << "2:  find airport\n";
+	std::cout << "3:  print airports\n";
 	std::cout << "-1: exit\n";
 }
 
@@ -26,11 +27,22 @@ void handleAirportAddition(Airline& airline)
 	airline.addAirport(name);
 }
 
+void handleAirportSearch(const Airline& airline)
+{
+	std::cout << "\nenter airport name: ";
+	std::string name{};
+	std::cin >> name;
+	bool found{ airline.findAirport(name) };
+	if (found)
+		std::cout << "\nairport " << name << " was found\n";
+	else
+		std::cout << "\nairport " << name << " was not found\n";
+}
+
 void handleAirlinePrinting(const Airline& airline)
 {
 	std::cout << '\n';
-	// change name to print i guess
-	airline.showAirports();
+	airline.printAirports();
 }
 
 void handleCommand(Airline& airline, int command)
@@ -41,6 +53,9 @@ void handleCommand(Airline& airline, int command)
 			handleAirportAddition(airline);
 			break;
 		case 2:
+			handleAirportSearch(airline);
+			break;
+		case 3:
 			handleAirlinePrinting(airline);
 			break;
 	}

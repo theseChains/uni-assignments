@@ -57,7 +57,21 @@ void Airline::addAirport(const std::string& airportName)
 	}
 }
 
-void Airline::showAirports() const
+bool Airline::findAirport(const std::string& airportName) const
+{
+	Airport* current{ m_airportHead };
+	while (current != nullptr)
+	{
+		if (current->getName() == airportName)
+			return true;
+
+		current = current->getNext();
+	}
+
+	return false;
+}
+
+void Airline::printAirports() const
 {
 	Airport* current{ m_airportHead };
 	while (current != nullptr)

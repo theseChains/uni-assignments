@@ -9,7 +9,7 @@ class Airline
 {
 private:
 	std::string m_name{};
-	AirportArrangement m_airports{};
+	Airport* m_airportHead{};
 
 public:
 	Airline();

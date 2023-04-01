@@ -1,6 +1,8 @@
 #ifndef AIRPORT_H
 #define AIRPORT_H
 
+#include "Airplane.h"
+
 #include <string>
 
 class Airport
@@ -10,6 +12,8 @@ private:
 
 	Airport* m_next{};
 	Airport* m_prev{};
+
+	Airplane* m_airplaneHead{};
 
 public:
 	Airport();

@@ -7,6 +7,11 @@ class AirportArrangement
 {
 private:
 	Airport* m_head{};
+
+public:
+	AirportArrangement();
+
+	Airport* getHead() const;
 };
 
 #endif

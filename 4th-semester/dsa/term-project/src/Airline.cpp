@@ -10,6 +10,11 @@ Airline::Airline(const std::string& name) : m_name{ name }, m_airportHead{ nullp
 {
 }
 
+bool Airline::isAirportListEmpty() const
+{
+	return m_airportHead == nullptr;
+}
+
 void Airline::addAirport(const std::string& airportName)
 {
 	Airport* newAirport{ new Airport{ airportName } };
@@ -71,8 +76,43 @@ bool Airline::findAirport(const std::string& airportName) const
 	return false;
 }
 
+void Airline::removeAirport(const std::string& airportName)
+{
+	if (m_airportHead == nullptr)
+	{
+		std::cout << "\nthe airport list is empty\n";
+		return;
+	}
+
+	if (!findAirport(airportName))
+	{
+		std::cout << "\ncouldn't find the airport \"" << airportName << "\"\n";
+		return;
+	}
+
+	Airport* current{ m_airportHead };
+	while (current->getName() != airportName)
+		current = current->getNext();
+
+	if (current == m_airportHead)
+		m_airportHead = current->getNext();
+
+	if (current->getPrev() != nullptr)
+		current->getPrev()->setNext(current->getNext());
+	if (current->getNext() != nullptr)
+		current->getNext()->setPrev(current->getPrev());
+
+	delete current;
+}
+
 void Airline::printAirports() const
 {
+	if (isAirportListEmpty())
+	{
+		std::cout << "\nthe airport list is empty\n";
+		return;
+	}
+
 	Airport* current{ m_airportHead };
 	while (current != nullptr)
 	{

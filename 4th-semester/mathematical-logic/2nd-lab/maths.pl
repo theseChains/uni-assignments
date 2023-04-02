@@ -30,19 +30,25 @@ run :-
     handle(Option).
 
 menu :-
+    nl,
     writeln("choose:"),
-    writeln("approx - calculate approximate arctg(X)"),
+    writeln("calculate - calculate absolute error for arctg(X)"),
     writeln("exit - terminate").
 
-handle([approx]) :-
+handle([calculate]) :-
     write("Enter N: "),
     readln(NList),
     [N | _] = NList,
     write("Enter X: "),
     readln(XList),
     [X | _] = XList,
+    StandardResult is atan(X),
+    writef("standard arctg(%d)   = %d\n", [X, StandardResult]),
     approx(N, X, Result),
     writef("approximate arctg(%d) = %d\n", [X, Result]),
+    writef("(N = %d)\n", [N]),
+    AbsoluteError is abs(Result - StandardResult),
+    writef("absolute error = %d\n\n", [AbsoluteError]),
     fail.
 
 handle([exit]) :-

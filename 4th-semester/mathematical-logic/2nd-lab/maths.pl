@@ -22,3 +22,28 @@ approxHelper(N, X, Accumulator, Result) :-
     NewAccumulator is Accumulator + ((-1) ** (N + 1)) / ((2 * N + 1) * X ** (2 * N + 1)),
     DecrementedN is N - 1,
     approxHelper(DecrementedN, X, NewAccumulator, Result).
+
+run :-
+    repeat,
+    menu,
+    readln(Option),
+    handle(Option).
+
+menu :-
+    writeln("choose:"),
+    writeln("approx - calculate approximate arctg(X)"),
+    writeln("exit - terminate").
+
+handle([approx]) :-
+    write("Enter N: "),
+    readln(NList),
+    [N | _] = NList,
+    write("Enter X: "),
+    readln(XList),
+    [X | _] = XList,
+    approx(N, X, Result),
+    writef("approximate arctg(%d) = %d\n", [X, Result]),
+    fail.
+
+handle([exit]) :-
+    writeln("exiting the run loop").

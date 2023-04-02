@@ -43,12 +43,12 @@ handle([calculate]) :-
     readln(XList),
     [X | _] = XList,
     StandardResult is atan(X),
-    writef("standard arctg(%d)   = %d\n", [X, StandardResult]),
+    format("standard arctg(~d)   = ~6f\n", [X, StandardResult]),
     approx(N, X, Result),
-    writef("approximate arctg(%d) = %d\n", [X, Result]),
+    format("approximate arctg(~d) = ~6f\n", [X, Result]),
     writef("(N = %d)\n", [N]),
     AbsoluteError is abs(Result - StandardResult),
-    writef("absolute error = %d\n\n", [AbsoluteError]),
+    format("absolute error = ~6f\n", [AbsoluteError]),
     fail.
 
 handle([exit]) :-

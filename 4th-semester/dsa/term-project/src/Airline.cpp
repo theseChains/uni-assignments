@@ -135,3 +135,8 @@ std::string& Airline::getName()
 {
 	return m_name;
 }
+
+Airport* Airline::getHead() const
+{
+	return m_airportHead;
+}

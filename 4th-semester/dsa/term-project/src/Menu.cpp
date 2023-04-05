@@ -1,5 +1,7 @@
 #include "Menu.h"
+
 #include "Airline.h"
+#include "FileIO.h"
 
 #include <iostream>
 #include <string>
@@ -10,6 +12,7 @@ void printMenu()
 	std::cout << "2:  find airport\n";
 	std::cout << "3:  print airports\n";
 	std::cout << "4:  remove an airport\n";
+	std::cout << "5:  write airlines to file\n";
 	std::cout << "-1: exit\n";
 }
 
@@ -85,6 +88,10 @@ void handleCommand(Airline& airline, int command)
 			break;
 		case 4:
 			handleAirportRemoval(airline);
+			break;
+		case 5:
+			writeAirlinesToFile(airline, "test.txt");
+			break;
 	}
 }
 

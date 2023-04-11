@@ -132,6 +132,7 @@ void removeFromTree(TreeNode*& root, int valueToRemove)
 		nodeToRemoveSuccessor->left = nodeToRemove->left;
 		nodeToRemoveSuccessor->left->parent = nodeToRemoveSuccessor;
 	}
+	delete nodeToRemove;
 }
 
 void printTreeInSymmetricOrderWithCount(const TreeNode* root)

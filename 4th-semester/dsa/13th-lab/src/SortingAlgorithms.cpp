@@ -13,7 +13,7 @@ void printVector(const std::vector<int>& numbers)
 void bubbleSort(std::vector<int> numbers)
 {
 	int numberOfComparisons{ 0 };
-	int numberOfSwaps{ 0 };
+	int numberOfAssignments{ 0 };
 
 	for (std::size_t i{ 0 }; i < numbers.size() - 1; ++i)
 	{
@@ -22,7 +22,7 @@ void bubbleSort(std::vector<int> numbers)
 			++numberOfComparisons;
 			if (numbers[j] > numbers[j + 1])
 			{
-				++numberOfSwaps;
+				numberOfAssignments += 3;
 				std::swap(numbers[j], numbers[j + 1]);
 			}
 		}
@@ -32,13 +32,13 @@ void bubbleSort(std::vector<int> numbers)
 	std::cout << "\nsorted:\n";
 	printVector(numbers);
 	std::cout << "number of comparisons: " << numberOfComparisons << '\n';
-	std::cout << "number of swaps: " << numberOfSwaps << '\n';
+	std::cout << "number of assignments: " << numberOfAssignments << '\n';
 }
 
 void selectionSort(std::vector<int> numbers)
 {
 	int numberOfComparisons{ 0 };
-	int numberOfSwaps{ 0 };
+	int numberOfAssignments{ 0 };
 
 	for (std::size_t i{ 0 }; i < numbers.size() - 1; ++i)
 	{
@@ -50,41 +50,48 @@ void selectionSort(std::vector<int> numbers)
 				indexOfMinimum = j;
 		}
 
-		++numberOfSwaps;
-		std::swap(numbers[indexOfMinimum], numbers[i]);
+		if (numbers[indexOfMinimum] != numbers[i])
+		{
+			numberOfAssignments += 3;
+			std::swap(numbers[indexOfMinimum], numbers[i]);
+		}
 	}
 
 	std::cout << "\nsorted:\n";
 	printVector(numbers);
 	std::cout << "number of comparisons: " << numberOfComparisons << '\n';
-	std::cout << "number of swaps: " << numberOfSwaps << '\n';
+	std::cout << "number of assignments: " << numberOfAssignments << '\n';
 }
 
 void insertionSort(std::vector<int> numbers)
 {
 	int numberOfComparisons{ 0 };
-	int numberOfSwaps{ 0 };
+	int numberOfAssignments{ 0 };
 
 	for (std::size_t i{ 1 }; i < numbers.size(); ++i)
 	{
 		int current{ numbers[i] };
+		++numberOfAssignments;
 		int j{ static_cast<int>(i - 1) };
 
 		++numberOfComparisons;
 		while (j >= 0 && numbers[j] > current)
 		{
 			++numberOfComparisons;
-			++numberOfSwaps;
 			numbers[j + 1] = numbers[j];
+			++numberOfAssignments;
 			--j;
 		}
 
-		++numberOfSwaps;
-		numbers[j + 1] = current;
+		if (numbers[j + 1] != current)
+		{
+			++numberOfAssignments;
+			numbers[j + 1] = current;
+		}
 	}
 
 	std::cout << "\nsorted:\n";
 	printVector(numbers);
 	std::cout << "number of comparisons: " << numberOfComparisons << '\n';
-	std::cout << "number of swaps: " << numberOfSwaps << '\n';
+	std::cout << "number of assignments: " << numberOfAssignments << '\n';
 }

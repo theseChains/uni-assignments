@@ -19,6 +19,12 @@ public:
 	Airport();
 	Airport(const std::string& name);
 
+	bool isAirportEmpty() const;
+	void addAirplane(const std::string& airplaneModel, int yearOfManufacture);
+	bool findAirplane(const std::string& airplaneModel);
+	void removeAirplane(const std::string& airplaneModel);
+	void printAirplanes() const;
+
 	void setName(const std::string& name);
 	void setNext(Airport* const next);
 	void setPrev(Airport* const prev);

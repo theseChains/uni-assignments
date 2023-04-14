@@ -157,3 +157,8 @@ Airport* Airport::getNext() const
 {
 	return m_next;
 }
+
+Airplane* Airport::getHead() const
+{
+	return m_airplaneHead;
+}

@@ -32,6 +32,8 @@ public:
 	const std::string& getName() const;
 	std::string& getName();
 	Airport* getNext() const;
+
+	Airplane* getHead() const;
 };
 
 #endif

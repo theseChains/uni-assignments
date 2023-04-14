@@ -2,12 +2,11 @@
 
 #include <iostream>
 
-Airport::Airport() : m_name { "Aiport" }, m_next{ nullptr }, m_prev{ nullptr }
+Airport::Airport() : m_name { "Aiport" }, m_next{ nullptr }
 {
 }
 
-Airport::Airport(const std::string& name)
-	: m_name { name }, m_next{ nullptr }, m_prev{ nullptr }
+Airport::Airport(const std::string& name) : m_name { name }, m_next{ nullptr }
 {
 }
 
@@ -144,11 +143,6 @@ void Airport::setNext(Airport* const next)
 	m_next = next;
 }
 
-void Airport::setPrev(Airport* const prev)
-{
-	m_prev = prev;
-}
-
 const std::string& Airport::getName() const
 {
 	return m_name;
@@ -162,9 +156,4 @@ std::string& Airport::getName()
 Airport* Airport::getNext() const
 {
 	return m_next;
-}
-
-Airport* Airport::getPrev() const
-{
-	return m_prev;
 }

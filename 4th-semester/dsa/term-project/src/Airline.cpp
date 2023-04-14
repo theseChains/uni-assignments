@@ -34,14 +34,12 @@ void Airline::addAirport(const std::string& airportName)
 	if (m_airportHead == nullptr)
 	{
 		newAirport->setNext(nullptr);
-		newAirport->setPrev(nullptr);
 		m_airportHead = newAirport;
 	}
 	// add at the beginning
 	else if (m_airportHead->getName() >= airportName)
 	{
 		newAirport->setNext(m_airportHead);
-		newAirport->setPrev(nullptr);
 		m_airportHead = newAirport;
 	}
 	else
@@ -60,16 +58,13 @@ void Airline::addAirport(const std::string& airportName)
 		if (current == nullptr)
 		{
 			newAirport->setNext(nullptr);
-			newAirport->setPrev(previous);
 			previous->setNext(newAirport);
 		}
 		// add before current
 		else
 		{
 			newAirport->setNext(current);
-			newAirport->setPrev(previous);
 			previous->setNext(newAirport);
-			current->setPrev(newAirport);
 		}
 	}
 }
@@ -103,16 +98,22 @@ void Airline::removeAirport(const std::string& airportName)
 	}
 
 	Airport* current{ m_airportHead };
-	while (current->getName() != airportName)
-		current = current->getNext();
+	Airport* previous{ nullptr };
 
-	if (current == m_airportHead)
+	if (current != nullptr && current->getName() == airportName)
+	{
 		m_airportHead = current->getNext();
+		delete current;
+		return;
+	}
 
-	if (current->getPrev() != nullptr)
-		current->getPrev()->setNext(current->getNext());
-	if (current->getNext() != nullptr)
-		current->getNext()->setPrev(current->getPrev());
+	while (current->getName() != airportName)
+	{
+		previous = current;
+		current = current->getNext();
+	}
+
+	previous->setNext(current->getNext());
 
 	delete current;
 }

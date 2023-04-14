@@ -4,6 +4,7 @@
 #include "FileIO.h"
 
 #include <iostream>
+#include <limits>
 #include <string>
 
 void printMenu()
@@ -23,15 +24,14 @@ int getNumber()
 {
 	int number{};
 	std::cin >> number;
+	std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 	return number;
 }
 
 std::string getString()
 {
 	std::string string{};
-	// doesn't work
-	// std::getline(std::cin, string);
-	std::cin >> string;
+	std::getline(std::cin, string);
 	return string;
 }
 

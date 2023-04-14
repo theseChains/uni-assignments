@@ -130,6 +130,7 @@ void Airline::printAirports() const
 	while (current != nullptr)
 	{
 		std::cout << "airport: " << current->getName() << '\n';
+		current->printAirplanes();
 		current = current->getNext();
 	}
 }

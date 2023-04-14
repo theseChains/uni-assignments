@@ -16,6 +16,8 @@ public:
 	Airline();
 	Airline(const std::string& name);
 
+	~Airline();
+
 	bool isAirportListEmpty() const;
 	void addAirport(const std::string& airportName);
 	bool findAirport(const std::string& airportName) const;

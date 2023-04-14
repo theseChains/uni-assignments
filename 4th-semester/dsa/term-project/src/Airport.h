@@ -19,6 +19,8 @@ public:
 	Airport();
 	Airport(const std::string& name);
 
+	~Airport();
+
 	bool isAirportEmpty() const;
 	void addAirplane(const std::string& airplaneModel, int yearOfManufacture);
 	bool findAirplane(const std::string& airplaneModel);

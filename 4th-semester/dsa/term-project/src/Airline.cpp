@@ -10,6 +10,18 @@ Airline::Airline(const std::string& name) : m_name{ name }, m_airportHead{ nullp
 {
 }
 
+Airline::~Airline()
+{
+	Airport* current{ m_airportHead };
+	Airport* old{ current };
+	while (current != nullptr)
+	{
+		current = current->getNext();
+		delete old;
+		old = current;
+	}
+}
+
 bool Airline::isAirportListEmpty() const
 {
 	return m_airportHead == nullptr;

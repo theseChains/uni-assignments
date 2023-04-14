@@ -11,6 +11,18 @@ Airport::Airport(const std::string& name)
 {
 }
 
+Airport::~Airport()
+{
+	Airplane* current{ m_airplaneHead };
+	Airplane* old{ current };
+	while (current != nullptr)
+	{
+		current = current->getNext();
+		delete old;
+		old = current;
+	}
+}
+
 bool Airport::isAirportEmpty() const
 {
 	return m_airplaneHead == nullptr;

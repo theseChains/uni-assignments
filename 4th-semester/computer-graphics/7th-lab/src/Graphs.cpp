@@ -35,11 +35,6 @@ void makeUsingEvaluationFunction(float* firstPart, float* secondPart, float cons
 		++index;
 	}
 
-	for (int i{ 0 }; i < 1000; i += 2)
-		std::cout << firstPart[i] << ' ' << firstPart[i + 1] << '\n';
-
-	std::cout << "\n\n";
-
 	currentX = 0.001f;
 	index = 0;
 	while (currentX < 1.0f && index < 1000)
@@ -49,9 +44,6 @@ void makeUsingEvaluationFunction(float* firstPart, float* secondPart, float cons
 		currentX += 0.002f;
 		++index;
 	}
-
-	for (int i{ 0 }; i < 1000; i += 2)
-		std::cout << secondPart[i] << ' ' << secondPart[i + 1] << '\n';
 }
 
 void makeUsingDigitalDifferentialAnalyzer(float* vertices, float constant)

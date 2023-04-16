@@ -15,13 +15,15 @@ void runFirstProgram()
 	Window window{};
 	Shader shader{ "../shaders/2dShader.vert", "../shaders/2dShader.frag" };
 
-	GraphType graphType{ GraphType::second };
+	GraphType graphType{ GraphType::first };
 	float constant{ 0.3f };
 
-	float graphVertices[2000]{};
-	makeGraph(graphVertices, graphType, constant);
+	float firstPart[1000]{};
+	float secondPart[1000]{};
+	makeGraph(firstPart, secondPart, graphType, constant);
 
-	Mesh graph{ graphVertices, sizeof(graphVertices), 2 };
+	Mesh first{ firstPart, sizeof(firstPart), 2 };
+	Mesh second{ secondPart, sizeof(secondPart), 2 };
 
 	while (!window.windowShouldClose())
 	{
@@ -31,8 +33,10 @@ void runFirstProgram()
 		glClear(GL_COLOR_BUFFER_BIT);
 
 		shader.use();
-		glBindVertexArray(graph.getVAO());
-		glDrawArrays(GL_LINE_STRIP, 0, 1000);
+		glBindVertexArray(first.getVAO());
+		glDrawArrays(GL_LINE_STRIP, 0, 500);
+		glBindVertexArray(second.getVAO());
+		glDrawArrays(GL_LINE_STRIP, 0, 500);
 
 		window.swapBuffers();
 		glfwPollEvents();

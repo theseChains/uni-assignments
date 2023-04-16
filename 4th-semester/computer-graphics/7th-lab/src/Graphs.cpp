@@ -3,37 +3,55 @@
 #include <cmath>
 #include <iostream>
 
-void makeGraph(float* vertices, GraphType graphType, float constant)
+void makeGraph(float* firstPart, float* secondPart, GraphType graphType, float constant)
 {
 	switch (graphType)
 	{
 		case GraphType::first:
 		{
-			makeUsingEvaluationFunction(vertices, constant);
+			makeUsingEvaluationFunction(firstPart, secondPart, constant);
 			break;
 		}
 		case GraphType::second:
 		{
-			makeUsingDigitalDifferentialAnalyzer(vertices, constant);
+			makeUsingDigitalDifferentialAnalyzer(firstPart, constant);
 			break;
 		}
 	}
 }
 
-void makeUsingEvaluationFunction(float* vertices, float constant)
+void makeUsingEvaluationFunction(float* firstPart, float* secondPart, float constant)
 {
-	float currentX{ 0.001f };
+	float currentX{ -1.0f };
+	int index{ 0 };
 	// nonsense, made to comply with the dda method below
 	constant -= 0.295f;
 
-	int index{ 0 };
-	while (currentX < 1.0f && index < 2000)
+	while (currentX < 0.0f && index < 1000)
 	{
-		vertices[index++] = currentX;
-		vertices[index] = constant / (2 * currentX);
-		currentX += 0.001f;
+		firstPart[index++] = currentX;
+		firstPart[index] = constant / (2 * currentX);
+		currentX += 0.002f;
 		++index;
 	}
+
+	for (int i{ 0 }; i < 1000; i += 2)
+		std::cout << firstPart[i] << ' ' << firstPart[i + 1] << '\n';
+
+	std::cout << "\n\n";
+
+	currentX = 0.001f;
+	index = 0;
+	while (currentX < 1.0f && index < 1000)
+	{
+		secondPart[index++] = currentX;
+		secondPart[index] = constant / (2 * currentX);
+		currentX += 0.002f;
+		++index;
+	}
+
+	for (int i{ 0 }; i < 1000; i += 2)
+		std::cout << secondPart[i] << ' ' << secondPart[i + 1] << '\n';
 }
 
 void makeUsingDigitalDifferentialAnalyzer(float* vertices, float constant)

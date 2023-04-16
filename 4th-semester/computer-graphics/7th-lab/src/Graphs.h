@@ -9,9 +9,9 @@ enum class GraphType
 	second,
 };
 
-void makeGraph(float* vertices, GraphType graphType, float constant);
+void makeGraph(float* firstPart, float* secondPart, GraphType graphType, float constant);
 
-void makeUsingEvaluationFunction(float* vertices, float constant);
+void makeUsingEvaluationFunction(float* firstPart, float* secondPart, float constant);
 void makeUsingDigitalDifferentialAnalyzer(float* vertices, float constant);
 
 #endif

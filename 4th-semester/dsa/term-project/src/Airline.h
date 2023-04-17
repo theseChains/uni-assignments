@@ -24,6 +24,9 @@ public:
 	void removeAirport(const std::string& airportName);
 	void printAirports() const;
 
+	void addAirplane(const std::string& airportName, const std::string& airplaneModel,
+		int yearOfManufacture);
+
 	void setName(const std::string& name);
 
 	const std::string& getName() const;

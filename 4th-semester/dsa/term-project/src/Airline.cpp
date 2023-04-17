@@ -135,6 +135,22 @@ void Airline::printAirports() const
 	}
 }
 
+void Airline::addAirplane(const std::string& airportName, const std::string& airplaneModel,
+	int yearOfManufacture)
+{
+	Airport* current{ m_airportHead };
+	while (current != nullptr && current->getName() != airportName)
+		current = current->getNext();
+
+	if (current == nullptr)
+	{
+		std::cout << "couldn't find airport with the name " << airportName << '\n';
+		return;
+	}
+
+	current->addAirplane(airplaneModel, yearOfManufacture);
+}
+
 void Airline::setName(const std::string& name)
 {
 	m_name = name;

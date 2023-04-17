@@ -4,6 +4,6 @@
 #include "Airline.h"
 
 void writeAirlinesToFile(const Airline& airline, const std::string& filename);
-void readAirlinesFromFile(const Airline& airline, const std::string& filename);
+void readAirlinesFromFile(Airline& airline, const std::string& filename);
 
 #endif

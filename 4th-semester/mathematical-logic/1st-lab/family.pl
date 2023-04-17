@@ -22,6 +22,11 @@ female(alina).
 female(rima).
 female(sonya).
 
+% other information
+born(rasim, 1, 1, 2003).
+born(aygul, 9, 3, 1977).
+born(ramil, 21, 1, 1959).
+
 % complex predicates (rules)
 father(X, Y) :- parent(X, Y), male(X).
 mother(X, Y) :- parent(X, Y), female(X).

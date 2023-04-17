@@ -1,5 +1,6 @@
 #include "SortingAlgorithms.h"
 
+#include <cmath>
 #include <iostream>
 #include <utility>
 
@@ -74,13 +75,17 @@ void insertionSort(std::vector<int> numbers)
 		while (j >= 0 && numbers[j] > current)
 		{
 			++numberOfComparisons;
-			++numberOfSwaps;
+			if (j != static_cast<int>(i - 1))
+				++numberOfSwaps;
 			numbers[j + 1] = numbers[j];
 			--j;
 		}
 
-		++numberOfSwaps;
-		numbers[j + 1] = current;
+		if (numbers[j + 1] != current)
+		{
+			++numberOfSwaps;
+			numbers[j + 1] = current;
+		}
 	}
 
 	std::cout << "\nsorted:\n";
@@ -104,11 +109,13 @@ void heapify(std::vector<int>& numbers, int size, int i, int& numberOfComparison
 	if (right < size && numbers[right] > numbers[largest])
 		largest = right;
 
-	++numberOfComparisons;
 	if (largest != i)
 	{
-		std::swap(numbers[i], numbers[largest]);
-		++numberOfSwaps;
+		if (numbers[i] != numbers[largest])
+		{
+			std::swap(numbers[i], numbers[largest]);
+			++numberOfSwaps;
+		}
 		heapify(numbers, size, largest, numberOfComparisons, numberOfSwaps);
 	}
 }
@@ -125,8 +132,11 @@ void heapSort(std::vector<int> numbers)
 
 	for (int i{ numbersSize - 1 }; i >= 0; --i)
 	{
-		std::swap(numbers[0], numbers[i]);
-		++numberOfSwaps;
+		if (numbers[0] != numbers[i])
+		{
+			std::swap(numbers[0], numbers[i]);
+			++numberOfSwaps;
+		}
 		heapify(numbers, i, 0, numberOfComparisons, numberOfSwaps);
 	}
 
@@ -136,37 +146,43 @@ void heapSort(std::vector<int> numbers)
 	std::cout << "number of swaps: " << numberOfSwaps << '\n';
 }
 
-int partition(std::vector<int>& numbers, int low, int high, int& numberOfComparisons,
+void quickSort(std::vector<int>& numbers, int left, int right, int& numberOfComparisons,
 		int& numberOfSwaps)
 {
-	int pivot{ numbers[high] };
-	int pivotIndex{ low - 1 };
+	int pivot{ numbers[(left + right) / 2] };
 
-	for (int current{ low }; current <= high - 1; ++current)
+	int low{ left };
+	int high{ right };
+	while (low <= high)
 	{
-		++numberOfComparisons;
-		if (numbers[current] < pivot)
+		while (numbers[low] < pivot && ++numberOfComparisons)
 		{
-			++pivotIndex;
-			std::swap(numbers[pivotIndex], numbers[current]);
-			++numberOfSwaps;
+			++low;
+			++numberOfComparisons;
+		}
+
+		while (numbers[high] > pivot && ++numberOfComparisons)
+		{
+			--high;
+			++numberOfComparisons;
+		}
+
+		if (low <= high)
+		{
+			if (numbers[low] != numbers[high])
+			{
+				++numberOfSwaps;
+				std::swap(numbers[low], numbers[high]);
+			}
+			++low;
+			--high;
 		}
 	}
 
-	std::swap(numbers[pivotIndex + 1], numbers[high]);
-	++numberOfSwaps;
-	return pivotIndex + 1;
-}
-
-void quickSort(std::vector<int>& numbers, int low, int high, int& numberOfComparisons,
-		int& numberOfSwaps)
-{
-	if (low < high)
-	{
-		int pivotIndex{ partition(numbers, low, high, numberOfComparisons, numberOfSwaps) };
-		quickSort(numbers, low, pivotIndex - 1, numberOfComparisons, numberOfSwaps);
-		quickSort(numbers, pivotIndex + 1, high, numberOfComparisons, numberOfSwaps);
-	}
+	if (left < high)
+		quickSort(numbers, left, high, numberOfComparisons, numberOfSwaps);
+	if (low < right)
+		quickSort(numbers, low, right, numberOfComparisons, numberOfSwaps);
 }
 
 void shellSort(std::vector<int> numbers)
@@ -180,16 +196,24 @@ void shellSort(std::vector<int> numbers)
 		for (int i{ gap }; i < numbersSize; ++i)
 		{
 			int temporary{ numbers[i] };
-			int j{};
+			int j{ i - gap };
+
 			++numberOfComparisons;
-			for (j = i; j >= gap && numbers[j - gap] > temporary; j -= gap)
+			while (j >= 0 && temporary < numbers[j])
 			{
-				numbers[j] = numbers[j - gap];
+				++numberOfComparisons;
+				numbers[j + gap] = numbers[j];
+				if (j != i - gap)
+					++numberOfSwaps;
 				++numberOfSwaps;
+				j = j - gap;
 			}
 
-			numbers[j] = temporary;
-			++numberOfSwaps;
+			if (numbers[j + gap] != temporary)
+			{
+				++numberOfSwaps;
+				numbers[j + gap] = temporary;
+			}
 		}
 	}
 

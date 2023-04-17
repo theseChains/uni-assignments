@@ -97,20 +97,10 @@ void handleCommand(std::vector<int>& numbers, int command)
 	switch (command)
 	{
 		case 1:
-			handleSorting(numbers, command);
-			break;
 		case 2:
-			handleSorting(numbers, command);
-			break;
 		case 3:
-			handleSorting(numbers, command);
-			break;
 		case 4:
-			handleSorting(numbers, command);
-			break;
 		case 5:
-			handleSorting(numbers, command);
-			break;
 		case 6:
 			handleSorting(numbers, command);
 			break;

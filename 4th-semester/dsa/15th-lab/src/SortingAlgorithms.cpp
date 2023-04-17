@@ -98,36 +98,9 @@ void genericBucketSort(std::vector<int> numbers)
 		buckets[position] = current;
 	}
 
-	// print buckets
-	for (int i{ 0 }; i < numberOfBuckets; ++i)
-	{
-		std::cout << "bucket number " << i << ": ";
-		Node* current{ buckets[i] };
-		while (current)
-		{
-			std::cout << current->data << ' ';
-			current = current->next;
-		}
-		std::cout << '\n';
-	}
-
 	for (int i{ 0 }; i < numberOfBuckets; ++i)
 	{
 		buckets[i] = sortBucket(buckets[i]);
-	}
-
-	// print again after sorting
-	std::cout << "\nbuckets after sorting\n";
-	for (int i{ 0 }; i < numberOfBuckets; ++i)
-	{
-		std::cout << "bucket number " << i << ": ";
-		Node* current{ buckets[i] };
-		while (current)
-		{
-			std::cout << current->data << ' ';
-			current = current->next;
-		}
-		std::cout << '\n';
 	}
 
 	for (int j{ 0 }, i{ 0 }; i < numberOfBuckets; ++i)

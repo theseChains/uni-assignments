@@ -43,7 +43,7 @@ handle([calculate]) :-
     readln(XList),
     [X | _] = XList,
     StandardResult is atan(X),
-    format("standard arctg(~d)   = ~6f\n", [X, StandardResult]),
+    format("standard arctg(~d)    = ~6f\n", [X, StandardResult]),
     approx(N, X, Result),
     format("approximate arctg(~d) = ~6f\n", [X, Result]),
     writef("(N = %d)\n", [N]),

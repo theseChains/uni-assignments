@@ -24,7 +24,7 @@ void makeUsingEvaluationFunction(float* firstPart, float* secondPart, float cons
 {
 	float currentX{ -1.0f };
 	int index{ 0 };
-	// nonsense, made to comply with the dda method below
+	// doesn't quite work either
 	constant -= 0.295f;
 
 	while (currentX < 0.0f && index < 1000)
@@ -48,7 +48,7 @@ void makeUsingEvaluationFunction(float* firstPart, float* secondPart, float cons
 
 void makeUsingDigitalDifferentialAnalyzer(float* vertices, float constant)
 {
-	// none of this makes sense, i have no idea what's going on, but it kinda works
+	// yea this doesn't really work, im sorry
 	float startingX{ 0.05f };
 	float startingY{ constant / (2 * startingX) };
 

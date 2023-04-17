@@ -15,7 +15,7 @@ void runFirstProgram()
 	Window window{};
 	Shader shader{ "../shaders/2dShader.vert", "../shaders/2dShader.frag" };
 
-	GraphType graphType{ GraphType::first };
+	GraphType graphType{ GraphType::second };
 	float constant{ 0.3f };
 
 	float firstPart[1000]{};

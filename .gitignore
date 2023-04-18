@@ -2,3 +2,5 @@ build/
 .ccls
 .vscode/
 include/
+.ccls-cache/
+compile_commands.json

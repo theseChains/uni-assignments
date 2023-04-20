@@ -27,18 +27,18 @@ void writeAirlinesToFile(const Airline& airline, const std::string& filename)
 	}
 }
 
-void readAirlinesFromFile(Airline& airline, const std::string& filename)
+bool readAirlinesFromFile(Airline& airline, const std::string& filename)
 {
 	if (!std::filesystem::exists(filename))
 	{
 		std::cerr << "\ncoudln't open file " << filename << '\n';
-		return;
+		return false;
 	}
 
 	if (std::filesystem::file_size(filename) == 0)
 	{
 		std::cerr << "\nfile " << filename << " is empty\n";
-		return;
+		return false;
 	}
 
 	std::ifstream inputFile{ filename };
@@ -52,7 +52,7 @@ void readAirlinesFromFile(Airline& airline, const std::string& filename)
 	{
 		std::cout << "invalid input.txt: no airline name\n";
 		// we should really return a bool here so that we know if the function succeeded
-		return;
+		return false;
 	}
 
 	while (std::getline(inputFile, line))
@@ -61,7 +61,7 @@ void readAirlinesFromFile(Airline& airline, const std::string& filename)
 		if (pos == std::string::npos)
 		{
 			std::cout << "invalid input.txt: airport info\n";
-			return;
+			return false;
 		}
 
 		std::string currentAirportName{ line.substr(pos + 1) };
@@ -72,7 +72,7 @@ void readAirlinesFromFile(Airline& airline, const std::string& filename)
 		if (pos == std::string::npos)
 		{
 			std::cout << "invalid input.txt: airplane info\n";
-			return;
+			return false;
 		}
 
 		std::string airplanesLine{ line.substr(pos + 1) };
@@ -81,9 +81,10 @@ void readAirlinesFromFile(Airline& airline, const std::string& filename)
 		while (pos != std::string::npos)
 		{
 			std::string airplaneInfo{ airplanesLine.substr(previousPos, pos) };
-			auto infoPos{ airplaneInfo.find(';') };
-			std::string airplaneModel{ airplaneInfo.substr()}
-			airline.addAirplane(currentAirportName, )
+			// auto infoPos{ airplaneInfo.find(';') };
+			std::string airplaneModel{ airplaneInfo.substr() };
 		}
 	}
+
+	return true;
 }

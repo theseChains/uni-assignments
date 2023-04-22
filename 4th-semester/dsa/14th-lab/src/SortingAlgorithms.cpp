@@ -14,7 +14,7 @@ void printVector(const std::vector<int>& numbers)
 void bubbleSort(std::vector<int> numbers)
 {
 	int numberOfComparisons{ 0 };
-	int numberOfSwaps{ 0 };
+	int numberOfAssignments{ 0 };
 
 	for (std::size_t i{ 0 }; i < numbers.size() - 1; ++i)
 	{
@@ -23,7 +23,7 @@ void bubbleSort(std::vector<int> numbers)
 			++numberOfComparisons;
 			if (numbers[j] > numbers[j + 1])
 			{
-				++numberOfSwaps;
+				numberOfAssignments += 3;
 				std::swap(numbers[j], numbers[j + 1]);
 			}
 		}
@@ -33,13 +33,13 @@ void bubbleSort(std::vector<int> numbers)
 	std::cout << "\nsorted:\n";
 	printVector(numbers);
 	std::cout << "number of comparisons: " << numberOfComparisons << '\n';
-	std::cout << "number of swaps: " << numberOfSwaps << '\n';
+	std::cout << "number of assignments: " << numberOfAssignments << '\n';
 }
 
 void selectionSort(std::vector<int> numbers)
 {
 	int numberOfComparisons{ 0 };
-	int numberOfSwaps{ 0 };
+	int numberOfAssignments{ 0 };
 
 	for (std::size_t i{ 0 }; i < numbers.size() - 1; ++i)
 	{
@@ -51,39 +51,42 @@ void selectionSort(std::vector<int> numbers)
 				indexOfMinimum = j;
 		}
 
-		++numberOfSwaps;
-		std::swap(numbers[indexOfMinimum], numbers[i]);
+		if (numbers[indexOfMinimum] != numbers[i])
+		{
+			numberOfAssignments += 3;
+			std::swap(numbers[indexOfMinimum], numbers[i]);
+		}
 	}
 
 	std::cout << "\nsorted:\n";
 	printVector(numbers);
 	std::cout << "number of comparisons: " << numberOfComparisons << '\n';
-	std::cout << "number of swaps: " << numberOfSwaps << '\n';
+	std::cout << "number of assignments: " << numberOfAssignments << '\n';
 }
 
 void insertionSort(std::vector<int> numbers)
 {
 	int numberOfComparisons{ 0 };
-	int numberOfSwaps{ 0 };
+	int numberOfAssignments{ 0 };
 
 	for (std::size_t i{ 1 }; i < numbers.size(); ++i)
 	{
 		int current{ numbers[i] };
+		++numberOfAssignments;
 		int j{ static_cast<int>(i - 1) };
 
 		++numberOfComparisons;
 		while (j >= 0 && numbers[j] > current)
 		{
 			++numberOfComparisons;
-			if (j != static_cast<int>(i - 1))
-				++numberOfSwaps;
 			numbers[j + 1] = numbers[j];
+			++numberOfAssignments;
 			--j;
 		}
 
 		if (numbers[j + 1] != current)
 		{
-			++numberOfSwaps;
+			++numberOfAssignments;
 			numbers[j + 1] = current;
 		}
 	}
@@ -91,10 +94,11 @@ void insertionSort(std::vector<int> numbers)
 	std::cout << "\nsorted:\n";
 	printVector(numbers);
 	std::cout << "number of comparisons: " << numberOfComparisons << '\n';
-	std::cout << "number of swaps: " << numberOfSwaps << '\n';
+	std::cout << "number of assignments: " << numberOfAssignments << '\n';
 }
 
-void heapify(std::vector<int>& numbers, int size, int i, int& numberOfComparisons, int& numberOfSwaps)
+void heapify(std::vector<int>& numbers, int size, int i, int& numberOfComparisons,
+		int& numberOfAssignments)
 {
 	// find largest among root, left child and right child
 	int largest{ i };
@@ -114,40 +118,40 @@ void heapify(std::vector<int>& numbers, int size, int i, int& numberOfComparison
 		if (numbers[i] != numbers[largest])
 		{
 			std::swap(numbers[i], numbers[largest]);
-			++numberOfSwaps;
+			numberOfAssignments += 3;
 		}
-		heapify(numbers, size, largest, numberOfComparisons, numberOfSwaps);
+		heapify(numbers, size, largest, numberOfComparisons, numberOfAssignments);
 	}
 }
 
 void heapSort(std::vector<int> numbers)
 {
 	int numberOfComparisons{ 0 };
-	int numberOfSwaps{ 0 };
+	int numberOfAssignments{ 0 };
 
 	int numbersSize{ static_cast<int>(numbers.size()) };
 	// build max heap
 	for (int i{ numbersSize }; i >= 0; --i)
-		heapify(numbers, numbersSize, i, numberOfComparisons, numberOfSwaps);
+		heapify(numbers, numbersSize, i, numberOfComparisons, numberOfAssignments);
 
 	for (int i{ numbersSize - 1 }; i >= 0; --i)
 	{
 		if (numbers[0] != numbers[i])
 		{
 			std::swap(numbers[0], numbers[i]);
-			++numberOfSwaps;
+			numberOfAssignments += 3;
 		}
-		heapify(numbers, i, 0, numberOfComparisons, numberOfSwaps);
+		heapify(numbers, i, 0, numberOfComparisons, numberOfAssignments);
 	}
 
 	std::cout << "\nsorted:\n";
 	printVector(numbers);
 	std::cout << "number of comparisons: " << numberOfComparisons << '\n';
-	std::cout << "number of swaps: " << numberOfSwaps << '\n';
+	std::cout << "number of assignments: " << numberOfAssignments << '\n';
 }
 
 void quickSort(std::vector<int>& numbers, int left, int right, int& numberOfComparisons,
-		int& numberOfSwaps)
+		int& numberOfAssignments)
 {
 	int pivot{ numbers[(left + right) / 2] };
 
@@ -155,13 +159,15 @@ void quickSort(std::vector<int>& numbers, int left, int right, int& numberOfComp
 	int high{ right };
 	while (low <= high)
 	{
-		while (numbers[low] < pivot && ++numberOfComparisons)
+		++numberOfComparisons;
+		while (numbers[low] < pivot)
 		{
 			++low;
 			++numberOfComparisons;
 		}
 
-		while (numbers[high] > pivot && ++numberOfComparisons)
+		++numberOfComparisons;
+		while (numbers[high] > pivot)
 		{
 			--high;
 			++numberOfComparisons;
@@ -171,8 +177,8 @@ void quickSort(std::vector<int>& numbers, int left, int right, int& numberOfComp
 		{
 			if (numbers[low] != numbers[high])
 			{
-				++numberOfSwaps;
 				std::swap(numbers[low], numbers[high]);
+				numberOfAssignments += 3;
 			}
 			++low;
 			--high;
@@ -180,15 +186,15 @@ void quickSort(std::vector<int>& numbers, int left, int right, int& numberOfComp
 	}
 
 	if (left < high)
-		quickSort(numbers, left, high, numberOfComparisons, numberOfSwaps);
+		quickSort(numbers, left, high, numberOfComparisons, numberOfAssignments);
 	if (low < right)
-		quickSort(numbers, low, right, numberOfComparisons, numberOfSwaps);
+		quickSort(numbers, low, right, numberOfComparisons, numberOfAssignments);
 }
 
 void shellSort(std::vector<int> numbers)
 {
 	int numberOfComparisons{ 0 };
-	int numberOfSwaps{ 0 };
+	int numberOfAssignments{ 0 };
 
 	int numbersSize{ static_cast<int>(numbers.size()) };
 	for (int gap{ numbersSize }; gap > 0; gap /= 2)
@@ -196,6 +202,7 @@ void shellSort(std::vector<int> numbers)
 		for (int i{ gap }; i < numbersSize; ++i)
 		{
 			int temporary{ numbers[i] };
+			++numberOfAssignments;
 			int j{ i - gap };
 
 			++numberOfComparisons;
@@ -203,15 +210,13 @@ void shellSort(std::vector<int> numbers)
 			{
 				++numberOfComparisons;
 				numbers[j + gap] = numbers[j];
-				if (j != i - gap)
-					++numberOfSwaps;
-				++numberOfSwaps;
+				++numberOfAssignments;
 				j = j - gap;
 			}
 
 			if (numbers[j + gap] != temporary)
 			{
-				++numberOfSwaps;
+				++numberOfAssignments;
 				numbers[j + gap] = temporary;
 			}
 		}
@@ -220,5 +225,5 @@ void shellSort(std::vector<int> numbers)
 	std::cout << "\nsorted:\n";
 	printVector(numbers);
 	std::cout << "number of comparisons: " << numberOfComparisons << '\n';
-	std::cout << "number of swaps: " << numberOfSwaps << '\n';
+	std::cout << "number of assignments: " << numberOfAssignments << '\n';
 }

@@ -18,11 +18,7 @@ void bucketSort(std::vector<int> numbers, int option)
 		for (std::size_t i{ 0 }; i < numbers.size(); ++i)
 		{
 			while (numbers[i] != static_cast<int>(i))
-			{
-				int temporary{ numbers[numbers[i]] };
-				numbers[numbers[i]] = numbers[i];
-				numbers[i] = temporary;
-			}
+				std::swap(numbers[numbers[i]], numbers[i]);
 		}
 
 		std::cout << "\nsorted:\n";
@@ -99,9 +95,7 @@ void genericBucketSort(std::vector<int> numbers)
 	}
 
 	for (int i{ 0 }; i < numberOfBuckets; ++i)
-	{
 		buckets[i] = sortBucket(buckets[i]);
-	}
 
 	for (int j{ 0 }, i{ 0 }; i < numberOfBuckets; ++i)
 	{
@@ -126,7 +120,7 @@ void countingSortForRadix(std::vector<int>& numbers, int size, int digit)
 	for (int i{ 0 }; i < size; ++i)
 		++workingStorage[(numbers[i] / digit) % 10];
 
-	for (int i{ 1 }; i <= 10; ++i)
+	for (int i{ 1 }; i < 10; ++i)
 		workingStorage[i] += workingStorage[i - 1];
 
 	for (int i{ size - 1 }; i >= 0; --i)
@@ -141,7 +135,7 @@ void countingSortForRadix(std::vector<int>& numbers, int size, int digit)
 void radixSort(std::vector<int> numbers)
 {
 	int size{ static_cast<int>(numbers.size()) };
-	int maximum{ *std::ranges::max_element(numbers.begin(), numbers.end()) };
+	int maximum{ *std::ranges::max_element(numbers) };
 
 	for (int digitPlace{ 1 }; maximum / digitPlace > 0; digitPlace *= 10)
 		countingSortForRadix(numbers, size, digitPlace);

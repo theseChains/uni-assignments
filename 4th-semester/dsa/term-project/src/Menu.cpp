@@ -132,7 +132,12 @@ void handleCommand(Airline& airline, int command)
 
 void runMenuLoop()
 {
-	Airline airline{ "S7 airlines" };
+	Airline airline{};
+	if (!readAirlinesFromFile(airline, "input.txt"))
+	{
+		std::cerr << "invalid input\n";
+		return;
+	}
 
 	int command{};
 	while (command != -1)

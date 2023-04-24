@@ -51,7 +51,6 @@ bool readAirlinesFromFile(Airline& airline, const std::string& filename)
 	else
 	{
 		std::cout << "invalid input.txt: no airline name\n";
-		// we should really return a bool here so that we know if the function succeeded
 		return false;
 	}
 
@@ -76,13 +75,20 @@ bool readAirlinesFromFile(Airline& airline, const std::string& filename)
 		}
 
 		std::string airplanesLine{ line.substr(pos + 1) };
-		auto previousPos{ 0 };
-		pos = airplanesLine.find(',');
-		while (pos != std::string::npos)
+		std::size_t startOfInfo{ 0 };
+		std::size_t endOfInfo{ airplanesLine.find(',') };
+		while (true)
 		{
-			std::string airplaneInfo{ airplanesLine.substr(previousPos, pos) };
-			// auto infoPos{ airplaneInfo.find(';') };
-			std::string airplaneModel{ airplaneInfo.substr() };
+			std::string airplaneInfo{ airplanesLine.substr(startOfInfo, endOfInfo) };
+			std::size_t endOfAirplaneModelInfo{ airplaneInfo.find(';') };
+			std::string airplaneModel{ airplaneInfo.substr(startOfInfo, endOfAirplaneModelInfo) };
+			int airplaneYearOfManufacture{
+				std::stoi(airplaneInfo.substr(endOfAirplaneModelInfo + 1, endOfInfo)) };
+			airline.addAirplane(currentAirportName, airplaneModel, airplaneYearOfManufacture);
+
+			if (airplanesLine.find(',') == std::string::npos)
+				break;
+			airplanesLine = airplanesLine.substr(airplanesLine.find(',') + 1);
 		}
 	}
 

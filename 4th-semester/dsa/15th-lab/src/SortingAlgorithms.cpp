@@ -81,13 +81,18 @@ Node* sortBucket(Node* head)
 
 void genericBucketSort(std::vector<int> numbers)
 {
-	int numberOfBuckets{ 10 };
-	int bucketCapacity{ static_cast<int>(numbers.size() / numberOfBuckets) + 1 };
+	int numberOfBuckets{};
+	if (numbers.size() > 100)
+		numberOfBuckets = static_cast<int>(numbers.size() / 10);
+	else
+		numberOfBuckets = 10;
+
+	int bucketInterval{ static_cast<int>(numbers.size() / numberOfBuckets) + 1 };
 	std::vector<Node*> buckets(numberOfBuckets);
 
 	for (std::size_t i{ 0 }; i < numbers.size(); ++i)
 	{
-		int position{ numbers[i] / bucketCapacity };
+		int position{ numbers[i] / bucketInterval };
 		Node* current{ new Node{} };
 		current->data = numbers[i];
 		current->next = buckets[position];

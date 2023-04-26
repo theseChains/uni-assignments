@@ -43,13 +43,14 @@ void selectionSort(std::vector<int> numbers)
 	for (std::size_t i{ 0 }; i < numbers.size() - 1; ++i)
 	{
 		std::size_t indexOfMinimum{ i };
-		for (std::size_t j{ i + 1 }; j < numbers.size(); ++j)
+		for (std::size_t j{ i + 1 }; j < numbers.size() - 1; ++j)
 		{
 			++numberOfComparisons;
 			if (numbers[j] < numbers[indexOfMinimum])
 				indexOfMinimum = j;
 		}
 
+		++numberOfComparisons;
 		if (numbers[indexOfMinimum] != numbers[i])
 		{
 			numberOfAssignments += 3;
@@ -70,8 +71,8 @@ void insertionSort(std::vector<int> numbers)
 
 	for (std::size_t i{ 1 }; i < numbers.size(); ++i)
 	{
-		int current{ numbers[i] };
 		++numberOfAssignments;
+		int current{ numbers[i] };
 		int j{ static_cast<int>(i - 1) };
 
 		++numberOfComparisons;
@@ -83,6 +84,7 @@ void insertionSort(std::vector<int> numbers)
 			--j;
 		}
 
+		++numberOfComparisons;
 		if (numbers[j + 1] != current)
 		{
 			++numberOfAssignments;

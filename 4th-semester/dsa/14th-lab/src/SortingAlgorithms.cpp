@@ -51,6 +51,7 @@ void selectionSort(std::vector<int> numbers)
 				indexOfMinimum = j;
 		}
 
+		++numberOfComparisons;
 		if (numbers[indexOfMinimum] != numbers[i])
 		{
 			numberOfAssignments += 3;
@@ -75,7 +76,6 @@ void insertionSort(std::vector<int> numbers)
 		++numberOfAssignments;
 		int j{ static_cast<int>(i - 1) };
 
-		++numberOfComparisons;
 		while (j >= 0 && numbers[j] > current)
 		{
 			++numberOfComparisons;
@@ -84,6 +84,7 @@ void insertionSort(std::vector<int> numbers)
 			--j;
 		}
 
+		++numberOfComparisons;
 		if (numbers[j + 1] != current)
 		{
 			++numberOfAssignments;
@@ -130,7 +131,6 @@ void heapSort(std::vector<int> numbers)
 	int numberOfAssignments{ 0 };
 
 	int numbersSize{ static_cast<int>(numbers.size()) };
-	// build max heap
 	for (int i{ numbersSize }; i >= 0; --i)
 		heapify(numbers, numbersSize, i, numberOfComparisons, numberOfAssignments);
 
@@ -175,6 +175,7 @@ void quickSort(std::vector<int>& numbers, int left, int right, int& numberOfComp
 
 		if (low <= high)
 		{
+			++numberOfComparisons;
 			if (numbers[low] != numbers[high])
 			{
 				std::swap(numbers[low], numbers[high]);
@@ -197,7 +198,7 @@ void shellSort(std::vector<int> numbers)
 	int numberOfAssignments{ 0 };
 
 	int numbersSize{ static_cast<int>(numbers.size()) };
-	for (int gap{ numbersSize }; gap > 0; gap /= 2)
+	for (int gap{ numbersSize / 2 }; gap > 0; gap /= 2)
 	{
 		for (int i{ gap }; i < numbersSize; ++i)
 		{

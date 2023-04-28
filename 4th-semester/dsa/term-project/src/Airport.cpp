@@ -128,7 +128,8 @@ void Airport::printAirplanes() const
 	Airplane* current{ m_airplaneHead };
 	while (current != nullptr)
 	{
-		std::cout << "airplane: " << current->getModel() << '\n';
+		std::cout << "airplane: " << current->getModel() << " (" <<
+			current->getYearOfManufacture() << ")\n";
 		current = current->getNext();
 	}
 }

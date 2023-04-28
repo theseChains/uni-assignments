@@ -89,6 +89,7 @@ bool readAirlinesFromFile(Airline& airline, const std::string& filename)
 			if (airplanesLine.find(',') == std::string::npos)
 				break;
 			airplanesLine = airplanesLine.substr(airplanesLine.find(',') + 1);
+			endOfInfo = airplanesLine.find(',');
 		}
 	}
 

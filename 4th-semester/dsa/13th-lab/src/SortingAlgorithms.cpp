@@ -43,7 +43,7 @@ void selectionSort(std::vector<int> numbers)
 	for (std::size_t i{ 0 }; i < numbers.size() - 1; ++i)
 	{
 		std::size_t indexOfMinimum{ i };
-		for (std::size_t j{ i + 1 }; j < numbers.size() - 1; ++j)
+		for (std::size_t j{ i + 1 }; j < numbers.size(); ++j)
 		{
 			++numberOfComparisons;
 			if (numbers[j] < numbers[indexOfMinimum])

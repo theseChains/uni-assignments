@@ -52,7 +52,28 @@ void generateVector(std::vector<int>& numbers)
 	numbers.reserve(numberOfElements);
 
 	for (int i{ 0 }; i < numberOfElements; ++i)
-		numbers.push_back(rnd::get(0, numberOfElements));
+		numbers.push_back(rnd::get(0, numberOfElements - 1));
+}
+
+bool generateVectorForRadix(std::vector<int>& numbers)
+{
+	numbers.clear();
+	std::cout << "\nenter number digits: ";
+	int numberOfDigits{ getNumber() };
+	if (numberOfDigits < 1 || numberOfDigits > 9)
+	{
+		std::cout << "incorrect number of digits\n";
+		return false;
+	}
+	std::cout << "\nenter number of elements: ";
+	int numberOfElements{ getNumber() };
+	numbers.reserve(numberOfElements);
+
+	for (int i{ 0 }; i < numberOfElements; ++i)
+		numbers.push_back(rnd::get(
+				0, static_cast<int>(std::pow(10.0, static_cast<double>(numberOfDigits)) - 1)));
+
+	return true;
 }
 
 void handleSorting(std::vector<int>& numbers, int command)
@@ -83,11 +104,12 @@ void handleSorting(std::vector<int>& numbers, int command)
 		}
 		case 3:
 		{
-			generateVector(numbers);
-
-			std::cout << "\noriginal:\n";
-			printVector(numbers);
-			radixSort(numbers);
+			if (generateVectorForRadix(numbers))
+			{
+				std::cout << "\noriginal:\n";
+				printVector(numbers);
+				radixSort(numbers);
+			}
 			break;
 		}
 	}

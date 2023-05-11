@@ -50,12 +50,8 @@ void selectionSort(std::vector<int> numbers)
 				indexOfMinimum = j;
 		}
 
-		++numberOfComparisons;
-		if (numbers[indexOfMinimum] != numbers[i])
-		{
-			numberOfAssignments += 3;
-			std::swap(numbers[indexOfMinimum], numbers[i]);
-		}
+		numberOfAssignments += 3;
+		std::swap(numbers[indexOfMinimum], numbers[i]);
 	}
 
 	std::cout << "\nsorted:\n";

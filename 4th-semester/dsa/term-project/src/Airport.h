@@ -23,7 +23,7 @@ public:
 	bool isAirportEmpty() const;
 	void addAirplane(const std::string& airplaneModel, int yearOfManufacture);
 	bool findAirplane(const std::string& airplaneModel);
-	void removeAirplane(const std::string& airplaneModel);
+	bool removeAirplane(const std::string& airplaneModel);
 	void printAirplanes() const;
 
 	void setName(const std::string& name);

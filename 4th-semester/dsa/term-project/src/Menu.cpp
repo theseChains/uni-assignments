@@ -16,7 +16,7 @@ void printMenu()
 	std::cout << "5:  write airlines to file\n";
 	std::cout << "6:  add new airplane to airport\n";
 	std::cout << "7:  find an airplane in an airport\n";
-	std::cout << "8:  remove and airplane from an airport\n";
+	std::cout << "8:  remove an airplane from an airport\n";
 	std::cout << "-1: exit\n";
 }
 
@@ -80,6 +80,12 @@ void handleAirportRemoval(Airline& airline)
 
 void handleAirplaneAddition(Airline& airline)
 {
+	if (airline.isAirportListEmpty())
+	{
+		std::cout << "\nthe airport list is empty\n";
+		return;
+	}
+
 	std::cout << "\nenter the name of the airport to which you want to add an airplane: ";
 	std::string airportName{ getString() };
 
@@ -99,6 +105,53 @@ void handleAirplaneAddition(Airline& airline)
 	int yearOfManufacture{ getNumber() };
 
 	currentAirport->addAirplane(airplaneModel, yearOfManufacture);
+}
+
+void handleAirplaneSearch(const Airline& airline)
+{
+	if (airline.isAirportListEmpty())
+	{
+		std::cout << "\nthe airport list is empty\n";
+		return;
+	}
+
+	std::cout << "enter the model of the airplane: ";
+	std::string model{ getString() };
+	Airport* current{ airline.getHead() };
+	int numberOfFoundAirplanes{ 0 };
+	while (current != nullptr)
+	{
+		if (current->findAirplane(model))
+		{
+			std::cout << "airplane " << model << " found in airport" << current->getName() << '\n';
+			++numberOfFoundAirplanes;
+		}
+
+		current = current->getNext();
+	}
+
+	if (numberOfFoundAirplanes == 0)
+		std::cout << "airplane " << model << " was not found\n";
+}
+
+void handleAirplaneRemoval(Airline& airline)
+{
+	if (airline.isAirportListEmpty())
+	{
+		std::cout << "\nthe airport list is empty\n";
+		return;
+	}
+
+	std::cout << "\nenter airplane name to remove: ";
+	std::string model{ getString() };
+	Airport* current{ airline.getHead() };
+	while (current != nullptr)
+	{
+		if (current->removeAirplane(model))
+			std::cout << "removed airplane " << model << " from airport "
+				<< current->getName() << '\n';
+		current = current->getNext();
+	}
 }
 
 void handleCommand(Airline& airline, int command)
@@ -124,8 +177,10 @@ void handleCommand(Airline& airline, int command)
 			handleAirplaneAddition(airline);
 			break;
 		case 7:
+			handleAirplaneSearch(airline);
 			break;
 		case 8:
+			handleAirplaneRemoval(airline);
 			break;
 	}
 }

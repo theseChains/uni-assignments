@@ -1,5 +1,6 @@
 #include <iostream>
 #include <limits>
+#include <string>
 
 void ignoreLine()
 {
@@ -38,10 +39,33 @@ int getNumber(char numberLetter)
     }
 }
 
+void printAvailableOperations()
+{
+    std::cout << "\navailable operations:\n";
+    std::cout << "raising to the power of 4: x^\n";
+    std::cout << "implication: x => y\n\n";
+}
+
+std::string getFunction(int numberOfVariables)
+{
+    std::cout << "enter your function:\n";
+    if (numberOfVariables == 1)
+        std::cout << "f(x) = ";
+    else if (numberOfVariables == 2)
+        std::cout << "f(x,y) = ";
+
+    std::string function{};
+    std::cin >> function;
+    return function;
+}
+
 int main()
 {
-    int numberOfValues{ getNumber('k') };
+    [[maybe_unused]] int numberOfValues{ getNumber('k') };
     int numberOfVariables{ getNumber('n') };
+
+    printAvailableOperations();
+    std::string function{ getFunction(numberOfVariables) };
 
     return 0;
 }

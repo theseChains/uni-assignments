@@ -49,6 +49,6 @@ std::string getFunction(int numberOfVariables)
         std::cout << "f(x,y) = ";
 
     std::string function{};
-    std::cin >> function;
+    std::getline(std::cin, function);
     return function;
 }

@@ -34,6 +34,17 @@ int main()
     }
     else if (numberOfVariables == 2)
     {
+        std::cout << std::setw(4) << 'x' << std::string(3, ' ') << '|' << std::setw(4)
+            << 'y' << std::string(3, ' ') << '|' << std::string(3, ' ') << "f(x,y)\n";
+        for (int currentX{ 0 }; currentX < numberOfValues; ++currentX)
+        {
+            for (int currentY{ 0 }; currentY < numberOfValues; ++currentY)
+            {
+                std::cout << std::setw(4) << currentX << std::string(3, ' ') << '|'
+                    << std::setw(4) << currentY << std::string(3, ' ') << '|' << std::setw(7)
+                        << evaluateFunction(function, currentX, currentY, numberOfValues) << '\n';
+            }
+        }
     }
 
     return 0;

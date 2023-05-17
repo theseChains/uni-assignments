@@ -30,5 +30,4 @@ run :-
     format("approximate arctg(~f) = ~6f\n", [X, Result]),
     writef("(N = %d)\n", [N]),
     AbsoluteError is abs(Result - StandardResult),
-    format("absolute error = ~6f\n", [AbsoluteError]),
-    fail.
+    format("absolute error = ~6f\n", [AbsoluteError]).

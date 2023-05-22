@@ -35,13 +35,14 @@ void printMultipleVariableResults(const std::vector<int>& values, int numberOfVa
 {
     std::cout << std::setw(4) << 'x' << std::string(3, ' ') << '|' << std::setw(4) << 'y'
         << std::string(3, ' ') << '|' << std::string(3, ' ') << "f(x,y)\n";
-    for (int currentX{ 0 }, i{ 0 }; currentX < numberOfValues; ++currentX, ++i)
+    int index{ 0 };
+    for (int currentX{ 0 }; currentX < numberOfValues; ++currentX)
     {
-        for (int currentY{ 0 }; currentY < numberOfValues; ++currentY, ++i)
+        for (int currentY{ 0 }; currentY < numberOfValues; ++currentY, ++index)
         {
             std::cout << std::setw(4) << currentX << std::string(3, ' ') << '|'
                 << std::setw(4) << currentY << std::string(3, ' ') << '|' << std::setw(7)
-                    << values[i] << '\n';
+                    << values[index] << '\n';
         }
     }
 }

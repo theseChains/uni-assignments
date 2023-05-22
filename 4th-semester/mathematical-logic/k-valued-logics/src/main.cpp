@@ -1,9 +1,12 @@
 #include <iomanip>
 #include <iostream>
 #include <string>
+#include <vector>
 
 #include "OutputFunctions.h"
+#include "ExpressionParser.h"
 #include "UserInput.h"
+#include "ValueGetter.h"
 
 int main()
 {
@@ -13,8 +16,9 @@ int main()
     printAvailableOperations();
     std::string function{ getFunction(numberOfVariables) };
     // todo: validate function input
-    
-    printResultTable(function, numberOfValues, numberOfVariables);
+
+    std::vector<int> values{ getFunctionValues(function, numberOfValues, numberOfVariables) };
+    printResultTable(values, numberOfValues, numberOfVariables);
 
     return 0;
 }

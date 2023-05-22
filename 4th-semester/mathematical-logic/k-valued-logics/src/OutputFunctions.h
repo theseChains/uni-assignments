@@ -2,10 +2,11 @@
 #define OUTPUT_FUNCTIONS_H
 
 #include <string>
+#include <vector>
 
 void printAvailableOperations();
-void printResultTable(const std::string& function, int numberOfValues, int numberOfVariables);
-void printSingleVariableResults(const std::string& function, int numberOfValues);
-void printMultipleVariableResults(const std::string& function, int numberOfValues);
+void printResultTable(const std::vector<int>& values, int numberOfValues, int numberOfVariables);
+void printSingleVariableResults(const std::vector<int>& values, int numberOfValues);
+void printMultipleVariableResults(const std::vector<int>& values, int numberOfValues);
 
 #endif

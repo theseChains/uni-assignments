@@ -3,17 +3,13 @@
 #include <iostream>
 #include <ranges>
 
-void hashFunction(int& index)
-{
-	index %= 10;
-}
-
-int getValueIndex(const std::string& value)
+int hashFunction(const std::string& value)
 {
 	int index{};
 	for (const auto& character : value)
 		index += static_cast<int>(character);
-	hashFunction(index);
+
+	index %= constants::maxSize;
 
 	return index;
 }
@@ -42,13 +38,13 @@ void addToTable(HashTable& table, const std::string& newValue)
 		return;
 	}
 
-	int index{ getValueIndex(newValue) };
+	int index{ hashFunction(newValue) };
 	table.array[index] = newValue;
 }
 
 std::pair<bool, int> findInTable(const HashTable& table, const std::string& valueToFind)
 {
-	int valueIndex{ getValueIndex(valueToFind) };
+	int valueIndex{ hashFunction(valueToFind) };
 	if (table.array[valueIndex] == valueToFind)
 		return { true, valueIndex };
 	else
@@ -70,15 +66,16 @@ void removeFromTable(HashTable& table, const std::string& valueToRemove)
 		return;
 	}
 
-	int valueIndex{ getValueIndex(valueToRemove) };
-	table.array[valueIndex] = "EMPTY";
+	int valueIndex{ hashFunction(valueToRemove) };
+	table.array[valueIndex].clear();
 }
 
 void printTable(const HashTable& table)
 {
-	for (const auto& element : table.array)
-		std::cout << element << ' ';
-	std::cout << '\n';
+	for (int i{ 0 }; i < constants::maxSize; ++i)
+	{
+		std::cout << i << ": " << table.array[i] << '\n';
+	}
 }
 
 void fillTable(HashTable& table)

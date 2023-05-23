@@ -8,23 +8,23 @@
 
 namespace constants
 {
-	inline constexpr int maxTableSize{ 13 };
+	inline constexpr int maxTableSize{ 10 };
 	inline constexpr int maxKeysSize{ 10 };
 }
 
 namespace config
 {
-	inline std::array<std::string, constants::maxKeysSize> keys{
-		"auto",
-		"union",
-		"constexpr",
-		"volatile",
-		"explicit",
-		"friend",
-		"inline",
-		"virtual",
-		"for",
-		"template"
+	inline constexpr std::array<std::string, constants::maxTableSize> keys{
+		"Christian",
+		"Stina",
+		"Daniel",
+		"Bertha",
+		"Augustus",
+		"Cosmo",
+		"Edwarda",
+		"Roberta",
+		"Thyra",
+		"Benita"
 	};
 }
 
@@ -35,7 +35,7 @@ struct HashTable
 };
 
 std::optional<int> addToTable(HashTable& table, const std::string& newValue);
-std::pair<bool, int> findInTable(const HashTable& table, const std::string& valueToFind);
+std::tuple<bool, int, int> findInTable(const HashTable& table, const std::string& valueToFind);
 void printTable(const HashTable& table);
 
 void fillTable(HashTable& table);

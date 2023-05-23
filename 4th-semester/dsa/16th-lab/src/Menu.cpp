@@ -85,8 +85,6 @@ void handleCommand(HashTable& table, int command)
 void runMenuLoop()
 {
 	HashTable table{};
-	for (int i{ 0 }; i < constants::maxSize; ++i)
-		table.array[i] = "EMPTY";
 
 	int command{};
 	while (command != -1)

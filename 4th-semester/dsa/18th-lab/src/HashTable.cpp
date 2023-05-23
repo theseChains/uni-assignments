@@ -3,32 +3,19 @@
 #include <iostream>
 #include <ranges>
 
-void hashFunction(int& index)
-{
-	index %= constants::maxTableSize;
-}
-
-int getValueIndex(const std::string& value)
+int hashFunction(const std::string& value)
 {
 	int index{};
 	for (const auto& character : value)
 		index += static_cast<int>(character);
-	hashFunction(index);
+	index %= constants::maxTableSize;
 
 	return index;
 }
 
-bool isKeyValid(const std::string& value)
-{
-	for (const auto& key : config::keys)
-		if (key == value)
-			return true;
-
-	return false;
-}
-
 void addToAuxiliaryList(Node*& head, const std::string& newValue, int& numberOfComaprisons)
 {
+	++numberOfComaprisons;
 	if (head == nullptr)
 	{
 		head = new Node{};
@@ -39,6 +26,7 @@ void addToAuxiliaryList(Node*& head, const std::string& newValue, int& numberOfC
 	}
 
 	Node* current{ head };
+	++numberOfComaprisons;
 	while (current->next != nullptr)
 	{
 		++numberOfComaprisons;
@@ -53,18 +41,19 @@ void addToAuxiliaryList(Node*& head, const std::string& newValue, int& numberOfC
 
 std::optional<int> addToTable(HashTable& table, const std::string& newValue)
 {
-	if (!isKeyValid(newValue))
+	int numberOfComaprisons{ 0 };
+
+	auto [found, valueIndex, number]{ findInTable(table, newValue) };
+	if (found)
 	{
-		std::cout << "\ncouldn't find key " << newValue << " in the list of keys\n";
+		std::cout << "the value " << newValue << " was found in the table\n";
 		return std::nullopt;
 	}
 
-	int numberOfComaprisons{ 0 };
-
-	int index{ getValueIndex(newValue) };
+	int index{ hashFunction(newValue) };
 	int currentIndex{ index };
 	++numberOfComaprisons;
-	if (table.array[currentIndex].value != "EMPTY")
+	if (!table.array[currentIndex].value.empty())
 		addToAuxiliaryList(table.array[currentIndex].head, newValue, numberOfComaprisons);
 	else
 		table.array[currentIndex].value = newValue;
@@ -72,24 +61,33 @@ std::optional<int> addToTable(HashTable& table, const std::string& newValue)
 	return numberOfComaprisons;
 }
 
-std::pair<bool, int> findInTable(const HashTable& table, const std::string& valueToFind)
+std::tuple<bool, int, int> findInTable(const HashTable& table, const std::string& valueToFind)
 {
-	int numberOfComaprisons{ 0 };
-	int valueIndex{ getValueIndex(valueToFind) };
+	int numberOfComparisons{ 0 };
+	int valueIndex{ hashFunction(valueToFind) };
 	Element tableElement{ table.array[valueIndex] };
 
-	++numberOfComaprisons;
+	++numberOfComparisons;
+	if (tableElement.value.empty())
+		return { false, valueIndex, numberOfComparisons };
+
+	++numberOfComparisons;
 	if (tableElement.value == valueToFind)
-		return { true, valueIndex };
+		return { true, valueIndex, numberOfComparisons };
 
 	Node* current{ tableElement.head };
+	++numberOfComparisons;
 	while (current != nullptr && current->value != valueToFind)
+	{
 		current = current->next;
+		++numberOfComparisons;
+	}
 
+	++numberOfComparisons;
 	if (current == nullptr)
-		return { false, valueIndex };
+		return { false, valueIndex, numberOfComparisons };
 
-	return { true, valueIndex };
+	return { true, valueIndex, numberOfComparisons };
 }
 
 bool findInAuxiliaryList(Node* head, const std::string& valueToFind)
@@ -132,12 +130,12 @@ void removeFromAuxiliaryList(Node*& head, const std::string& valueToRemove)
 
 void removeFromTable(HashTable& table, const std::string& valueToRemove)
 {
-	int valueIndex{ getValueIndex(valueToRemove) };
+	int valueIndex{ hashFunction(valueToRemove) };
 	std::string& tableValue{ table.array[valueIndex].value };
 	if (tableValue == valueToRemove)
 	{
 		if (table.array[valueIndex].head == nullptr)
-			tableValue = "EMPTY";
+			tableValue.clear();
 		else
 		{
 			Node*& tableElementHead{ table.array[valueIndex].head };
@@ -158,7 +156,9 @@ void printAuxiliaryList(Node* head)
 	Node* current{ head };
 	while (current != nullptr)
 	{
-		std::cout << current->value << ' ';
+		std::cout << current->value;
+		if (current->next != nullptr)
+			std::cout << ", ";
 		current = current->next;
 	}
 	std::cout << '\n';
@@ -166,10 +166,10 @@ void printAuxiliaryList(Node* head)
 
 void printTable(const HashTable& table)
 {
-	for (const auto& element : table.array)
+	for (int i{ 0 }; i < constants::maxTableSize; ++i)
 	{
-		std::cout << element.value << ' ';
-		printAuxiliaryList(element.head);
+		std::cout << i << ": " << table.array[i].value << " - ";
+		printAuxiliaryList(table.array[i].head);
 	}
 	std::cout << '\n';
 }
@@ -177,7 +177,7 @@ void printTable(const HashTable& table)
 void fillTable(HashTable& table)
 {
 	int numberOfComaprisons{ 0 };
-	for (const auto& key : config::keys)
+	for (const auto& key : config::names)
 	{
 		auto added{ addToTable(table, key) };
 		if (added)

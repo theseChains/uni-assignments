@@ -40,12 +40,18 @@ void handleTableSearch(const HashTable& table)
 {
 	std::cout << "\nenter value to find: ";
 	std::string valueToFind{ getString() };
-	auto [found, index]{ findInTable(table, valueToFind) };
+
+	auto [found, index, number]{ findInTable(table, valueToFind) };
 	if (found)
+	{
 		std::cout << "\nvalue " << valueToFind << " was found in the table at index " <<
 			index << '\n';
+	}
 	else
+	{
 		std::cout << "\nvalue " << valueToFind << " was not found in the table\n";
+	}
+	std::cout << "number of comparisons: " << number << '\n';
 }
 
 void handleTablePrinting(const HashTable& table)
@@ -76,8 +82,6 @@ void handleCommand(HashTable& table, int command)
 void runMenuLoop()
 {
 	HashTable table{};
-	for (int i{ 0 }; i < constants::maxTableSize; ++i)
-		table.array[i] = "EMPTY";
 
 	int command{};
 	while (command != -1)

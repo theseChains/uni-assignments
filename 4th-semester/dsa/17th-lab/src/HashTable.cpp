@@ -3,38 +3,18 @@
 #include <iostream>
 #include <ranges>
 
-void hashFunction(int& index)
-{
-	index %= constants::maxTableSize;
-}
-
-int getValueIndex(const std::string& value)
+int hashFunction(const std::string& value)
 {
 	int index{};
 	for (const auto& character : value)
 		index += static_cast<int>(character);
-	hashFunction(index);
+	index %= constants::maxTableSize;
 
 	return index;
 }
 
-bool isKeyValid(const std::string& value)
-{
-	for (const auto& key : config::keys)
-		if (key == value)
-			return true;
-
-	return false;
-}
-
 std::optional<int> addToTable(HashTable& table, const std::string& newValue)
 {
-	if (!isKeyValid(newValue))
-	{
-		std::cout << "\ncouldn't find key " << newValue << " in the list of keys\n";
-		return std::nullopt;
-	}
-
 	if (table.size == constants::maxTableSize)
 	{
 		std::cout << "\nthe table is full\n";
@@ -42,12 +22,18 @@ std::optional<int> addToTable(HashTable& table, const std::string& newValue)
 	}
 
 	int numberOfComaprisons{ 0 };
+	auto [found, valueIndex, number]{ findInTable(table, newValue) };
+	if (found)
+	{
+		std::cout << "the value " << newValue << " was found in the table\n";
+		return std::nullopt;
+	}
 
-	int index{ getValueIndex(newValue) };
+	int index{ hashFunction(newValue) };
 	int iteration{ 1 };
 	int currentIndex{ index };
 	++numberOfComaprisons;
-	while (table.array[currentIndex] != "EMPTY" && iteration <= constants::maxTableSize - 2)
+	while (!table.array[currentIndex].empty())
 	{
 		++numberOfComaprisons;
 		currentIndex = (index + iteration) % constants::maxTableSize;
@@ -60,20 +46,18 @@ std::optional<int> addToTable(HashTable& table, const std::string& newValue)
 	return numberOfComaprisons;
 }
 
-std::pair<bool, int> findInTable(const HashTable& table, const std::string& valueToFind)
+std::tuple<bool, int, int> findInTable(const HashTable& table, const std::string& valueToFind)
 {
-	int valueIndex{ getValueIndex(valueToFind) };
+	int valueIndex{ hashFunction(valueToFind) };
 	int iteration{ 1 };
-	int numberOfComaprisons{ 0 };
+	int numberOfComparisons{ 0 };
+	if (table.array[valueIndex].empty())
+		return { false, valueIndex, numberOfComparisons };
 	while (iteration <= constants::maxTableSize - 1)
 	{
-		++numberOfComaprisons;
+		++numberOfComparisons;
 		if (table.array[valueIndex] == valueToFind)
-		{
-			std::cout << "\nnumber of comparisons while searching: " << numberOfComaprisons
-				<< '\n';
-			return { true, valueIndex };
-		}
+			return { true, valueIndex, numberOfComparisons };
 
 		++valueIndex;
 		valueIndex %= constants::maxTableSize;
@@ -81,15 +65,13 @@ std::pair<bool, int> findInTable(const HashTable& table, const std::string& valu
 		++iteration;
 	}
 
-	std::cout << "\nnumber of comparisons while searching: " << numberOfComaprisons << '\n';
-	return { false, valueIndex };
+	return { false, valueIndex, numberOfComparisons };
 }
 
 void printTable(const HashTable& table)
 {
-	for (const auto& element : table.array)
-		std::cout << element << ' ';
-	std::cout << '\n';
+	for (int i{ 0 }; i < constants::maxTableSize; ++i)
+		std::cout << i << ": " << table.array[i] << '\n';
 }
 
 void fillTable(HashTable& table)

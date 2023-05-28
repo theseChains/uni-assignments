@@ -90,7 +90,7 @@ int evaluateFunction(const std::string& functionString, int currentX, int curren
                 processOperation(operands, currentOperator, numberOfValues);
                 operators.pop();
             }
-            operators.push(currentOperator);
+            operators.push(functionString[i]);
             mayBeUnary = true;
         }
         else if (functionString[i] == 'x')

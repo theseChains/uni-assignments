@@ -21,8 +21,7 @@ bool isUnary(char operatorCharacter)
 
 int getPriority(char operatorCharacter)
 {
-    // unary
-    if (operatorCharacter < 0)
+    if (operatorCharacter == '^')
         return 2;
     else if (operatorCharacter == '>')
         return 1;
@@ -34,9 +33,14 @@ void processOperation(std::stack<int>& operands, char operatorCharacter, int num
 {
     if (operatorCharacter == '^')
     {
+        std::cout << "processing power\n";
+        // the number 4
         int operand{ operands.top() };
+        std::cout << "auxiliaryOperand: " << operand << '\n';
         operands.pop();
-        operands.push(static_cast<int>(std::pow(operand, constants::power)) % numberOfValues);
+        int auxiliaryOperand{ operands.top() };
+        operands.pop();
+        operands.push(static_cast<int>(std::pow(auxiliaryOperand, operand)) % numberOfValues);
     }
     else
     {
@@ -51,73 +55,84 @@ void processOperation(std::stack<int>& operands, char operatorCharacter, int num
     }
 }
 
-int evaluateFunction(const std::string& functionString, int currentX, int currentY,
-        int numberOfValues)
+std::string convertToPostfix(const std::string& functionString)
 {
-    std::stack<int> operands{};
     std::stack<char> operators{};
-    bool mayBeUnary{ true };
+    std::string result{};
+    result.reserve(functionString.size());
+
     for (std::size_t i{ 0 }; i < functionString.size(); ++i)
     {
-        if (isDelimiter(functionString[i]))
+        char currentCharacter{ functionString[i] };
+
+        if (currentCharacter == ' ')
             continue;
 
-        if (functionString[i] == '(')
+        if (std::isalnum(currentCharacter))
         {
-            operators.push('(');
-            mayBeUnary = true;
+            result += currentCharacter;
         }
-        else if (functionString[i] == ')')
+        else if (currentCharacter == '(')
+        {
+            operators.push(currentCharacter);
+        }
+        else if (currentCharacter == ')')
         {
             while (operators.top() != '(')
             {
-                processOperation(operands, operators.top(), numberOfValues);
+                result += operators.top();
                 operators.pop();
             }
             operators.pop();
-            mayBeUnary = false;
         }
-        else if (isOperator(functionString[i]))
+        else if (isOperator(currentCharacter))
         {
-            char currentOperator{ functionString[i] };
-            if (mayBeUnary && isUnary(functionString[i]))
-                currentOperator = -currentOperator;
-
-            while (!operators.empty() &&
-                ((currentOperator >= 0 && getPriority(operators.top()) >= getPriority(currentOperator)) ||
-                 (currentOperator < 0 && getPriority(operators.top()) > getPriority(currentOperator))))
+            while (!operators.empty() && getPriority(currentCharacter) <= getPriority(operators.top()))
             {
-                processOperation(operands, currentOperator, numberOfValues);
+                result += operators.top();
                 operators.pop();
             }
-            operators.push(functionString[i]);
-            mayBeUnary = true;
+            operators.push(currentCharacter);
         }
-        else if (functionString[i] == 'x')
+    }
+    while (!operators.empty())
+    {
+        result += operators.top();
+        operators.pop();
+    }
+
+    return result;
+}
+
+int evaluateFunction(const std::string& functionString, int currentX, int currentY,
+        int numberOfValues)
+{
+    std::string postfixForm{ convertToPostfix(functionString) };
+    std::stack<int> operands{};
+
+    for (std::size_t i{ 0 }; i < functionString.size(); ++i)
+    {
+        char currentCharacter{ functionString[i] };
+        if (isOperator(currentCharacter))
         {
-            operands.push(currentX);
-            mayBeUnary = false;
+            processOperation(operands, currentCharacter, numberOfValues);
         }
-        else if (functionString[i] == 'y')
-        {
-            operands.push(currentY);
-            mayBeUnary = false;
-        }
-        else
+        else if (std::isdigit(currentCharacter))
         {
             int number{ 0 };
-            while (i < functionString.size() && std::isalnum(functionString[i]))
+            while (i < functionString.size() && std::isdigit(functionString[i]))
                 number = number * 10 + functionString[i++] - '0';
             --i;
             operands.push(number);
-            mayBeUnary = false;
         }
-    }
-
-    while (!operators.empty())
-    {
-        processOperation(operands, operators.top(), numberOfValues);
-        operators.pop();
+        else if (currentCharacter == 'x')
+        {
+            operands.push(currentX);
+        }
+        else if (currentCharacter == 'y')
+        {
+            operands.push(currentY);
+        }
     }
 
     return operands.top();

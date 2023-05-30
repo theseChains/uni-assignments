@@ -48,8 +48,6 @@ bool numbersAreValid(const std::string& function, int numberOfValues)
         }
     }
 
-    std::cout << "\nnumbers are valid\n";
-
     return true;
 }
 

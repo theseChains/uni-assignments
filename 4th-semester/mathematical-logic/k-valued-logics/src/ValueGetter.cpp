@@ -1,7 +1,7 @@
 #include "ValueGetter.h"
 #include "ExpressionParser.h"
 
-std::vector<int> getFunctionValues(const std::string& function, int numberOfValues,
+std::vector<int> getFunctionValues(std::string& function, int numberOfValues,
         int numberOfVariables)
 {
     std::vector<int> values{};
@@ -13,14 +13,14 @@ std::vector<int> getFunctionValues(const std::string& function, int numberOfValu
     return values;
 }
 
-void getSingleVariableFunctionValues(const std::string& function, std::vector<int>& values,
+void getSingleVariableFunctionValues(std::string& function, std::vector<int>& values,
         int numberOfValues)
 {
     for (int currentX{ 0 }; currentX < numberOfValues; ++currentX)
         values.push_back(evaluateFunction(function, currentX, 0, numberOfValues));
 }
 
-void getMultipleVariableFunctionValues(const std::string& function, std::vector<int>& values,
+void getMultipleVariableFunctionValues(std::string& function, std::vector<int>& values,
         int numberOfValues)
 {
     for (int currentX{ 0 }; currentX < numberOfValues; ++currentX)

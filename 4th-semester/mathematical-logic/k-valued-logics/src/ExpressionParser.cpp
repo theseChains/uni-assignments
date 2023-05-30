@@ -26,21 +26,19 @@ int getPriority(char operatorCharacter)
     else if (operatorCharacter == '>')
         return 1;
 
-    return -1;
+    return 0;
 }
 
 void processOperation(std::stack<int>& operands, char operatorCharacter, int numberOfValues)
 {
     if (operatorCharacter == '^')
     {
-        std::cout << "processing power\n";
         // the number 4
-        int operand{ operands.top() };
-        std::cout << "auxiliaryOperand: " << operand << '\n';
-        operands.pop();
         int auxiliaryOperand{ operands.top() };
         operands.pop();
-        operands.push(static_cast<int>(std::pow(auxiliaryOperand, operand)) % numberOfValues);
+        int operand{ operands.top() };
+        operands.pop();
+        operands.push(static_cast<int>(std::pow(operand, auxiliaryOperand)) % numberOfValues);
     }
     else
     {
@@ -55,7 +53,19 @@ void processOperation(std::stack<int>& operands, char operatorCharacter, int num
     }
 }
 
-std::string convertToPostfix(const std::string& functionString)
+void convertPowerToBinaryOperation(std::string& functionString)
+{
+    for (std::size_t i{ 0 }; i < functionString.size(); ++i)
+    {
+        if (functionString[i] == '^')
+        {
+            functionString.insert(i + 1, 1, '4');
+            ++i;
+        }
+    }
+}
+
+std::string convertToPostfix(std::string& functionString)
 {
     std::stack<char> operators{};
     std::string result{};
@@ -87,7 +97,8 @@ std::string convertToPostfix(const std::string& functionString)
         }
         else if (isOperator(currentCharacter))
         {
-            while (!operators.empty() && getPriority(currentCharacter) <= getPriority(operators.top()))
+            while (!operators.empty() &&
+                    getPriority(currentCharacter) <= getPriority(operators.top()))
             {
                 result += operators.top();
                 operators.pop();
@@ -104,10 +115,8 @@ std::string convertToPostfix(const std::string& functionString)
     return result;
 }
 
-int evaluateFunction(const std::string& functionString, int currentX, int currentY,
-        int numberOfValues)
+int evaluateFunction(std::string& functionString, int currentX, int currentY, int numberOfValues)
 {
-    std::string postfixForm{ convertToPostfix(functionString) };
     std::stack<int> operands{};
 
     for (std::size_t i{ 0 }; i < functionString.size(); ++i)

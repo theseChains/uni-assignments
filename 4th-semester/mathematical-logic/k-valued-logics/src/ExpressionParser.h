@@ -10,8 +10,8 @@ bool isUnary(char operatorCharacter);
 int getPriority(char operatorCharacter);
 void processOperation(std::stack<int>& operands, char operatorCharacter, int numberOfValues);
 
-std::string convertToPostfix(const std::string& functionString);
-int evaluateFunction(const std::string& function, int currentX, int currentY,
-        int numberOfValues);
+void convertPowerToBinaryOperation(std::string& functionString);
+std::string convertToPostfix(std::string& functionString);
+int evaluateFunction(std::string& function, int currentX, int currentY, int numberOfValues);
 
 #endif

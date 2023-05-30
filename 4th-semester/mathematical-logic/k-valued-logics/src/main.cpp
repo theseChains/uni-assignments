@@ -5,8 +5,6 @@
 #include "UserInput.h"
 #include "ValueGetter.h"
 
-#include <iostream>
-
 int main()
 {
     int numberOfValues{ getNumber('k') };

@@ -79,13 +79,9 @@ std::string convertToPostfix(std::string& functionString)
             continue;
 
         if (std::isalnum(currentCharacter))
-        {
             result += currentCharacter;
-        }
         else if (currentCharacter == '(')
-        {
             operators.push(currentCharacter);
-        }
         else if (currentCharacter == ')')
         {
             while (operators.top() != '(')
@@ -123,9 +119,7 @@ int evaluateFunction(std::string& functionString, int currentX, int currentY, in
     {
         char currentCharacter{ functionString[i] };
         if (isOperator(currentCharacter))
-        {
             processOperation(operands, currentCharacter, numberOfValues);
-        }
         else if (std::isdigit(currentCharacter))
         {
             int number{ 0 };
@@ -135,13 +129,9 @@ int evaluateFunction(std::string& functionString, int currentX, int currentY, in
             operands.push(number);
         }
         else if (currentCharacter == 'x')
-        {
             operands.push(currentX);
-        }
         else if (currentCharacter == 'y')
-        {
             operands.push(currentY);
-        }
     }
 
     return operands.top();

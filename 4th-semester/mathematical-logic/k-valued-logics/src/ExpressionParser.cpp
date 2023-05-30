@@ -33,7 +33,6 @@ void processOperation(std::stack<int>& operands, char operatorCharacter, int num
 {
     if (operatorCharacter == '^')
     {
-        // the number 4
         int auxiliaryOperand{ operands.top() };
         operands.pop();
         int operand{ operands.top() };
@@ -75,7 +74,7 @@ std::string convertToPostfix(std::string& functionString)
     {
         char currentCharacter{ functionString[i] };
 
-        if (currentCharacter == ' ')
+        if (isDelimiter(currentCharacter))
             continue;
 
         if (std::isalnum(currentCharacter))

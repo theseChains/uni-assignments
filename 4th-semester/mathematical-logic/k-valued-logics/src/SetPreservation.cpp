@@ -46,12 +46,14 @@ bool setHasProperValues(const std::unordered_set<int>& set, int numberOfValues)
     return true;
 }
 
+[[deprecated("incorrect algorithm")]]
 void checkForSetPreservation(const std::vector<int>& values, int numberOfValues)
 {
     std::unordered_set<int> set{ getUserSet(numberOfValues) };
     bool preservesTheSet{ true };
     for (std::size_t i{ 0 }; i < values.size(); ++i)
     {
+        // this is not the right way to do this, the algorithm is a bit more complex
         if (set.find(values[i]) == set.end())
         {
             preservesTheSet = false;

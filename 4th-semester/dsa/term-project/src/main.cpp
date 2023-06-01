@@ -2,7 +2,8 @@
 
 int main()
 {
-	runMenuLoop();
+	Menu menu{};
+	menu.runMenuLoop();
 
 	return 0;
 }

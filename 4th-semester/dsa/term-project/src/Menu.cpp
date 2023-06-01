@@ -1,13 +1,11 @@
 #include "Menu.h"
 
-#include "Airline.h"
 #include "FileIO.h"
 
 #include <iostream>
 #include <limits>
-#include <string>
 
-void printMenu()
+void Menu::printMenu()
 {
 	std::cout << "\n1:  add new airport\n";
 	std::cout << "2:  find airport\n";
@@ -20,7 +18,7 @@ void printMenu()
 	std::cout << "-1: exit\n";
 }
 
-int getNumber()
+int Menu::getNumber()
 {
 	int number{};
 	std::cin >> number;
@@ -28,21 +26,21 @@ int getNumber()
 	return number;
 }
 
-std::string getString()
+std::string Menu::getString()
 {
 	std::string string{};
 	std::getline(std::cin, string);
 	return string;
 }
 
-void handleAirportAddition(Airline& airline)
+void Menu::handleAirportAddition(Airline& airline)
 {
 	std::cout << "\nenter airport name: ";
 	std::string name{ getString() };
 	airline.addAirport(name);
 }
 
-void handleAirportSearch(const Airline& airline)
+void Menu::handleAirportSearch(const Airline& airline)
 {
 	if (airline.isAirportListEmpty())
 	{
@@ -59,13 +57,13 @@ void handleAirportSearch(const Airline& airline)
 		std::cout << "\nairport " << name << " was not found\n";
 }
 
-void handleAirlinePrinting(const Airline& airline)
+void Menu::handleAirlinePrinting(const Airline& airline)
 {
 	std::cout << '\n';
 	airline.printAirports();
 }
 
-void handleAirportRemoval(Airline& airline)
+void Menu::handleAirportRemoval(Airline& airline)
 {
 	if (airline.isAirportListEmpty())
 	{
@@ -78,7 +76,7 @@ void handleAirportRemoval(Airline& airline)
 	airline.removeAirport(name);
 }
 
-void handleAirplaneAddition(Airline& airline)
+void Menu::handleAirplaneAddition(Airline& airline)
 {
 	if (airline.isAirportListEmpty())
 	{
@@ -107,7 +105,7 @@ void handleAirplaneAddition(Airline& airline)
 	currentAirport->addAirplane(airplaneModel, yearOfManufacture);
 }
 
-void handleAirplaneSearch(const Airline& airline)
+void Menu::handleAirplaneSearch(const Airline& airline)
 {
 	if (airline.isAirportListEmpty())
 	{
@@ -134,7 +132,7 @@ void handleAirplaneSearch(const Airline& airline)
 		std::cout << "airplane " << model << " was not found\n";
 }
 
-void handleAirplaneRemoval(Airline& airline)
+void Menu::handleAirplaneRemoval(Airline& airline)
 {
 	if (airline.isAirportListEmpty())
 	{
@@ -154,7 +152,7 @@ void handleAirplaneRemoval(Airline& airline)
 	}
 }
 
-void handleCommand(Airline& airline, int command)
+void Menu::handleCommand(Airline& airline, int command)
 {
 	switch (command)
 	{
@@ -185,7 +183,7 @@ void handleCommand(Airline& airline, int command)
 	}
 }
 
-void runMenuLoop()
+void Menu::runMenuLoop()
 {
 	Airline airline{};
 	if (!readAirlinesFromFile(airline, "input.txt"))

@@ -3,7 +3,14 @@
 
 #include "Airline.h"
 
-void writeAirlinesToFile(const Airline& airline, const std::string& filename);
-bool readAirlinesFromFile(Airline& airline, const std::string& filename);
+#include <string>
+
+class FileIO
+{
+public:
+	void writeAirlinesToFile(const Airline& airline, const std::string& filename);
+	bool readAirlinesFromFile(Airline& airline, const std::string& filename);
+
+};
 
 #endif

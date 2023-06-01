@@ -5,7 +5,7 @@
 #include <iostream>
 #include <string>
 
-void writeAirlinesToFile(const Airline& airline, const std::string& filename)
+void FileIO::writeAirlinesToFile(const Airline& airline, const std::string& filename)
 {
 	std::ofstream outputFile{ filename };
 
@@ -27,7 +27,7 @@ void writeAirlinesToFile(const Airline& airline, const std::string& filename)
 	}
 }
 
-bool readAirlinesFromFile(Airline& airline, const std::string& filename)
+bool FileIO::readAirlinesFromFile(Airline& airline, const std::string& filename)
 {
 	if (!std::filesystem::exists(filename))
 	{

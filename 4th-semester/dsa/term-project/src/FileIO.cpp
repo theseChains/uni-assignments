@@ -9,20 +9,24 @@ void FileIO::writeAirlinesToFile(const Airline& airline, const std::string& file
 {
 	std::ofstream outputFile{ filename };
 
-	outputFile << "Airline: " << airline.getName() << "\n\n";
+	outputFile << "Airline:" << airline.getName() << '\n';
 	Airport* currentAirport{ airline.getHead() };
 	while (currentAirport != nullptr)
 	{
-		outputFile << "airport: " << currentAirport->getName() << '\n';
+		outputFile << "Airport:" << currentAirport->getName() << '\n';
 
 		Airplane* currentAirplane{ currentAirport->getHead() };
+		outputFile << "Airplanes:";
 		while (currentAirplane != nullptr)
 		{
-			outputFile << "airplane: " << currentAirplane->getModel() << ' ' <<
-				currentAirplane->getYearOfManufacture() << '\n';
+			outputFile << currentAirplane->getModel() << ',' <<
+				currentAirplane->getYearOfManufacture();
+			if (currentAirplane->getNext() != nullptr)
+				outputFile << ';';
+
 			currentAirplane = currentAirplane->getNext();
 		}
-
+		outputFile << '\n';
 		currentAirport = currentAirport->getNext();
 	}
 }
@@ -76,20 +80,22 @@ bool FileIO::readAirlinesFromFile(Airline& airline, const std::string& filename)
 
 		std::string airplanesLine{ line.substr(pos + 1) };
 		std::size_t startOfInfo{ 0 };
-		std::size_t endOfInfo{ airplanesLine.find(',') };
+		std::size_t endOfInfo{ airplanesLine.find(';') };
 		while (true)
 		{
 			std::string airplaneInfo{ airplanesLine.substr(startOfInfo, endOfInfo) };
-			std::size_t endOfAirplaneModelInfo{ airplaneInfo.find(';') };
+			if (airplaneInfo.empty())
+				break;
+			std::size_t endOfAirplaneModelInfo{ airplaneInfo.find(',') };
 			std::string airplaneModel{ airplaneInfo.substr(startOfInfo, endOfAirplaneModelInfo) };
 			int airplaneYearOfManufacture{
 				std::stoi(airplaneInfo.substr(endOfAirplaneModelInfo + 1, endOfInfo)) };
 			airline.addAirplane(currentAirportName, airplaneModel, airplaneYearOfManufacture);
 
-			if (airplanesLine.find(',') == std::string::npos)
+			if (airplanesLine.find(';') == std::string::npos)
 				break;
-			airplanesLine = airplanesLine.substr(airplanesLine.find(',') + 1);
-			endOfInfo = airplanesLine.find(',');
+			airplanesLine = airplanesLine.substr(airplanesLine.find(';') + 1);
+			endOfInfo = airplanesLine.find(';');
 		}
 	}
 

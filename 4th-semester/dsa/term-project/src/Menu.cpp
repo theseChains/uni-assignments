@@ -11,10 +11,9 @@ void Menu::printMenu()
 	std::cout << "2:  find airport\n";
 	std::cout << "3:  print airline\n";
 	std::cout << "4:  remove an airport\n";
-	std::cout << "5:  write airlines to file\n";
-	std::cout << "6:  add new airplane to airport\n";
-	std::cout << "7:  find an airplane in an airport\n";
-	std::cout << "8:  remove an airplane from an airport\n";
+	std::cout << "5:  add new airplane to airport\n";
+	std::cout << "6:  find an airplane in an airport\n";
+	std::cout << "7:  remove an airplane from an airport\n";
 	std::cout << "-1: exit\n";
 }
 
@@ -169,15 +168,12 @@ void Menu::handleCommand(Airline& airline, int command)
 			handleAirportRemoval(airline);
 			break;
 		case 5:
-			writeAirlinesToFile(airline, "test.txt");
-			break;
-		case 6:
 			handleAirplaneAddition(airline);
 			break;
-		case 7:
+		case 6:
 			handleAirplaneSearch(airline);
 			break;
-		case 8:
+		case 7:
 			handleAirplaneRemoval(airline);
 			break;
 	}
@@ -186,9 +182,10 @@ void Menu::handleCommand(Airline& airline, int command)
 void Menu::runMenuLoop()
 {
 	Airline airline{};
-	if (!readAirlinesFromFile(airline, "input.txt"))
+	FileIO fileIO{};
+	if (!fileIO.readAirlinesFromFile(airline, "airline.txt"))
 	{
-		std::cerr << "invalid input\n";
+		std::cerr << "invalid input from file\n";
 		return;
 	}
 
@@ -199,4 +196,10 @@ void Menu::runMenuLoop()
 		command = getNumber();
 		handleCommand(airline, command);
 	}
+
+	std::cout << "save the structure to airline.txt? might overwrite the previous structure\n";
+	std::cout << "0 - don't save\n1 - save\n";
+	int choice{ getNumber() };
+	if (choice)
+		fileIO.writeAirlinesToFile(airline, "airline.txt");
 }

@@ -14,6 +14,8 @@ void Menu::printMenu()
 	std::cout << "5:  add new airplane to airport\n";
 	std::cout << "6:  find an airplane in an airport\n";
 	std::cout << "7:  remove an airplane from an airport\n";
+	std::cout << "8:  clear the airline structure\n";
+	std::cout << "9:  set a new name for the airline\n";
 	std::cout << "-1: exit\n";
 }
 
@@ -120,7 +122,7 @@ void Menu::handleAirplaneSearch(const Airline& airline)
 	{
 		if (current->findAirplane(model))
 		{
-			std::cout << "airplane " << model << " found in airport" << current->getName() << '\n';
+			std::cout << "airplane " << model << " found in airport " << current->getName() << '\n';
 			++numberOfFoundAirplanes;
 		}
 
@@ -151,6 +153,21 @@ void Menu::handleAirplaneRemoval(Airline& airline)
 	}
 }
 
+void Menu::handleAirlineClearing(Airline& airline)
+{
+	airline.~Airline();
+	std::cout << "\nenter the name for the new airline: ";
+	std::string airlineName{ getString() };
+	airline = Airline{ airlineName };
+}
+
+void Menu::handleAirlineNameChange(Airline& airline)
+{
+	std::cout << "\nenter the name for the new airline: ";
+	std::string airlineName{ getString() };
+	airline.setName(airlineName);
+}
+
 void Menu::handleCommand(Airline& airline, int command)
 {
 	switch (command)
@@ -176,6 +193,12 @@ void Menu::handleCommand(Airline& airline, int command)
 		case 7:
 			handleAirplaneRemoval(airline);
 			break;
+		case 8:
+			handleAirlineClearing(airline);
+			break;
+		case 9:
+			handleAirlineNameChange(airline);
+			break;
 	}
 }
 
@@ -185,10 +208,12 @@ void Menu::runMenuLoop()
 	FileIO fileIO{};
 	if (!fileIO.readAirlinesFromFile(airline, "airline.txt"))
 	{
-		std::cerr << "invalid input from file\n";
-		return;
+		std::cout << "enter the name of the airline: ";
+		std::string airlineName{ getString() };
+		airline.setName(airlineName);
 	}
 
+	airline.printAirports();
 	int command{};
 	while (command != -1)
 	{

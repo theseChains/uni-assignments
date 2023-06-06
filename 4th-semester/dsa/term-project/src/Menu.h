@@ -20,7 +20,6 @@ public:
 	void handleAirplaneAddition(Airline& airline);
 	void handleAirplaneSearch(const Airline& airline);
 	void handleAirplaneRemoval(Airline& airline);
-	void handleAirlineClearing(Airline& airline);
 	void handleAirlineNameChange(Airline& airline);
 	void handleCommand(Airline& airline, int command);
 };

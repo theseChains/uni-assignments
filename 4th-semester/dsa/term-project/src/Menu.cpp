@@ -14,17 +14,29 @@ void Menu::printMenu()
 	std::cout << "5:  add new airplane to airport\n";
 	std::cout << "6:  find an airplane in an airport\n";
 	std::cout << "7:  remove an airplane from an airport\n";
-	std::cout << "8:  clear the airline structure\n";
-	std::cout << "9:  set a new name for the airline\n";
+	std::cout << "8:  set a new name for the airline\n";
 	std::cout << "-1: exit\n";
 }
 
 int Menu::getNumber()
 {
-	int number{};
-	std::cin >> number;
-	std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-	return number;
+	while (true)
+	{
+		int number{};
+		std::cin >> number;
+
+		if (!std::cin)
+		{
+			std::cin.clear();
+			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+			std::cout << "\ninvalid input, try again: ";
+		}
+		else
+		{
+			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+			return number;
+		}
+	}
 }
 
 std::string Menu::getString()
@@ -116,21 +128,7 @@ void Menu::handleAirplaneSearch(const Airline& airline)
 
 	std::cout << "enter the model of the airplane: ";
 	std::string model{ getString() };
-	Airport* current{ airline.getHead() };
-	int numberOfFoundAirplanes{ 0 };
-	while (current != nullptr)
-	{
-		if (current->findAirplane(model))
-		{
-			std::cout << "airplane " << model << " found in airport " << current->getName() << '\n';
-			++numberOfFoundAirplanes;
-		}
-
-		current = current->getNext();
-	}
-
-	if (numberOfFoundAirplanes == 0)
-		std::cout << "airplane " << model << " was not found\n";
+	airline.findAirplane(model);
 }
 
 void Menu::handleAirplaneRemoval(Airline& airline)
@@ -143,22 +141,7 @@ void Menu::handleAirplaneRemoval(Airline& airline)
 
 	std::cout << "\nenter airplane name to remove: ";
 	std::string model{ getString() };
-	Airport* current{ airline.getHead() };
-	while (current != nullptr)
-	{
-		if (current->removeAirplane(model))
-			std::cout << "removed airplane " << model << " from airport "
-				<< current->getName() << '\n';
-		current = current->getNext();
-	}
-}
-
-void Menu::handleAirlineClearing(Airline& airline)
-{
-	airline.~Airline();
-	std::cout << "\nenter the name for the new airline: ";
-	std::string airlineName{ getString() };
-	airline = Airline{ airlineName };
+	airline.deleteAirplane(model);
 }
 
 void Menu::handleAirlineNameChange(Airline& airline)
@@ -194,9 +177,6 @@ void Menu::handleCommand(Airline& airline, int command)
 			handleAirplaneRemoval(airline);
 			break;
 		case 8:
-			handleAirlineClearing(airline);
-			break;
-		case 9:
 			handleAirlineNameChange(airline);
 			break;
 	}

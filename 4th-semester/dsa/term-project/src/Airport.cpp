@@ -91,16 +91,10 @@ bool Airport::findAirplane(const std::string& airplaneModel)
 bool Airport::removeAirplane(const std::string& airplaneModel)
 {
 	if (m_airplaneHead == nullptr)
-	{
-		std::cout << "\nthe airplane list is empty\n";
 		return false;
-	}
 
 	if (!findAirplane(airplaneModel))
-	{
-		// std::cout << "\ncouldn't find the airplane \"" << airplaneModel << "\"\n";
 		return false;
-	}
 
 	Airplane* current{ m_airplaneHead };
 	while (current->getModel() != airplaneModel)

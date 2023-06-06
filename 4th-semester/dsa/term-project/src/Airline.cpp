@@ -1,6 +1,7 @@
 #include "Airline.h"
 
 #include <iostream>
+#include <iomanip>
 
 Airline::Airline() : m_name{ "Airline" }, m_airportHead{ nullptr }
 {
@@ -120,18 +121,21 @@ void Airline::removeAirport(const std::string& airportName)
 
 void Airline::printAirports() const
 {
+	std::cout << "airline: " << m_name << '\n';
 	if (isAirportListEmpty())
 	{
 		std::cout << "\nthe airport list is empty\n";
 		return;
 	}
 
+	std::cout << std::string(50, '-') << '\n';
 	Airport* current{ m_airportHead };
 	while (current != nullptr)
 	{
 		std::cout << "airport: " << current->getName() << '\n';
 		current->printAirplanes();
 		current = current->getNext();
+		std::cout << std::string(50, '-') << '\n';
 	}
 }
 
@@ -149,6 +153,45 @@ void Airline::addAirplane(const std::string& airportName, const std::string& air
 	}
 
 	current->addAirplane(airplaneModel, yearOfManufacture);
+}
+
+void Airline::findAirplane(const std::string& airplaneModel) const
+{
+	Airport* current{ m_airportHead };
+	int numberOfFoundAirplanes{ 0 };
+	while (current != nullptr)
+	{
+		if (current->findAirplane(airplaneModel))
+		{
+			std::cout << "airplane " << airplaneModel << " found in airport " << current->getName()
+				<< '\n';
+			++numberOfFoundAirplanes;
+		}
+
+		current = current->getNext();
+	}
+
+	if (numberOfFoundAirplanes == 0)
+		std::cout << "airplane " << airplaneModel << " was not found\n";
+}
+
+void Airline::deleteAirplane(const std::string& airplaneModel)
+{
+	Airport* current{ m_airportHead };
+	bool removed{ false };
+	while (current != nullptr)
+	{
+		if (current->removeAirplane(airplaneModel))
+		{
+			std::cout << "removed airplane " << airplaneModel << " from airport "
+				<< current->getName() << '\n';
+			removed = true;
+		}
+		current = current->getNext();
+	}
+
+	if (!removed)
+		std::cout << "\ncouldn't find airplane " << airplaneModel << " in the airport list\n";
 }
 
 void Airline::setName(const std::string& name)

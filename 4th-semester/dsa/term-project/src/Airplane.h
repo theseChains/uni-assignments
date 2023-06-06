@@ -15,6 +15,7 @@ private:
 public:
 	Airplane();
 	Airplane(const std::string& model, int yearOfManufacture);
+	~Airplane() = default;
 
 	void setModel(const std::string& model);
 	void setYearOfManufacture(int yearOfManufacture);

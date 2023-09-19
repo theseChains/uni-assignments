@@ -7,7 +7,8 @@
 
 void printRelaxationMethodTableHeader(std::ofstream& outputFile)
 {
-    outputFile << "k" << ',' << "x_k" << ',' << "y_k" << ',' << "z_k" << ',' <<
+    outputFile << "Метод релаксации\n";
+    outputFile << ",k" << ',' << "x_k" << ',' << "y_k" << ',' << "z_k" << ',' <<
         "R_x(k)" << ',' << "R_y(k)" << ',' << "R_z(k)" << ',' << "max|R(k)|\n";
 }
 
@@ -58,6 +59,10 @@ void runRelaxationMethodLoop(const double epsilon, std::ofstream& outputFile,
         }
     }
 
+    outputFile << "Найденные приближённые корни:\n";
+    outputFile << "x = " << x << '\n';
+    outputFile << "y = " << y << '\n';
+    outputFile << "z = " << z << '\n';
     outputFile << '\n';
 }
 

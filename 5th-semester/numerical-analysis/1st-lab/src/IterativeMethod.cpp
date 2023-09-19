@@ -5,6 +5,7 @@
 
 void printIterativeMethodTableHeader(std::ofstream& outputFile)
 {
+    outputFile << "Метод простых итераций\n";
     outputFile << "k" << ',' << "x_k" << ',' << "y_k" << ',' << "z_k" << ',' <<
         "x_k+1" << ',' << "y_k+1" << ',' << "z_k+1" << ',' << "|x_k+1 - x_k|" <<
         ',' << "|y_k+1 - y_k|" << ',' << "|z_k+1 - z_k|" << ',' << "sum\n";
@@ -41,6 +42,10 @@ void runIterativeMethodLoop(const double epsilon, std::ofstream& outputFile,
             keepGoing = false;
     }
 
+    outputFile << "Найденные приближённые корни:\n";
+    outputFile << "x = " << lastX << '\n';
+    outputFile << "y = " << lastY << '\n';
+    outputFile << "z = " << lastZ << '\n';
     outputFile << '\n';
 }
 

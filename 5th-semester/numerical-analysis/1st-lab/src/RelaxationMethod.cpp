@@ -5,11 +5,12 @@
 
 #include <algorithm>
 
-void printRelaxationMethodTableHeader(std::ofstream& outputFile)
+void printRelaxationMethodTableHeader(std::ofstream& outputFile, const double epsilon)
 {
     outputFile << "Метод релаксации\n";
-    outputFile << ",k" << ',' << "x_k" << ',' << "y_k" << ',' << "z_k" << ',' <<
-        "R_x(k)" << ',' << "R_y(k)" << ',' << "R_z(k)" << ',' << "max|R(k)|\n";
+    outputFile << "точность: " << epsilon << ",k" << ',' << "x_k" << ',' <<
+        "y_k" << ',' << "z_k" << ',' << "R_x(k)" << ',' << "R_y(k)" << ',' <<
+        "R_z(k)" << ',' << "max|R(k)|\n";
 }
 
 double getMaxResidualValue(double residualX, double residualY, double residualZ)
@@ -29,7 +30,7 @@ double getMaxResidualValue(double residualX, double residualY, double residualZ)
 void runRelaxationMethodLoop(const double epsilon, std::ofstream& outputFile,
         double x, double y, double z)
 {
-    int currentIteration{ 1 };
+    int currentIteration{ 0 };
     bool keepGoing{ true };
     while (keepGoing)
     {
@@ -40,7 +41,7 @@ void runRelaxationMethodLoop(const double epsilon, std::ofstream& outputFile,
         double maxResidualAbsoluteValue{
             getMaxResidualValue(residualX, residualY, residualZ) };
 
-        outputFile << currentIteration << ',' << x << ',' << y << ',' << z <<
+        outputFile << ',' << currentIteration << ',' << x << ',' << y << ',' << z <<
             ',' << residualX << ',' << residualY << ',' << residualZ << ',' <<
             maxResidualAbsoluteValue << '\n';
 
@@ -69,8 +70,8 @@ void runRelaxationMethodLoop(const double epsilon, std::ofstream& outputFile,
 void runRelaxationMethod(std::ofstream& outputFile, double x, double y,
         double z)
 {
-    printRelaxationMethodTableHeader(outputFile);
+    printRelaxationMethodTableHeader(outputFile, constants::firstEpsilon);
     runRelaxationMethodLoop(constants::firstEpsilon, outputFile, x, y, z);
-    printRelaxationMethodTableHeader(outputFile);
+    printRelaxationMethodTableHeader(outputFile, constants::secondEpsilon);
     runRelaxationMethodLoop(constants::secondEpsilon, outputFile, x, y, z);
 }

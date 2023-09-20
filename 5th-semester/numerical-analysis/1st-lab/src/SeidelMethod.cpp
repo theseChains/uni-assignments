@@ -3,12 +3,13 @@
 #include "Calculations.hpp"
 #include "Constants.hpp"
 
-void printSeidelMethodTableHeader(std::ofstream& outputFile)
+void printSeidelMethodTableHeader(std::ofstream& outputFile, const double epsilon)
 {
     outputFile << "Метод Зейделя\n";
-    outputFile << "k" << ',' << "x_k" << ',' << "y_k" << ',' << "z_k" << ',' <<
-        "x_k+1" << ',' << "y_k+1" << ',' << "z_k+1" << ',' << "|x_k+1 - x_k|" <<
-        ',' << "|y_k+1 - y_k|" << ',' << "|z_k+1 - z_k|" << ',' << "sum\n";
+    outputFile << "точность: " << epsilon << ",k + 1" << ',' << "x_k" << ',' <<
+        "y_k" << ',' << "z_k" << ',' << "x_k+1" << ',' << "y_k+1" << ',' <<
+        "z_k+1" << ',' << "|x_k+1 - x_k|" << ',' << "|y_k+1 - y_k|" << ',' <<
+        "|z_k+1 - z_k|" << ',' << "sum\n";
 }
 
 void runSeidelMethodLoop(const double epsilon, std::ofstream& outputFile,
@@ -28,7 +29,7 @@ void runSeidelMethodLoop(const double epsilon, std::ofstream& outputFile,
 
         double differenceSum{ differenceX + differenceY + differenceZ };
 
-        outputFile << currentIteration << ',' << lastX << ',' << lastY << ',' <<
+        outputFile << ',' << currentIteration << ',' << lastX << ',' << lastY << ',' <<
             lastZ << ',' << nextX << ',' << nextY << ',' << nextZ << ',' <<
             differenceX << ',' << differenceY << ',' << differenceZ << ',' <<
             differenceSum << '\n';
@@ -52,10 +53,10 @@ void runSeidelMethodLoop(const double epsilon, std::ofstream& outputFile,
 void runSeidelMethod(std::ofstream& outputFile, double lastX, double lastY,
         double lastZ)
 {
-    printSeidelMethodTableHeader(outputFile);
+    printSeidelMethodTableHeader(outputFile, constants::firstEpsilon);
     runSeidelMethodLoop(constants::firstEpsilon, outputFile,
                            lastX, lastY, lastZ);
-    printSeidelMethodTableHeader(outputFile);
+    printSeidelMethodTableHeader(outputFile, constants::secondEpsilon);
     runSeidelMethodLoop(constants::secondEpsilon, outputFile,
                            lastX, lastY, lastZ);
 }

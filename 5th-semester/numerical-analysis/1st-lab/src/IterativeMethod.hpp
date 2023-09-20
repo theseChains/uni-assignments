@@ -3,7 +3,7 @@
 
 #include <fstream>
 
-void printIterativeMethodTableHeader(std::ofstream& outputFile);
+void printIterativeMethodTableHeader(std::ofstream& outputFile, const double epsilon);
 void runIterativeMethodLoop(const double epsilon, std::ofstream& outputFile,
         double lastX, double lastY, double lastZ);
 void runIterativeMethod(std::ofstream& outputFile, double lastX, double lastY,

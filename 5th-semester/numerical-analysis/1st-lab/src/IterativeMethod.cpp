@@ -3,12 +3,13 @@
 #include "Calculations.hpp"
 #include "Constants.hpp"
 
-void printIterativeMethodTableHeader(std::ofstream& outputFile)
+void printIterativeMethodTableHeader(std::ofstream& outputFile, const double epsilon)
 {
     outputFile << "Метод простых итераций\n";
-    outputFile << "k" << ',' << "x_k" << ',' << "y_k" << ',' << "z_k" << ',' <<
-        "x_k+1" << ',' << "y_k+1" << ',' << "z_k+1" << ',' << "|x_k+1 - x_k|" <<
-        ',' << "|y_k+1 - y_k|" << ',' << "|z_k+1 - z_k|" << ',' << "sum\n";
+    outputFile << "точность: " << epsilon << ",k + 1" << ',' << "x_k" << ',' <<
+        "y_k" << ',' << "z_k" << ',' << "x_k+1" << ',' << "y_k+1" << ',' <<
+        "z_k+1" << ',' << "|x_k+1 - x_k|" << ',' << "|y_k+1 - y_k|" << ',' <<
+        "|z_k+1 - z_k|" << ',' << "sum\n";
 }
 
 void runIterativeMethodLoop(const double epsilon, std::ofstream& outputFile,
@@ -28,7 +29,7 @@ void runIterativeMethodLoop(const double epsilon, std::ofstream& outputFile,
 
         double differenceSum{ differenceX + differenceY + differenceZ };
 
-        outputFile << currentIteration << ',' << lastX << ',' << lastY << ',' <<
+        outputFile << ',' << currentIteration << ',' << lastX << ',' << lastY << ',' <<
             lastZ << ',' << nextX << ',' << nextY << ',' << nextZ << ',' <<
             differenceX << ',' << differenceY << ',' << differenceZ << ',' <<
             differenceSum << '\n';
@@ -51,10 +52,10 @@ void runIterativeMethodLoop(const double epsilon, std::ofstream& outputFile,
 
 void runIterativeMethod(std::ofstream& outputFile, double lastX, double lastY, double lastZ)
 {
-    printIterativeMethodTableHeader(outputFile);
+    printIterativeMethodTableHeader(outputFile, constants::firstEpsilon);
     runIterativeMethodLoop(constants::firstEpsilon, outputFile,
                            lastX, lastY, lastZ);
-    printIterativeMethodTableHeader(outputFile);
+    printIterativeMethodTableHeader(outputFile, constants::secondEpsilon);
     runIterativeMethodLoop(constants::secondEpsilon, outputFile,
                            lastX, lastY, lastZ);
 }

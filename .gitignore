@@ -5,3 +5,4 @@ include/
 .ccls-cache/
 compile_commands.json
 .cache/
+.clang-format

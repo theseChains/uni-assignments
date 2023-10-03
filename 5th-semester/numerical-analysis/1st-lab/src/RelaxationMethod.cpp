@@ -1,16 +1,17 @@
 #include "RelaxationMethod.hpp"
 
+#include <algorithm>
+
 #include "Calculations.hpp"
 #include "Constants.hpp"
 
-#include <algorithm>
-
-void printRelaxationMethodTableHeader(std::ofstream& outputFile, const double epsilon)
+void printRelaxationMethodTableHeader(std::ofstream& outputFile,
+                                      const double epsilon)
 {
     outputFile << "Метод релаксации\n";
-    outputFile << "точность: " << epsilon << ",k" << ',' << "x_k" << ',' <<
-        "y_k" << ',' << "z_k" << ',' << "R_x(k)" << ',' << "R_y(k)" << ',' <<
-        "R_z(k)" << ',' << "max|R(k)|\n";
+    outputFile << "точность: " << epsilon << ",k" << ',' << "x_k" << ','
+               << "y_k" << ',' << "z_k" << ',' << "R_x(k)" << ',' << "R_y(k)"
+               << ',' << "R_z(k)" << ',' << "max|R(k)|\n";
 }
 
 double getMaxResidualValue(double residualX, double residualY, double residualZ)
@@ -19,8 +20,8 @@ double getMaxResidualValue(double residualX, double residualY, double residualZ)
     double absoluteResidualY{ std::abs(residualY) };
     double absoluteResidualZ{ std::abs(residualZ) };
 
-    double maxResidualAbsoluteValue{
-        std::max(absoluteResidualX, absoluteResidualY) };
+    double maxResidualAbsoluteValue{ std::max(absoluteResidualX,
+                                              absoluteResidualY) };
     maxResidualAbsoluteValue =
         std::max(maxResidualAbsoluteValue, absoluteResidualZ);
 
@@ -28,7 +29,7 @@ double getMaxResidualValue(double residualX, double residualY, double residualZ)
 }
 
 void runRelaxationMethodLoop(const double epsilon, std::ofstream& outputFile,
-        double x, double y, double z)
+                             double x, double y, double z)
 {
     int currentIteration{ 0 };
     bool keepGoing{ true };
@@ -38,12 +39,12 @@ void runRelaxationMethodLoop(const double epsilon, std::ofstream& outputFile,
         double residualY{ getResidualY(x, y, z) };
         double residualZ{ getResidualZ(x, y, z) };
 
-        double maxResidualAbsoluteValue{
-            getMaxResidualValue(residualX, residualY, residualZ) };
+        double maxResidualAbsoluteValue{ getMaxResidualValue(
+            residualX, residualY, residualZ) };
 
-        outputFile << ',' << currentIteration << ',' << x << ',' << y << ',' << z <<
-            ',' << residualX << ',' << residualY << ',' << residualZ << ',' <<
-            maxResidualAbsoluteValue << '\n';
+        outputFile << ',' << currentIteration << ',' << x << ',' << y << ','
+                   << z << ',' << residualX << ',' << residualY << ','
+                   << residualZ << ',' << maxResidualAbsoluteValue << '\n';
 
         ++currentIteration;
         if (std::abs(residualX) == maxResidualAbsoluteValue)
@@ -68,7 +69,7 @@ void runRelaxationMethodLoop(const double epsilon, std::ofstream& outputFile,
 }
 
 void runRelaxationMethod(std::ofstream& outputFile, double x, double y,
-        double z)
+                         double z)
 {
     printRelaxationMethodTableHeader(outputFile, constants::firstEpsilon);
     runRelaxationMethodLoop(constants::firstEpsilon, outputFile, x, y, z);

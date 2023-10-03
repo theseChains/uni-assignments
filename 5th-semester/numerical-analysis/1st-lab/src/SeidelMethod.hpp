@@ -3,10 +3,11 @@
 
 #include <fstream>
 
-void printSeidelMethodTableHeader(std::ofstream& outputFile, const double epsilon);
+void printSeidelMethodTableHeader(std::ofstream& outputFile,
+                                  const double epsilon);
 void runSeidelMethodLoop(const double epsilon, std::ofstream& outputFile,
-        double lastX, double lastY, double lastZ);
+                         double lastX, double lastY, double lastZ);
 void runSeidelMethod(std::ofstream& outputFile, double lastX, double lastY,
-        double lastZ);
+                     double lastZ);
 
 #endif

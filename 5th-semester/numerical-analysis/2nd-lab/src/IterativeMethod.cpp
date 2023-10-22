@@ -3,12 +3,14 @@
 #include "Calculations.hpp"
 #include "Constants.hpp"
 
+#include <iostream>
+
 void printIterativeMethodTableHeader(std::ofstream& outputFile,
                                      const double epsilon)
 {
     outputFile << "Метод простых итераций\n";
     outputFile << "точность: " << epsilon << ",k + 1" << ',' << "x_k" << ','
-               << "x_k+1" << ',' << "|x_k+1 - x_k|" << ',' << "|f(x_k+1)\n";
+               << "x_k+1" << ',' << "|x_k+1 - x_k|" << ',' << "|f(x_k+1)|\n";
 }
 
 void runIterativeMethodLoop(const double epsilon, const double delta,
@@ -26,8 +28,9 @@ void runIterativeMethodLoop(const double epsilon, const double delta,
                    << ',' << xDifference << ',' << functionValue << '\n';
 
         lastX = nextX;
+        ++currentIteration;
 
-        if (xDifference <= epsilon || functionValue <= delta)
+        if (xDifference <= epsilon && functionValue <= delta)
             keepGoing = false;
     }
 

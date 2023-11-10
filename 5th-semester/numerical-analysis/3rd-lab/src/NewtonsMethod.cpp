@@ -20,8 +20,16 @@ void runNewtonsMethodLoop(const double epsilon, const double delta,
 {
     int currentIteration{ 1 };
     bool keepGoing{ true };
+    bool foundMistake{ false };
     while (keepGoing)
     {
+        if (2 * lastX == 1)
+        {
+            foundMistake = true;
+            outputFile << "Знаменатель обращается в 0\n";
+            break;
+        }
+
         double nextX{ getNextXForIterativeMethod(lastX, lastY) };
         double nextY{ getNextYForIterativeMethod(lastX, lastY) };
         double xDifference{ std::abs(nextX - lastX) };
@@ -45,6 +53,14 @@ void runNewtonsMethodLoop(const double epsilon, const double delta,
         {
             keepGoing = false;
         }
+    }
+
+    if (!foundMistake)
+    {
+        outputFile << "Найденные корни:\n";
+        outputFile << "x = " << lastX << '\n';
+        outputFile << "y = " << lastY << '\n';
+        outputFile << '\n';
     }
 }
 

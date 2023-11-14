@@ -23,15 +23,27 @@ int main()
         }
     }
 
-    outputFile << "x,y,PI(x),q\n";
+    outputFile << "x,y(x),PI(x),|y(x)-PI(x)|,q,PII(x),|y(x)-PII(x)|,t\n";
     for (int i{ 0 }; i < 3; ++i)
     {
         double functionValue{ getFunctionValue(inputValues[i]) };
+
         double q{ getQ(inputValues[i]) };
-        double interpolationFormulaValue{
+        double firstInterpolationFormulaValue{
             calculateFirstNewtonsInterpolationFormula(inputValues[i]) };
+        double firstYDifference{
+            std::abs(functionValue - firstInterpolationFormulaValue) };
+
+        double t{ getT(inputValues[i]) };
+        double secondInterpolationFormulaValue{
+            calculateFirstNewtonsInterpolationFormula(inputValues[i]) };
+        double secondYDifference{
+            std::abs(functionValue - secondInterpolationFormulaValue) };
+
         outputFile << inputValues[i] << ',' << functionValue << ',' <<
-            interpolationFormulaValue << ',' << q << '\n';
+            firstInterpolationFormulaValue << ',' << firstYDifference << ',' <<
+            q << ',' << secondInterpolationFormulaValue << ',' <<
+            secondYDifference << ',' << t << '\n';
     }
 
     return 0;

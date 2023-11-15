@@ -1,9 +1,10 @@
 #include <array>
 #include <fstream>
+#include <iomanip>
 #include <iostream>
 
-#include "Constants.hpp"
 #include "Calculations.hpp"
+#include "Constants.hpp"
 
 int main()
 {
@@ -15,7 +16,7 @@ int main()
         std::cout << "x" << i << " = ";
         std::cin >> inputValues[i];
         while (inputValues[i] > constants::rightEndOfRange ||
-            inputValues[i] < constants::leftEndOfRange)
+               inputValues[i] < constants::leftEndOfRange)
         {
             std::cout << "Значения должны принадлежать отрезку [2.6; 2.85]\n";
             std::cout << "x" << i << " = ";
@@ -23,28 +24,68 @@ int main()
         }
     }
 
-    outputFile << "x,y(x),PI(x),|y(x)-PI(x)|,q,PII(x),|y(x)-PII(x)|,t\n";
+    outputFile << "x,y(x),PI(x),|y(x)-PI(x)|,q,PII(x),|y(x)-PII(x)|,t,L(x),|y("
+                  "x) - L(x)|\n";
+    outputFile << std::setprecision(15);
+    outputFile << std::fixed;
     for (int i{ 0 }; i < 3; ++i)
     {
         double functionValue{ getFunctionValue(inputValues[i]) };
 
         double q{ getQ(inputValues[i]) };
         double firstInterpolationFormulaValue{
-            calculateFirstNewtonsInterpolationFormula(inputValues[i]) };
-        double firstYDifference{
-            std::abs(functionValue - firstInterpolationFormulaValue) };
+            calculateFirstNewtonsInterpolationFormula(inputValues[i])
+        };
+        double firstYDifference{ std::abs(functionValue -
+                                          firstInterpolationFormulaValue) };
 
         double t{ getT(inputValues[i]) };
         double secondInterpolationFormulaValue{
-            calculateFirstNewtonsInterpolationFormula(inputValues[i]) };
-        double secondYDifference{
-            std::abs(functionValue - secondInterpolationFormulaValue) };
+            calculateFirstNewtonsInterpolationFormula(inputValues[i])
+        };
+        double secondYDifference{ std::abs(functionValue -
+                                           secondInterpolationFormulaValue) };
 
-        outputFile << inputValues[i] << ',' << functionValue << ',' <<
-            firstInterpolationFormulaValue << ',' << firstYDifference << ',' <<
-            q << ',' << secondInterpolationFormulaValue << ',' <<
-            secondYDifference << ',' << t << '\n';
+        double lagrangeInterpolationFormulaValue{
+            calculateLagrangeInterpolationFormula(inputValues[i])
+        };
+        double thirdYDifference{ std::abs(functionValue -
+                                          lagrangeInterpolationFormulaValue) };
+
+        outputFile << inputValues[i] << ',' << functionValue << ','
+                   << firstInterpolationFormulaValue << ',' << firstYDifference
+                   << ',' << q << ',' << secondInterpolationFormulaValue << ','
+                   << secondYDifference << ',' << t << ','
+                   << lagrangeInterpolationFormulaValue << ','
+                   << thirdYDifference << '\n';
     }
 
+    outputFile << "x,y'(x),(PI(x))',x0,q,|y'(x)-(PI(x))'|,(PII(x))',xn,t,|y'(x)-(PII(x))'|\n";
+    for (int i{ 0 }; i < 3; ++i)
+    {
+        double derivativeValue{ getDerivativeValue(inputValues[i]) };
+
+        double x0{ getClosestX0(inputValues[i]) };
+        double q{ (inputValues[i] - x0) / 0.05 };
+        double derivativeFirstInterpolationFormula{
+            calculateDerivativeFirstNewtonsInterpolation(inputValues[i])
+        };
+        double firstDerivativeDifference{ std::abs(derivativeValue -
+                                          derivativeFirstInterpolationFormula) };
+
+        double xn{ getClosestXn(inputValues[i]) };
+        double t{ (inputValues[i] - xn) / 0.05 };
+        double derivativeSecondInterpolationFormula{
+            calculateFirstNewtonsInterpolationFormula(inputValues[i])
+        };
+        double secondDerivativeDifference{ std::abs(derivativeValue -
+                                           derivativeSecondInterpolationFormula) };
+
+        outputFile << inputValues[i] << ',' << derivativeValue << ','
+                   << derivativeFirstInterpolationFormula << ','
+                   << x0 << ',' << q << ',' << firstDerivativeDifference
+                   << ',' << derivativeSecondInterpolationFormula << ','
+                   << xn << ',' << t << ',' << secondDerivativeDifference << '\n';
+    }
     return 0;
 }

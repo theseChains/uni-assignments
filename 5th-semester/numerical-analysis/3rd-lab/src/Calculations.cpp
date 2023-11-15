@@ -35,50 +35,38 @@ double getDelta(double x)
 
 double getNextXForIterativeMethod(double lastX, double lastY)
 {
-    double firstFunctionValue{ getFirstFunctionValue(lastX, lastY) };
-    double secondFunctionValue{ getSecondFunctionValue(lastX, lastY) };
-    return (lastX + getAlpha(lastX) * firstFunctionValue +
-            getBeta(lastX) * secondFunctionValue);
+    return (lastX + (-1 / (2 * lastX - 1)) * (std::pow(lastX, 2) + lastY - 6) +
+            (1 / (2 * lastX - 1)) * (lastX + lastY - 4));
 }
 
 double getNextYForIterativeMethod(double lastX, double lastY)
 {
-    double firstFunctionValue{ getFirstFunctionValue(lastX, lastY) };
-    double secondFunctionValue{ getSecondFunctionValue(lastX, lastY) };
-    return (lastY + getGamma(lastX) * firstFunctionValue +
-            getDelta(lastX) * secondFunctionValue);
+    return (lastY + (1 / (2 * lastX - 1)) * (std::pow(lastX, 2) + lastY - 6) +
+            (-2 * lastX / (2 * lastX - 1)) * (lastX + lastY - 4));
 }
 
 double getNextXForNewtonsMethod(double lastX, double lastY)
 {
-    double firstFunctionValue{ getFirstFunctionValue(lastX, lastY) };
-    double secondFunctionValue{ getSecondFunctionValue(lastX, lastY) };
-    return (lastX + getAlpha(lastX) * firstFunctionValue +
-            getBeta(lastX) * secondFunctionValue);
+    return (lastX - ((1 / (2 * lastX - 1)) * (std::pow(lastX, 2) + lastY - 6) -
+            (1 / (2 * lastX - 1)) * (lastX + lastY - 4)));
 }
 
 double getNextYForNewtonsMethod(double lastX, double lastY)
 {
-    double firstFunctionValue{ getFirstFunctionValue(lastX, lastY) };
-    double secondFunctionValue{ getSecondFunctionValue(lastX, lastY) };
-    return (lastY + getGamma(lastX) * firstFunctionValue +
-            getDelta(lastX) * secondFunctionValue);
+    return (lastY - ((-1 / (2 * lastX - 1)) * (std::pow(lastX, 2) + lastY - 6) +
+            (2 * lastX / (2 * lastX - 1)) * (lastX + lastY - 4)));
 }
 
 double getNextXForModifiedNewtonsMethod(double lastX, double lastY,
                                         double firstX)
 {
-    double firstFunctionValue{ getFirstFunctionValue(lastX, lastY) };
-    double secondFunctionValue{ getSecondFunctionValue(lastX, lastY) };
-    return (lastX + getAlpha(firstX) * firstFunctionValue +
-            getBeta(firstX) * secondFunctionValue);
+    return (lastX - ((1 / (2 * firstX - 1)) * (std::pow(lastX, 2) + lastY - 6) -
+            (1 / (2 * firstX - 1)) * (lastX + lastY - 4)));
 }
 
 double getNextYForModifiedNewtonsMethod(double lastX, double lastY,
                                         double firstX)
 {
-    double firstFunctionValue{ getFirstFunctionValue(lastX, lastY) };
-    double secondFunctionValue{ getSecondFunctionValue(lastX, lastY) };
-    return (lastY + getGamma(firstX) * firstFunctionValue +
-            getDelta(firstX) * secondFunctionValue);
+    return (lastY - ((-1 / (2 * firstX - 1)) * (std::pow(lastX, 2) + lastY - 6) +
+            (2 * firstX / (2 * firstX - 1)) * (lastX + lastY - 4)));
 }

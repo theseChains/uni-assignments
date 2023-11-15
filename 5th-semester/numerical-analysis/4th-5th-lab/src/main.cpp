@@ -68,16 +68,14 @@ int main()
         double x0{ getClosestX0(inputValues[i]) };
         double q{ (inputValues[i] - x0) / 0.05 };
         double derivativeFirstInterpolationFormula{
-            calculateDerivativeFirstNewtonsInterpolation(inputValues[i])
-        };
+            calculateDerivativeFirstNewtonsInterpolation(inputValues[i]) };
         double firstDerivativeDifference{ std::abs(derivativeValue -
                                           derivativeFirstInterpolationFormula) };
 
         double xn{ getClosestXn(inputValues[i]) };
         double t{ (inputValues[i] - xn) / 0.05 };
         double derivativeSecondInterpolationFormula{
-            calculateFirstNewtonsInterpolationFormula(inputValues[i])
-        };
+            calculateDerivativeSecondNewtonsInterpolation(inputValues[i]) };
         double secondDerivativeDifference{ std::abs(derivativeValue -
                                            derivativeSecondInterpolationFormula) };
 

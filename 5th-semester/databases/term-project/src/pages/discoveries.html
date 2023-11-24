@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Discoveries - Your Astronomy Site</title>
+  <link rel="stylesheet" href="../assets/css/discoveries.css">
+</head>
+<body>
+
+  <header>
+    <h1 class="site-name">Your Astronomy Site</h1>
+    <div class="search-bar">
+      <input type="text" placeholder="Search...">
+      <button type="submit">Search</button>
+    </div>
+  </header>
+
+  <nav>
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="discoveries.html">Discoveries</a></li>
+    </ul>
+  </nav>
+
+  <main>
+    <h2>Discoveries</h2>
+
+    <form>
+      <label for="topic">Topic:</label>
+      <select id="topic" name="topic">
+        <option value="all">All Topics</option>
+        <option value="exoplanets">Exoplanets</option>
+        <option value="black-holes">Black Holes</option>
+        <!-- Add more topics as needed -->
+      </select>
+
+      <label for="year">Year:</label>
+      <input type="number" id="year" name="year" min="1800" max="2023">
+
+      <label for="keyword">Keyword:</label>
+      <input type="text" id="keyword" name="keyword">
+
+      <button type="submit">Filter</button>
+    </form>
+
+    <article class="discovery-article">
+      <h3>Discovery Title</h3>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam eget lacus at velit cursus luctus quis eu elit...</p>
+      <button class="continue-reading-btn">Continue Reading</button>
+    </article>
+    <!-- Discovery articles go here -->
+
+  </main>
+
+  <footer>
+    <p>&copy; 2023 Your Astronomy Site. All rights reserved.</p>
+  </footer>
+
+</body>
+</html>

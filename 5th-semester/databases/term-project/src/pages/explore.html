@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Explore - Your Astronomy Site</title>
+  <link rel="stylesheet" href="../assets/css/explore.css">
+</head>
+<body>
+
+  <header>
+    <h1 class="site-name">Your Astronomy Site</h1>
+    <div class="search-bar">
+      <input type="text" placeholder="Search...">
+      <button type="submit">Search</button>
+    </div>
+  </header>
+
+  <nav>
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="explore.html">Explore</a></li>
+    </ul>
+  </nav>
+
+  <main>
+    <form class="filter-form">
+      <label for="topic">Topic:</label>
+      <select id="topic" name="topic">
+        <option value="all">All Topics</option>
+        <option value="stars">Stars</option>
+        <option value="galaxies">Galaxies</option>
+        <!-- Add more topics as needed -->
+      </select>
+
+      <div class="search-bar">
+        <input type="text" id="search" name="search" placeholder="Search...">
+        <button type="submit">Search</button>
+      </div>
+    </form>
+
+    <section class="explore-items">
+      <div class="explore-item">
+        <img src="star.jpg" alt="Star Image">
+        <h2>Alpha Centauri</h2>
+        <p class="object-type">Star</p>
+      </div>
+
+      <div class="explore-item">
+        <img src="galaxy.jpg" alt="Galaxy Image">
+        <h2>Andromeda Galaxy</h2>
+        <p class="object-type">Galaxy</p>
+      </div>
+      <!-- Add more items as needed -->
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2023 Your Astronomy Site. All rights reserved.</p>
+  </footer>
+
+</body>
+</html>

@@ -1,7 +1,12 @@
 const express = require('express');
+const path = require('path');
 const { Pool } = require('pg');
+const dotenv = require('dotenv');
+const starsRouter = require('./routes/stars');
+const pagesRouter = require('./routes/pages');
+const errorMiddleware = require('./middleware/error');
 
-require('dotenv').config();
+dotenv.config();
 
 const app = express();
 const port = 3000;
@@ -14,15 +19,16 @@ const pool = new Pool({
   port: process.env.DB_PORT,
 });
 
-app.get('/api/stars', async (req, res) => {
-  try {
-    const result = await pool.query('SELECT * FROM stars');
-    res.json(result.rows);
-  } catch (err) {
-    console.error(err);
-    res.status(500).send('Internal Server Error');
-  }
-});
+app.use(express.json());
+
+// app.use('/assets', express.static('src/assets', { type: 'text/css' }));
+app.use('/assets', express.static(path.join(__dirname, 'assets'), { type: 'text/css' }));
+
+app.use('/', pagesRouter);
+
+app.use('/api/stars', starsRouter);
+
+app.use(errorMiddleware);
 
 app.listen(port, () => {
   console.log(`Server listening at http://localhost:${port}`);

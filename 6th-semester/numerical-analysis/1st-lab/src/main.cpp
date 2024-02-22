@@ -182,7 +182,7 @@ void runRungeKuttWithChangingStep(std::ofstream& outputFile, int n, double epsil
         difference = std::abs(exactValues[i].y - rungeKuttValues[i].y);
 
         rungeKuttValues2H[i].x = rungeKuttValues2H[i - 2].x + step * 2;
-        rungeKuttValues2H[i].y = calculateRungeKuttValue(rungeKuttValues[i - 1].y, rungeKuttValues[i - 1].x, step * 2);
+        rungeKuttValues2H[i].y = calculateRungeKuttValue(rungeKuttValues2H[i - 2].y, rungeKuttValues2H[i - 2].x, step * 2);
         difference2H = std::abs(rungeKuttValues[i].y - rungeKuttValues2H[i].y);
 
         outputFile << iteration++ << ',' << exactValues[i].x << ',' << exactValues[i].y;
@@ -230,8 +230,8 @@ int main()
     outputFile << '\n';
     performCalculations(outputFile, 20);
     outputFile << '\n';
-    runRungeKuttWithChangingStep(outputFile, 10, 0.2);
-    runRungeKuttWithChangingStep(outputFile, 20, 0.1);
+    runRungeKuttWithChangingStep(outputFile, 10, 1e-6);
+    runRungeKuttWithChangingStep(outputFile, 20, 9e-8);
 
     return 0;
 }

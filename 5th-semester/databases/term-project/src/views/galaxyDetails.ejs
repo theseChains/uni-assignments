@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Star Details - Your Astronomy Site</title>
+  <link rel="stylesheet" href="../assets/css/explore.css">
+</head>
+<body>
+
+  <header>
+    <h1 class="site-name">Astronomy</h1>
+  </header>
+
+  <nav>
+    <ul>
+      <li><a href="/index">Home</a></li>
+      <li><a href="/explore">Explore</a></li>
+    </ul>
+  </nav>
+
+  <main>
+    <h2>Galaxy Details</h2>
+
+    <article class="galaxy-article">
+      <h1><%= galaxy.name %></h1>
+      <img src="../assets/images/<%= galaxy.image_url %>" alt="<%= galaxy.name %> Image">
+
+      <p><strong>Type:</strong> <%= galaxy.type %></p>
+      <p><strong>Distance from Earth:</strong> <%= galaxy.distance_from_earth %> light years</p>
+      <p><strong>Diameter:</strong> <%= galaxy.diameter %> light years</p>
+      <p><strong>Mass:</strong> <%= galaxy.mass %> solar masses</p>
+      <p><strong>Number of Stars:</strong> <%= galaxy.number_of_stars %></p>
+      <p><strong>Luminosity:</strong> <%= galaxy.luminosity %> solar luminosities</p>
+      <p><strong>Description:</strong> <%= galaxy.description %></p>
+    </article>
+
+  </main>
+
+  <footer>
+    <p>&copy; 2023 Astronomy.</p>
+  </footer>
+
+</body>
+</html>

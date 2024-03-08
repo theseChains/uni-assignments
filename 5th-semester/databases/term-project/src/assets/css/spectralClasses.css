@@ -1,0 +1,36 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+header {
+  background-color: #333;
+  color: white;
+  text-align: center;
+  padding: 1rem;
+}
+
+main {
+  max-width: 800px;
+  margin: 2rem auto;
+}
+
+.spectral-classes {
+  display: grid;
+  gap: 20px;
+}
+
+.spectral-class {
+  border: 1px solid #ddd;
+  padding: 1rem;
+  border-radius: 8px;
+}
+
+.spectral-class h2 {
+  color: #333;
+}
+
+.spectral-class p {
+  margin: 0.5rem 0;
+}

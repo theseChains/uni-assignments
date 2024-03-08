@@ -18,8 +18,8 @@
 
   <nav>
     <ul>
-      <li><a href="index.html">Home</a></li>
-      <li><a href="constellations.html">Constellations</a></li>
+      <li><a href="index">Home</a></li>
+      <li><a href="constellations">Constellations</a></li>
     </ul>
   </nav>
 
@@ -27,20 +27,14 @@
     <h2>Constellations Guide</h2>
 
     <section class="constellation-guide">
+      <% constellations.forEach(constellation => { %>
       <article class="constellation-article">
-        <h3>Orion</h3>
-        <img src="orion.jpg" alt="Orion Constellation">
-        <p>Orion is one of the most recognizable constellations in the night sky...</p>
+        <h3><%= constellation.name %></h3>
+        <img src="/assets/placeholder-image.jpg" alt="<%= constellation.name %> Constellation">
+        <p>No additional details available.</p>
         <button class="continue-reading-btn">Learn More</button>
       </article>
-
-      <article class="constellation-article">
-        <h3>Ursa Major</h3>
-        <img src="ursa-major.jpg" alt="Ursa Major Constellation">
-        <p>Ursa Major, also known as the Great Bear, is a prominent constellation...</p>
-        <button class="continue-reading-btn">Learn More</button>
-      </article>
-      <!-- Add more constellation articles as needed -->
+      <% }); %>
     </section>
 
   </main>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../assets/css/spectralClasses.css">
+  <title>Spectral Class Details - <%= spectralClass.name %></title>
+</head>
+<body>
+  <header>
+    <h1><%= spectralClass.name %> Details</h1>
+  </header>
+
+  <main>
+    <section class="spectral-class-details">
+      <article class="spectral-class">
+        <h2><%= spectralClass.name %></h2>
+        <p><strong>Temperature Range:</strong> <%= spectralClass.temperature_range %></p>
+        <p><strong>Color:</strong> <%= spectralClass.color %></p>
+        <p><strong>Luminosity Class:</strong> <%= spectralClass.luminosity_class %></p>
+        <p><strong>Typical Size:</strong> <%= spectralClass.typical_size %></p>
+        <p><%= spectralClass.description %></p>
+      </article>
+    </section>
+  </main>
+</body>
+</html>

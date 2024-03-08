@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Star Details - Your Astronomy Site</title>
+  <link rel="stylesheet" href="../assets/css/explore.css">
+</head>
+<body>
+
+  <header>
+    <h1 class="site-name">Astronomy</h1>
+  </header>
+
+  <nav>
+    <ul>
+      <li><a href="/index">Home</a></li>
+      <li><a href="/explore">Explore</a></li>
+    </ul>
+  </nav>
+
+  <main>
+    <h2>Star Details</h2>
+
+
+    <article class="star-article">
+      <h1><%= star.name %></h1>
+      <img src="../assets/images/<%= star.image_url %>" alt="<%= star.name %> Image">
+
+      <p><strong>Description:</strong> <%= star.description %></p>
+
+      <p><strong>Distance from Earth:</strong> <%= star.distance_from_earth %> light-years</p>
+      <p><strong>Temperature:</strong> <%= star.temperature %> Kelvin</p>
+      <p><strong>Luminosity:</strong> <%= star.luminosity %> Solar luminosities</p>
+      <p><strong>Mass:</strong> <%= star.mass %> Solar masses</p>
+      <p><strong>Radius:</strong> <%= star.radius %> Solar radii</p>
+      <p><strong>Age:</strong> <%= star.age %> million years</p>
+      <p><strong>Color:</strong> <%= star.color %></p>
+
+      <p><strong>Constellation:</strong> <a href="/constellations/<%= star.constellation_id %>"><%= constellation_name %></a></p>
+      <p><strong>Galaxy:</strong> <a href="/galaxies/<%= star.galaxy_id %>"><%= galaxy_name %></a></p>
+      <p><strong>Spectral Class:</strong> <a href="/spectralClasses/<%= star.spectral_class_id %>"><%= spectral_class_name %></a></p>
+    </article>
+
+  </main>
+
+  <footer>
+    <p>&copy; 2023 Astronomy.</p>
+  </footer>
+
+</body>
+</html>

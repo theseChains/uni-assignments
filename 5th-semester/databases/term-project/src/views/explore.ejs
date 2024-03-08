@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Explore - Your Astronomy Site</title>
+  <link rel="stylesheet" href="../assets/css/explore.css">
+</head>
+<body>
+
+  <header>
+    <h1 class="site-name">Astronomy</h1>
+  </header>
+
+  <nav>
+    <ul>
+      <li><a href="index">Home</a></li>
+      <li><a href="explore">Explore</a></li>
+    </ul>
+  </nav>
+  <style>
+.explore-item img {
+  width: 200px; /* Adjust the width as needed */
+  height: 200px; /* Adjust the height as needed */
+  object-fit: cover; /* Maintain aspect ratio and cover the container */
+}
+
+          /* Add any additional styles as needed */
+  </style>
+
+    <main>
+      <form class="filter-form" id="filterForm">
+        <label for="topic">Topic:</label>
+        <select id="topic" name="topic" onchange="filterItems()">
+          <option value="all">All Topics</option>
+          <option value="stars">Stars</option>
+          <option value="galaxies">Galaxies</option>
+        </select>
+
+        <div class="search-bar">
+          <input type="text" id="search" name="search" placeholder="Search...">
+          <button type="button" onclick="searchItems()">Search</button>
+        </div>
+      </form>
+
+      <section class="explore-items">
+        <% stars.forEach(star => { %>
+          <div class="explore-item" data-topic="stars">
+            <a href="/stars/<%= star.id %>">
+              <img src="../assets/images/<%= star.image_url %>" alt="<%= star.name %> Image">
+              <h2><%= star.name %></h2>
+            </a>
+            <p class="object-type">Star</p>
+          </div>
+        <% }); %>
+
+        <% galaxies.forEach(galaxy => { %>
+          <div class="explore-item" data-topic="galaxies">
+            <a href="/galaxies/<%= galaxy.id %>">
+              <img src="../assets/images/<%= galaxy.image_url %>" alt="<%= galaxy.name %> Image">
+              <h2><%= galaxy.name %></h2>
+            </a>
+            <p class="object-type">Galaxy</p>
+          </div>
+        <% }); %>
+      </section>
+    </main>
+
+    <script>
+      function filterItems() {
+        var selectedTopic = document.getElementById('topic').value;
+        var items = document.querySelectorAll('.explore-item');
+
+        items.forEach(item => {
+          var itemTopic = item.getAttribute('data-topic');
+
+          if (selectedTopic === 'all' || selectedTopic === itemTopic) {
+            item.style.display = 'block';
+          } else {
+            item.style.display = 'none';
+          }
+        });
+      }
+      function searchItems() {
+        const searchInput = document.getElementById('search').value.toLowerCase();
+
+        const items = document.querySelectorAll('.explore-item');
+
+        items.forEach(item => {
+          const itemName = item.querySelector('h2').innerText.toLowerCase();
+
+          if (itemName.includes(searchInput)) {
+            item.style.display = 'block';
+          } else {
+            item.style.display = 'none';
+          }
+        });
+      }
+    </script>
+
+  <footer>
+    <p>&copy; 2023 Your Astronomy Site. All rights reserved.</p>
+  </footer>
+
+</body>
+</html>

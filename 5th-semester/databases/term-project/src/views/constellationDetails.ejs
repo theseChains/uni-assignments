@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Constellation Details - Your Astronomy Site</title>
+  <link rel="stylesheet" href="../assets/css/constellations.css">
+</head>
+<body>
+
+  <header>
+    <h1 class="site-name">Astronomy</h1>
+  </header>
+
+  <nav>
+    <ul>
+      <li><a href="/index">Home</a></li>
+      <li><a href="/constellations">Constellations</a></li>
+    </ul>
+  </nav>
+
+  <main>
+    <h2>Constellation Details</h2>
+
+    <article class="constellation-article">
+      <h3><%= constellation.name %></h3>
+      <img src="../assets/images/<%= constellation.image_url %>" alt="<%= constellation.name %> Image">
+      <p><strong>Abbreviation:</strong> <%= constellation.abbreviation %></p>
+      <p><strong>Area:</strong> <%= constellation.area %> square units</p>
+      <p><strong>Brightest Star:</strong>
+        <% if (constellation.brightest_star_id) { %>
+          <a href="/stars/<%= constellation.brightest_star_id %>"><%= constellation.brightest_star %></a>
+        <% } else { %>
+          <%= constellation.brightest_star %>
+        <% } %>
+      </p>
+      <p><strong>Number of Stars:</strong> <%= constellation.number_of_stars %></p>
+      <p><strong>Description:</strong> <%= constellation.description %></p>
+    </article>
+
+  </main>
+
+  <footer>
+    <p>&copy; 2023 Astronomy.</p>
+  </footer>
+
+</body>
+</html>

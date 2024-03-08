@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../assets/css/spectralClasses.css">
+  <title>Spectral Classes</title>
+</head>
+<body>
+  <header>
+    <h1>Spectral Classes</h1>
+  </header>
+
+  <main>
+    <section class="spectral-classes">
+      <% spectralClasses.forEach(spectralClass => { %>
+        <article class="spectral-class">
+          <h2><%= spectralClass.name %></h2>
+          <p><strong>Temperature Range:</strong> <%= spectralClass.temperature_range %></p>
+          <p><strong>Color:</strong> <%= spectralClass.color %></p>
+          <a href="/spectralClasses/<%= spectralClass.id %>">Learn More</a>
+        </article>
+      <% }); %>
+    </section>
+  </main>
+</body>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Constellations - Your Astronomy Site</title>
+  <link rel="stylesheet" href="../assets/css/constellations.css">
+</head>
+<body>
+
+  <header>
+    <h1 class="site-name">Astronomy</h1>
+  </header>
+
+  <nav>
+    <ul>
+      <li><a href="index">Home</a></li>
+      <li><a href="constellations">Constellations</a></li>
+    </ul>
+  </nav>
+
+  <main>
+    <h2>Constellations Guide</h2>
+
+    <section class="constellation-guide">
+      <% constellations.forEach(constellation => { %>
+        <article class="constellation-article">
+          <h3><%= constellation.name %></h3>
+          <img src="../assets/images/<%= constellation.image_url %>" alt="<%= constellation.name %> Image">
+          <p><%= constellation.short_description %></p>
+          <a href="/constellations/<%= constellation.id %>">
+            <button class="continue-reading-btn">Learn More</button>
+          </a>
+        </article>
+      <% }); %>
+    </section>
+
+  </main>
+
+  <footer>
+    <p>&copy; 2023 Astronomy.</p>
+  </footer>
+
+</body>
+</html>

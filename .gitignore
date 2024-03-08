@@ -6,5 +6,5 @@ include/
 compile_commands.json
 .cache/
 .clang-format
-.env
+*.env
 node_modules/

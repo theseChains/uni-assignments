@@ -2,6 +2,8 @@
 
 #include "Constants.hpp"
 
+#include <iostream>
+
 double getFunctionValue(double x)
 {
     return (std::pow(2, x) + 5 * x - 10);
@@ -60,15 +62,17 @@ int getAposterioryEstimate(double firstX)
     {
         double nextX{ getNextForIterativeMethod(lastX) };
         double xDifference{ std::abs(nextX - lastX) };
+
+        lastX = nextX;
+        ++numberOfIterations;
         if (contractionCoefficient / (1 - contractionCoefficient) *
                 xDifference <= constants::epsilon)
         {
             keepGoing = false;
         }
-
-        lastX = nextX;
-        ++numberOfIterations;
     }
+
+    std::cout << "xn = " << lastX << '\n';
 
     return numberOfIterations;
 }

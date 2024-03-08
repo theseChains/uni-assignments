@@ -1,0 +1,15 @@
+#!/bin/bash
+
+function fact {
+    if (( $1 <= 2 )); then
+        echo $1
+    else
+        x=$(( $1 - 1 ))
+        x=$(fact $x)
+        x=$(( x * $1 ))
+        echo $x
+    fi
+}
+
+result=$(fact $1)
+echo $result

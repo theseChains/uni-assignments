@@ -1,0 +1,6 @@
+#!/bin/bash 
+
+select char in a b c d e 
+do 
+    echo $char is select 
+done 

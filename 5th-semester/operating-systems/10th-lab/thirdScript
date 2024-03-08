@@ -1,0 +1,6 @@
+#!/bin/bash
+
+for file in x y z
+do
+    echo The file name is $file
+done

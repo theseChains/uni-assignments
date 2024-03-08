@@ -1,0 +1,8 @@
+#!/bin/bash 
+
+for file in `ls` 
+do 
+    if [ -x $file ] 
+    then echo $file is executable 
+    fi 
+done 

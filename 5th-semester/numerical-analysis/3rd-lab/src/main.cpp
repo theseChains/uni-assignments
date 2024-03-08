@@ -1,6 +1,7 @@
 #include <cmath>
 #include <fstream>
 #include <iostream>
+#include <iomanip>
 
 #include "Constants.hpp"
 #include "Input.hpp"
@@ -11,6 +12,8 @@
 int main()
 {
     std::ofstream outputFile{ "output.csv" };
+    outputFile << std::fixed;
+    outputFile << std::setprecision(12);
 
     std::cout << "x0 = ";
     double firstX{};

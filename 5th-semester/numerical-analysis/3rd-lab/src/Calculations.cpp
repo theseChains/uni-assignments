@@ -35,7 +35,7 @@ double getDelta(double x)
 
 double getNextXForIterativeMethod(double lastX, double lastY)
 {
-    return (lastX + (-1 / (2 * lastX - 1)) * (std::pow(lastX, 2) + lastY - 6) +
+    return (lastX - (1 / (2 * lastX - 1)) * (std::pow(lastX, 2) + lastY - 6) +
             (1 / (2 * lastX - 1)) * (lastX + lastY - 4));
 }
 

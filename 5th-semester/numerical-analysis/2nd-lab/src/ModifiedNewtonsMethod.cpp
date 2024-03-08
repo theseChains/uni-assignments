@@ -26,7 +26,7 @@ void runModifiedNewtonsMethodLoop(const double epsilon, const double delta,
     if (getFunctionValue(lastX) * secondDerivativeValue < 0)
     {
         outputFile <<
-            "не выполняется достаточное условие сходимости метода Ньютона\n\n";
+            "не выполняется достаточное условие сходимости модифицированного метода Ньютона\n\n";
         keepGoing = false;
         foundX = false;
     }

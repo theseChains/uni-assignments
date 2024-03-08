@@ -26,7 +26,7 @@ int main()
 
     outputFile << "x,y(x),PI(x),|y(x)-PI(x)|,q,PII(x),|y(x)-PII(x)|,t,L(x),|y("
                   "x) - L(x)|\n";
-    outputFile << std::setprecision(15);
+    outputFile << std::setprecision(25);
     outputFile << std::fixed;
     for (int i{ 0 }; i < 3; ++i)
     {
@@ -41,7 +41,7 @@ int main()
 
         double t{ getT(inputValues[i]) };
         double secondInterpolationFormulaValue{
-            calculateFirstNewtonsInterpolationFormula(inputValues[i])
+            calculateSecondNewtonsInterpolationFormula(inputValues[i])
         };
         double secondYDifference{ std::abs(functionValue -
                                            secondInterpolationFormulaValue) };
@@ -60,7 +60,7 @@ int main()
                    << thirdYDifference << '\n';
     }
 
-    outputFile << "x,y'(x),(PI(x))',x0,q,|y'(x)-(PI(x))'|,(PII(x))',xn,t,|y'(x)-(PII(x))'|\n";
+    outputFile << "\nx,y'(x),(PI(x))',x0,q,|y'(x)-(PI(x))'|,(PII(x))',xn,t,|y'(x)-(PII(x))'|\n";
     for (int i{ 0 }; i < 3; ++i)
     {
         double derivativeValue{ getDerivativeValue(inputValues[i]) };

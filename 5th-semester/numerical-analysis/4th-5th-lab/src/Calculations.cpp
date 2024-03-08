@@ -43,14 +43,14 @@ double calculateSecondNewtonsInterpolationFormula(double x)
 double calculateLagrangeInterpolationFormula(double x)
 {
     return (
-        -302.64 * (x - 2.65) * (x - 2.7) * (x - 2.75) * (x - 2.8) * (x - 2.85) +
-        1327.09 * (x - 2.6) * (x - 2.7) * (x - 2.75) * (x - 2.8) * (x - 2.85) +
-        (-2321.9) * (x - 2.6) * (x - 2.65) * (x - 2.75) * (x - 2.8) *
+        -302.6440421333 * (x - 2.65) * (x - 2.7) * (x - 2.75) * (x - 2.8) * (x - 2.85) +
+        1327.0918506666 * (x - 2.6) * (x - 2.7) * (x - 2.75) * (x - 2.8) * (x - 2.85) +
+        (-2321.903098133) * (x - 2.6) * (x - 2.65) * (x - 2.75) * (x - 2.8) *
             (x - 2.85) +
-        2026.15 * (x - 2.6) * (x - 2.65) * (x - 2.7) * (x - 2.8) * (x - 2.85) +
-        (-881.83) * (x - 2.6) * (x - 2.65) * (x - 2.7) * (x - 2.75) *
+        2026.149412 * (x - 2.6) * (x - 2.65) * (x - 2.7) * (x - 2.8) * (x - 2.85) +
+        (-881.8264330666) * (x - 2.6) * (x - 2.65) * (x - 2.7) * (x - 2.75) *
             (x - 2.85) +
-        153.15 * (x - 2.6) * (x - 2.65) * (x - 2.7) * (x - 2.75) * (x - 2.8));
+        153.13307832 * (x - 2.6) * (x - 2.65) * (x - 2.7) * (x - 2.75) * (x - 2.8));
 }
 
 double getDerivativeValue(double x)
@@ -67,7 +67,7 @@ double getClosestX0(double x)
     {
         double leftDifference{ std::abs(x - values[i]) };
         double rightDifference{ std::abs(x - values[i + 1]) };
-        if (leftDifference == rightDifference)
+        if (std::abs(leftDifference - rightDifference) < 0.000000001)
         {
             x0 = values[i];
             break;
@@ -93,7 +93,7 @@ double getClosestXn(double x)
     {
         double leftDifference{ std::abs(x - values[i]) };
         double rightDifference{ std::abs(x - values[i + 1]) };
-        if (leftDifference == rightDifference)
+        if (std::abs(leftDifference - rightDifference) < 0.000000001)
         {
             x0 = values[i + 1];
             break;

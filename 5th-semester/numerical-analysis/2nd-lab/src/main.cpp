@@ -24,10 +24,11 @@ int main()
     double firstX{};
     std::cin >> firstX;
 
-    if (firstX < constants::leftBorder || firstX > constants::rightBorder)
+    while (firstX < constants::leftBorder || firstX > constants::rightBorder)
     {
         std::cerr << "x0 не принадлежит отрезку [a, b] = [0.5, 1.0]\n";
-        return 1;
+        std::cout << "x0 = ";
+        std::cin >> firstX;
     }
 
     runIterativeMethod(outputFile, firstX);

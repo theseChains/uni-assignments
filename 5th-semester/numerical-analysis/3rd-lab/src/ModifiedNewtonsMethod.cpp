@@ -2,6 +2,7 @@
 
 #include <algorithm>
 #include <iostream>
+#include <cmath>
 
 #include "Calculations.hpp"
 #include "Constants.hpp"
@@ -29,7 +30,13 @@ void runModifiedNewtonsMethodLoop(const double epsilon, const double delta,
         if (2 * firstX == 1)
         {
             foundMistake = true;
-            outputFile << "Знаменатель обращается в 0\n";
+            outputFile << "Итерационный процесс модифицированного метода Ньютона закончен. Матрица Якоби вырожденная\n";
+            break;
+        }
+        if (std::isinf(lastX) || std::isinf(lastY))
+        {
+            foundMistake = true;
+            outputFile << "Метод расходится\n";
             break;
         }
 

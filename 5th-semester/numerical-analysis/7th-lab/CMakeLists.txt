@@ -17,4 +17,4 @@ list (REMOVE_DUPLICATES program_INCLUDE_DIRS)
 add_executable(app ${program_SOURCES})
 target_include_directories(app PRIVATE ${program_INCLUDE_DIRS})
 
-target_compile_options(app PRIVATE -Wall -Wextra -Wpedantic -Wshadow -Wconversion -Werror)
+target_compile_options(app PRIVATE -Wall -Wextra -Wpedantic -Wshadow -Werror)

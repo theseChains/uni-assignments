@@ -1,6 +1,7 @@
 #include "IterativeMethod.hpp"
 
 #include <iostream>
+#include <cmath>
 
 #include "Calculations.hpp"
 #include "Constants.hpp"
@@ -28,6 +29,12 @@ void runIterativeMethodLoop(const double epsilon, const double delta,
         {
             foundMistake = true;
             outputFile << "Знаменатель обращается в 0\n";
+            break;
+        }
+        if (std::isinf(lastX) || std::isinf(lastY))
+        {
+            foundMistake = true;
+            outputFile << "Метод расходится\n";
             break;
         }
 

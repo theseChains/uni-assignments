@@ -8,3 +8,5 @@ compile_commands.json
 .clang-format
 *.env
 node_modules/
+build-*/
+*.pro.user

@@ -1,0 +1,39 @@
+
+Start of new log
+Function Evaluation Event: processArgument evaluated
+Variable Change Receiver Event: incremented number of positive elements
+Function Evaluation Event: processArgument evaluated
+Function Evaluation Event: processArgument evaluated
+Variable Change Receiver Event: incremented number of positive elements
+Function Evaluation Event: processArgument evaluated
+Function Evaluation Event: processArgument evaluated
+Variable Change Receiver Event: incremented number of positive elements
+Function Evaluation Event: processArgument evaluated
+Function Evaluation Event: processArgument evaluated
+File Output Stream Event: More negative odd numbers
+
+Start of new log
+Function Evaluation Event: processArgument evaluated
+Variable Change Receiver Event: incremented number of positive elements
+Function Evaluation Event: processArgument evaluated
+Function Evaluation Event: processArgument evaluated
+Variable Change Receiver Event: incremented number of positive elements
+Function Evaluation Event: processArgument evaluated
+Function Evaluation Event: processArgument evaluated
+Variable Change Receiver Event: incremented number of positive elements
+Function Evaluation Event: processArgument evaluated
+Function Evaluation Event: processArgument evaluated
+File Output Stream Event: More negative odd numbers
+
+Start of new log
+Function Evaluation Event: processArgument evaluated
+Variable Change Receiver Event: incremented number of positive elements
+Function Evaluation Event: processArgument evaluated
+Function Evaluation Event: processArgument evaluated
+Variable Change Receiver Event: incremented number of positive elements
+Function Evaluation Event: processArgument evaluated
+Function Evaluation Event: processArgument evaluated
+Variable Change Receiver Event: incremented number of positive elements
+Function Evaluation Event: processArgument evaluated
+Function Evaluation Event: processArgument evaluated
+File Output Stream Event: More negative odd numbers

@@ -3,35 +3,40 @@ import java.net.*;
 import java.util.Scanner;
 
 public class TCPClient implements Runnable {
-    public static final int CLIENT_COUNT = 1;
-    public static final int READ_BUFFER_SIZE = 10;
-
     private String name = null;
     private String host = null;
     private int serverPort = 0;
 
-    public TCPClient(String clientName, String hostName, int port) {
+    private String journalFileName = null;
+
+    public TCPClient(String clientName, String hostName, int port, String fileName) {
         name = clientName;
         host = hostName;
         serverPort = port;
+        journalFileName = fileName;
     }
 
     public void run() {
-        String[] expression = { "33333333333.7+", "1.6-", "5=" };
+        String[] expression = { "3.7+", "1.6-", "4-", "5=" };
+        writeToJournal("Client is running...");
         try {
             Socket socket = new Socket(host, serverPort);
             PrintWriter writer = new PrintWriter(socket.getOutputStream(), true);
             BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
+            writeToJournal("Client connected to server: " + host + ":" + serverPort);
+
             for (String argument : expression)
             {
-                System.out.println("writing: " + argument);
+                writeToJournal("Writing string to server: " + argument);
                 writer.println(argument);
                 writer.flush();
             }
 
+            writeToJournal("Finished writing expression to server");
+
             String result = reader.readLine();
-            System.out.println("Result: " + result);
+            writeToJournal("Result returned from server: " + result + "\n");
 
             writer.close();
             reader.close();
@@ -39,9 +44,17 @@ public class TCPClient implements Runnable {
 
             Thread.yield();
         } catch (UnknownHostException e) {
-            System.err.println("Исключение: " + e.toString());
+            System.err.println("Exception: " + e.toString());
         } catch (IOException e) {
-            System.err.println("Исключение: " + e.toString());
+            System.err.println("Exception: " + e.toString());
+        }
+    }
+
+    public void writeToJournal(String entry) {
+        try (FileWriter writer = new FileWriter(journalFileName, true)) {
+            writer.write(entry + "\n");
+        } catch (IOException e) {
+            System.err.println("Error occurred while writing to the server journal: " + e.getMessage());
         }
     }
 
@@ -51,10 +64,11 @@ public class TCPClient implements Runnable {
             Scanner scanner = new Scanner(file);
             String host = scanner.nextLine();
             int serverPort = Integer.parseInt(scanner.nextLine());
+            String journalFileName = scanner.nextLine();
             scanner.close();
 
             String name = "client";
-            TCPClient client = new TCPClient(name, host, serverPort);
+            TCPClient client = new TCPClient(name, host, serverPort, journalFileName);
             Thread clientThread = new Thread(client);
             clientThread.start();
         } catch (FileNotFoundException e) {

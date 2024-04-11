@@ -5,6 +5,7 @@ import java.util.Scanner;
 public class TCPServer {
     private ServerSocket serverSocket;
     private String journalFileName;
+    private int id = 0;
 
     public static void main(String[] args) {
         if (args.length != 1) {
@@ -33,7 +34,6 @@ public class TCPServer {
     public void writeToJournal(String entry) {
         try (FileWriter writer = new FileWriter(journalFileName, true)) {
             writer.write(entry + "\n");
-            // System.out.println("Entry added to server journal: " + entry);
         } catch (IOException e) {
             System.err.println("Error occurred while writing to the server journal: " + e.getMessage());
         }
@@ -43,14 +43,16 @@ public class TCPServer {
         class Listener implements Runnable {
             Socket socket;
             PrintWriter writer;
+            int listId = 0;
 
-            public Listener(Socket socket) {
+            public Listener(Socket socket, int id) {
                 this.socket = socket;
+                this.listId = id;
             }
 
             public void run() {
                 try {
-                    writeToJournal("Listener is running...");
+                    writeToJournal("Listener " + listId + " is running...");
 
                     BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                     this.writer = new PrintWriter(socket.getOutputStream(), true);
@@ -58,14 +60,14 @@ public class TCPServer {
                     StringBuilder expression = new StringBuilder();
                     String line;
                     while ((line = reader.readLine()) != null) {
-                        writeToJournal("Read string from client: " + line);
+                        writeToJournal("Read string from client " + listId + ": " + line);
                         if (line.endsWith("=")) {
                             expression.append(line);
-                            writeToJournal("Expression read from client: " + expression);
+                            writeToJournal("Expression read from client " + listId + ": " + expression);
 
                             double result = calculateExpression(expression.toString());
                             writer.println(result);
-                            writeToJournal("Result sent to client: " + result + "\n");
+                            writeToJournal("Result sent to client " + listId + ": " + result);
 
                             expression.setLength(0);
                         } else {
@@ -73,21 +75,29 @@ public class TCPServer {
                         }
                     }
 
+                    writeToJournal("Client " + listId + " disconnected\n");
                     writer.close();
                     reader.close();
                     socket.close();
+                    --id;
                 } catch (IOException e) {
                     writeToJournal("IOException occurred: " + e.getMessage());
                     writer.println("IOException: " + e.getMessage());
                     System.err.println("Exception: " + e.toString());
+                    writeToJournal("Client " + listId + " disconnected\n");
+                    --id;
                 } catch (ArithmeticException e) {
                     System.err.println("Overflow or underflow occurred");
                     writeToJournal("ArithmeticException occurred: " + e.getMessage());
                     writer.println("ArithmeticException: " + e.getMessage());
+                    writeToJournal("Client " + listId + " disconnected\n");
+                    --id;
                 } catch (NumberFormatException e) {
                     System.err.println("Invalid number format in expression");
                     writeToJournal("NumberFormatException occurred: " + e.getMessage());
                     writer.println("NumberFormatException: " + e.getMessage());
+                    writeToJournal("Client " + listId + " disconnected\n");
+                    --id;
                 }
             }
         }
@@ -97,7 +107,7 @@ public class TCPServer {
         while (true) {
             try {
                 Socket socket = serverSocket.accept();
-                Listener listener = new Listener(socket);
+                Listener listener = new Listener(socket, ++id);
                 Thread thread = new Thread(listener);
                 thread.start();
             } catch (IOException e) {

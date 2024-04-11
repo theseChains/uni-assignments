@@ -17,7 +17,6 @@ public class TCPClient implements Runnable {
     }
 
     public void run() {
-        String[] expression = { "3.7+", "1.6-", "4-", "5=" };
         writeToJournal("Client is running...");
         try {
             Socket socket = new Socket(host, serverPort);
@@ -26,8 +25,12 @@ public class TCPClient implements Runnable {
 
             writeToJournal("Client connected to server: " + host + ":" + serverPort);
 
-            for (String argument : expression)
+            Scanner scanner = new Scanner(System.in);
+            String argument = "";
+            while (!argument.endsWith("="))
             {
+                System.out.print("Enter argument: ");
+                argument = scanner.nextLine();
                 writeToJournal("Writing string to server: " + argument);
                 writer.println(argument);
                 writer.flush();

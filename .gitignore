@@ -10,3 +10,5 @@ compile_commands.json
 node_modules/
 build-*/
 *.pro.user
+*.jar
+*.class

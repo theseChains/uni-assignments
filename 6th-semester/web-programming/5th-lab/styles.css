@@ -1,0 +1,26 @@
+.graphContainer {
+    position: relative;
+    overflow: hidden;
+    border: solid 2px black;
+}
+
+.graphPoint {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background-color: black;
+}
+
+.gridLine {
+    position: absolute;
+    background-color: lightgray;
+}
+
+button {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+    margin-top: 10px;
+}

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Решение задачи</title>
+        <script src="script.js" defer></script>
+    </head>
+    <body>
+        <h1>Решение задачи</h1>
+        <h2>Последовательность 123456789101112131415...</h2>
+        <label for="numberInput">Введите значение k:</label>
+        <input type="text" id="numberInput">
+        <button id="calculateButton">Найти K-ю цифру</button>
+        <div id="result"></div>
+
+        <h1>Текущая дата и время</h1>
+        <table border="1">
+            <tr>
+                <td id="dateOutput"></td>
+            </tr>
+            <tr>
+                <td id="dayOfWeekOutput"></td>
+            </tr>
+        </table>
+
+        <h1>Количество дней до сессии</h1>
+        <button id="calculateDays">Вывести кол-во дней до сессии</button>
+        <div id="remainingDays">
+            <input type="text" id="daysCount" readonly>
+        </div>
+
+        <h1>Расчет количества дней</h1>
+        <label for="dateInput">Введите дату:</label>
+        <input type="date" id="dateInput">
+        <button id="calculateFromDate">Рассчитать</button>
+        <div id="daysPassed">
+            <h3>Количество дней, прошедших с введенной даты:</h3>
+            <input type="text" id="daysPassedCount" readonly>
+        </div>
+
+        <h1>Сумма числовой последовательности</h1>
+        <label for="firstTermInput">Номер первого члена:</label>
+        <input type="number" id="firstTermInput" min="-100" max="100" value="1"><br>
+        <label for="numTermsInput">Количество членов:</label>
+        <input type="number" id="numTermsInput" min="1" max="100" value="10"><br>
+        <button id="calculateSequence">Рассчитать</button><br>
+        <div id="resultSequence"></div>
+    </body>
+</html>

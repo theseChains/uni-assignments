@@ -24,3 +24,16 @@ button {
     cursor: pointer;
     margin-top: 10px;
 }
+
+.container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.column {
+    width: 45%;
+}
+
+#pokerColumn {
+    margin-left: 20px;
+}

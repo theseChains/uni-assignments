@@ -1,18 +1,65 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <title>title</title>
-        <link rel="stylesheet" type="text/css" href="styles.css">
-    </head>
-    <body>
-        <h1>График функции 2*x*sin(1-x^2)</h1>
-        <div class="graphContainer" id="graphContainer"></div>
-        <div>
-            <button id="scaleUpButton">Увеличить масштаб</button>
-            <button id="scaleDownButton">Уменьшить масштаб</button>
+<head>
+    <meta charset="UTF-8">
+    <title>Poker Hand Generator</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="column" id="graphColumn">
+            <h1>График функции 2*x*sin(1-x^2)</h1>
+            <div class="graphContainer" id="graphContainer"></div>
+            <div>
+                <button id="scaleUpButton">Увеличить масштаб</button>
+                <button id="scaleDownButton">Уменьшить масштаб</button>
+            </div>
         </div>
+        <div class="column" id="pokerColumn">
+            <h1>Покер</h1>
+            <div id="pokerContainer">
+                <h2>Раздача</h2>
+                <div>
+                    <label for="cardValue">Значение:</label>
+                    <select id="cardValue">
+                        <option value="A">Ace</option>
+                        <option value="K">King</option>
+                        <option value="Q">Queen</option>
+                        <option value="J">Jack</option>
+                        <option value="10">10</option>
+                        <option value="9">9</option>
+                        <option value="8">8</option>
+                        <option value="7">7</option>
+                        <option value="6">6</option>
+                        <option value="5">5</option>
+                        <option value="4">4</option>
+                        <option value="3">3</option>
+                        <option value="2">2</option>
+                    </select>
+                    <label for="cardSuit">Масть:</label>
+                    <select id="cardSuit">
+                        <option value="hearts">Hearts</option>
+                        <option value="diamonds">Diamonds</option>
+                        <option value="clubs">Clubs</option>
+                        <option value="spades">Spades</option>
+                    </select>
+                    <button id="addCardButton">Добавить карту</button>
+                </div>
+                <div>
+                    <h3>Карты игрока:</h3>
+                    <div id="selectedCardImages"></div>
+                </div>
+                <div>
+                    <button id="fullHouseCheck">Есть ли фулл хаус?</button>
+                    <div id="answer"></div>
+                </div>
+                <button id="removeLastCard">Убрать последнюю карту</button>
+                <button id="clearCardsButton">Очистить комбинацию</button>
+            </div>
+        </div>
+    </div>
 
-        <script src="script.js"></script>
-    </body>
+    <script src="graph.js" defer></script>
+    <script src="poker.js" defer></script>
+</body>
 </html>

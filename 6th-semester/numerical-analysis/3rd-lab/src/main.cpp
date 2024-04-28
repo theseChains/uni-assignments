@@ -27,17 +27,17 @@ void printResult(std::ofstream& outputFile, double k, const std::vector<std::vec
 
 double getFxValue(double x)
 {
-    return (1.3 * std::exp(-1.2 * x) + std::cos(1.3 * x));
+    return (constants::gamma * std::exp(constants::m * x) + std::cos(constants::gamma * x));
 }
 
 double getPhiTValue(double t)
 {
-    return (2.9 * t + std::sin(t));
+    return (constants::alpha * t + std::sin(constants::beta * t));
 }
 
 double getPsiTValue(double t)
 {
-    return (std::exp(-1.8 * t) + 2.7 * std::sin(-1.8 - 1.2 * t));
+    return (std::exp(constants::bigN * t) + constants::bigM * std::sin(constants::bigN - constants::m * t));
 }
 
 void runExplicitScheme(std::ofstream& outputFile)

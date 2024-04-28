@@ -65,6 +65,7 @@ void runExplicitScheme(std::ofstream& outputFile)
         }
     }
 
+    outputFile << "Явная схема" << ',' << "шаг по t:," << k << '\n';
     printResult(outputFile, k, u);
 }
 
@@ -108,6 +109,7 @@ void runImplicitScheme(std::ofstream& outputFile, int s)
         }
     }
 
+    outputFile << "Неявная схема, s = " << s << ',' << "шаг по t:," << k << '\n';
     printResult(outputFile, k, u);
 }
 

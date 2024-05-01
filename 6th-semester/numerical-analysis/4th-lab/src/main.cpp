@@ -16,8 +16,8 @@ void printResult(std::ofstream& outputFile, double k,
 {
     printHeader(outputFile);
 
-    outputFile << "Вирт. слой,";
-    for (int i{ 0 }; i <= constants::n; ++i)
+    outputFile << "Вирт. слой,,";
+    for (int i{ 1 }; i < constants::n; ++i)
     {
         outputFile << virtualResult[i] << ',';
     }

@@ -52,7 +52,7 @@ double getPhiTValue(double t)
 
 double getPsiTValue(double t)
 {
-    return (std::exp(constants::bigN * t) + constants::bigM * std::sin(constants::bigN - constants::m * t));
+    return (std::exp(constants::bigN * t) + constants::bigM * std::sin(constants::bigN * t) + constants::bigN);
 }
 
 void calculateAndPrintResult(std::ofstream& outputFile)
@@ -67,7 +67,7 @@ void calculateAndPrintResult(std::ofstream& outputFile)
     }
 
     double k{ constants::h };
-    for (int j{ 0 }; j <= constants::n; ++j)
+    for (int j{ 1 }; j <= constants::n; ++j)
     {
         u[0][j] = getPhiTValue(k * j);
         u[constants::n][j] = getPsiTValue(k * j);

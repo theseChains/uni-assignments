@@ -57,7 +57,7 @@ void runExplicitScheme(std::ofstream& outputFile)
         u[constants::n][j] = getPsiTValue(k * j);
     }
 
-    for (int j{ 1 }; j < constants::n; ++j)
+    for (int j{ 0 }; j < constants::n; ++j)
     {
         for (int i{ 1 }; i < constants::n; ++i)
         {
@@ -95,7 +95,7 @@ void runImplicitScheme(std::ofstream& outputFile, int s)
         b[1][j + 1] = getPhiTValue(k * j) + s * u[1][j];
     }
 
-    for (int j{ 1 }; j < constants::n; ++j)
+    for (int j{ 0 }; j < constants::n; ++j)
     {
         for (int i{ 2 }; i < constants::n; ++i)
         {

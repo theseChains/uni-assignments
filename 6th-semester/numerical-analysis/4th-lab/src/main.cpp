@@ -83,7 +83,7 @@ void calculateAndPrintResult(std::ofstream& outputFile)
         u[i][1] = u[i + 1][0] + u[i - 1][0] - virtualU[i];
     }
 
-    for (int j{ 1 }; j < constants::n; ++j)
+    for (int j{ 0 }; j < constants::n; ++j)
     {
         for (int i{ 1 }; i < constants::n; ++i)
         {

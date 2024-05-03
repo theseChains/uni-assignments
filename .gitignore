@@ -12,3 +12,4 @@ build-*/
 *.pro.user
 *.jar
 *.class
+*.user

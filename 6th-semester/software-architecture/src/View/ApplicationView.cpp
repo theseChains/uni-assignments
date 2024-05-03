@@ -5,15 +5,17 @@
 
 #include <QDebug>
 
+#include "ViewConstants.h"
+
 namespace polyclinic
 {
-ApplicationView::ApplicationView(ApplicationController& controller, QWidget *parent)
+ApplicationView::ApplicationView(ApplicationController& controller, QWidget* parent)
     : QMainWindow{ parent },
       m_controller{ controller },
       m_ui{ new Ui::ApplicationViewUi }
 {
     m_ui->setupUi(this);
-    navigateToPage("LoginPage");
+    navigateToPage(constants::kLoginPage);
 
     QObject::connect(m_ui->LogInButton, &QPushButton::clicked,
                      this, &ApplicationView::onLoginButtonClicked);
@@ -21,7 +23,7 @@ ApplicationView::ApplicationView(ApplicationController& controller, QWidget *par
 
 void ApplicationView::onLoginButtonClicked() {
     if (loginIsValid()) {
-        navigateToPage("RegistratorPage");
+        navigateToPage(constants::kRegistratorPage);
     } else {
         std::cerr << "invalid login or password\n";
     }
@@ -31,7 +33,7 @@ bool ApplicationView::loginIsValid() {
     return true;
 }
 
-void ApplicationView::navigateToPage(const QString &objectName) {
+void ApplicationView::navigateToPage(const QString& objectName) {
     for (int i{ 0 }; i < m_ui->stackedWidget->count(); ++i) {
         QWidget* widget{ m_ui->stackedWidget->widget(i) };
         if (widget && widget->objectName() == objectName) {

@@ -14,15 +14,20 @@ find_package(Qt5 COMPONENTS Widgets REQUIRED)
 include_directories(src)
 
 set(VIEW_SOURCES
+    src/View/ApplicationViewUi.ui
     src/View/ApplicationView.cpp
     src/View/ApplicationView.h
-    src/View/ApplicationViewUi.ui
+    src/View/ViewConstants.h
 )
 
 set(CONTROLLER_SOURCES
+    src/Controller/ApplicationController.cpp
+    src/Controller/ApplicationController.h
 )
 
 set(MODEL_SOURCES
+    src/Model/ApplicationModel.cpp
+    src/Model/ApplicationModel.h
 )
 
 add_executable(PolyclinicApp

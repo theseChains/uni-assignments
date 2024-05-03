@@ -5,8 +5,11 @@
 
 #include <QDebug>
 
-ApplicationView::ApplicationView(QWidget *parent)
+namespace polyclinic
+{
+ApplicationView::ApplicationView(ApplicationController& controller, QWidget *parent)
     : QMainWindow{ parent },
+      m_controller{ controller },
       m_ui{ new Ui::ApplicationViewUi }
 {
     m_ui->setupUi(this);
@@ -44,4 +47,4 @@ ApplicationView::~ApplicationView()
 {
     delete m_ui;
 }
-
+}

@@ -1,18 +1,22 @@
-#ifndef POLYCLINICAPP_H
-#define POLYCLINICAPP_H
+#ifndef POLYCLINIC_APP_VIEW_APPLICATIONVIEW_H_
+#define POLYCLINIC_APP_VIEW_APPLICATIONVIEW_H_
 
 #include <QMainWindow>
+
+#include "Controller/ApplicationController.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class ApplicationViewUi; }
 QT_END_NAMESPACE
 
+namespace polyclinic
+{
 class ApplicationView : public QMainWindow
 {
     Q_OBJECT
 
 public:
-    ApplicationView(QWidget *parent = nullptr);
+    ApplicationView(ApplicationController& controller, QWidget *parent = nullptr);
     ~ApplicationView();
 
 private slots:
@@ -23,7 +27,9 @@ private:
     void navigateToPage(const QString& objectName);
 
 private:
+    ApplicationController& m_controller;
     Ui::ApplicationViewUi* m_ui;
 };
+}
 
-#endif // POLYCLINICAPP_H
+#endif

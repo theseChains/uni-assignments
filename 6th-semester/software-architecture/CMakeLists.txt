@@ -13,6 +13,10 @@ find_package(Qt5 COMPONENTS Widgets REQUIRED)
 
 include_directories(src)
 
+QT5_ADD_RESOURCES(RESOURCE_FILES
+    res/darkstyle.qrc
+)
+
 set(VIEW_SOURCES
     src/View/ApplicationViewUi.ui
     src/View/ApplicationView.cpp
@@ -31,9 +35,11 @@ set(MODEL_SOURCES
 )
 
 add_executable(PolyclinicApp
+    ${RESOURCE_FILES}
     ${VIEW_SOURCES}
     ${CONTROLLER_SOURCES}
     ${MODEL_SOURCES}
-    src/main.cpp)
+    src/main.cpp
+)
 
 target_link_libraries(PolyclinicApp PRIVATE Qt5::Widgets)

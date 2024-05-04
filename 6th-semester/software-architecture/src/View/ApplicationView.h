@@ -1,7 +1,11 @@
 #ifndef POLYCLINIC_APP_VIEW_APPLICATIONVIEW_H_
 #define POLYCLINIC_APP_VIEW_APPLICATIONVIEW_H_
 
+#include <array>
+#include <vector>
+
 #include <QMainWindow>
+#include <QStackedWidget>
 
 #include "Controller/ApplicationController.h"
 
@@ -21,10 +25,17 @@ public:
 
 private slots:
     void onLoginButtonClicked();
+    void onFindClientsButtonClicked();
+    void onBackToSearchButtonClicked();
 
 private:
     bool loginIsValid();
-    void navigateToPage(const QString& objectName);
+    bool foundClients();
+    std::vector<std::array<QString, 4>> findClients();
+    void fillTableWithData(const std::vector<std::array<QString, 4>>& data);
+    void navigateToPage(const QString& pageName);
+    bool searchStackedWidgetForPage(const QString& pageName,
+                                    QStackedWidget& stackedWidget);
 
 private:
     ApplicationController& m_controller;

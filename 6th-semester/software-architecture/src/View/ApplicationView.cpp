@@ -21,6 +21,8 @@ ApplicationView::ApplicationView(ApplicationController& controller, QWidget* par
 
     m_ui->FoundClientsTable->setHorizontalHeaderLabels(
         QStringList{} << "Фамилия" << "Имя" << "Отчество" << "Дата рождения");
+    m_ui->FoundClientsTable->setSelectionMode(QAbstractItemView::SingleSelection);
+    m_ui->FoundClientsTable->setSelectionBehavior(QAbstractItemView::SelectRows);
 
     navigateToPage(constants::kLoginPage);
 
@@ -30,6 +32,8 @@ ApplicationView::ApplicationView(ApplicationController& controller, QWidget* par
                      this, &ApplicationView::onFindClientsButtonClicked);
     QObject::connect(m_ui->BackToSearchButton, &QPushButton::clicked,
                      this, &ApplicationView::onBackToSearchButtonClicked);
+    QObject::connect(m_ui->OpenClientInfoButton, &QPushButton::clicked,
+                     this, &ApplicationView::onOpenClientInfoButtonCliecked);
 }
 
 void ApplicationView::onLoginButtonClicked()
@@ -47,6 +51,30 @@ void ApplicationView::onLoginButtonClicked()
 void ApplicationView::onBackToSearchButtonClicked()
 {
     navigateToPage(constants::kSeachClientsPage);
+}
+
+void ApplicationView::onOpenClientInfoButtonCliecked()
+{
+    int selectedRow{ m_ui->FoundClientsTable->currentRow() };
+    if (selectedRow != -1)
+    {
+        // should really create a struct for this short kind of data
+        std::array<QString, 4> clientData{};
+        for (int col{ 0 }; col < m_ui->FoundClientsTable->columnCount(); ++col)
+        {
+            QTableWidgetItem *item{
+                m_ui->FoundClientsTable->item(selectedRow, col) };
+            clientData[col] = item->text();
+        }
+
+        // then we also fetch full data based on this client data from the table
+        // cause we'll need it anyways
+        // so if we have 2 clients with the same data.. well.. too bad xd
+
+        m_ui->ClientPageClientSurname->setText(clientData[0]);
+
+        navigateToPage(constants::kClientInfoPage);
+    }
 }
 
 std::vector<std::array<QString, 4>> ApplicationView::findClients()

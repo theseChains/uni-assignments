@@ -11,6 +11,7 @@ inline const QString kRegistratorPage{ "RegistratorPage" };
 inline const QString kAdministratorPage{ "AdministratorPage" };
 inline const QString kSeachClientsPage{ "SearchClientsPage" };
 inline const QString kFoundClientsPage{ "FoundClientsPage" };
+inline const QString kClientInfoPage{ "ClientInfoPage" };
 }
 
 #endif

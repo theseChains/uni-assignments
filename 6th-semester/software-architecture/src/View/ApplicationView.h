@@ -27,6 +27,7 @@ private slots:
     void onLoginButtonClicked();
     void onFindClientsButtonClicked();
     void onBackToSearchButtonClicked();
+    void onOpenClientInfoButtonCliecked();
 
 private:
     bool loginIsValid();

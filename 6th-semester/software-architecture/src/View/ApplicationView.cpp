@@ -33,7 +33,9 @@ ApplicationView::ApplicationView(ApplicationController& controller, QWidget* par
     QObject::connect(m_ui->BackToSearchButton, &QPushButton::clicked,
                      this, &ApplicationView::onBackToSearchButtonClicked);
     QObject::connect(m_ui->OpenClientInfoButton, &QPushButton::clicked,
-                     this, &ApplicationView::onOpenClientInfoButtonCliecked);
+                     this, &ApplicationView::onOpenClientInfoButtonClicked);
+    QObject::connect(m_ui->BackToClientTableButton, &QPushButton::clicked,
+                     this, &ApplicationView::onBackToClientTableButtonClicked);
 }
 
 void ApplicationView::onLoginButtonClicked()
@@ -53,7 +55,7 @@ void ApplicationView::onBackToSearchButtonClicked()
     navigateToPage(constants::kSeachClientsPage);
 }
 
-void ApplicationView::onOpenClientInfoButtonCliecked()
+void ApplicationView::onOpenClientInfoButtonClicked()
 {
     int selectedRow{ m_ui->FoundClientsTable->currentRow() };
     if (selectedRow != -1)
@@ -71,10 +73,21 @@ void ApplicationView::onOpenClientInfoButtonCliecked()
         // cause we'll need it anyways
         // so if we have 2 clients with the same data.. well.. too bad xd
 
-        m_ui->ClientPageClientSurname->setText(clientData[0]);
+        m_ui->ClientPageLastName->setText(clientData[0]);
+        m_ui->ClientPageFirstName->setText(clientData[1]);
+        m_ui->ClientPageMiddleName->setText(clientData[2]);
+        QStringList dateParts{ clientData[3].split('.') };
+        QDate date{ dateParts[2].toInt(), dateParts[1].toInt(), dateParts[0].toInt() };
+        // this should honeslty already be a QDate
+        m_ui->ClientPageDateOfBirth->setDate(date);
 
         navigateToPage(constants::kClientInfoPage);
     }
+}
+
+void ApplicationView::onBackToClientTableButtonClicked()
+{
+    navigateToPage(constants::kFoundClientsPage);
 }
 
 std::vector<std::array<QString, 4>> ApplicationView::findClients()
@@ -84,21 +97,21 @@ std::vector<std::array<QString, 4>> ApplicationView::findClients()
     clientData.push_back({ "zzz", "mmm", "add", "10.10.2000"});
     clientData.push_back({ "dataaa", "dataa", "data", "10.10.3000"});
 
-    clientData.push_back({ "aaa", "bbb", "ccc", "10.10.1000"});
-    clientData.push_back({ "zzz", "mmm", "add", "10.10.2000"});
-    clientData.push_back({ "dataaa", "dataa", "data", "10.10.3000"});
+    clientData.push_back({ "baa", "bba", "cac", "10.20.1000"});
+    clientData.push_back({ "kkzzz", "mmm", "add", "10.30.2000"});
+    clientData.push_back({ "kkdataaa", "dataa", "data", "10.40.3000"});
 
-    clientData.push_back({ "aaa", "bbb", "ccc", "10.10.1000"});
-    clientData.push_back({ "zzz", "mmm", "add", "10.10.2000"});
-    clientData.push_back({ "dataaa", "dataa", "data", "10.10.3000"});
+    clientData.push_back({ "llaaa", "bbb", "ccc", "10.50.1000"});
+    clientData.push_back({ "llzzz", "mmm", "add", "10.60.2000"});
+    clientData.push_back({ "lldataaa", "dataa", "data", "40.10.3000"});
 
-    clientData.push_back({ "aaa", "bbb", "ccc", "10.10.1000"});
-    clientData.push_back({ "zzz", "mmm", "add", "10.10.2000"});
-    clientData.push_back({ "dataaa", "dataa", "data", "10.10.3000"});
+    clientData.push_back({ "lllaaa", "bbb", "ccc", "30.10.1000"});
+    clientData.push_back({ "lllzzz", "mmm", "add", "30.10.2000"});
+    clientData.push_back({ "llldataaa", "dataa", "data", "80.10.3000"});
 
-    clientData.push_back({ "aaa", "bbb", "ccc", "10.10.1000"});
-    clientData.push_back({ "zzz", "mmm", "add", "10.10.2000"});
-    clientData.push_back({ "dataaa", "dataa", "data", "10.10.3000"});
+    clientData.push_back({ "aaaa", "bbb", "ccc", "10.10.8000"});
+    clientData.push_back({ "azzz", "mmm", "add", "10.10.8000"});
+    clientData.push_back({ "adataaa", "dataa", "data", "10.10.3000"});
 
     return clientData;
 }
@@ -106,7 +119,7 @@ std::vector<std::array<QString, 4>> ApplicationView::findClients()
 void ApplicationView::fillTableWithData(const std::vector<std::array<QString, 4>>& data)
 {
     m_ui->FoundClientsTable->setRowCount(data.size());
-    m_ui->FoundClientsTable->setColumnCount(4);
+    m_ui->FoundClientsTable->setColumnCount(constants::kNumberOfClientsTableColumns);
 
     // move this somewhere else?
     int fontSize{ 14 };
@@ -115,7 +128,7 @@ void ApplicationView::fillTableWithData(const std::vector<std::array<QString, 4>
 
     for (std::size_t i{ 0 }; i < data.size(); ++i)
     {
-        for (std::size_t j{ 0 }; j < 4; ++j)
+        for (std::size_t j{ 0 }; j < constants::kNumberOfClientsTableColumns; ++j)
         {
             QTableWidgetItem *item{};
             if (m_ui->FoundClientsTable->item(i, j))

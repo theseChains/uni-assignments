@@ -12,6 +12,7 @@ inline const QString kAdministratorPage{ "AdministratorPage" };
 inline const QString kSeachClientsPage{ "SearchClientsPage" };
 inline const QString kFoundClientsPage{ "FoundClientsPage" };
 inline const QString kClientInfoPage{ "ClientInfoPage" };
+inline const QString kTalonPage{ "TalonPage" };
 
 inline constexpr int kNumberOfClientsTableColumns{ 4 };
 }

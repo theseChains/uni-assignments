@@ -18,6 +18,7 @@ ApplicationView::ApplicationView(ApplicationController& controller, QWidget* par
     m_ui->setupUi(this);
     m_ui->RegistratorTabs->setCurrentIndex(0);
     m_ui->ClientSearchStackedWidget->setCurrentIndex(0);
+    m_ui->TalonPageTabs->setCurrentIndex(0);
 
     m_ui->FoundClientsTable->setHorizontalHeaderLabels(
         QStringList{} << "Фамилия" << "Имя" << "Отчество" << "Дата рождения");
@@ -36,6 +37,10 @@ ApplicationView::ApplicationView(ApplicationController& controller, QWidget* par
                      this, &ApplicationView::onOpenClientInfoButtonClicked);
     QObject::connect(m_ui->BackToClientTableButton, &QPushButton::clicked,
                      this, &ApplicationView::onBackToClientTableButtonClicked);
+    QObject::connect(m_ui->ClientPageTalonButton, &QPushButton::clicked,
+                     this, &ApplicationView::onClientPageTalonButtonClicked);
+    QObject::connect(m_ui->ClientTableTalonButton, &QPushButton::clicked,
+                     this, &ApplicationView::onClientTableTalonButtonClicked);
 }
 
 void ApplicationView::onLoginButtonClicked()
@@ -58,6 +63,8 @@ void ApplicationView::onBackToSearchButtonClicked()
 void ApplicationView::onOpenClientInfoButtonClicked()
 {
     int selectedRow{ m_ui->FoundClientsTable->currentRow() };
+    // it always chooses the first one if there is no choice
+    // look into that if you have time
     if (selectedRow != -1)
     {
         // should really create a struct for this short kind of data
@@ -88,6 +95,37 @@ void ApplicationView::onOpenClientInfoButtonClicked()
 void ApplicationView::onBackToClientTableButtonClicked()
 {
     navigateToPage(constants::kFoundClientsPage);
+}
+
+void ApplicationView::onClientPageTalonButtonClicked()
+{
+    QString clientData{};
+
+    clientData.append(m_ui->ClientPageLastName->text() + " ");
+    clientData.append(m_ui->ClientPageFirstName->text() + " ");
+    clientData.append(m_ui->ClientPageMiddleName->text() + " ");
+    QDate date{ m_ui->ClientPageDateOfBirth->date() };
+    clientData.append(date.toString("dd.MM.yyyy"));
+
+    m_ui->TalonPageClientInfo->setText(clientData);
+
+    navigateToPage(constants::kTalonPage);
+}
+
+void ApplicationView::onClientTableTalonButtonClicked()
+{
+    int selectedRow{ m_ui->FoundClientsTable->currentRow() };
+    QString clientData{};
+    for (int col{ 0 }; col < m_ui->FoundClientsTable->columnCount(); ++col)
+    {
+        QTableWidgetItem *item{ m_ui->FoundClientsTable->item(selectedRow, col) };
+        clientData.append(item->text());
+        clientData.append(" ");
+    }
+
+    m_ui->TalonPageClientInfo->setText(clientData);
+
+    navigateToPage(constants::kTalonPage);
 }
 
 std::vector<std::array<QString, 4>> ApplicationView::findClients()
@@ -188,6 +226,8 @@ void ApplicationView::navigateToPage(const QString& pageName)
 bool ApplicationView::searchStackedWidgetForPage(const QString& pageName,
                                                  QStackedWidget& stackedWidget)
 {
+    // im pretty sure i can just use indices instead of this
+    // this is kind of more safe in case i delete some page but idk..
     for (int i{ 0 }; i < stackedWidget.count(); ++i)
     {
         QWidget* foundWidget{ stackedWidget.widget(i) };

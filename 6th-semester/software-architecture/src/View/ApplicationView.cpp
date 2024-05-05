@@ -41,6 +41,8 @@ ApplicationView::ApplicationView(ApplicationController& controller, QWidget* par
                      this, &ApplicationView::onClientPageTalonButtonClicked);
     QObject::connect(m_ui->ClientTableTalonButton, &QPushButton::clicked,
                      this, &ApplicationView::onClientTableTalonButtonClicked);
+    QObject::connect(m_ui->BackFromTalonButton, &QPushButton::clicked,
+                     this, &ApplicationView::onBackFromTalonButtonClicked);
 }
 
 void ApplicationView::onLoginButtonClicked()
@@ -109,6 +111,8 @@ void ApplicationView::onClientPageTalonButtonClicked()
 
     m_ui->TalonPageClientInfo->setText(clientData);
 
+    m_lastClientStackedWidgetIndex = m_ui->ClientSearchStackedWidget->currentIndex();
+
     navigateToPage(constants::kTalonPage);
 }
 
@@ -124,6 +128,8 @@ void ApplicationView::onClientTableTalonButtonClicked()
     }
 
     m_ui->TalonPageClientInfo->setText(clientData);
+
+    m_lastClientStackedWidgetIndex = m_ui->ClientSearchStackedWidget->currentIndex();
 
     navigateToPage(constants::kTalonPage);
 }
@@ -197,6 +203,11 @@ void ApplicationView::onFindClientsButtonClicked()
     {
         std::cerr << "nothing was found\n";
     }
+}
+
+void ApplicationView::onBackFromTalonButtonClicked()
+{
+    m_ui->ClientSearchStackedWidget->setCurrentIndex(m_lastClientStackedWidgetIndex);
 }
 
 bool ApplicationView::loginIsValid()

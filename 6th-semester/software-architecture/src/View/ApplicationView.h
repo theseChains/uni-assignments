@@ -31,6 +31,7 @@ private slots:
     void onBackToClientTableButtonClicked();
     void onClientPageTalonButtonClicked();
     void onClientTableTalonButtonClicked();
+    void onBackFromTalonButtonClicked();
 
 private:
     bool loginIsValid();
@@ -43,6 +44,7 @@ private:
 
 private:
     ApplicationController& m_controller;
+    int m_lastClientStackedWidgetIndex{};
     Ui::ApplicationViewUi* m_ui;
 };
 }

@@ -43,6 +43,8 @@ ApplicationView::ApplicationView(ApplicationController& controller, QWidget* par
                      this, &ApplicationView::onClientTableTalonButtonClicked);
     QObject::connect(m_ui->BackFromTalonButton, &QPushButton::clicked,
                      this, &ApplicationView::onBackFromTalonButtonClicked);
+    QObject::connect(m_ui->TalonPageEditScheduleButton, &QPushButton::clicked,
+                     this, &ApplicationView::onTalonPageEditScheduleButtonClicked);
 }
 
 void ApplicationView::onLoginButtonClicked()
@@ -208,6 +210,12 @@ void ApplicationView::onFindClientsButtonClicked()
 void ApplicationView::onBackFromTalonButtonClicked()
 {
     m_ui->ClientSearchStackedWidget->setCurrentIndex(m_lastClientStackedWidgetIndex);
+}
+
+void ApplicationView::onTalonPageEditScheduleButtonClicked()
+{
+    // hmm
+    m_ui->RegistratorTabs->setCurrentIndex(2);
 }
 
 bool ApplicationView::loginIsValid()

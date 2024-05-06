@@ -32,6 +32,7 @@ private slots:
     void onClientPageTalonButtonClicked();
     void onClientTableTalonButtonClicked();
     void onBackFromTalonButtonClicked();
+    void onTalonPageEditScheduleButtonClicked();
 
 private:
     bool loginIsValid();

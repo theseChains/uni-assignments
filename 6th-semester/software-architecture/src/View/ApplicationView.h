@@ -33,6 +33,7 @@ private slots:
     void onClientTableTalonButtonClicked();
     void onBackFromTalonButtonClicked();
     void onTalonPageEditScheduleButtonClicked();
+    void onOpenOutpatientCardButtonClicked();
 
 private:
     bool loginIsValid();

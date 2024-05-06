@@ -46,13 +46,15 @@ ApplicationView::ApplicationView(ApplicationController& controller, QWidget* par
                      this, &ApplicationView::onBackFromTalonButtonClicked);
     QObject::connect(m_ui->TalonPageEditScheduleButton, &QPushButton::clicked,
                      this, &ApplicationView::onTalonPageEditScheduleButtonClicked);
+    QObject::connect(m_ui->OpenOutpatientCardButton, &QPushButton::clicked,
+                     this, &ApplicationView::onOpenOutpatientCardButtonClicked);
 }
 
 void ApplicationView::onLoginButtonClicked()
 {
     if (loginIsValid())
     {
-        navigateToPage(constants::kAdministratorPage);
+        navigateToPage(constants::kDoctorPage);
     }
     else
     {
@@ -219,6 +221,11 @@ void ApplicationView::onTalonPageEditScheduleButtonClicked()
     m_ui->RegistratorTabs->setCurrentIndex(2);
 }
 
+void ApplicationView::onOpenOutpatientCardButtonClicked()
+{
+    navigateToPage(constants::kOutpatientCardPage);
+}
+
 bool ApplicationView::loginIsValid()
 {
     return true;
@@ -238,6 +245,9 @@ void ApplicationView::navigateToPage(const QString& pageName)
     // that's not cool
     if (!foundPage)
         foundPage = searchStackedWidgetForPage(pageName, *m_ui->ClientSearchStackedWidget);
+
+    if (!foundPage)
+        foundPage = searchStackedWidgetForPage(pageName, *m_ui->DoctorStackedWidget);
 
     if (!foundPage)
         qDebug() << "could not find page " << pageName << '\n';

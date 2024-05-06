@@ -16,6 +16,7 @@ ApplicationView::ApplicationView(ApplicationController& controller, QWidget* par
       m_ui{ new Ui::ApplicationViewUi }
 {
     m_ui->setupUi(this);
+    m_ui->AdministratorTabs->setCurrentIndex(0);
     m_ui->RegistratorTabs->setCurrentIndex(0);
     m_ui->ClientSearchStackedWidget->setCurrentIndex(0);
     m_ui->TalonPageTabs->setCurrentIndex(0);
@@ -51,7 +52,7 @@ void ApplicationView::onLoginButtonClicked()
 {
     if (loginIsValid())
     {
-        navigateToPage(constants::kRegistratorPage);
+        navigateToPage(constants::kAdministratorPage);
     }
     else
     {

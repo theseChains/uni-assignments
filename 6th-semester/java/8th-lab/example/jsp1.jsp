@@ -16,6 +16,6 @@
             <input type="submit" value="OK" name="button1" />
             <%mybean.addCounter(1);%>
         </form>
-        <a href="jsp_2.jsp?name=123">Переход</a>
+        <a href="jsp2.jsp?name=123">Переход</a>
     </body>
 </html>

@@ -1,0 +1,7 @@
+author_full_name=Default Author
+publication_title=Default Title
+publisher=Default Publisher
+year_of_publication=2000
+number_of_pages=100
+year_of_writing=1990
+weight_in_grams=500

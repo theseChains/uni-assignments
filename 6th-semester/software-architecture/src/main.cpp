@@ -14,6 +14,7 @@ int main(int argc, char *argv[])
     application.setStyleSheet(QLatin1String{ styleSheetFile.readAll() });
 
     polyclinic::ApplicationModel model{};
+    model.connectToTheDatabase();
     polyclinic::ApplicationController controller{ model };
     polyclinic::ApplicationView view{ controller };
     view.show();

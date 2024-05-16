@@ -34,9 +34,10 @@ private slots:
     void onBackFromTalonButtonClicked();
     void onTalonPageEditScheduleButtonClicked();
     void onOpenOutpatientCardButtonClicked();
+    void onAuthenticationSuccess(UserType userType);
+    void onAuthenticationFailed();
 
 private:
-    bool loginIsValid();
     bool foundClients();
     std::vector<std::array<QString, 4>> findClients();
     void fillTableWithData(const std::vector<std::array<QString, 4>>& data);

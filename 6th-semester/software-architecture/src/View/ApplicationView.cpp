@@ -19,6 +19,7 @@ ApplicationView::ApplicationView(ApplicationController& controller, QWidget* par
     m_ui->AdministratorTabs->setCurrentIndex(0);
     m_ui->RegistratorTabs->setCurrentIndex(0);
     m_ui->ClientSearchStackedWidget->setCurrentIndex(0);
+    m_ui->DoctorStackedWidget->setCurrentIndex(0);
     m_ui->TalonPageTabs->setCurrentIndex(0);
 
     m_ui->FoundClientsTable->setHorizontalHeaderLabels(
@@ -48,18 +49,39 @@ ApplicationView::ApplicationView(ApplicationController& controller, QWidget* par
                      this, &ApplicationView::onTalonPageEditScheduleButtonClicked);
     QObject::connect(m_ui->OpenOutpatientCardButton, &QPushButton::clicked,
                      this, &ApplicationView::onOpenOutpatientCardButtonClicked);
+
+    QObject::connect(&m_controller, &ApplicationController::authenticationSuccess,
+                     this, &ApplicationView::onAuthenticationSuccess);
+    QObject::connect(&m_controller, &ApplicationController::authenticationFailed,
+                     this, &ApplicationView::onAuthenticationFailed);
 }
 
 void ApplicationView::onLoginButtonClicked()
 {
-    if (loginIsValid())
+    m_controller.authenticateUser(
+            m_ui->LoginInput->text(), m_ui->PasswordInput->text());
+}
+
+void ApplicationView::onAuthenticationSuccess(UserType userType)
+{
+    if (userType == UserType::kAdministrator)
+    {
+        navigateToPage(constants::kAdministratorPage);
+    }
+    else if (userType == UserType::kDoctor)
     {
         navigateToPage(constants::kDoctorPage);
     }
-    else
+    else if (userType == UserType::kRegistrator)
     {
-        std::cerr << "invalid login or password\n";
+        navigateToPage(constants::kRegistratorPage);
     }
+}
+
+void ApplicationView::onAuthenticationFailed()
+{
+    // todo: output a message in the app about this
+    std::cerr << "invalid login or password\n";
 }
 
 void ApplicationView::onBackToSearchButtonClicked()
@@ -224,11 +246,6 @@ void ApplicationView::onTalonPageEditScheduleButtonClicked()
 void ApplicationView::onOpenOutpatientCardButtonClicked()
 {
     navigateToPage(constants::kOutpatientCardPage);
-}
-
-bool ApplicationView::loginIsValid()
-{
-    return true;
 }
 
 bool ApplicationView::foundClients()

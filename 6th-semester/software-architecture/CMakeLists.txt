@@ -9,7 +9,7 @@ set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 
-find_package(Qt5 COMPONENTS Widgets REQUIRED)
+find_package(Qt5 COMPONENTS Core Widgets Sql REQUIRED)
 
 include_directories(src)
 
@@ -34,6 +34,10 @@ set(MODEL_SOURCES
     src/Model/ApplicationModel.h
 )
 
+set(CONFIG_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/config)
+set(CONFIG_BUILD_DIR ${CMAKE_CURRENT_BINARY_DIR}/config)
+file(COPY ${CONFIG_SOURCE_DIR}/config.ini DESTINATION ${CONFIG_BUILD_DIR})
+
 add_executable(PolyclinicApp
     ${RESOURCE_FILES}
     ${VIEW_SOURCES}
@@ -42,4 +46,4 @@ add_executable(PolyclinicApp
     src/main.cpp
 )
 
-target_link_libraries(PolyclinicApp PRIVATE Qt5::Widgets)
+target_link_libraries(PolyclinicApp PRIVATE Qt5::Core Qt5::Widgets Qt5::Sql)

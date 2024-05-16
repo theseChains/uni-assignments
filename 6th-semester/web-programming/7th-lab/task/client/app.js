@@ -2,7 +2,7 @@ let main = function (studentObjects) {
     "use strict";
 
     let students = studentObjects.map(function (student) {
-        return { institute: student.institute, group: student.group, name: student.name };
+        return { institute: student.institute, group: student.group, name: student.name, studyForm: student.studyForm };
     });
 
     let organizeByProperty = function (studentObjects, property) {
@@ -54,11 +54,11 @@ let main = function (studentObjects) {
             organizedData[key].forEach(function(student) {
                 let info;
                 if (property === 'institute') {
-                    info = student.name + ", " + student.group;
+                    info = student.name + ", " + student.group + ", " + student.studyForm;
                 } else if (property === 'group') {
-                    info = student.name + ", " + student.institute;
+                    info = student.name + ", " + student.institute + ", " + student.studyForm;
                 } else if (property === 'phone') {
-                    info = student.name + ", " + student.group + ", " + student.institute;
+                    info = student.name + ", " + student.group + ", " + student.institute + ", " + student.studyForm;
                 }
                 $content.append($("<li>").text(info));
             });
@@ -77,13 +77,13 @@ let main = function (studentObjects) {
                 $content = $("<ul>");
                 for (let i = students.length - 1; i >= 0; i--) {
                     let student = students[i];
-                    let info = student.institute + ", " + student.group + ", " + student.name;
+                    let info = student.institute + ", " + student.group + ", " + student.name + ", " + student.studyForm;
                     $content.append($("<li>").text(info));
                 }
             } else if ($element.parent().is(":nth-child(2)")) {
                 $content = $("<ul>");
                 students.forEach(function (student) {
-                    let info = student.institute + ", " + student.group + ", " + student.name;
+                    let info = student.institute + ", " + student.group + ", " + student.name + ", " + student.studyForm;
                     $content.append($("<li>").text(info));
                 });
             } else if ($element.parent().is(":nth-child(3)")) {
@@ -107,6 +107,10 @@ let main = function (studentObjects) {
                 $content.append($("<div>").text("Группа:"));
                 let $groupInput = $("<input>");
                 $content.append($groupInput);
+
+                $content.append($("<div>").text("Форма обучения:"));
+                let $studyFormInput = $("<input>");
+                $content.append($studyFormInput);
 
                 $content.append($("<div>").text("Номера телефонов (через запятую):"));
                 let $phoneNumbersInput = $("<input>");
@@ -133,12 +137,14 @@ let main = function (studentObjects) {
                             "institute": $instituteInput.val(),
                             "group": $groupInput.val(),
                             "name": $nameInput.val(),
+                            "studyForm": $studyFormInput.val(),
                             "phone": $phoneNumbersInput.val().split(",")
                         });
 
                         $instituteInput.val("");
                         $groupInput.val("");
                         $nameInput.val("");
+                        $studyFormInput.val("");
                         $phoneNumbersInput.val("");
                     });
                 };

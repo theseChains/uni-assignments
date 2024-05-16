@@ -22,6 +22,14 @@ set(VIEW_SOURCES
     src/View/ApplicationView.cpp
     src/View/ApplicationView.h
     src/View/ViewConstants.h
+    src/View/ButtonHandlers/DoctorButtonsHandler.cpp
+    src/View/ButtonHandlers/DoctorButtonsHandler.h
+    src/View/ButtonHandlers/AdministratorButtonsHandler.cpp
+    src/View/ButtonHandlers/AdministratorButtonsHandler.h
+    src/View/ButtonHandlers/RegistratorButtonsHandler.cpp
+    src/View/ButtonHandlers/RegistratorButtonsHandler.h
+    src/View/StackedWidgetNavigator/StackedWidgetNavigator.cpp
+    src/View/StackedWidgetNavigator/StackedWidgetNavigator.h
 )
 
 set(CONTROLLER_SOURCES

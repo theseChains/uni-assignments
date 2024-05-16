@@ -13,3 +13,4 @@ build-*/
 *.jar
 *.class
 *.user
+config.ini

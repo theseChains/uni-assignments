@@ -4,6 +4,8 @@
 #include <QString>
 #include <QStringView>
 
+#include <unordered_map>
+
 namespace polyclinic::constants
 {
 inline const QString kLoginPage{ "LoginPage" };

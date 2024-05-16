@@ -8,6 +8,7 @@
 #include <QStackedWidget>
 
 #include "Controller/ApplicationController.h"
+#include "View/ButtonHandlers/RegistratorButtonsHandler.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class ApplicationViewUi; }
@@ -25,30 +26,18 @@ public:
 
 private slots:
     void onLoginButtonClicked();
-    void onFindClientsButtonClicked();
-    void onBackToSearchButtonClicked();
-    void onOpenClientInfoButtonClicked();
-    void onBackToClientTableButtonClicked();
-    void onClientPageTalonButtonClicked();
-    void onClientTableTalonButtonClicked();
-    void onBackFromTalonButtonClicked();
-    void onTalonPageEditScheduleButtonClicked();
     void onOpenOutpatientCardButtonClicked();
     void onAuthenticationSuccess(UserType userType);
     void onAuthenticationFailed();
 
 private:
     bool foundClients();
-    std::vector<std::array<QString, 4>> findClients();
-    void fillTableWithData(const std::vector<std::array<QString, 4>>& data);
-    void navigateToPage(const QString& pageName);
-    bool searchStackedWidgetForPage(const QString& pageName,
-                                    QStackedWidget& stackedWidget);
 
 private:
     ApplicationController& m_controller;
     int m_lastClientStackedWidgetIndex{};
     Ui::ApplicationViewUi* m_ui;
+    RegistratorButtonsHandler m_registratorButtonsHandler{};
 };
 }
 

@@ -1,7 +1,7 @@
 #include "RegistratorButtonsHandler.h"
 #include "../ui_ApplicationViewUi.h"
-#include "View/ViewConstants.h"
-#include "View/StackedWidgetNavigator/StackedWidgetNavigator.h"
+#include "../ViewConstants.h"
+#include "../StackedWidgetNavigator/StackedWidgetNavigator.h"
 
 #include <QPushButton>
 #include <iostream>
@@ -15,6 +15,10 @@ void RegistratorButtonsHandler::setUi(Ui::ApplicationViewUi* ui)
 
 void RegistratorButtonsHandler::connectButtonsToSlots()
 {
+    // so all of this is just.. not here.. should be in controller
+    // or not
+    QObject::connect(m_ui->RegisterClientButton, &QPushButton::clicked,
+            this, &RegistratorButtonsHandler::onRegisterPatientButtonClicked);
     QObject::connect(m_ui->OpenClientInfoButton, &QPushButton::clicked,
             this, &RegistratorButtonsHandler::onOpenClientInfoButtonClicked);
     QObject::connect(m_ui->FindClientsButton, &QPushButton::clicked,
@@ -31,6 +35,11 @@ void RegistratorButtonsHandler::connectButtonsToSlots()
             this, &RegistratorButtonsHandler::onBackFromTalonButtonClicked);
     QObject::connect(m_ui->TalonPageEditScheduleButton, &QPushButton::clicked,
             this, &RegistratorButtonsHandler::onTalonPageEditScheduleButtonClicked);
+}
+
+void RegistratorButtonsHandler::onRegisterPatientButtonClicked()
+{
+
 }
 
 void RegistratorButtonsHandler::onOpenClientInfoButtonClicked()

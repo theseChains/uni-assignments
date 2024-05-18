@@ -17,14 +17,14 @@
    <widget class="QStackedWidget" name="UserStackedWidget">
     <property name="geometry">
      <rect>
-      <x>6</x>
+      <x>7</x>
       <y>0</y>
       <width>1280</width>
       <height>720</height>
      </rect>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>2</number>
     </property>
     <widget class="QWidget" name="LoginPage">
      <widget class="QWidget" name="verticalLayoutWidget">
@@ -71,7 +71,7 @@
      <widget class="QTabWidget" name="RegistratorTabs">
       <property name="geometry">
        <rect>
-        <x>2</x>
+        <x>4</x>
         <y>0</y>
         <width>1273</width>
         <height>685</height>
@@ -517,7 +517,7 @@
           </spacer>
          </item>
          <item>
-          <widget class="QPushButton" name="pushButton_2">
+          <widget class="QPushButton" name="RegisterClientButton">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
              <horstretch>0</horstretch>
@@ -3508,14 +3508,14 @@
      <widget class="QTabWidget" name="tabWidget">
       <property name="geometry">
        <rect>
-        <x>0</x>
+        <x>2</x>
         <y>0</y>
         <width>1271</width>
         <height>691</height>
        </rect>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="tab_5">
        <attribute name="title">

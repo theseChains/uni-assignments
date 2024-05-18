@@ -7,8 +7,10 @@
 #include <QMainWindow>
 #include <QStackedWidget>
 
-#include "Controller/ApplicationController.h"
-#include "View/ButtonHandlers/RegistratorButtonsHandler.h"
+// todo: change this later please!
+#include "ButtonHandlers/RegistratorButtonsHandler.h"
+#include "../../common/UserType.h"
+#include "../Facade/Facade.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class ApplicationViewUi; }
@@ -16,12 +18,13 @@ QT_END_NAMESPACE
 
 namespace polyclinic
 {
+// change the name of the class maybe?
 class ApplicationView : public QMainWindow
 {
     Q_OBJECT
 
 public:
-    ApplicationView(ApplicationController& controller, QWidget *parent = nullptr);
+    explicit ApplicationView(QWidget *parent = nullptr);
     ~ApplicationView();
 
 private slots:
@@ -34,9 +37,9 @@ private:
     bool foundClients();
 
 private:
-    ApplicationController& m_controller;
-    int m_lastClientStackedWidgetIndex{};
-    Ui::ApplicationViewUi* m_ui;
+    Ui::ApplicationViewUi* m_ui{};
+    Facade* m_facade{};
+
     RegistratorButtonsHandler m_registratorButtonsHandler{};
 };
 }

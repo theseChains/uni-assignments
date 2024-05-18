@@ -20,6 +20,7 @@ public:
     void connectButtonsToSlots();
 
 private slots:
+    void onRegisterPatientButtonClicked();
     void onOpenClientInfoButtonClicked();
     void onFindClientsButtonClicked();
     void onBackToSearchButtonClicked();

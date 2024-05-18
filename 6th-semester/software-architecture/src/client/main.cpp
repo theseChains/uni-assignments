@@ -1,11 +1,10 @@
-#include "Controller/ApplicationController.h"
-#include "Model/ApplicationModel.h"
 #include "View/ApplicationView.h"
 
 #include <QApplication>
 #include <QFile>
+#include <QTcpSocket>
 
-int main(int argc, char *argv[])
+int main(int argc, char* argv[])
 {
     QApplication application{ argc, argv };
 
@@ -13,10 +12,7 @@ int main(int argc, char *argv[])
     styleSheetFile.open(QFile::ReadOnly);
     application.setStyleSheet(QLatin1String{ styleSheetFile.readAll() });
 
-    polyclinic::ApplicationModel model{};
-    model.connectToTheDatabase();
-    polyclinic::ApplicationController controller{ model };
-    polyclinic::ApplicationView view{ controller };
+    polyclinic::ApplicationView view{};
     view.show();
 
     return application.exec();

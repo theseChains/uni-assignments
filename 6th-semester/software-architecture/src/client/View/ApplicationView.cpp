@@ -11,10 +11,10 @@
 
 namespace polyclinic
 {
-ApplicationView::ApplicationView(ApplicationController& controller, QWidget* parent)
+ApplicationView::ApplicationView(QWidget* parent)
     : QMainWindow{ parent },
-      m_controller{ controller },
-      m_ui{ new Ui::ApplicationViewUi }
+      m_ui{ new Ui::ApplicationViewUi },
+      m_facade{ new Facade{ this } }
 {
     m_ui->setupUi(this);
     m_registratorButtonsHandler.setUi(m_ui);
@@ -32,21 +32,22 @@ ApplicationView::ApplicationView(ApplicationController& controller, QWidget* par
 
     StackedWidgetNavigator::navigateToPage(*m_ui->UserStackedWidget, constants::kLoginPage);
 
+    // qobject here or not?
     QObject::connect(m_ui->LogInButton, &QPushButton::clicked,
                      this, &ApplicationView::onLoginButtonClicked);
     QObject::connect(m_ui->OpenOutpatientCardButton, &QPushButton::clicked,
                      this, &ApplicationView::onOpenOutpatientCardButtonClicked);
 
-    QObject::connect(&m_controller, &ApplicationController::authenticationSuccess,
-                     this, &ApplicationView::onAuthenticationSuccess);
-    QObject::connect(&m_controller, &ApplicationController::authenticationFailed,
-                     this, &ApplicationView::onAuthenticationFailed);
+    connect(m_facade, &Facade::loginResult, this, &ApplicationView::onAuthenticationSuccess);
 }
 
 void ApplicationView::onLoginButtonClicked()
 {
-    m_controller.authenticateUser(
-            m_ui->LoginInput->text(), m_ui->PasswordInput->text());
+    LoginInputData inputData{};
+    inputData.username = m_ui->LoginInput->text();
+    inputData.password = m_ui->PasswordInput->text();
+
+    m_facade->login(inputData);
 }
 
 void ApplicationView::onAuthenticationSuccess(UserType userType)
@@ -73,7 +74,7 @@ void ApplicationView::onAuthenticationFailed()
 
 void ApplicationView::onOpenOutpatientCardButtonClicked()
 {
-    navigateToPage(constants::kOutpatientCardPage);
+    /* navigateToPage(constants::kOutpatientCardPage); */
 }
 
 bool ApplicationView::foundClients()

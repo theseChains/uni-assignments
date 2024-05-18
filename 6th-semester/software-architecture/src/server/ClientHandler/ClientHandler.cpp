@@ -4,6 +4,8 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 
+#include "../../common/data/Reflect.h"
+
 namespace polyclinic
 {
 ClientHandler::ClientHandler(qintptr socketDescriptor, QObject* parent)
@@ -63,7 +65,7 @@ void ClientHandler::onReadyRead()
 
 void ClientHandler::processLoginRequest(const QJsonObject& request)
 {
-    LoginInputData inputData{ LoginInputData::fromJson(request) };
+    LoginInputData inputData{ Reflect::fromJson<LoginInputData>(request) };
     UserType userType{ m_databaseHandler.authenticateUser(inputData) };
 
     QJsonObject response{};

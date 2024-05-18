@@ -3,6 +3,8 @@
 #include <QJsonObject>
 #include <QJsonDocument>
 
+#include "../common/data/Reflect.h"
+
 namespace polyclinic
 {
 Client::Client(QObject* parent)
@@ -27,7 +29,7 @@ void Client::connectToServer()
 
 void Client::sendLoginRequest(const LoginInputData& inputData)
 {
-    QJsonObject request{ inputData.toJson() };
+    QJsonObject request{ Reflect::toJson(inputData) };
     request["command"] = "login";
 
     QJsonDocument document{ request };

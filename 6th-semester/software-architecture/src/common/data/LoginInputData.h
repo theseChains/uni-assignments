@@ -4,6 +4,8 @@
 #include <QString>
 #include <QJsonObject>
 
+#include "Reflect.h"
+
 namespace polyclinic
 {
 struct LoginInputData
@@ -11,22 +13,19 @@ struct LoginInputData
     QString username{};
     QString password{};
 
-    static LoginInputData fromJson(const QJsonObject& data)
-    {
-        LoginInputData inputData{};
-        inputData.username = data["username"].toString();
-        inputData.password = data["password"].toString();
+    LoginInputData() = default;
+    LoginInputData(const QString& username, const QString& password)
+        : username{ username }, password{ password }
+    {}
+};
 
-        return inputData;
-    }
-
-    QJsonObject toJson() const
-    {
-        QJsonObject jsonData{};
-        jsonData["username"] = username;
-        jsonData["password"] = password;
-
-        return jsonData;
+template <>
+struct ReflectTraits<LoginInputData> {
+    static constexpr auto fields() {
+        return std::make_tuple(
+            std::make_pair("username", &LoginInputData::username),
+            std::make_pair("password", &LoginInputData::password)
+        );
     }
 };
 }

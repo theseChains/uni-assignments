@@ -1,5 +1,5 @@
-#ifndef POLYCLINIC_APP_COMMON_DATA_LOGININPUT_H_
-#define POLYCLINIC_APP_COMMON_DATA_LOGININPUT_H_
+#ifndef POLYCLINIC_APP_COMMON_DATA_LOGININPUTDATA_H_
+#define POLYCLINIC_APP_COMMON_DATA_LOGININPUTDATA_H_
 
 #include <QString>
 #include <QJsonObject>
@@ -12,11 +12,6 @@ struct LoginInputData
 {
     QString username{};
     QString password{};
-
-    LoginInputData() = default;
-    LoginInputData(const QString& username, const QString& password)
-        : username{ username }, password{ password }
-    {}
 };
 
 template <>

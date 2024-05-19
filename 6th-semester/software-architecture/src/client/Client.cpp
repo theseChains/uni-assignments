@@ -3,7 +3,7 @@
 #include <QJsonObject>
 #include <QJsonDocument>
 
-#include "../common/data/Reflect.h"
+#include "common/data/Reflect.h"
 
 namespace polyclinic
 {

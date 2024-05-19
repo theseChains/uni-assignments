@@ -8,4 +8,6 @@ add_executable(PolyclinicServer
     main.cpp
 )
 
+include_directories(../)
+
 target_link_libraries(PolyclinicServer PRIVATE Qt5::Core Qt5::Network Qt5::Sql)

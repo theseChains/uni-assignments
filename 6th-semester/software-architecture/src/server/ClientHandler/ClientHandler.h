@@ -4,8 +4,7 @@
 #include <QThread>
 #include <QTcpSocket>
 
-// todo: change later please!
-#include "../DatabaseHandler/DatabaseHandler.h"
+#include "server/DatabaseHandler/DatabaseHandler.h"
 
 namespace polyclinic
 {

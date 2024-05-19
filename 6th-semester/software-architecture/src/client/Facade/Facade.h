@@ -3,10 +3,9 @@
 
 #include <QObject>
 
-// todo: change later please!
-#include "../../common/data/LoginInputData.h"
-#include "../../common/UserType.h"
-#include "../Client.h"
+#include "common/data/LoginInputData.h"
+#include "common/UserType.h"
+#include "client/Client.h"
 
 namespace polyclinic
 {

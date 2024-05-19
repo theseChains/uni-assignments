@@ -4,9 +4,8 @@
 #include <QSqlDatabase>
 #include <QString>
 
-// change later please!
-#include "../../common/UserType.h"
-#include "../../common/data/LoginInputData.h"
+#include "common/UserType.h"
+#include "common/data/LoginInputData.h"
 
 namespace polyclinic
 {

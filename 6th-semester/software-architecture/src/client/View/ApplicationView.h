@@ -7,10 +7,9 @@
 #include <QMainWindow>
 #include <QStackedWidget>
 
-// todo: change this later please!
-#include "ButtonHandlers/RegistratorButtonsHandler.h"
-#include "../../common/UserType.h"
-#include "../Facade/Facade.h"
+#include "client/View/ButtonHandlers/RegistratorButtonsHandler.h"
+#include "common/UserType.h"
+#include "client/Facade/Facade.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class ApplicationViewUi; }

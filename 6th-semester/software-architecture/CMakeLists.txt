@@ -9,49 +9,15 @@ set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 
-find_package(Qt5 COMPONENTS Core Widgets Sql REQUIRED)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/build)
 
-include_directories(src)
+find_package(Qt5 COMPONENTS Core Network Widgets Sql REQUIRED)
 
-QT5_ADD_RESOURCES(RESOURCE_FILES
-    res/darkstyle.qrc
-)
+include_directories(src/client)
+include_directories(src/server)
+include_directories(src/common)
+include_directories(src/common/data)
 
-set(VIEW_SOURCES
-    src/View/ApplicationViewUi.ui
-    src/View/ApplicationView.cpp
-    src/View/ApplicationView.h
-    src/View/ViewConstants.h
-    src/View/ButtonHandlers/DoctorButtonsHandler.cpp
-    src/View/ButtonHandlers/DoctorButtonsHandler.h
-    src/View/ButtonHandlers/AdministratorButtonsHandler.cpp
-    src/View/ButtonHandlers/AdministratorButtonsHandler.h
-    src/View/ButtonHandlers/RegistratorButtonsHandler.cpp
-    src/View/ButtonHandlers/RegistratorButtonsHandler.h
-    src/View/StackedWidgetNavigator/StackedWidgetNavigator.cpp
-    src/View/StackedWidgetNavigator/StackedWidgetNavigator.h
-)
-
-set(CONTROLLER_SOURCES
-    src/Controller/ApplicationController.cpp
-    src/Controller/ApplicationController.h
-)
-
-set(MODEL_SOURCES
-    src/Model/ApplicationModel.cpp
-    src/Model/ApplicationModel.h
-)
-
-set(CONFIG_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/config)
-set(CONFIG_BUILD_DIR ${CMAKE_CURRENT_BINARY_DIR}/config)
-file(COPY ${CONFIG_SOURCE_DIR}/config.ini DESTINATION ${CONFIG_BUILD_DIR})
-
-add_executable(PolyclinicApp
-    ${RESOURCE_FILES}
-    ${VIEW_SOURCES}
-    ${CONTROLLER_SOURCES}
-    ${MODEL_SOURCES}
-    src/main.cpp
-)
-
-target_link_libraries(PolyclinicApp PRIVATE Qt5::Core Qt5::Widgets Qt5::Sql)
+add_subdirectory(src/client)
+add_subdirectory(src/server)
+add_subdirectory(src/common)

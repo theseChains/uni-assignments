@@ -4,6 +4,7 @@
 #include <QObject>
 
 #include "common/data/LoginInputData.h"
+#include "common/data/PatientRegistrationData.h"
 #include "common/UserType.h"
 #include "client/Client.h"
 
@@ -17,15 +18,17 @@ public:
     explicit Facade(QObject* parent = nullptr);
 
     void login(const LoginInputData& inputData);
+    void registerPatient(const PatientRegistrationData& data);
 
 signals:
     void loginResult(UserType userType);
+    void patientRegistrationResult(bool success);
 
 private slots:
     void onClientLoginResult(UserType userType);
+    void onPatientRegistrationResult(bool success);
 
 private:
-    // should this be a pointer?
     Client* m_client{};
 };
 }

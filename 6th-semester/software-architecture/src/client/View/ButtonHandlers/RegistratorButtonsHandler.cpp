@@ -1,13 +1,21 @@
 #include "RegistratorButtonsHandler.h"
 #include "../ui_ApplicationViewUi.h"
-#include "../ViewConstants.h"
-#include "../StackedWidgetNavigator/StackedWidgetNavigator.h"
+#include "client/View/ViewConstants.h"
+#include "client/View/StackedWidgetNavigator/StackedWidgetNavigator.h"
+#include "common/data/PatientRegistrationData.h"
 
 #include <QPushButton>
 #include <iostream>
 
 namespace polyclinic
 {
+RegistratorButtonsHandler::RegistratorButtonsHandler(Facade* facade)
+    : m_facade{ facade }
+{
+    connect(m_facade, &Facade::patientRegistrationResult,
+            this, &RegistratorButtonsHandler::onPatientRegistration);
+}
+
 void RegistratorButtonsHandler::setUi(Ui::ApplicationViewUi* ui)
 {
     m_ui = ui;
@@ -15,8 +23,6 @@ void RegistratorButtonsHandler::setUi(Ui::ApplicationViewUi* ui)
 
 void RegistratorButtonsHandler::connectButtonsToSlots()
 {
-    // so all of this is just.. not here.. should be in controller
-    // or not
     QObject::connect(m_ui->RegisterClientButton, &QPushButton::clicked,
             this, &RegistratorButtonsHandler::onRegisterPatientButtonClicked);
     QObject::connect(m_ui->OpenClientInfoButton, &QPushButton::clicked,
@@ -39,7 +45,33 @@ void RegistratorButtonsHandler::connectButtonsToSlots()
 
 void RegistratorButtonsHandler::onRegisterPatientButtonClicked()
 {
+    PatientRegistrationData data{};
+    data.lastName = m_ui->PatientRegLastName->text();
+    data.firstName = m_ui->PatientRegFirstName->text();
+    data.middleName = m_ui->PatientRegMiddleName->text();
+    data.dateOfBirth = m_ui->PatientRegDateOfBirth->date();
+    data.gender = m_ui->PatientRegGender->currentText();
+    data.documentType = m_ui->PatientRegDocument->currentText();
+    data.documentNumber = m_ui->PatientRegDocumentNumber->text();
+    data.documentSeries = m_ui->PatientRegDocumentSeries->text();
+    data.medicalInsuranceNumber = m_ui->PatientRegMedicalInsurance->text();
+    data.individualInsuranceNumber = m_ui->PatientRegIndividualInsurance->text();
+    data.phoneNumber = m_ui->PatientRegPhoneNumber->text();
+    data.city = m_ui->PatientRegCity->text();
+    data.street = m_ui->PatientRegStreet->text();
+    data.houseNumber = m_ui->PatientRegHouseNumber->text().toInt();
+    data.apartmentNumber = m_ui->PatientRegApartmentNumber->text().toInt();
 
+    m_facade->registerPatient(data);
+}
+
+void RegistratorButtonsHandler::onPatientRegistration(bool success)
+{
+    if (success) {
+        std::cerr << "added new patient\n";
+    } else {
+        std::cerr << "did not add a new patient\n";
+    }
 }
 
 void RegistratorButtonsHandler::onOpenClientInfoButtonClicked()

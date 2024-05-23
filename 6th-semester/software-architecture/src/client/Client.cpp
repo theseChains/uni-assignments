@@ -3,6 +3,8 @@
 #include <QJsonObject>
 #include <QJsonDocument>
 
+#include <iostream>
+
 #include "common/data/Reflect.h"
 
 namespace polyclinic
@@ -36,6 +38,15 @@ void Client::sendLoginRequest(const LoginInputData& inputData)
     m_socket->write(document.toJson());
 }
 
+void Client::sendPatientRegistrationRequest(const PatientRegistrationData& data)
+{
+    QJsonObject request{ Reflect::toJson(data) };
+    request["command"] = "registerPatient";
+
+    QJsonDocument document{ request };
+    m_socket->write(document.toJson());
+}
+
 void Client::onReadyRead()
 {
     QByteArray data{ m_socket->readAll() };
@@ -47,12 +58,22 @@ void Client::onReadyRead()
     {
         processLoginResult(response);
     }
+    else if (command == "patientRegistrationResult")
+    {
+        processPatientRegistrationResult(response);
+    }
 }
 
 void Client::processLoginResult(const QJsonObject& response)
 {
     UserType userType{ static_cast<UserType>(response["userType"].toInt()) };
     emit loginResult(userType);
+}
+
+void Client::processPatientRegistrationResult(const QJsonObject& response)
+{
+    bool success{ response["success"].toBool() };
+    emit patientRegistrationResult(success);
 }
 
 void Client::onDisconnected()

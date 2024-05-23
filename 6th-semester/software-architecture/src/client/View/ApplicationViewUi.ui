@@ -111,7 +111,7 @@
               </widget>
              </item>
              <item>
-              <widget class="QLineEdit" name="lineEdit_7"/>
+              <widget class="QLineEdit" name="PatientRegCity"/>
              </item>
             </layout>
            </item>
@@ -130,7 +130,7 @@
               </widget>
              </item>
              <item>
-              <widget class="QLineEdit" name="lineEdit_10"/>
+              <widget class="QLineEdit" name="PatientRegStreet"/>
              </item>
             </layout>
            </item>
@@ -149,7 +149,7 @@
               </widget>
              </item>
              <item>
-              <widget class="QLineEdit" name="lineEdit_11"/>
+              <widget class="QLineEdit" name="PatientRegHouseNumber"/>
              </item>
              <item>
               <layout class="QHBoxLayout" name="horizontalLayout_13" stretch="3,6">
@@ -166,7 +166,7 @@
                 </widget>
                </item>
                <item>
-                <widget class="QLineEdit" name="lineEdit_12"/>
+                <widget class="QLineEdit" name="PatientRegApartmentNumber"/>
                </item>
               </layout>
              </item>
@@ -204,7 +204,7 @@
               </widget>
              </item>
              <item>
-              <widget class="QLineEdit" name="lineEdit_16">
+              <widget class="QLineEdit" name="PatientRegPhoneNumber">
                <property name="inputMethodHints">
                 <set>Qt::ImhDialableCharactersOnly</set>
                </property>
@@ -227,7 +227,7 @@
               </widget>
              </item>
              <item>
-              <widget class="QLineEdit" name="lineEdit_14">
+              <widget class="QLineEdit" name="PatientRegIndividualInsurance">
                <property name="inputMethodHints">
                 <set>Qt::ImhDigitsOnly</set>
                </property>
@@ -250,7 +250,7 @@
               </widget>
              </item>
              <item>
-              <widget class="QLineEdit" name="lineEdit_13">
+              <widget class="QLineEdit" name="PatientRegMedicalInsurance">
                <property name="inputMethodHints">
                 <set>Qt::ImhDigitsOnly</set>
                </property>
@@ -308,7 +308,7 @@
               </widget>
              </item>
              <item>
-              <widget class="QLineEdit" name="lineEdit_8"/>
+              <widget class="QLineEdit" name="PatientRegFirstName"/>
              </item>
             </layout>
            </item>
@@ -327,7 +327,7 @@
               </widget>
              </item>
              <item>
-              <widget class="QLineEdit" name="lineEdit_9"/>
+              <widget class="QLineEdit" name="PatientRegMiddleName"/>
              </item>
             </layout>
            </item>
@@ -346,7 +346,7 @@
               </widget>
              </item>
              <item>
-              <widget class="QDateEdit" name="dateEdit_2">
+              <widget class="QDateEdit" name="PatientRegDateOfBirth">
                <property name="displayFormat">
                 <string>dd/MM/yyyy</string>
                </property>
@@ -389,7 +389,7 @@
               </widget>
              </item>
              <item>
-              <widget class="QComboBox" name="comboBox">
+              <widget class="QComboBox" name="PatientRegDocument">
                <property name="currentText">
                 <string>Паспорт</string>
                </property>
@@ -422,7 +422,7 @@
               </widget>
              </item>
              <item>
-              <widget class="QLineEdit" name="lineEdit_5">
+              <widget class="QLineEdit" name="PatientRegDocumentSeries">
                <property name="inputMethodHints">
                 <set>Qt::ImhDigitsOnly</set>
                </property>
@@ -448,7 +448,7 @@
               </widget>
              </item>
              <item>
-              <widget class="QLineEdit" name="lineEdit_6">
+              <widget class="QLineEdit" name="PatientRegDocumentNumber">
                <property name="inputMethodHints">
                 <set>Qt::ImhDigitsOnly</set>
                </property>
@@ -474,7 +474,7 @@
               </widget>
              </item>
              <item>
-              <widget class="QComboBox" name="comboBox_2">
+              <widget class="QComboBox" name="PatientRegGender">
                <item>
                 <property name="text">
                  <string>Мужской</string>
@@ -612,7 +612,7 @@
          </rect>
         </property>
         <property name="currentIndex">
-         <number>3</number>
+         <number>2</number>
         </property>
         <widget class="QWidget" name="SearchClientsPage">
          <widget class="QWidget" name="horizontalLayoutWidget_10">
@@ -1814,7 +1814,7 @@
            </rect>
           </property>
           <property name="currentIndex">
-           <number>0</number>
+           <number>1</number>
           </property>
           <widget class="QWidget" name="tab">
            <attribute name="title">

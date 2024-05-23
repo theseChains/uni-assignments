@@ -83,4 +83,42 @@ UserType DatabaseHandler::authenticateUser(const LoginInputData& loginData)
 
     return userType;
 }
+
+bool DatabaseHandler::registerPatient(const PatientRegistrationData& data)
+{
+    QSqlQuery query{ m_database };
+    query.prepare("INSERT INTO patients "
+                  "(last_name, first_name, middle_name, date_of_birth, gender, document_type, "
+                  "document_number, document_series, medical_insurance_number, individual_insurance_number, "
+                  "phone_number, city, street, house_number, apartment_number) "
+                  "VALUES "
+                  "(:last_name, :first_name, :middle_name, :date_of_birth, :gender, :document_type, "
+                  ":document_number, :document_series, :medical_insurance_number, :individual_insurance_number, "
+                  ":phone_number, :city, :street, :house_number, :apartment_number)");
+
+    qDebug() << "database individ ins number: " << data.individualInsuranceNumber << '\n';
+    query.bindValue(":last_name", data.lastName);
+    query.bindValue(":first_name", data.firstName);
+    query.bindValue(":middle_name", data.middleName);
+    query.bindValue(":date_of_birth", data.dateOfBirth);
+    query.bindValue(":gender", data.gender);
+    query.bindValue(":document_type", data.documentType);
+    query.bindValue(":document_number", data.documentNumber);
+    query.bindValue(":document_series", data.documentSeries);
+    query.bindValue(":medical_insurance_number", data.medicalInsuranceNumber);
+    query.bindValue(":individual_insurance_number", data.individualInsuranceNumber);
+    query.bindValue(":phone_number", data.phoneNumber);
+    query.bindValue(":city", data.city);
+    query.bindValue(":street", data.street);
+    query.bindValue(":house_number", data.houseNumber);
+    query.bindValue(":apartment_number", data.apartmentNumber);
+
+    if (!query.exec()) {
+        qWarning() << "Error executing query:" << query.lastError().text();
+        return false;
+    }
+    std::cerr << "registeringg\n";
+
+    return true;
+}
 }

@@ -6,6 +6,7 @@
 
 #include "common/UserType.h"
 #include "common/data/LoginInputData.h"
+#include "common/data/PatientRegistrationData.h"
 
 namespace polyclinic
 {
@@ -18,9 +19,11 @@ public:
 
     void connectToServer();
     void sendLoginRequest(const LoginInputData& inputData);
+    void sendPatientRegistrationRequest(const PatientRegistrationData& data);
 
 signals:
     void loginResult(UserType userType);
+    void patientRegistrationResult(bool success);
 
 private slots:
     void onReadyRead();
@@ -28,6 +31,7 @@ private slots:
 
 private:
     void processLoginResult(const QJsonObject& response);
+    void processPatientRegistrationResult(const QJsonObject& response);
 
 private:
     QTcpSocket* m_socket{};

@@ -3,6 +3,8 @@
 
 #include <QtCore>
 
+#include "client/Facade/Facade.h"
+
 QT_BEGIN_NAMESPACE
 namespace Ui { class ApplicationViewUi; }
 QT_END_NAMESPACE
@@ -14,13 +16,15 @@ class RegistratorButtonsHandler : public QObject
     Q_OBJECT
 
 public:
-    RegistratorButtonsHandler() = default;
+    RegistratorButtonsHandler(Facade* facade);
 
     void setUi(Ui::ApplicationViewUi* ui);
     void connectButtonsToSlots();
 
 private slots:
     void onRegisterPatientButtonClicked();
+    void onPatientRegistration(bool success);
+
     void onOpenClientInfoButtonClicked();
     void onFindClientsButtonClicked();
     void onBackToSearchButtonClicked();
@@ -36,6 +40,7 @@ private:
 
 private:
     Ui::ApplicationViewUi* m_ui;
+    Facade* m_facade;
     int m_lastClientStackedWidgetIndex{};
 };
 }

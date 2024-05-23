@@ -4,7 +4,9 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 
-#include "../../common/data/Reflect.h"
+#include <iostream>
+
+#include "common/data/Reflect.h"
 
 namespace polyclinic
 {
@@ -61,16 +63,35 @@ void ClientHandler::onReadyRead()
     {
         processLoginRequest(request);
     }
+    else if (command == "registerPatient")
+    {
+        processPatientRegistrationRequest(request);
+    }
 }
 
 void ClientHandler::processLoginRequest(const QJsonObject& request)
 {
-    LoginInputData inputData{ Reflect::fromJson<LoginInputData>(request) };
+    LoginInputData inputData{};
+    Reflect::fromJson(request, inputData);
     UserType userType{ m_databaseHandler.authenticateUser(inputData) };
 
     QJsonObject response{};
     response["command"] = "loginResult";
     response["userType"] = static_cast<int>(userType);
+
+    QJsonDocument document{ response };
+    m_socket->write(document.toJson());
+}
+
+void ClientHandler::processPatientRegistrationRequest(const QJsonObject& request)
+{
+    PatientRegistrationData data{};
+    Reflect::fromJson(request, data);
+    bool success{ m_databaseHandler.registerPatient(data) };
+
+    QJsonObject response{};
+    response["command"] = "patientRegistrationResult";
+    response["success"] = success;
 
     QJsonDocument document{ response };
     m_socket->write(document.toJson());

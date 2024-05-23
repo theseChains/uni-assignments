@@ -6,6 +6,7 @@
 
 #include "common/UserType.h"
 #include "common/data/LoginInputData.h"
+#include "common/data/PatientRegistrationData.h"
 
 namespace polyclinic
 {
@@ -18,6 +19,7 @@ public:
     bool connectToTheDatabase();
 
     UserType authenticateUser(const LoginInputData& loginData);
+    bool registerPatient(const PatientRegistrationData& data);
 
 private:
     QSqlDatabase m_database{};

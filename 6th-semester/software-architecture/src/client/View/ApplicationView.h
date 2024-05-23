@@ -39,7 +39,7 @@ private:
     Ui::ApplicationViewUi* m_ui{};
     Facade* m_facade{};
 
-    RegistratorButtonsHandler m_registratorButtonsHandler{};
+    RegistratorButtonsHandler m_registratorButtonsHandler;
 };
 }
 

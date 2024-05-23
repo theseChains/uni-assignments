@@ -14,11 +14,13 @@ namespace polyclinic
 ApplicationView::ApplicationView(QWidget* parent)
     : QMainWindow{ parent },
       m_ui{ new Ui::ApplicationViewUi },
-      m_facade{ new Facade{ this } }
+      m_facade{ new Facade{ this } },
+      m_registratorButtonsHandler{ m_facade }
 {
     m_ui->setupUi(this);
     m_registratorButtonsHandler.setUi(m_ui);
     m_registratorButtonsHandler.connectButtonsToSlots();
+
     m_ui->AdministratorTabs->setCurrentIndex(0);
     m_ui->RegistratorTabs->setCurrentIndex(0);
     m_ui->ClientSearchStackedWidget->setCurrentIndex(0);

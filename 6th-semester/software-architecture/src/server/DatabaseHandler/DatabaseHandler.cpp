@@ -30,15 +30,15 @@ DatabaseHandler::~DatabaseHandler()
 
 bool DatabaseHandler::connectToTheDatabase()
 {
-    /* QString configPath{ QCoreApplication::applicationDirPath() + "/config/config.ini" }; */
-    /* QSettings settings{ configPath, QSettings::IniFormat }; */
+    QString configPath{ QCoreApplication::applicationDirPath() + "/../config/config.ini" };
+    QSettings settings{ configPath, QSettings::IniFormat };
 
     m_database = QSqlDatabase::addDatabase("QPSQL", m_connectionName);
-    m_database.setHostName("localhost");
-    m_database.setDatabaseName("polyclinic");
-    m_database.setUserName("postgres");
-    m_database.setPassword("funkyBunch_03");
-    /* m_database.setPort(settings.value("Database/Port").toInt()); */
+    m_database.setHostName(settings.value("Database/Host").toString());
+    m_database.setDatabaseName(settings.value("Database/DatabaseName").toString());
+    m_database.setUserName(settings.value("Database/Username").toString());
+    m_database.setPassword(settings.value("Database/Password").toString());
+    m_database.setPort(settings.value("Database/Port").toInt());
 
     if (!m_database.open())
     {

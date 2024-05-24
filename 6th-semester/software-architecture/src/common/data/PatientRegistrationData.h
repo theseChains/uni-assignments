@@ -8,6 +8,7 @@
 
 namespace polyclinic
 {
+// todo: rename to PatientData
 struct PatientRegistrationData
 {
     QString lastName{};

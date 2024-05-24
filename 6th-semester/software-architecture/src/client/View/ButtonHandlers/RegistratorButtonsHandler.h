@@ -29,8 +29,11 @@ private slots:
     void onRegisterPatientButtonClicked();
     void onPatientRegistration(bool success);
 
+    void onFindAllPatientsButtonClicked();
+    void onGetAllPatientBriefDataResult(const std::vector<PatientBriefData>& data);
+
     void onOpenClientInfoButtonClicked();
-    void onFindClientsButtonClicked();
+    /* void onFindClientsButtonClicked(); */
     void onBackToSearchButtonClicked();
     void onBackToClientTableButtonClicked();
     void onClientPageTalonButtonClicked();
@@ -39,9 +42,7 @@ private slots:
     void onTalonPageEditScheduleButtonClicked();
 
 private:
-    bool patientRegistrationDataIsValid();
-    std::vector<std::array<QString, 4>> findClients();
-    void fillTableWithData(const std::vector<std::array<QString, 4>>& data);
+    void fillTableWithData(const std::vector<PatientBriefData>& data);
 
 private:
     Ui::ApplicationViewUi* m_ui;

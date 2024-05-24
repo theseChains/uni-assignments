@@ -2,6 +2,7 @@
 
 #include <QJsonObject>
 #include <QJsonDocument>
+#include <QJsonArray>
 
 #include <iostream>
 
@@ -47,6 +48,15 @@ void Client::sendPatientRegistrationRequest(const PatientRegistrationData& data)
     m_socket->write(document.toJson());
 }
 
+void Client::sendGetAllPatientBriefDataRequest()
+{
+    QJsonObject request{};
+    request["command"] = "getAllPatientBriefData";
+
+    QJsonDocument document{ request };
+    m_socket->write(document.toJson());
+}
+
 void Client::onReadyRead()
 {
     QByteArray data{ m_socket->readAll() };
@@ -62,6 +72,10 @@ void Client::onReadyRead()
     {
         processPatientRegistrationResult(response);
     }
+    else if (command == "patientBriefDataResult")
+    {
+        processGetAllPatientBriefDataResult(response);
+    }
 }
 
 void Client::processLoginResult(const QJsonObject& response)
@@ -74,6 +88,28 @@ void Client::processPatientRegistrationResult(const QJsonObject& response)
 {
     bool success{ response["success"].toBool() };
     emit patientRegistrationResult(success);
+}
+
+void Client::processGetAllPatientBriefDataResult(const QJsonObject& response)
+{
+    std::vector<PatientBriefData> data{};
+
+    if (response.contains("briefData") && response["briefData"].isArray())
+    {
+        // never change to brace initialization
+        QJsonArray jsonArray = response["briefData"].toArray();
+        for (const auto& jsonValue : jsonArray)
+        {
+            if (jsonValue.isObject())
+            {
+                PatientBriefData patient{};
+                Reflect::fromJson(jsonValue.toObject(), patient);
+                data.push_back(patient);
+            }
+        }
+    }
+
+    emit getAllPatientsBriefDataResult(data);
 }
 
 void Client::onDisconnected()

@@ -71,14 +71,14 @@
      <widget class="QTabWidget" name="RegistratorTabs">
       <property name="geometry">
        <rect>
-        <x>0</x>
+        <x>1</x>
         <y>0</y>
         <width>1273</width>
         <height>685</height>
        </rect>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="ClientRegistration">
        <attribute name="title">
@@ -637,7 +637,7 @@
          </rect>
         </property>
         <property name="currentIndex">
-         <number>2</number>
+         <number>0</number>
         </property>
         <widget class="QWidget" name="SearchClientsPage">
          <widget class="QWidget" name="horizontalLayoutWidget_10">
@@ -701,7 +701,7 @@
             </spacer>
            </item>
            <item>
-            <widget class="QPushButton" name="ClearSearchInfoButton_2">
+            <widget class="QPushButton" name="FindAllPatients">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
                <horstretch>0</horstretch>

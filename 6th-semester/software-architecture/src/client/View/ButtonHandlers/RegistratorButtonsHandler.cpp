@@ -6,6 +6,7 @@
 #include "common/data/PatientRegistrationData.h"
 
 #include <QPushButton>
+#include <QMessageBox>
 #include <iostream>
 
 namespace polyclinic
@@ -15,6 +16,8 @@ RegistratorButtonsHandler::RegistratorButtonsHandler(Facade* facade)
 {
     connect(m_facade, &Facade::patientRegistrationResult,
             this, &RegistratorButtonsHandler::onPatientRegistration);
+    connect(m_facade, &Facade::getAllPatientBriefDataResult,
+            this, &RegistratorButtonsHandler::onGetAllPatientBriefDataResult);
 }
 
 void RegistratorButtonsHandler::setUi(Ui::ApplicationViewUi* ui)
@@ -26,10 +29,13 @@ void RegistratorButtonsHandler::connectButtonsToSlots()
 {
     QObject::connect(m_ui->RegisterClientButton, &QPushButton::clicked,
             this, &RegistratorButtonsHandler::onRegisterPatientButtonClicked);
+    connect(m_ui->FindAllPatients, &QPushButton::clicked,
+            this, &RegistratorButtonsHandler::onFindAllPatientsButtonClicked);
+
     QObject::connect(m_ui->OpenClientInfoButton, &QPushButton::clicked,
             this, &RegistratorButtonsHandler::onOpenClientInfoButtonClicked);
-    QObject::connect(m_ui->FindClientsButton, &QPushButton::clicked,
-            this, &RegistratorButtonsHandler::onFindClientsButtonClicked);
+    /* QObject::connect(m_ui->FindClientsButton, &QPushButton::clicked, */
+    /*         this, &RegistratorButtonsHandler::onFindClientsButtonClicked); */
     QObject::connect(m_ui->BackToSearchButton, &QPushButton::clicked,
             this, &RegistratorButtonsHandler::onBackToSearchButtonClicked);
     QObject::connect(m_ui->BackToClientTableButton, &QPushButton::clicked,
@@ -76,9 +82,29 @@ void RegistratorButtonsHandler::onRegisterPatientButtonClicked()
 void RegistratorButtonsHandler::onPatientRegistration(bool success)
 {
     if (success) {
-        std::cerr << "added new patient\n";
+        // kinda sucks for nullptr stuff here but alright
+        // fix if you have time
+        QMessageBox::information(nullptr, "Success", "Пациент успешно зарегистрирован.");
     } else {
-        std::cerr << "did not add a new patient\n";
+        QMessageBox::critical(nullptr, "Error", "Не удалось добавить пациента в базу данных.");
+    }
+}
+
+void RegistratorButtonsHandler::onFindAllPatientsButtonClicked()
+{
+    m_facade->getAllPatientBriefData();
+}
+
+void RegistratorButtonsHandler::onGetAllPatientBriefDataResult(const std::vector<PatientBriefData>& data)
+{
+    if (!data.empty())
+    {
+        fillTableWithData(data);
+        StackedWidgetNavigator::navigateToPage(*m_ui->ClientSearchStackedWidget, constants::kFoundClientsPage);
+    }
+    else
+    {
+        QMessageBox::critical(nullptr, "Error", "Не удалось найти пациентов в базе данных.");
     }
 }
 
@@ -159,36 +185,12 @@ void RegistratorButtonsHandler::onClientTableTalonButtonClicked()
     StackedWidgetNavigator::navigateToPage(*m_ui->ClientSearchStackedWidget, constants::kTalonPage);
 }
 
-std::vector<std::array<QString, 4>> RegistratorButtonsHandler::findClients()
-{
-    std::vector<std::array<QString, 4>> clientData{};
-    clientData.push_back({ "aaa", "bbb", "ccc", "10.10.1000"});
-    clientData.push_back({ "zzz", "mmm", "add", "10.10.2000"});
-    clientData.push_back({ "dataaa", "dataa", "data", "10.10.3000"});
-
-    clientData.push_back({ "baa", "bba", "cac", "10.20.1000"});
-    clientData.push_back({ "kkzzz", "mmm", "add", "10.30.2000"});
-    clientData.push_back({ "kkdataaa", "dataa", "data", "10.40.3000"});
-
-    clientData.push_back({ "llaaa", "bbb", "ccc", "10.50.1000"});
-    clientData.push_back({ "llzzz", "mmm", "add", "10.60.2000"});
-    clientData.push_back({ "lldataaa", "dataa", "data", "40.10.3000"});
-
-    clientData.push_back({ "lllaaa", "bbb", "ccc", "30.10.1000"});
-    clientData.push_back({ "lllzzz", "mmm", "add", "30.10.2000"});
-    clientData.push_back({ "llldataaa", "dataa", "data", "80.10.3000"});
-
-    clientData.push_back({ "aaaa", "bbb", "ccc", "10.10.8000"});
-    clientData.push_back({ "azzz", "mmm", "add", "10.10.8000"});
-    clientData.push_back({ "adataaa", "dataa", "data", "10.10.3000"});
-
-    return clientData;
-}
-
-void RegistratorButtonsHandler::fillTableWithData(const std::vector<std::array<QString, 4>>& data)
+void RegistratorButtonsHandler::fillTableWithData(const std::vector<PatientBriefData>& data)
 {
     m_ui->FoundClientsTable->setRowCount(data.size());
     m_ui->FoundClientsTable->setColumnCount(constants::kNumberOfClientsTableColumns);
+
+    m_ui->FoundClientsTable->setHorizontalHeaderLabels({"ID", "First Name", "Last Name", "Middle Name", "Date of Birth"});
 
     // move this somewhere else?
     int fontSize{ 14 };
@@ -197,37 +199,27 @@ void RegistratorButtonsHandler::fillTableWithData(const std::vector<std::array<Q
 
     for (std::size_t i{ 0 }; i < data.size(); ++i)
     {
-        for (std::size_t j{ 0 }; j < constants::kNumberOfClientsTableColumns; ++j)
+        // why an auto& here.. god knows
+        const auto& patient = data[i];
+        const QStringList rowData = {
+            QString::number(patient.id),
+            patient.firstName,
+            patient.lastName,
+            patient.middleName,
+            patient.dateOfBirth.toString("dd-MM-yyyy")
+        };
+
+        for (std::size_t j = 0; j < constants::kNumberOfClientsTableColumns; ++j)
         {
-            QTableWidgetItem *item{};
-            if (m_ui->FoundClientsTable->item(i, j))
-            {
-                item = m_ui->FoundClientsTable->item(i, j);
-            }
-            else
-            {
-                item = new QTableWidgetItem{};
-                m_ui->FoundClientsTable->setItem(i, j, item);
-            }
+            QTableWidgetItem* item = new QTableWidgetItem(rowData[j]);
             item->setFlags(item->flags() & ~Qt::ItemIsEditable);
-            item->setText(data[i][j]);
             item->setFont(font);
+            m_ui->FoundClientsTable->setItem(i, j, item);
         }
     }
-}
 
-void RegistratorButtonsHandler::onFindClientsButtonClicked()
-{
-    std::vector<std::array<QString, 4>> data{ findClients() };
-    if (!data.empty())
-    {
-        fillTableWithData(data);
-        StackedWidgetNavigator::navigateToPage(*m_ui->ClientSearchStackedWidget, constants::kFoundClientsPage);
-    }
-    else
-    {
-        std::cerr << "nothing was found\n";
-    }
+    // Hide the ID column
+    m_ui->FoundClientsTable->hideColumn(0);
 }
 
 void RegistratorButtonsHandler::onBackFromTalonButtonClicked()

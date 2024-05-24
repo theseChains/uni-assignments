@@ -29,6 +29,7 @@ private slots:
 private:
     void processLoginRequest(const QJsonObject& request);
     void processPatientRegistrationRequest(const QJsonObject& request);
+    void processGetAllPatientBriefDataRequest();
 
 private:
     qintptr m_socketDescriptor{};

@@ -112,11 +112,40 @@ bool DatabaseHandler::registerPatient(const PatientRegistrationData& data)
     query.bindValue(":house_number", data.houseNumber);
     query.bindValue(":apartment_number", data.apartmentNumber);
 
+    // might want to pass those to the client
     if (!query.exec()) {
         qWarning() << "Error executing query:" << query.lastError().text();
         return false;
     }
 
     return true;
+}
+
+std::vector<PatientBriefData> DatabaseHandler::getAllPatientsBriefData()
+{
+    QSqlQuery query{ m_database };
+    query.prepare("SELECT patient_id, last_name, first_name, middle_name, date_of_birth "
+                  "FROM patients");
+
+    if (!query.exec()) {
+        qWarning() << "Error executing query:" << query.lastError().text();
+        return {};
+    }
+
+    std::vector<PatientBriefData> data{};
+    while (query.next())
+    {
+        PatientBriefData patient{};
+        patient.id = query.value("patient_id").toInt();
+        patient.lastName = query.value("last_name").toString();
+        patient.firstName = query.value("first_name").toString();
+        patient.middleName = query.value("middle_name").toString();
+        patient.dateOfBirth = query.value("date_of_birth").toDate();
+
+        data.push_back(patient);
+    }
+    std::cout << "db handler data size: " << data.size() << '\n';
+
+    return data;
 }
 }

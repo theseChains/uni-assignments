@@ -4,9 +4,13 @@
 #include <QSqlDatabase>
 #include <QString>
 
+#include <array>
+#include <vector>
+
 #include "common/UserType.h"
 #include "common/data/LoginInputData.h"
 #include "common/data/PatientRegistrationData.h"
+#include "common/data/PatientBriefData.h"
 
 namespace polyclinic
 {
@@ -20,6 +24,7 @@ public:
 
     UserType authenticateUser(const LoginInputData& loginData);
     bool registerPatient(const PatientRegistrationData& data);
+    std::vector<PatientBriefData> getAllPatientsBriefData();
 
 private:
     QSqlDatabase m_database{};

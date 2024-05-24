@@ -19,14 +19,17 @@ public:
 
     void login(const LoginInputData& inputData);
     void registerPatient(const PatientRegistrationData& data);
+    void getAllPatientBriefData();
 
 signals:
     void loginResult(UserType userType);
     void patientRegistrationResult(bool success);
+    void getAllPatientBriefDataResult(const std::vector<PatientBriefData>& data);
 
 private slots:
     void onClientLoginResult(UserType userType);
     void onPatientRegistrationResult(bool success);
+    void onGetAllPatientBriefDataResult(const std::vector<PatientBriefData>& data);
 
 private:
     Client* m_client{};

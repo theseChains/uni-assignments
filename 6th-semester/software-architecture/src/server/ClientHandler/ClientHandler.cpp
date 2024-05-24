@@ -3,6 +3,7 @@
 #include <QByteArray>
 #include <QJsonDocument>
 #include <QJsonObject>
+#include <QJsonArray>
 
 #include <iostream>
 
@@ -67,6 +68,10 @@ void ClientHandler::onReadyRead()
     {
         processPatientRegistrationRequest(request);
     }
+    else if (command == "getAllPatientBriefData")
+    {
+        processGetAllPatientBriefDataRequest();
+    }
 }
 
 void ClientHandler::processLoginRequest(const QJsonObject& request)
@@ -92,6 +97,24 @@ void ClientHandler::processPatientRegistrationRequest(const QJsonObject& request
     QJsonObject response{};
     response["command"] = "patientRegistrationResult";
     response["success"] = success;
+
+    QJsonDocument document{ response };
+    m_socket->write(document.toJson());
+}
+
+void ClientHandler::processGetAllPatientBriefDataRequest()
+{
+    std::vector<PatientBriefData> patients{
+            m_databaseHandler.getAllPatientsBriefData() };
+    QJsonArray jsonArray{};
+    for (const auto& patient : patients)
+    {
+        jsonArray.append(Reflect::toJson(patient));
+    }
+
+    QJsonObject response{};
+    response["command"] = "patientBriefDataResult";
+    response["briefData"] = jsonArray;
 
     QJsonDocument document{ response };
     m_socket->write(document.toJson());

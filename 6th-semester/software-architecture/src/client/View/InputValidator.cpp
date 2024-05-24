@@ -17,6 +17,14 @@ QString InputValidator::patientRegistrationInputIsValid(const Ui::ApplicationVie
         errorMessage += "Please enter a valid date of birth.\n";
     }
 
+    if (ui.PatientRegCity->text().isEmpty()) {
+        errorMessage += "Please enter the patient's city.\n";
+    }
+
+    if (ui.PatientRegHouseNumber->text().isEmpty()) {
+        errorMessage += "Please enter the patient's house number.\n";
+    }
+
     QRegularExpression documentNumberRegex{ "^[0-9]{6}$" };
     if (!documentNumberRegex.match(ui.PatientRegDocumentNumber->text()).hasMatch()) {
         errorMessage += "Please enter a valid document number (6 digits).\n";

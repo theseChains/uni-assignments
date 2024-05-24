@@ -12,6 +12,10 @@ add_executable(PolyclinicApp
     View/ApplicationView.cpp
     View/ApplicationView.h
     View/ViewConstants.h
+    View/ValidatorSetup.cpp
+    View/ValidatorSetup.h
+    View/InputValidator.cpp
+    View/InputValidator.h
     View/ButtonHandlers/DoctorButtonsHandler.cpp
     View/ButtonHandlers/DoctorButtonsHandler.h
     View/ButtonHandlers/AdministratorButtonsHandler.cpp

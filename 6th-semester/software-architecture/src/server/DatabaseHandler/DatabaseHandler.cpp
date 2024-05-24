@@ -96,7 +96,6 @@ bool DatabaseHandler::registerPatient(const PatientRegistrationData& data)
                   ":document_number, :document_series, :medical_insurance_number, :individual_insurance_number, "
                   ":phone_number, :city, :street, :house_number, :apartment_number)");
 
-    qDebug() << "database individ ins number: " << data.individualInsuranceNumber << '\n';
     query.bindValue(":last_name", data.lastName);
     query.bindValue(":first_name", data.firstName);
     query.bindValue(":middle_name", data.middleName);
@@ -117,7 +116,6 @@ bool DatabaseHandler::registerPatient(const PatientRegistrationData& data)
         qWarning() << "Error executing query:" << query.lastError().text();
         return false;
     }
-    std::cerr << "registeringg\n";
 
     return true;
 }

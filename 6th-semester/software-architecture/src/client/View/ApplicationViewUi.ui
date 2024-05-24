@@ -111,7 +111,16 @@
               </widget>
              </item>
              <item>
-              <widget class="QLineEdit" name="PatientRegCity"/>
+              <widget class="QLineEdit" name="PatientRegCity">
+               <property name="font">
+                <font>
+                 <pointsize>10</pointsize>
+                </font>
+               </property>
+               <property name="maxLength">
+                <number>50</number>
+               </property>
+              </widget>
              </item>
             </layout>
            </item>
@@ -130,7 +139,11 @@
               </widget>
              </item>
              <item>
-              <widget class="QLineEdit" name="PatientRegStreet"/>
+              <widget class="QLineEdit" name="PatientRegStreet">
+               <property name="maxLength">
+                <number>50</number>
+               </property>
+              </widget>
              </item>
             </layout>
            </item>
@@ -289,7 +302,11 @@
               </widget>
              </item>
              <item>
-              <widget class="QLineEdit" name="PatientRegLastName"/>
+              <widget class="QLineEdit" name="PatientRegLastName">
+               <property name="maxLength">
+                <number>50</number>
+               </property>
+              </widget>
              </item>
             </layout>
            </item>
@@ -308,7 +325,11 @@
               </widget>
              </item>
              <item>
-              <widget class="QLineEdit" name="PatientRegFirstName"/>
+              <widget class="QLineEdit" name="PatientRegFirstName">
+               <property name="maxLength">
+                <number>50</number>
+               </property>
+              </widget>
              </item>
             </layout>
            </item>
@@ -327,7 +348,11 @@
               </widget>
              </item>
              <item>
-              <widget class="QLineEdit" name="PatientRegMiddleName"/>
+              <widget class="QLineEdit" name="PatientRegMiddleName">
+               <property name="maxLength">
+                <number>50</number>
+               </property>
+              </widget>
              </item>
             </layout>
            </item>

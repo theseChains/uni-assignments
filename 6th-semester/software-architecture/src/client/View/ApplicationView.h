@@ -8,6 +8,7 @@
 #include <QStackedWidget>
 
 #include "client/View/ButtonHandlers/RegistratorButtonsHandler.h"
+#include "client/View/ValidatorSetup.h"
 #include "common/UserType.h"
 #include "client/Facade/Facade.h"
 
@@ -29,17 +30,17 @@ public:
 private slots:
     void onLoginButtonClicked();
     void onOpenOutpatientCardButtonClicked();
-    void onAuthenticationSuccess(UserType userType);
-    void onAuthenticationFailed();
+    void onAuthentication(UserType userType);
 
-private:
-    bool foundClients();
+    void displayErrorMessage(const QString& message);
 
 private:
     Ui::ApplicationViewUi* m_ui{};
     Facade* m_facade{};
 
     RegistratorButtonsHandler m_registratorButtonsHandler;
+
+    ValidatorSetup m_validatorSetup;
 };
 }
 

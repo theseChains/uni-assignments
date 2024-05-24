@@ -5,6 +5,7 @@
 
 #include <QDebug>
 #include <QTableWidget>
+#include <QMessageBox>
 
 #include "ViewConstants.h"
 #include "StackedWidgetNavigator/StackedWidgetNavigator.h"
@@ -15,11 +16,14 @@ ApplicationView::ApplicationView(QWidget* parent)
     : QMainWindow{ parent },
       m_ui{ new Ui::ApplicationViewUi },
       m_facade{ new Facade{ this } },
-      m_registratorButtonsHandler{ m_facade }
+      m_registratorButtonsHandler{ m_facade },
+      m_validatorSetup{ this }
 {
     m_ui->setupUi(this);
     m_registratorButtonsHandler.setUi(m_ui);
     m_registratorButtonsHandler.connectButtonsToSlots();
+
+    m_validatorSetup.setupValidators(*m_ui);
 
     m_ui->AdministratorTabs->setCurrentIndex(0);
     m_ui->RegistratorTabs->setCurrentIndex(0);
@@ -40,7 +44,10 @@ ApplicationView::ApplicationView(QWidget* parent)
     QObject::connect(m_ui->OpenOutpatientCardButton, &QPushButton::clicked,
                      this, &ApplicationView::onOpenOutpatientCardButtonClicked);
 
-    connect(m_facade, &Facade::loginResult, this, &ApplicationView::onAuthenticationSuccess);
+    connect(&m_registratorButtonsHandler, &RegistratorButtonsHandler::errorOccurred,
+            this, &ApplicationView::displayErrorMessage);
+
+    connect(m_facade, &Facade::loginResult, this, &ApplicationView::onAuthentication);
 }
 
 void ApplicationView::onLoginButtonClicked()
@@ -52,7 +59,7 @@ void ApplicationView::onLoginButtonClicked()
     m_facade->login(inputData);
 }
 
-void ApplicationView::onAuthenticationSuccess(UserType userType)
+void ApplicationView::onAuthentication(UserType userType)
 {
     if (userType == UserType::kAdministrator)
     {
@@ -66,22 +73,20 @@ void ApplicationView::onAuthenticationSuccess(UserType userType)
     {
         StackedWidgetNavigator::navigateToPage(*m_ui->UserStackedWidget, constants::kRegistratorPage);
     }
+    else
+    {
+        QMessageBox::critical(this, "Ошибка", "Неправильный логин или пароль.");
+    }
 }
 
-void ApplicationView::onAuthenticationFailed()
+void ApplicationView::displayErrorMessage(const QString& message)
 {
-    // todo: output a message in the app about this
-    std::cerr << "invalid login or password\n";
+    QMessageBox::critical(this, "Ошибка", message);
 }
 
 void ApplicationView::onOpenOutpatientCardButtonClicked()
 {
     /* navigateToPage(constants::kOutpatientCardPage); */
-}
-
-bool ApplicationView::foundClients()
-{
-    return true;
 }
 
 ApplicationView::~ApplicationView()

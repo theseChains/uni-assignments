@@ -2,6 +2,7 @@
 #include "../ui_ApplicationViewUi.h"
 #include "client/View/ViewConstants.h"
 #include "client/View/StackedWidgetNavigator/StackedWidgetNavigator.h"
+#include "client/View/InputValidator.h"
 #include "common/data/PatientRegistrationData.h"
 
 #include <QPushButton>
@@ -45,6 +46,13 @@ void RegistratorButtonsHandler::connectButtonsToSlots()
 
 void RegistratorButtonsHandler::onRegisterPatientButtonClicked()
 {
+    QString errorMessage{ InputValidator::patientRegistrationInputIsValid(*m_ui) };
+    if (!errorMessage.isEmpty())
+    {
+        emit errorOccurred(errorMessage);
+        return;
+    }
+
     PatientRegistrationData data{};
     data.lastName = m_ui->PatientRegLastName->text();
     data.firstName = m_ui->PatientRegFirstName->text();
@@ -102,7 +110,7 @@ void RegistratorButtonsHandler::onOpenClientInfoButtonClicked()
         // this should honeslty already be a QDate
         m_ui->ClientPageDateOfBirth->setDate(date);
 
-        StackedWidgetNavigator::StackedWidgetNavigator::navigateToPage(*m_ui->ClientSearchStackedWidget, constants::kClientInfoPage);
+        StackedWidgetNavigator::navigateToPage(*m_ui->ClientSearchStackedWidget, constants::kClientInfoPage);
     }
 }
 

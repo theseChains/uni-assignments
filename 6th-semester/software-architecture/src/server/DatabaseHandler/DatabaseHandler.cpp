@@ -144,8 +144,53 @@ std::vector<PatientBriefData> DatabaseHandler::getAllPatientsBriefData()
 
         data.push_back(patient);
     }
-    std::cout << "db handler data size: " << data.size() << '\n';
 
     return data;
+}
+
+std::vector<PatientBriefData> DatabaseHandler::getPatientBriefData(const PatientSearchData& data)
+{
+    QSqlQuery query{ m_database };
+    QString queryString{ "SELECT patient_id, last_name, first_name, middle_name, date_of_birth "
+                        "FROM patients WHERE 1 = 1" };
+    if (data.lastName.has_value())
+        queryString += " AND last_name = '" + data.lastName.value() + "'";
+    if (data.firstName.has_value())
+        queryString += " AND first_name = '" + data.firstName.value() + "'";
+    if (data.middleName.has_value())
+        queryString += " AND middle_name = '" + data.middleName.value() + "'";
+    if (data.dateOfBirth.has_value())
+        queryString += " AND date_of_birth = '" +
+                data.dateOfBirth.value().toString("yyyy-MM-dd") + "'";
+    if (data.documentType.has_value())
+        queryString += " AND document_type = '" + data.documentType.value() + "'";
+    if (data.documentSeries.has_value())
+        queryString += " AND document_series = '" + data.documentSeries.value() + "'";
+    if (data.documentNumber.has_value())
+        queryString += " AND document_number = '" + data.documentNumber.value() + "'";
+    if (data.gender.has_value())
+        queryString += " AND gender = '" + data.gender.value() + "'";
+
+    query.prepare(queryString);
+
+    if (!query.exec()) {
+        qWarning() << "Error executing query:" << query.lastError().text();
+        return {};
+    }
+
+    std::vector<PatientBriefData> briefData{};
+    while (query.next())
+    {
+        PatientBriefData patient{};
+        patient.id = query.value("patient_id").toInt();
+        patient.lastName = query.value("last_name").toString();
+        patient.firstName = query.value("first_name").toString();
+        patient.middleName = query.value("middle_name").toString();
+        patient.dateOfBirth = query.value("date_of_birth").toDate();
+
+        briefData.push_back(patient);
+    }
+
+    return briefData;
 }
 }

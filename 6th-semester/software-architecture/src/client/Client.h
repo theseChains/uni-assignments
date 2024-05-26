@@ -8,6 +8,7 @@
 #include "common/data/LoginInputData.h"
 #include "common/data/PatientRegistrationData.h"
 #include "common/data/PatientBriefData.h"
+#include "common/data/PatientSearchData.h"
 
 namespace polyclinic
 {
@@ -22,11 +23,13 @@ public:
     void sendLoginRequest(const LoginInputData& inputData);
     void sendPatientRegistrationRequest(const PatientRegistrationData& data);
     void sendGetAllPatientBriefDataRequest();
+    void sendGetPatientBriefDataRequest(const PatientSearchData& data);
 
 signals:
     void loginResult(UserType userType);
     void patientRegistrationResult(bool success);
     void getAllPatientsBriefDataResult(const std::vector<PatientBriefData>& data);
+    void getPatientBriefDataResult(const std::vector<PatientBriefData>& data);
 
 private slots:
     void onReadyRead();
@@ -36,6 +39,7 @@ private:
     void processLoginResult(const QJsonObject& response);
     void processPatientRegistrationResult(const QJsonObject& response);
     void processGetAllPatientBriefDataResult(const QJsonObject& response);
+    void processGetPatientBriefDataResult(const QJsonObject& response);
 
 private:
     QTcpSocket* m_socket{};

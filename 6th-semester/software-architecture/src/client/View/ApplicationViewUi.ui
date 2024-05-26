@@ -630,7 +630,7 @@
        <widget class="QStackedWidget" name="ClientSearchStackedWidget">
         <property name="geometry">
          <rect>
-          <x>0</x>
+          <x>1</x>
           <y>0</y>
           <width>1271</width>
           <height>651</height>
@@ -701,7 +701,7 @@
             </spacer>
            </item>
            <item>
-            <widget class="QPushButton" name="FindAllPatients">
+            <widget class="QPushButton" name="FindAllPatientsButton">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
                <horstretch>0</horstretch>
@@ -735,7 +735,7 @@
             </spacer>
            </item>
            <item>
-            <widget class="QPushButton" name="FindClientsButton">
+            <widget class="QPushButton" name="FindPatientsButton">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
                <horstretch>0</horstretch>
@@ -783,7 +783,14 @@
            <item>
             <layout class="QVBoxLayout" name="verticalLayout_11">
              <item>
-              <layout class="QHBoxLayout" name="horizontalLayout_36" stretch="3,4">
+              <layout class="QHBoxLayout" name="horizontalLayout_36" stretch="0,3,4">
+               <item>
+                <widget class="QCheckBox" name="PatientSearchLastNameCheckBox">
+                 <property name="text">
+                  <string/>
+                 </property>
+                </widget>
+               </item>
                <item>
                 <widget class="QLabel" name="label_31">
                  <property name="font">
@@ -797,12 +804,19 @@
                 </widget>
                </item>
                <item>
-                <widget class="QLineEdit" name="lineEdit_28"/>
+                <widget class="QLineEdit" name="PatientSearchLastName"/>
                </item>
               </layout>
              </item>
              <item>
-              <layout class="QHBoxLayout" name="horizontalLayout_37" stretch="3,4">
+              <layout class="QHBoxLayout" name="horizontalLayout_37" stretch="0,3,4">
+               <item>
+                <widget class="QCheckBox" name="PatientSearchFirstNameCheckBox">
+                 <property name="text">
+                  <string/>
+                 </property>
+                </widget>
+               </item>
                <item>
                 <widget class="QLabel" name="label_32">
                  <property name="font">
@@ -816,12 +830,19 @@
                 </widget>
                </item>
                <item>
-                <widget class="QLineEdit" name="lineEdit_29"/>
+                <widget class="QLineEdit" name="PatientSearchFirstName"/>
                </item>
               </layout>
              </item>
              <item>
-              <layout class="QHBoxLayout" name="horizontalLayout_38" stretch="3,4">
+              <layout class="QHBoxLayout" name="horizontalLayout_38" stretch="0,3,4">
+               <item>
+                <widget class="QCheckBox" name="PatientSearchMiddleNameCheckBox">
+                 <property name="text">
+                  <string/>
+                 </property>
+                </widget>
+               </item>
                <item>
                 <widget class="QLabel" name="label_33">
                  <property name="font">
@@ -835,12 +856,19 @@
                 </widget>
                </item>
                <item>
-                <widget class="QLineEdit" name="lineEdit_30"/>
+                <widget class="QLineEdit" name="PatientSearchMiddleName"/>
                </item>
               </layout>
              </item>
              <item>
-              <layout class="QHBoxLayout" name="horizontalLayout_39" stretch="3,4">
+              <layout class="QHBoxLayout" name="horizontalLayout_39" stretch="0,3,4">
+               <item>
+                <widget class="QCheckBox" name="PatientSearchDateOfBirthCheckBox">
+                 <property name="text">
+                  <string/>
+                 </property>
+                </widget>
+               </item>
                <item>
                 <widget class="QLabel" name="label_34">
                  <property name="font">
@@ -854,7 +882,7 @@
                 </widget>
                </item>
                <item>
-                <widget class="QDateEdit" name="dateEdit_4">
+                <widget class="QDateEdit" name="PatientSearchDateOfBirth">
                  <property name="displayFormat">
                   <string>dd/MM/yyyy</string>
                  </property>
@@ -883,7 +911,14 @@
            <item>
             <layout class="QVBoxLayout" name="verticalLayout_12">
              <item>
-              <layout class="QHBoxLayout" name="horizontalLayout_40" stretch="3,4">
+              <layout class="QHBoxLayout" name="horizontalLayout_40" stretch="0,3,4">
+               <item>
+                <widget class="QCheckBox" name="PatientSearchDocumentTypeCheckBox">
+                 <property name="text">
+                  <string/>
+                 </property>
+                </widget>
+               </item>
                <item>
                 <widget class="QLabel" name="label_35">
                  <property name="font">
@@ -897,7 +932,7 @@
                 </widget>
                </item>
                <item>
-                <widget class="QComboBox" name="comboBox_5">
+                <widget class="QComboBox" name="PatientSearchDocumentType">
                  <property name="currentText">
                   <string>Паспорт</string>
                  </property>
@@ -916,7 +951,14 @@
               </layout>
              </item>
              <item>
-              <layout class="QHBoxLayout" name="horizontalLayout_41" stretch="3,4">
+              <layout class="QHBoxLayout" name="horizontalLayout_41" stretch="0,3,4">
+               <item>
+                <widget class="QCheckBox" name="PatientSearchDocumentSeriesCheckBox">
+                 <property name="text">
+                  <string/>
+                 </property>
+                </widget>
+               </item>
                <item>
                 <widget class="QLabel" name="label_36">
                  <property name="font">
@@ -930,7 +972,7 @@
                 </widget>
                </item>
                <item>
-                <widget class="QLineEdit" name="lineEdit_31">
+                <widget class="QLineEdit" name="PatientSearchDocumentSeries">
                  <property name="inputMethodHints">
                   <set>Qt::ImhDigitsOnly</set>
                  </property>
@@ -942,7 +984,14 @@
               </layout>
              </item>
              <item>
-              <layout class="QHBoxLayout" name="horizontalLayout_42" stretch="3,4">
+              <layout class="QHBoxLayout" name="horizontalLayout_42" stretch="0,3,4">
+               <item>
+                <widget class="QCheckBox" name="PatientSearchDocumentNumberCheckBox">
+                 <property name="text">
+                  <string/>
+                 </property>
+                </widget>
+               </item>
                <item>
                 <widget class="QLabel" name="label_37">
                  <property name="font">
@@ -956,7 +1005,7 @@
                 </widget>
                </item>
                <item>
-                <widget class="QLineEdit" name="lineEdit_32">
+                <widget class="QLineEdit" name="PatientSearchDocumentNumber">
                  <property name="inputMethodHints">
                   <set>Qt::ImhDigitsOnly</set>
                  </property>
@@ -968,7 +1017,14 @@
               </layout>
              </item>
              <item>
-              <layout class="QHBoxLayout" name="horizontalLayout_43" stretch="3,4">
+              <layout class="QHBoxLayout" name="horizontalLayout_43" stretch="0,3,4">
+               <item>
+                <widget class="QCheckBox" name="PatientSearchGenderCheckBox">
+                 <property name="text">
+                  <string/>
+                 </property>
+                </widget>
+               </item>
                <item>
                 <widget class="QLabel" name="label_38">
                  <property name="font">
@@ -982,7 +1038,7 @@
                 </widget>
                </item>
                <item>
-                <widget class="QComboBox" name="comboBox_6">
+                <widget class="QComboBox" name="PatientSearchGender">
                  <item>
                   <property name="text">
                    <string>Мужской</string>

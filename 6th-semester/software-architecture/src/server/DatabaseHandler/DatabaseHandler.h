@@ -11,6 +11,7 @@
 #include "common/data/LoginInputData.h"
 #include "common/data/PatientRegistrationData.h"
 #include "common/data/PatientBriefData.h"
+#include "common/data/PatientSearchData.h"
 
 namespace polyclinic
 {
@@ -25,6 +26,7 @@ public:
     UserType authenticateUser(const LoginInputData& loginData);
     bool registerPatient(const PatientRegistrationData& data);
     std::vector<PatientBriefData> getAllPatientsBriefData();
+    std::vector<PatientBriefData> getPatientBriefData(const PatientSearchData& data);
 
 private:
     QSqlDatabase m_database{};

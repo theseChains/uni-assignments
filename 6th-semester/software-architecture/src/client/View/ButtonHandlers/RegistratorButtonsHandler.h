@@ -32,8 +32,10 @@ private slots:
     void onFindAllPatientsButtonClicked();
     void onGetAllPatientBriefDataResult(const std::vector<PatientBriefData>& data);
 
+    void onFindPatientsButtonClicked();
+    void onGetPatientsBriefDataResult(const std::vector<PatientBriefData>& data);
+
     void onOpenClientInfoButtonClicked();
-    /* void onFindClientsButtonClicked(); */
     void onBackToSearchButtonClicked();
     void onBackToClientTableButtonClicked();
     void onClientPageTalonButtonClicked();

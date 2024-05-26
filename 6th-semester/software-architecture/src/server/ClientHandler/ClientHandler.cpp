@@ -8,6 +8,7 @@
 #include <iostream>
 
 #include "common/data/Reflect.h"
+#include "common/data/PatientSearchData.h"
 
 namespace polyclinic
 {
@@ -72,6 +73,10 @@ void ClientHandler::onReadyRead()
     {
         processGetAllPatientBriefDataRequest();
     }
+    else if (command == "getPatientBriefData")
+    {
+        processGetPatientBriefDataRequest(request);
+    }
 }
 
 void ClientHandler::processLoginRequest(const QJsonObject& request)
@@ -106,6 +111,26 @@ void ClientHandler::processGetAllPatientBriefDataRequest()
 {
     std::vector<PatientBriefData> patients{
             m_databaseHandler.getAllPatientsBriefData() };
+    QJsonArray jsonArray{};
+    for (const auto& patient : patients)
+    {
+        jsonArray.append(Reflect::toJson(patient));
+    }
+
+    QJsonObject response{};
+    response["command"] = "allPatientsBriefDataResult";
+    response["briefData"] = jsonArray;
+
+    QJsonDocument document{ response };
+    m_socket->write(document.toJson());
+}
+
+void ClientHandler::processGetPatientBriefDataRequest(const QJsonObject& request)
+{
+    PatientSearchData data{};
+    Reflect::fromJson(request, data);
+    std::vector<PatientBriefData> patients{ m_databaseHandler.getPatientBriefData(data) };
+
     QJsonArray jsonArray{};
     for (const auto& patient : patients)
     {

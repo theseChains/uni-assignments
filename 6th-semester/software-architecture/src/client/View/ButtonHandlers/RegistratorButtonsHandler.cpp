@@ -4,6 +4,7 @@
 #include "client/View/StackedWidgetNavigator/StackedWidgetNavigator.h"
 #include "client/View/InputValidator.h"
 #include "common/data/PatientRegistrationData.h"
+#include "common/data/PatientSearchData.h"
 
 #include <QPushButton>
 #include <QMessageBox>
@@ -18,6 +19,8 @@ RegistratorButtonsHandler::RegistratorButtonsHandler(Facade* facade)
             this, &RegistratorButtonsHandler::onPatientRegistration);
     connect(m_facade, &Facade::getAllPatientBriefDataResult,
             this, &RegistratorButtonsHandler::onGetAllPatientBriefDataResult);
+    connect(m_facade, &Facade::getPatientBriefDataResult,
+            this, &RegistratorButtonsHandler::onGetPatientsBriefDataResult);
 }
 
 void RegistratorButtonsHandler::setUi(Ui::ApplicationViewUi* ui)
@@ -27,15 +30,15 @@ void RegistratorButtonsHandler::setUi(Ui::ApplicationViewUi* ui)
 
 void RegistratorButtonsHandler::connectButtonsToSlots()
 {
-    QObject::connect(m_ui->RegisterClientButton, &QPushButton::clicked,
+    connect(m_ui->RegisterClientButton, &QPushButton::clicked,
             this, &RegistratorButtonsHandler::onRegisterPatientButtonClicked);
-    connect(m_ui->FindAllPatients, &QPushButton::clicked,
+    connect(m_ui->FindAllPatientsButton, &QPushButton::clicked,
             this, &RegistratorButtonsHandler::onFindAllPatientsButtonClicked);
+    connect(m_ui->FindPatientsButton, &QPushButton::clicked,
+            this, &RegistratorButtonsHandler::onFindPatientsButtonClicked);
 
-    QObject::connect(m_ui->OpenClientInfoButton, &QPushButton::clicked,
+    connect(m_ui->OpenClientInfoButton, &QPushButton::clicked,
             this, &RegistratorButtonsHandler::onOpenClientInfoButtonClicked);
-    /* QObject::connect(m_ui->FindClientsButton, &QPushButton::clicked, */
-    /*         this, &RegistratorButtonsHandler::onFindClientsButtonClicked); */
     QObject::connect(m_ui->BackToSearchButton, &QPushButton::clicked,
             this, &RegistratorButtonsHandler::onBackToSearchButtonClicked);
     QObject::connect(m_ui->BackToClientTableButton, &QPushButton::clicked,
@@ -105,6 +108,74 @@ void RegistratorButtonsHandler::onGetAllPatientBriefDataResult(const std::vector
     else
     {
         QMessageBox::critical(nullptr, "Error", "Не удалось найти пациентов в базе данных.");
+    }
+}
+
+void RegistratorButtonsHandler::onFindPatientsButtonClicked()
+{
+    PatientSearchData data{};
+    bool searchEnabled{ false };
+    if (m_ui->PatientSearchLastNameCheckBox->isChecked())
+    {
+        data.lastName = m_ui->PatientSearchLastName->text();
+        searchEnabled = true;
+    }
+    if (m_ui->PatientSearchFirstNameCheckBox->isChecked())
+    {
+        data.firstName = m_ui->PatientSearchFirstName->text();
+        searchEnabled = true;
+    }
+    if (m_ui->PatientSearchMiddleNameCheckBox->isChecked())
+    {
+        data.middleName = m_ui->PatientSearchMiddleName->text();
+        searchEnabled = true;
+    }
+    if (m_ui->PatientSearchDateOfBirthCheckBox->isChecked())
+    {
+        data.dateOfBirth = m_ui->PatientSearchDateOfBirth->date();
+        searchEnabled = true;
+    }
+    if (m_ui->PatientSearchDocumentTypeCheckBox->isChecked())
+    {
+        data.documentType = m_ui->PatientSearchDocumentType->currentText();
+        searchEnabled = true;
+    }
+    if (m_ui->PatientSearchDocumentSeriesCheckBox->isChecked())
+    {
+        data.documentSeries = m_ui->PatientSearchDocumentSeries->text();
+        searchEnabled = true;
+    }
+    if (m_ui->PatientSearchDocumentNumberCheckBox->isChecked())
+    {
+        data.documentNumber = m_ui->PatientSearchLastName->text();
+        searchEnabled = true;
+    }
+    if (m_ui->PatientSearchGenderCheckBox->isChecked())
+    {
+        data.gender = m_ui->PatientSearchGender->currentText();
+        searchEnabled = true;
+    }
+
+    if (searchEnabled)
+    {
+        m_facade->getPatientBriefData(data);
+    }
+    else
+    {
+        QMessageBox::critical(nullptr, "Error", "Укажите хотя бы один критерий для поиска");
+    }
+}
+
+void RegistratorButtonsHandler::onGetPatientsBriefDataResult(const std::vector<PatientBriefData>& data)
+{
+    if (!data.empty())
+    {
+        fillTableWithData(data);
+        StackedWidgetNavigator::navigateToPage(*m_ui->ClientSearchStackedWidget, constants::kFoundClientsPage);
+    }
+    else
+    {
+        QMessageBox::critical(nullptr, "Error", "Не удалось найти пациентов по вашему запросу.");
     }
 }
 

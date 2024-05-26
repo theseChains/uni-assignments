@@ -30,6 +30,7 @@ private:
     void processLoginRequest(const QJsonObject& request);
     void processPatientRegistrationRequest(const QJsonObject& request);
     void processGetAllPatientBriefDataRequest();
+    void processGetPatientBriefDataRequest(const QJsonObject& request);
 
 private:
     qintptr m_socketDescriptor{};

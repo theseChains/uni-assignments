@@ -84,7 +84,7 @@ UserType DatabaseHandler::authenticateUser(const LoginInputData& loginData)
     return userType;
 }
 
-bool DatabaseHandler::registerPatient(const PatientRegistrationData& data)
+bool DatabaseHandler::registerPatient(const PatientData& data)
 {
     QSqlQuery query{ m_database };
     query.prepare("INSERT INTO patients "
@@ -192,5 +192,38 @@ std::vector<PatientBriefData> DatabaseHandler::getPatientBriefData(const Patient
     }
 
     return briefData;
+}
+
+PatientData DatabaseHandler::getPatientInfo(int id)
+{
+    QSqlQuery query{ m_database };
+    query.prepare("SELECT * FROM patients WHERE patient_id = :id");
+    query.bindValue(":id", id);
+
+    if (!query.exec()) {
+        qWarning() << "Error executing query:" << query.lastError().text();
+        return {};
+    }
+
+    PatientData data{};
+    if (query.next())
+    {
+        data.lastName = query.value("last_name").toString();
+        data.firstName = query.value("first_name").toString();
+        data.middleName = query.value("middle_name").toString();
+        data.dateOfBirth = query.value("date_of_birth").toDate();
+        data.documentType = query.value("document_type").toString();
+        data.documentNumber = query.value("document_number").toString();
+        data.documentSeries= query.value("document_series").toString();
+        data.medicalInsuranceNumber = query.value("medical_insurance_number").toString();
+        data.individualInsuranceNumber= query.value("individual_insurance_number").toString();
+        data.phoneNumber = query.value("phone_number").toString();
+        data.city = query.value("city").toString();
+        data.street = query.value("street").toString();
+        data.houseNumber = query.value("house_number").toInt();
+        data.apartmentNumber = query.value("apartment_number").toInt();
+    }
+
+    return data;
 }
 }

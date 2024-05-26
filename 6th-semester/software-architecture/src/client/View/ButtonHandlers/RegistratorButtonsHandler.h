@@ -5,6 +5,8 @@
 #include <QString>
 
 #include "client/Facade/Facade.h"
+#include "common/data/PatientSearchData.h"
+#include "common/data/PatientData.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class ApplicationViewUi; }
@@ -35,7 +37,9 @@ private slots:
     void onFindPatientsButtonClicked();
     void onGetPatientsBriefDataResult(const std::vector<PatientBriefData>& data);
 
-    void onOpenClientInfoButtonClicked();
+    void onOpenPatientInfoButtonClicked();
+    void onPatientInfoResult(const PatientData& data);
+
     void onBackToSearchButtonClicked();
     void onBackToClientTableButtonClicked();
     void onClientPageTalonButtonClicked();

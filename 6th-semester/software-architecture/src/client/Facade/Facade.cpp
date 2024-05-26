@@ -12,6 +12,8 @@ Facade::Facade(QObject* parent)
             this, &Facade::onGetAllPatientBriefDataResult);
     connect(m_client, &Client::getPatientBriefDataResult,
             this, &Facade::onGetPatientBriefDataResult);
+    connect(m_client, &Client::getPatientInfoResult,
+            this, &Facade::onGetPatientInfoResult);
 
     m_client->connectToServer();
 }
@@ -26,7 +28,7 @@ void Facade::onClientLoginResult(UserType userType)
     emit loginResult(userType);
 }
 
-void Facade::registerPatient(const PatientRegistrationData& data)
+void Facade::registerPatient(const PatientData& data)
 {
     m_client->sendPatientRegistrationRequest(data);
 }
@@ -54,5 +56,15 @@ void Facade::getPatientBriefData(const PatientSearchData& data)
 void Facade::onGetPatientBriefDataResult(const std::vector<PatientBriefData>& data)
 {
     emit getPatientBriefDataResult(data);
+}
+
+void Facade::getPatientInfo(int id)
+{
+    m_client->sendGetPatientInfoRequest(id);
+}
+
+void Facade::onGetPatientInfoResult(const PatientData& data)
+{
+    emit getPatientInfoResult(data);
 }
 }

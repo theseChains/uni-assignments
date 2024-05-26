@@ -77,6 +77,10 @@ void ClientHandler::onReadyRead()
     {
         processGetPatientBriefDataRequest(request);
     }
+    else if (command == "getPatientInfo")
+    {
+        processGetPatientInfoRequest(request);
+    }
 }
 
 void ClientHandler::processLoginRequest(const QJsonObject& request)
@@ -95,7 +99,7 @@ void ClientHandler::processLoginRequest(const QJsonObject& request)
 
 void ClientHandler::processPatientRegistrationRequest(const QJsonObject& request)
 {
-    PatientRegistrationData data{};
+    PatientData data{};
     Reflect::fromJson(request, data);
     bool success{ m_databaseHandler.registerPatient(data) };
 
@@ -140,6 +144,18 @@ void ClientHandler::processGetPatientBriefDataRequest(const QJsonObject& request
     QJsonObject response{};
     response["command"] = "patientBriefDataResult";
     response["briefData"] = jsonArray;
+
+    QJsonDocument document{ response };
+    m_socket->write(document.toJson());
+}
+
+void ClientHandler::processGetPatientInfoRequest(const QJsonObject& request)
+{
+    int id{ request["patientId"].toInt() };
+    PatientData data{ m_databaseHandler.getPatientInfo(id) };
+
+    QJsonObject response{ Reflect::toJson(data) };
+    response["command"] = "patientInfoResult";
 
     QJsonDocument document{ response };
     m_socket->write(document.toJson());

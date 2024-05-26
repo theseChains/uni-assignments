@@ -637,7 +637,7 @@
          </rect>
         </property>
         <property name="currentIndex">
-         <number>0</number>
+         <number>2</number>
         </property>
         <widget class="QWidget" name="SearchClientsPage">
          <widget class="QWidget" name="horizontalLayoutWidget_10">
@@ -1225,7 +1225,7 @@
             </spacer>
            </item>
            <item>
-            <widget class="QPushButton" name="OpenClientInfoButton">
+            <widget class="QPushButton" name="OpenPatientInfoButton">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
                <horstretch>0</horstretch>
@@ -1355,7 +1355,7 @@
                 </widget>
                </item>
                <item>
-                <widget class="QLineEdit" name="lineEdit_33"/>
+                <widget class="QLineEdit" name="PatientPageCity"/>
                </item>
               </layout>
              </item>
@@ -1374,7 +1374,7 @@
                 </widget>
                </item>
                <item>
-                <widget class="QLineEdit" name="lineEdit_34"/>
+                <widget class="QLineEdit" name="PatientPageStreet"/>
                </item>
               </layout>
              </item>
@@ -1393,7 +1393,7 @@
                 </widget>
                </item>
                <item>
-                <widget class="QLineEdit" name="lineEdit_35"/>
+                <widget class="QLineEdit" name="PatientPageHouseNumber"/>
                </item>
                <item>
                 <layout class="QHBoxLayout" name="horizontalLayout_51" stretch="3,6">
@@ -1410,7 +1410,7 @@
                   </widget>
                  </item>
                  <item>
-                  <widget class="QLineEdit" name="lineEdit_36"/>
+                  <widget class="QLineEdit" name="PatientPageApartmentNumber"/>
                  </item>
                 </layout>
                </item>
@@ -1448,7 +1448,7 @@
                 </widget>
                </item>
                <item>
-                <widget class="QLineEdit" name="lineEdit_37">
+                <widget class="QLineEdit" name="PatientPagePhoneNumber">
                  <property name="inputMethodHints">
                   <set>Qt::ImhDialableCharactersOnly</set>
                  </property>
@@ -1471,7 +1471,7 @@
                 </widget>
                </item>
                <item>
-                <widget class="QLineEdit" name="lineEdit_38">
+                <widget class="QLineEdit" name="PatientPageIndividualInsuranceNumber">
                  <property name="inputMethodHints">
                   <set>Qt::ImhDigitsOnly</set>
                  </property>
@@ -1494,7 +1494,7 @@
                 </widget>
                </item>
                <item>
-                <widget class="QLineEdit" name="lineEdit_39">
+                <widget class="QLineEdit" name="PatientPageMedicalInsuranceNumber">
                  <property name="inputMethodHints">
                   <set>Qt::ImhDigitsOnly</set>
                  </property>
@@ -1533,7 +1533,7 @@
                 </widget>
                </item>
                <item>
-                <widget class="QLineEdit" name="ClientPageLastName"/>
+                <widget class="QLineEdit" name="PatientPageLastName"/>
                </item>
               </layout>
              </item>
@@ -1552,7 +1552,7 @@
                 </widget>
                </item>
                <item>
-                <widget class="QLineEdit" name="ClientPageFirstName"/>
+                <widget class="QLineEdit" name="PatientPageFirstName"/>
                </item>
               </layout>
              </item>
@@ -1571,7 +1571,7 @@
                 </widget>
                </item>
                <item>
-                <widget class="QLineEdit" name="ClientPageMiddleName"/>
+                <widget class="QLineEdit" name="PatientPageMiddleName"/>
                </item>
               </layout>
              </item>
@@ -1590,7 +1590,7 @@
                 </widget>
                </item>
                <item>
-                <widget class="QDateEdit" name="ClientPageDateOfBirth">
+                <widget class="QDateEdit" name="PatientPageDateOfBirth">
                  <property name="displayFormat">
                   <string>dd/MM/yyyy</string>
                  </property>
@@ -1633,7 +1633,7 @@
                 </widget>
                </item>
                <item>
-                <widget class="QComboBox" name="comboBox_7">
+                <widget class="QComboBox" name="PatientPageDocumentType">
                  <property name="currentText">
                   <string>Паспорт</string>
                  </property>
@@ -1666,7 +1666,7 @@
                 </widget>
                </item>
                <item>
-                <widget class="QLineEdit" name="lineEdit_43">
+                <widget class="QLineEdit" name="PatientPageDocumentSeries">
                  <property name="inputMethodHints">
                   <set>Qt::ImhDigitsOnly</set>
                  </property>
@@ -1692,7 +1692,7 @@
                 </widget>
                </item>
                <item>
-                <widget class="QLineEdit" name="lineEdit_44">
+                <widget class="QLineEdit" name="PatientPageDocumentNumber">
                  <property name="inputMethodHints">
                   <set>Qt::ImhDigitsOnly</set>
                  </property>
@@ -1718,7 +1718,7 @@
                 </widget>
                </item>
                <item>
-                <widget class="QComboBox" name="comboBox_8">
+                <widget class="QComboBox" name="PatientPageGender">
                  <item>
                   <property name="text">
                    <string>Мужской</string>
@@ -1888,14 +1888,14 @@
          <widget class="QTabWidget" name="TalonPageTabs">
           <property name="geometry">
            <rect>
-            <x>3</x>
+            <x>4</x>
             <y>0</y>
             <width>1261</width>
             <height>641</height>
            </rect>
           </property>
           <property name="currentIndex">
-           <number>1</number>
+           <number>0</number>
           </property>
           <widget class="QWidget" name="tab">
            <attribute name="title">

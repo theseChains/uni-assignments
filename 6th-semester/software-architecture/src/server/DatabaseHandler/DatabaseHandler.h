@@ -9,7 +9,7 @@
 
 #include "common/UserType.h"
 #include "common/data/LoginInputData.h"
-#include "common/data/PatientRegistrationData.h"
+#include "common/data/PatientData.h"
 #include "common/data/PatientBriefData.h"
 #include "common/data/PatientSearchData.h"
 
@@ -24,9 +24,10 @@ public:
     bool connectToTheDatabase();
 
     UserType authenticateUser(const LoginInputData& loginData);
-    bool registerPatient(const PatientRegistrationData& data);
+    bool registerPatient(const PatientData& data);
     std::vector<PatientBriefData> getAllPatientsBriefData();
     std::vector<PatientBriefData> getPatientBriefData(const PatientSearchData& data);
+    PatientData getPatientInfo(int id);
 
 private:
     QSqlDatabase m_database{};

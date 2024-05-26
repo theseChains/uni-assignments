@@ -39,7 +39,7 @@ void Client::sendLoginRequest(const LoginInputData& inputData)
     m_socket->write(document.toJson());
 }
 
-void Client::sendPatientRegistrationRequest(const PatientRegistrationData& data)
+void Client::sendPatientRegistrationRequest(const PatientData& data)
 {
     QJsonObject request{ Reflect::toJson(data) };
     request["command"] = "registerPatient";
@@ -61,6 +61,16 @@ void Client::sendGetPatientBriefDataRequest(const PatientSearchData& data)
 {
     QJsonObject request{ Reflect::toJson(data) };
     request["command"] = "getPatientBriefData";
+
+    QJsonDocument document{ request };
+    m_socket->write(document.toJson());
+}
+
+void Client::sendGetPatientInfoRequest(int id)
+{
+    QJsonObject request{};
+    request["command"] = "getPatientInfo";
+    request["patientId"] = id;
 
     QJsonDocument document{ request };
     m_socket->write(document.toJson());
@@ -88,6 +98,10 @@ void Client::onReadyRead()
     else if (command == "patientBriefDataResult")
     {
         processGetPatientBriefDataResult(response);
+    }
+    else if (command == "patientInfoResult")
+    {
+        processGetPatientInfoResult(response);
     }
 }
 
@@ -146,6 +160,13 @@ void Client::processGetPatientBriefDataResult(const QJsonObject& response)
     }
 
     emit getPatientBriefDataResult(data);
+}
+
+void Client::processGetPatientInfoResult(const QJsonObject& response)
+{
+    PatientData data{};
+    Reflect::fromJson(response, data);
+    emit getPatientInfoResult(data);
 }
 
 void Client::onDisconnected()

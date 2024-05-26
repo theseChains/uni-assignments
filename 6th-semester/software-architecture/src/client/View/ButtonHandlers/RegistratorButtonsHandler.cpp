@@ -3,7 +3,7 @@
 #include "client/View/ViewConstants.h"
 #include "client/View/StackedWidgetNavigator/StackedWidgetNavigator.h"
 #include "client/View/InputValidator.h"
-#include "common/data/PatientRegistrationData.h"
+#include "common/data/PatientData.h"
 #include "common/data/PatientSearchData.h"
 
 #include <QPushButton>
@@ -21,6 +21,8 @@ RegistratorButtonsHandler::RegistratorButtonsHandler(Facade* facade)
             this, &RegistratorButtonsHandler::onGetAllPatientBriefDataResult);
     connect(m_facade, &Facade::getPatientBriefDataResult,
             this, &RegistratorButtonsHandler::onGetPatientsBriefDataResult);
+    connect(m_facade, &Facade::getPatientInfoResult,
+            this, &RegistratorButtonsHandler::onPatientInfoResult);
 }
 
 void RegistratorButtonsHandler::setUi(Ui::ApplicationViewUi* ui)
@@ -36,9 +38,9 @@ void RegistratorButtonsHandler::connectButtonsToSlots()
             this, &RegistratorButtonsHandler::onFindAllPatientsButtonClicked);
     connect(m_ui->FindPatientsButton, &QPushButton::clicked,
             this, &RegistratorButtonsHandler::onFindPatientsButtonClicked);
+    connect(m_ui->OpenPatientInfoButton, &QPushButton::clicked,
+            this, &RegistratorButtonsHandler::onOpenPatientInfoButtonClicked);
 
-    connect(m_ui->OpenClientInfoButton, &QPushButton::clicked,
-            this, &RegistratorButtonsHandler::onOpenClientInfoButtonClicked);
     QObject::connect(m_ui->BackToSearchButton, &QPushButton::clicked,
             this, &RegistratorButtonsHandler::onBackToSearchButtonClicked);
     QObject::connect(m_ui->BackToClientTableButton, &QPushButton::clicked,
@@ -62,7 +64,7 @@ void RegistratorButtonsHandler::onRegisterPatientButtonClicked()
         return;
     }
 
-    PatientRegistrationData data{};
+    PatientData data{};
     data.lastName = m_ui->PatientRegLastName->text();
     data.firstName = m_ui->PatientRegFirstName->text();
     data.middleName = m_ui->PatientRegMiddleName->text();
@@ -179,36 +181,37 @@ void RegistratorButtonsHandler::onGetPatientsBriefDataResult(const std::vector<P
     }
 }
 
-void RegistratorButtonsHandler::onOpenClientInfoButtonClicked()
+void RegistratorButtonsHandler::onOpenPatientInfoButtonClicked()
 {
     int selectedRow{ m_ui->FoundClientsTable->currentRow() };
     // it always chooses the first one if there is no choice
     // look into that if you have time
     if (selectedRow != -1)
     {
-        // should really create a struct for this short kind of data
-        std::array<QString, 4> clientData{};
-        for (int col{ 0 }; col < m_ui->FoundClientsTable->columnCount(); ++col)
-        {
-            QTableWidgetItem *item{
-                m_ui->FoundClientsTable->item(selectedRow, col) };
-            clientData[col] = item->text();
-        }
-
-        // then we also fetch full data based on this client data from the table
-        // cause we'll need it anyways
-        // so if we have 2 clients with the same data.. well.. too bad xd
-
-        m_ui->ClientPageLastName->setText(clientData[0]);
-        m_ui->ClientPageFirstName->setText(clientData[1]);
-        m_ui->ClientPageMiddleName->setText(clientData[2]);
-        QStringList dateParts{ clientData[3].split('.') };
-        QDate date{ dateParts[2].toInt(), dateParts[1].toInt(), dateParts[0].toInt() };
-        // this should honeslty already be a QDate
-        m_ui->ClientPageDateOfBirth->setDate(date);
-
-        StackedWidgetNavigator::navigateToPage(*m_ui->ClientSearchStackedWidget, constants::kClientInfoPage);
+        m_facade->getPatientInfo(
+                m_ui->FoundClientsTable->item(selectedRow, 0)->text().toInt());
     }
+}
+
+void RegistratorButtonsHandler::onPatientInfoResult(const PatientData& data)
+{
+    m_ui->PatientPageLastName->setText(data.lastName);
+    m_ui->PatientPageFirstName->setText(data.firstName);
+    m_ui->PatientPageMiddleName->setText(data.middleName);
+    m_ui->PatientPageDateOfBirth->setDate(data.dateOfBirth);
+    m_ui->PatientPageGender->setCurrentText(data.gender);
+    m_ui->PatientPageDocumentType->setCurrentText(data.documentType);
+    m_ui->PatientPageDocumentNumber->setText(data.documentNumber);
+    m_ui->PatientPageDocumentSeries->setText(data.documentSeries);
+    m_ui->PatientPageMedicalInsuranceNumber->setText(data.medicalInsuranceNumber);
+    m_ui->PatientPageIndividualInsuranceNumber->setText(data.individualInsuranceNumber);
+    m_ui->PatientPagePhoneNumber->setText(data.phoneNumber);
+    m_ui->PatientPageCity->setText(data.city);
+    m_ui->PatientPageStreet->setText(data.street);
+    m_ui->PatientPageHouseNumber->setText(QString::number(data.houseNumber));
+    m_ui->PatientPageApartmentNumber->setText(QString::number(data.apartmentNumber));
+
+    StackedWidgetNavigator::navigateToPage(*m_ui->ClientSearchStackedWidget, constants::kClientInfoPage);
 }
 
 void RegistratorButtonsHandler::onBackToSearchButtonClicked()
@@ -223,19 +226,19 @@ void RegistratorButtonsHandler::onBackToClientTableButtonClicked()
 
 void RegistratorButtonsHandler::onClientPageTalonButtonClicked()
 {
-    QString clientData{};
+    /* QString clientData{}; */
 
-    clientData.append(m_ui->ClientPageLastName->text() + " ");
-    clientData.append(m_ui->ClientPageFirstName->text() + " ");
-    clientData.append(m_ui->ClientPageMiddleName->text() + " ");
-    QDate date{ m_ui->ClientPageDateOfBirth->date() };
-    clientData.append(date.toString("dd.MM.yyyy"));
+    /* clientData.append(m_ui->ClientPageLastName->text() + " "); */
+    /* clientData.append(m_ui->ClientPageFirstName->text() + " "); */
+    /* clientData.append(m_ui->ClientPageMiddleName->text() + " "); */
+    /* QDate date{ m_ui->ClientPageDateOfBirth->date() }; */
+    /* clientData.append(date.toString("dd.MM.yyyy")); */
 
-    m_ui->TalonPageClientInfo->setText(clientData);
+    /* m_ui->TalonPageClientInfo->setText(clientData); */
 
-    m_lastClientStackedWidgetIndex = m_ui->ClientSearchStackedWidget->currentIndex();
+    /* m_lastClientStackedWidgetIndex = m_ui->ClientSearchStackedWidget->currentIndex(); */
 
-    StackedWidgetNavigator::navigateToPage(*m_ui->ClientSearchStackedWidget, constants::kTalonPage);
+    /* StackedWidgetNavigator::navigateToPage(*m_ui->ClientSearchStackedWidget, constants::kTalonPage); */
 }
 
 void RegistratorButtonsHandler::onClientTableTalonButtonClicked()
@@ -261,28 +264,29 @@ void RegistratorButtonsHandler::fillTableWithData(const std::vector<PatientBrief
     m_ui->FoundClientsTable->setRowCount(data.size());
     m_ui->FoundClientsTable->setColumnCount(constants::kNumberOfClientsTableColumns);
 
-    m_ui->FoundClientsTable->setHorizontalHeaderLabels({"ID", "First Name", "Last Name", "Middle Name", "Date of Birth"});
+    m_ui->FoundClientsTable->setHorizontalHeaderLabels(
+            { "ID", "Фамилия", "Имя", "Отчество", "Дата рождения" });
 
     // move this somewhere else?
     int fontSize{ 14 };
-    QFont font;
+    QFont font{};
     font.setPointSize(fontSize);
 
     for (std::size_t i{ 0 }; i < data.size(); ++i)
     {
         // why an auto& here.. god knows
         const auto& patient = data[i];
-        const QStringList rowData = {
+        const QStringList rowData{
             QString::number(patient.id),
-            patient.firstName,
             patient.lastName,
+            patient.firstName,
             patient.middleName,
             patient.dateOfBirth.toString("dd-MM-yyyy")
         };
 
-        for (std::size_t j = 0; j < constants::kNumberOfClientsTableColumns; ++j)
+        for (std::size_t j{ 0 }; j < constants::kNumberOfClientsTableColumns; ++j)
         {
-            QTableWidgetItem* item = new QTableWidgetItem(rowData[j]);
+            QTableWidgetItem* item{ new QTableWidgetItem(rowData[j]) };
             item->setFlags(item->flags() & ~Qt::ItemIsEditable);
             item->setFont(font);
             m_ui->FoundClientsTable->setItem(i, j, item);

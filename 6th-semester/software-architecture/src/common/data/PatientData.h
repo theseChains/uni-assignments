@@ -8,8 +8,7 @@
 
 namespace polyclinic
 {
-// todo: rename to PatientData
-struct PatientRegistrationData
+struct PatientData
 {
     QString lastName{};
     QString firstName{};
@@ -29,39 +28,39 @@ struct PatientRegistrationData
 };
 
 template <>
-struct ReflectTraits<PatientRegistrationData> {
+struct ReflectTraits<PatientData> {
     static constexpr auto fields() {
         return std::make_tuple(
             std::make_pair("lastName",
-                           &PatientRegistrationData::lastName),
+                           &PatientData::lastName),
             std::make_pair("firstName",
-                           &PatientRegistrationData::firstName),
+                           &PatientData::firstName),
             std::make_pair("middleName",
-                           &PatientRegistrationData::middleName),
+                           &PatientData::middleName),
             std::make_pair("dateOfBirth",
-                           &PatientRegistrationData::dateOfBirth),
+                           &PatientData::dateOfBirth),
             std::make_pair("gender",
-                           &PatientRegistrationData::gender),
+                           &PatientData::gender),
             std::make_pair("documentType",
-                           &PatientRegistrationData::documentType),
+                           &PatientData::documentType),
             std::make_pair("documentNumber",
-                           &PatientRegistrationData::documentNumber),
+                           &PatientData::documentNumber),
             std::make_pair("documentSeries",
-                           &PatientRegistrationData::documentSeries),
+                           &PatientData::documentSeries),
             std::make_pair("medicalInsuranceNumber",
-                           &PatientRegistrationData::medicalInsuranceNumber),
+                           &PatientData::medicalInsuranceNumber),
             std::make_pair("individualInsuranceNumber",
-                           &PatientRegistrationData::individualInsuranceNumber),
+                           &PatientData::individualInsuranceNumber),
             std::make_pair("phoneNumber",
-                           &PatientRegistrationData::phoneNumber),
+                           &PatientData::phoneNumber),
             std::make_pair("city",
-                           &PatientRegistrationData::city),
+                           &PatientData::city),
             std::make_pair("street",
-                           &PatientRegistrationData::street),
+                           &PatientData::street),
             std::make_pair("houseNumber",
-                           &PatientRegistrationData::houseNumber),
+                           &PatientData::houseNumber),
             std::make_pair("apartmentNumber",
-                           &PatientRegistrationData::apartmentNumber)
+                           &PatientData::apartmentNumber)
         );
     }
 };

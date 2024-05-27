@@ -32,6 +32,8 @@ private:
     void processGetAllPatientBriefDataRequest();
     void processGetPatientBriefDataRequest(const QJsonObject& request);
     void processGetPatientInfoRequest(const QJsonObject& request);
+    void processUpdatePatientInfoRequest(const QJsonObject& request);
+    void processGetDoctorsBySpecializationRequest(const QJsonObject& request);
 
 private:
     qintptr m_socketDescriptor{};

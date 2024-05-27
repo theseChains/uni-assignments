@@ -12,17 +12,22 @@
 
 namespace polyclinic
 {
-RegistratorButtonsHandler::RegistratorButtonsHandler(Facade* facade)
-    : m_facade{ facade }
+RegistratorButtonsHandler::RegistratorButtonsHandler(Client* client, QObject* parent)
+    : QObject{ parent }, m_client{ client }
 {
-    connect(m_facade, &Facade::patientRegistrationResult,
+    connect(m_client, &Client::patientRegistrationResult,
             this, &RegistratorButtonsHandler::onPatientRegistration);
-    connect(m_facade, &Facade::getAllPatientBriefDataResult,
+    connect(m_client, &Client::getAllPatientsBriefDataResult,
             this, &RegistratorButtonsHandler::onGetAllPatientBriefDataResult);
-    connect(m_facade, &Facade::getPatientBriefDataResult,
+    connect(m_client, &Client::getPatientBriefDataResult,
             this, &RegistratorButtonsHandler::onGetPatientsBriefDataResult);
-    connect(m_facade, &Facade::getPatientInfoResult,
+    connect(m_client, &Client::getPatientInfoResult,
             this, &RegistratorButtonsHandler::onPatientInfoResult);
+    connect(m_client, &Client::updatePatientInfoResult,
+            this, &RegistratorButtonsHandler::onUpdatePatientInfoResult);
+    connect(m_client, &Client::getDoctorsBySpecializationResult,
+            this, &RegistratorButtonsHandler::onGetDoctorsBySpecializationResult);
+
 }
 
 void RegistratorButtonsHandler::setUi(Ui::ApplicationViewUi* ui)
@@ -40,13 +45,19 @@ void RegistratorButtonsHandler::connectButtonsToSlots()
             this, &RegistratorButtonsHandler::onFindPatientsButtonClicked);
     connect(m_ui->OpenPatientInfoButton, &QPushButton::clicked,
             this, &RegistratorButtonsHandler::onOpenPatientInfoButtonClicked);
+    connect(m_ui->UpdatePatientInfoButton, &QPushButton::clicked,
+            this, &RegistratorButtonsHandler::onUpdatePatientInfoButtonClicked);
+    connect(m_ui->ScheduleEditDoctorSpecialization,
+            QOverload<int>::of(&QComboBox::currentIndexChanged),
+            this, &RegistratorButtonsHandler::onSpecializationChanged);
+
+    connect(m_ui->PatientPageTalonButton, &QPushButton::clicked,
+            this, &RegistratorButtonsHandler::onClientPageTalonButtonClicked);
 
     QObject::connect(m_ui->BackToSearchButton, &QPushButton::clicked,
             this, &RegistratorButtonsHandler::onBackToSearchButtonClicked);
     QObject::connect(m_ui->BackToClientTableButton, &QPushButton::clicked,
             this, &RegistratorButtonsHandler::onBackToClientTableButtonClicked);
-    QObject::connect(m_ui->ClientPageTalonButton, &QPushButton::clicked,
-            this, &RegistratorButtonsHandler::onClientPageTalonButtonClicked);
     QObject::connect(m_ui->ClientTableTalonButton, &QPushButton::clicked,
             this, &RegistratorButtonsHandler::onClientTableTalonButtonClicked);
     QObject::connect(m_ui->BackFromTalonButton, &QPushButton::clicked,
@@ -81,7 +92,7 @@ void RegistratorButtonsHandler::onRegisterPatientButtonClicked()
     data.houseNumber = m_ui->PatientRegHouseNumber->text().toInt();
     data.apartmentNumber = m_ui->PatientRegApartmentNumber->text().toInt();
 
-    m_facade->registerPatient(data);
+    m_client->sendPatientRegistrationRequest(data);
 }
 
 void RegistratorButtonsHandler::onPatientRegistration(bool success)
@@ -97,7 +108,8 @@ void RegistratorButtonsHandler::onPatientRegistration(bool success)
 
 void RegistratorButtonsHandler::onFindAllPatientsButtonClicked()
 {
-    m_facade->getAllPatientBriefData();
+    m_isSpecificSearch = false;
+    m_client->sendGetAllPatientBriefDataRequest();
 }
 
 void RegistratorButtonsHandler::onGetAllPatientBriefDataResult(const std::vector<PatientBriefData>& data)
@@ -160,7 +172,9 @@ void RegistratorButtonsHandler::onFindPatientsButtonClicked()
 
     if (searchEnabled)
     {
-        m_facade->getPatientBriefData(data);
+        m_isSpecificSearch = true;
+        m_lastSearchCriteria = data;
+        m_client->sendGetPatientBriefDataRequest(data);
     }
     else
     {
@@ -188,8 +202,9 @@ void RegistratorButtonsHandler::onOpenPatientInfoButtonClicked()
     // look into that if you have time
     if (selectedRow != -1)
     {
-        m_facade->getPatientInfo(
-                m_ui->FoundClientsTable->item(selectedRow, 0)->text().toInt());
+        int patientId{ m_ui->FoundClientsTable->item(selectedRow, 0)->text().toInt() };
+        m_currentPatientId = patientId;
+        m_client->sendGetPatientInfoRequest(patientId);
     }
 }
 
@@ -214,6 +229,38 @@ void RegistratorButtonsHandler::onPatientInfoResult(const PatientData& data)
     StackedWidgetNavigator::navigateToPage(*m_ui->ClientSearchStackedWidget, constants::kClientInfoPage);
 }
 
+void RegistratorButtonsHandler::onUpdatePatientInfoButtonClicked()
+{
+    PatientData data{};
+    data.lastName = m_ui->PatientPageLastName->text();
+    data.firstName = m_ui->PatientPageFirstName->text();
+    data.middleName = m_ui->PatientPageMiddleName->text();
+    data.dateOfBirth = m_ui->PatientPageDateOfBirth->date();
+    data.gender = m_ui->PatientPageGender->currentText();
+    data.documentType = m_ui->PatientPageDocumentType->currentText();
+    data.documentNumber = m_ui->PatientPageDocumentNumber->text();
+    data.documentSeries = m_ui->PatientPageDocumentSeries->text();
+    data.medicalInsuranceNumber = m_ui->PatientPageMedicalInsuranceNumber->text();
+    data.individualInsuranceNumber = m_ui->PatientPageIndividualInsuranceNumber->text();
+    data.phoneNumber = m_ui->PatientPagePhoneNumber->text();
+    data.city = m_ui->PatientPageCity->text();
+    data.street = m_ui->PatientPageStreet->text();
+    data.houseNumber = m_ui->PatientPageHouseNumber->text().toInt();
+    data.apartmentNumber = m_ui->PatientPageApartmentNumber->text().toInt();
+
+    m_client->sendUpdatePatientInfoRequest(data, m_currentPatientId);
+}
+
+void RegistratorButtonsHandler::onUpdatePatientInfoResult(bool success)
+{
+    if (success) {
+        QMessageBox::information(nullptr, "Success", "Данные успешно обновлены.");
+    } else {
+        QMessageBox::critical(nullptr, "Error", "Не удалось обновить данные пациента.");
+    }
+}
+
+
 void RegistratorButtonsHandler::onBackToSearchButtonClicked()
 {
     StackedWidgetNavigator::navigateToPage(*m_ui->ClientSearchStackedWidget, constants::kSeachClientsPage);
@@ -221,7 +268,31 @@ void RegistratorButtonsHandler::onBackToSearchButtonClicked()
 
 void RegistratorButtonsHandler::onBackToClientTableButtonClicked()
 {
+    if (m_isSpecificSearch && m_lastSearchCriteria.has_value())
+    {
+        m_client->sendGetPatientBriefDataRequest(m_lastSearchCriteria.value());
+    }
+    else
+    {
+        m_client->sendGetAllPatientBriefDataRequest();
+    }
+
     StackedWidgetNavigator::navigateToPage(*m_ui->ClientSearchStackedWidget, constants::kFoundClientsPage);
+}
+
+void RegistratorButtonsHandler::onSpecializationChanged()
+{
+    QString specialization{ m_ui->ScheduleEditDoctorSpecialization->currentText() };
+    m_client->sendGetDoctorsBySpecializationRequest(specialization);
+}
+
+void RegistratorButtonsHandler::onGetDoctorsBySpecializationResult(const std::vector<DoctorScheduleData>& data)
+{
+    m_ui->ScheduleEditDoctorLastName->clear();
+    for (const auto& doctor : data)
+    {
+        m_ui->ScheduleEditDoctorLastName->addItem(doctor.lastName, doctor.id);
+    }
 }
 
 void RegistratorButtonsHandler::onClientPageTalonButtonClicked()
@@ -293,7 +364,6 @@ void RegistratorButtonsHandler::fillTableWithData(const std::vector<PatientBrief
         }
     }
 
-    // Hide the ID column
     m_ui->FoundClientsTable->hideColumn(0);
 }
 

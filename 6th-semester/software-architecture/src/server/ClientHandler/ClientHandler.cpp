@@ -9,6 +9,7 @@
 
 #include "common/data/Reflect.h"
 #include "common/data/PatientSearchData.h"
+#include "common/data/DoctorScheduleData.h"
 
 namespace polyclinic
 {
@@ -80,6 +81,14 @@ void ClientHandler::onReadyRead()
     else if (command == "getPatientInfo")
     {
         processGetPatientInfoRequest(request);
+    }
+    else if (command == "updatePatientInfo")
+    {
+        processUpdatePatientInfoRequest(request);
+    }
+    else if (command == "getDoctorsBySpecialization")
+    {
+        processGetDoctorsBySpecializationRequest(request);
     }
 }
 
@@ -156,6 +165,42 @@ void ClientHandler::processGetPatientInfoRequest(const QJsonObject& request)
 
     QJsonObject response{ Reflect::toJson(data) };
     response["command"] = "patientInfoResult";
+
+    QJsonDocument document{ response };
+    m_socket->write(document.toJson());
+}
+
+void ClientHandler::processUpdatePatientInfoRequest(const QJsonObject& request)
+{
+    PatientData data{};
+    Reflect::fromJson(request, data);
+    int id{ request["patientId"].toInt() };
+
+    bool success{ m_databaseHandler.setPatientInfo(data, id) };
+
+    QJsonObject response{};
+    response["command"] = "updatePatientInfoResult";
+    response["success"] = success;
+
+    QJsonDocument document{ response };
+    m_socket->write(document.toJson());
+}
+
+void ClientHandler::processGetDoctorsBySpecializationRequest(const QJsonObject& request)
+{
+    QString specialization{ request["specialization"].toString() };
+
+    std::vector<DoctorScheduleData> data{ m_databaseHandler.getDoctorsBySpecialization(specialization) };
+
+    QJsonArray jsonArray{};
+    for (const auto& doctor : data)
+    {
+        jsonArray.append(Reflect::toJson(doctor));
+    }
+
+    QJsonObject response{};
+    response["command"] = "doctorsBySpecializationResult";
+    response["doctors"] = jsonArray;
 
     QJsonDocument document{ response };
     m_socket->write(document.toJson());

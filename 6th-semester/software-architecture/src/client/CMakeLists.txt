@@ -6,8 +6,6 @@ add_executable(PolyclinicApp
     ${RESOURCE_FILES}
     Client.cpp
     Client.h
-    Facade/Facade.cpp
-    Facade/Facade.h
     View/ApplicationViewUi.ui
     View/ApplicationView.cpp
     View/ApplicationView.h

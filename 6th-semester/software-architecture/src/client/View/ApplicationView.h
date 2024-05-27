@@ -10,7 +10,7 @@
 #include "client/View/ButtonHandlers/RegistratorButtonsHandler.h"
 #include "client/View/ValidatorSetup.h"
 #include "common/UserType.h"
-#include "client/Facade/Facade.h"
+#include "client/Client.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class ApplicationViewUi; }
@@ -36,7 +36,7 @@ private slots:
 
 private:
     Ui::ApplicationViewUi* m_ui{};
-    Facade* m_facade{};
+    Client* m_client{};
 
     RegistratorButtonsHandler m_registratorButtonsHandler;
 

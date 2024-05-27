@@ -15,8 +15,8 @@ namespace polyclinic
 ApplicationView::ApplicationView(QWidget* parent)
     : QMainWindow{ parent },
       m_ui{ new Ui::ApplicationViewUi },
-      m_facade{ new Facade{ this } },
-      m_registratorButtonsHandler{ m_facade },
+      m_client{ new Client{ this } },
+      m_registratorButtonsHandler{ m_client },
       m_validatorSetup{ this }
 {
     m_ui->setupUi(this);
@@ -47,7 +47,9 @@ ApplicationView::ApplicationView(QWidget* parent)
     connect(&m_registratorButtonsHandler, &RegistratorButtonsHandler::errorOccurred,
             this, &ApplicationView::displayErrorMessage);
 
-    connect(m_facade, &Facade::loginResult, this, &ApplicationView::onAuthentication);
+    m_client->connectToServer();
+    connect(m_client, &Client::loginResult,
+            this, &ApplicationView::onAuthentication);
 }
 
 void ApplicationView::onLoginButtonClicked()
@@ -56,7 +58,7 @@ void ApplicationView::onLoginButtonClicked()
     inputData.username = m_ui->LoginInput->text();
     inputData.password = m_ui->PasswordInput->text();
 
-    m_facade->login(inputData);
+    m_client->sendLoginRequest(inputData);
 }
 
 void ApplicationView::onAuthentication(UserType userType)

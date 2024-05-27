@@ -78,7 +78,7 @@
        </rect>
       </property>
       <property name="currentIndex">
-       <number>1</number>
+       <number>2</number>
       </property>
       <widget class="QWidget" name="ClientRegistration">
        <attribute name="title">
@@ -630,14 +630,14 @@
        <widget class="QStackedWidget" name="ClientSearchStackedWidget">
         <property name="geometry">
          <rect>
-          <x>1</x>
+          <x>2</x>
           <y>0</y>
           <width>1271</width>
           <height>651</height>
          </rect>
         </property>
         <property name="currentIndex">
-         <number>2</number>
+         <number>3</number>
         </property>
         <widget class="QWidget" name="SearchClientsPage">
          <widget class="QWidget" name="horizontalLayoutWidget_10">
@@ -1782,7 +1782,7 @@
             </spacer>
            </item>
            <item>
-            <widget class="QPushButton" name="OpenClientInfoButton_2">
+            <widget class="QPushButton" name="UpdatePatientInfoButton">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
                <horstretch>0</horstretch>
@@ -1816,7 +1816,7 @@
             </spacer>
            </item>
            <item>
-            <widget class="QPushButton" name="ClientPageTalonButton">
+            <widget class="QPushButton" name="PatientPageTalonButton">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
                <horstretch>0</horstretch>
@@ -2806,7 +2806,7 @@
             </widget>
            </item>
            <item>
-            <widget class="QComboBox" name="comboBox_15">
+            <widget class="QComboBox" name="ScheduleEditDoctorSpecialization">
              <item>
               <property name="text">
                <string>терапевт</string>
@@ -2844,7 +2844,7 @@
             </widget>
            </item>
            <item>
-            <widget class="QLineEdit" name="lineEdit_55"/>
+            <widget class="QComboBox" name="ScheduleEditDoctorLastName"/>
            </item>
           </layout>
          </item>
@@ -2861,7 +2861,7 @@
             </widget>
            </item>
            <item>
-            <widget class="QDateEdit" name="dateEdit_13">
+            <widget class="QDateEdit" name="ScheduleEditDate">
              <property name="displayFormat">
               <string>dd/MM/yyyy</string>
              </property>

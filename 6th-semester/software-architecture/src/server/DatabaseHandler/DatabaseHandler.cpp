@@ -226,4 +226,77 @@ PatientData DatabaseHandler::getPatientInfo(int id)
 
     return data;
 }
+
+bool DatabaseHandler::setPatientInfo(const PatientData& data, int id)
+{
+    QSqlQuery query{ m_database };
+    query.prepare("UPDATE patients SET "
+            "last_name = :last_name, "
+            "first_name = :first_name, "
+            "middle_name = :middle_name, "
+            "date_of_birth = :date_of_birth, "
+            "gender = :gender, "
+            "document_type = :document_type, "
+            "document_number = :document_number, "
+            "document_series = :document_series, "
+            "medical_insurance_number = :medical_insurance_number, "
+            "individual_insurance_number = :individual_insurance_number, "
+            "phone_number = :phone_number, "
+            "city = :city, "
+            "street = :street, "
+            "house_number = :house_number, "
+            "apartment_number = :apartment_number "
+            "WHERE patient_id = :id");
+
+    query.bindValue(":id", id);
+    query.bindValue(":last_name", data.lastName);
+    query.bindValue(":first_name", data.firstName);
+    query.bindValue(":middle_name", data.middleName);
+    query.bindValue(":date_of_birth", data.dateOfBirth);
+    query.bindValue(":gender", data.gender);
+    query.bindValue(":document_type", data.documentType);
+    query.bindValue(":document_number", data.documentNumber);
+    query.bindValue(":document_series", data.documentSeries);
+    query.bindValue(":medical_insurance_number", data.medicalInsuranceNumber);
+    query.bindValue(":individual_insurance_number", data.individualInsuranceNumber);
+    query.bindValue(":phone_number", data.phoneNumber);
+    query.bindValue(":city", data.city);
+    query.bindValue(":street", data.street);
+    query.bindValue(":house_number", data.houseNumber);
+    query.bindValue(":apartment_number", data.apartmentNumber);
+
+    if (!query.exec()) {
+        qWarning() << "Error executing query:" << query.lastError().text();
+        return false;
+    }
+
+    return true;
+}
+
+std::vector<DoctorScheduleData>
+DatabaseHandler::getDoctorsBySpecialization(const QString& specialization)
+{
+    QSqlQuery query{ m_database };
+    query.prepare("SELECT doctor_id, last_name FROM doctors "
+                  "WHERE :specialization = specialization");
+    query.bindValue(":specialization", specialization);
+
+    if (!query.exec())
+    {
+        qWarning() << "Error executing query:" << query.lastError().text();
+        return {};
+    }
+
+    std::vector<DoctorScheduleData> data{};
+    while (query.next())
+    {
+        DoctorScheduleData doctor{};
+        doctor.id = query.value("doctor_id").toInt();
+        doctor.lastName = query.value("last_name").toString();
+
+        data.push_back(doctor);
+    }
+
+    return data;
+}
 }

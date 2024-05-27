@@ -4,9 +4,12 @@
 #include <QObject>
 #include <QString>
 
-#include "client/Facade/Facade.h"
+#include <optional>
+
+#include "client/Client.h"
 #include "common/data/PatientSearchData.h"
 #include "common/data/PatientData.h"
+#include "common/data/DoctorScheduleData.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class ApplicationViewUi; }
@@ -19,7 +22,7 @@ class RegistratorButtonsHandler : public QObject
     Q_OBJECT
 
 public:
-    RegistratorButtonsHandler(Facade* facade);
+    explicit RegistratorButtonsHandler(Client* client, QObject* parent = nullptr);
 
     void setUi(Ui::ApplicationViewUi* ui);
     void connectButtonsToSlots();
@@ -40,20 +43,30 @@ private slots:
     void onOpenPatientInfoButtonClicked();
     void onPatientInfoResult(const PatientData& data);
 
-    void onBackToSearchButtonClicked();
-    void onBackToClientTableButtonClicked();
+    void onUpdatePatientInfoButtonClicked();
+    void onUpdatePatientInfoResult(bool success);
+
+    void onSpecializationChanged();
+    void onGetDoctorsBySpecializationResult(const std::vector<DoctorScheduleData>& data);
+
     void onClientPageTalonButtonClicked();
     void onClientTableTalonButtonClicked();
     void onBackFromTalonButtonClicked();
     void onTalonPageEditScheduleButtonClicked();
 
+    void onBackToSearchButtonClicked();
+    void onBackToClientTableButtonClicked();
+
 private:
     void fillTableWithData(const std::vector<PatientBriefData>& data);
 
 private:
-    Ui::ApplicationViewUi* m_ui;
-    Facade* m_facade;
+    Ui::ApplicationViewUi* m_ui{};
+    Client* m_client{};
     int m_lastClientStackedWidgetIndex{};
+    int m_currentPatientId{};
+    std::optional<PatientSearchData> m_lastSearchCriteria{};
+    bool m_isSpecificSearch{};
 };
 }
 

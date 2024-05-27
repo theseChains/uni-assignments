@@ -76,6 +76,26 @@ void Client::sendGetPatientInfoRequest(int id)
     m_socket->write(document.toJson());
 }
 
+void Client::sendUpdatePatientInfoRequest(const PatientData& data, int id)
+{
+    QJsonObject request{ Reflect::toJson(data) };
+    request["command"] = "updatePatientInfo";
+    request["patientId"] = id;
+
+    QJsonDocument document{ request };
+    m_socket->write(document.toJson());
+}
+
+void Client::sendGetDoctorsBySpecializationRequest(const QString& specialization)
+{
+    QJsonObject request{};
+    request["command"] = "getDoctorsBySpecialization";
+    request["specialization"] = specialization;
+
+    QJsonDocument document{ request };
+    m_socket->write(document.toJson());
+}
+
 void Client::onReadyRead()
 {
     QByteArray data{ m_socket->readAll() };
@@ -102,6 +122,14 @@ void Client::onReadyRead()
     else if (command == "patientInfoResult")
     {
         processGetPatientInfoResult(response);
+    }
+    else if (command == "updatePatientInfoResult")
+    {
+        processUpdatePatientInfoResult(response);
+    }
+    else if (command == "doctorsBySpecializationResult")
+    {
+        processGetDoctorsBySpecializationResult(response);
     }
 }
 
@@ -167,6 +195,34 @@ void Client::processGetPatientInfoResult(const QJsonObject& response)
     PatientData data{};
     Reflect::fromJson(response, data);
     emit getPatientInfoResult(data);
+}
+
+void Client::processUpdatePatientInfoResult(const QJsonObject& response)
+{
+    bool success{ response["success"].toBool() };
+    emit updatePatientInfoResult(success);
+}
+
+void Client::processGetDoctorsBySpecializationResult(const QJsonObject& response)
+{
+    std::vector<DoctorScheduleData> data{};
+
+    // put this in a function man
+    if (response.contains("doctors") && response["doctors"].isArray())
+    {
+        QJsonArray jsonArray = response["doctors"].toArray();
+        for (const auto& jsonValue : jsonArray)
+        {
+            if (jsonValue.isObject())
+            {
+                DoctorScheduleData doctor{};
+                Reflect::fromJson(jsonValue.toObject(), doctor);
+                data.push_back(doctor);
+            }
+        }
+    }
+
+    emit getDoctorsBySpecializationResult(data);
 }
 
 void Client::onDisconnected()

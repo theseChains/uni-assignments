@@ -5,6 +5,7 @@
 #include "client/View/InputValidator.h"
 #include "common/data/PatientData.h"
 #include "common/data/PatientSearchData.h"
+#include "client/View/ButtonHandlers/AddSlotDialog.h"
 
 #include <QPushButton>
 #include <QMessageBox>
@@ -27,7 +28,17 @@ RegistratorButtonsHandler::RegistratorButtonsHandler(Client* client, QObject* pa
             this, &RegistratorButtonsHandler::onUpdatePatientInfoResult);
     connect(m_client, &Client::getDoctorsBySpecializationResult,
             this, &RegistratorButtonsHandler::onGetDoctorsBySpecializationResult);
+    connect(m_client, &Client::getDoctorSlotsResult,
+            this, &RegistratorButtonsHandler::onGetDoctorSlotsResult);
 
+    connect(m_client, &Client::deleteSlotResult,
+            this, &RegistratorButtonsHandler::onDeleteSlotResult);
+    connect(m_client, &Client::deleteDayOfSlotsResult,
+            this, &RegistratorButtonsHandler::onDeleteDayOfSlotsResult);
+    connect(m_client, &Client::addSlotResult,
+            this, &RegistratorButtonsHandler::onAddSlotResult);
+    connect(m_client, &Client::addDayOfSlotsResult,
+            this, &RegistratorButtonsHandler::onAddDayOfSlotsResult);
 }
 
 void RegistratorButtonsHandler::setUi(Ui::ApplicationViewUi* ui)
@@ -39,17 +50,31 @@ void RegistratorButtonsHandler::connectButtonsToSlots()
 {
     connect(m_ui->RegisterClientButton, &QPushButton::clicked,
             this, &RegistratorButtonsHandler::onRegisterPatientButtonClicked);
+
     connect(m_ui->FindAllPatientsButton, &QPushButton::clicked,
             this, &RegistratorButtonsHandler::onFindAllPatientsButtonClicked);
     connect(m_ui->FindPatientsButton, &QPushButton::clicked,
             this, &RegistratorButtonsHandler::onFindPatientsButtonClicked);
+
     connect(m_ui->OpenPatientInfoButton, &QPushButton::clicked,
             this, &RegistratorButtonsHandler::onOpenPatientInfoButtonClicked);
     connect(m_ui->UpdatePatientInfoButton, &QPushButton::clicked,
             this, &RegistratorButtonsHandler::onUpdatePatientInfoButtonClicked);
+
     connect(m_ui->ScheduleEditDoctorSpecialization,
             QOverload<int>::of(&QComboBox::currentIndexChanged),
             this, &RegistratorButtonsHandler::onSpecializationChanged);
+    connect(m_ui->ScheduleEditDoctorSlotsButton, &QPushButton::clicked,
+            this, &RegistratorButtonsHandler::onDoctorSlotsButtonClicked);
+
+    connect(m_ui->ScheduleEditDeleteChosenButton, &QPushButton::clicked,
+            this, &RegistratorButtonsHandler::onDeleteSlotButtonClicked);
+    connect(m_ui->ScheduleEditDeleteDayButton, &QPushButton::clicked,
+            this, &RegistratorButtonsHandler::onDeleteDayOfSlotsButtonClicked);
+    connect(m_ui->ScheduleEditAddDayButton, &QPushButton::clicked,
+            this, &RegistratorButtonsHandler::onAddDayOfSlotsButtonClicked);
+    connect(m_ui->ScheduleEditAddSlotButton, &QPushButton::clicked,
+            this, &RegistratorButtonsHandler::onAddSlotButtonClicked);
 
     connect(m_ui->PatientPageTalonButton, &QPushButton::clicked,
             this, &RegistratorButtonsHandler::onClientPageTalonButtonClicked);
@@ -295,6 +320,136 @@ void RegistratorButtonsHandler::onGetDoctorsBySpecializationResult(const std::ve
     }
 }
 
+void RegistratorButtonsHandler::onDoctorSlotsButtonClicked()
+{
+    QVariant doctorIdVariant{ m_ui->ScheduleEditDoctorLastName->currentData() };
+
+    if (doctorIdVariant.isValid())
+    {
+        int doctorId{ doctorIdVariant.toInt() };
+        QDate date{ m_ui->ScheduleEditDate->date() };
+        m_client->sendGetDoctorSlotsRequest(doctorId, date);
+    }
+    else
+    {
+        QMessageBox::critical(nullptr, "Error", "Ошибка в получении данных");
+    }
+}
+
+void RegistratorButtonsHandler::onGetDoctorSlotsResult(const std::vector<DoctorSlotData>& data)
+{
+    fillSlotTable(data);
+}
+
+void RegistratorButtonsHandler::onDeleteSlotButtonClicked()
+{
+    int selectedRow{ m_ui->ScheduleEditTable->currentRow() };
+
+    if (selectedRow != -1)
+    {
+        int slotId{ m_ui->ScheduleEditTable->item(selectedRow, 0)->text().toInt() };
+        m_client->sendDeleteSlotRequest(slotId);
+    }
+}
+
+void RegistratorButtonsHandler::onDeleteSlotResult(bool success)
+{
+    if (!success)
+    {
+        QMessageBox::critical(nullptr, "Error", "Ошибка при удалении слота");
+    }
+    else
+    {
+        onDoctorSlotsButtonClicked();
+    }
+}
+
+void RegistratorButtonsHandler::onDeleteDayOfSlotsButtonClicked()
+{
+    QVariant doctorIdVariant{ m_ui->ScheduleEditDoctorLastName->currentData() };
+
+    if (doctorIdVariant.isValid())
+    {
+        int doctorId{ doctorIdVariant.toInt() };
+        QDate date{ m_ui->ScheduleEditDate->date() };
+        m_client->sendDeleteDayOfSlotsRequest(doctorId, date);
+    }
+    else
+    {
+        QMessageBox::critical(nullptr, "Error", "Ошибка в получении данных");
+    }
+}
+
+void RegistratorButtonsHandler::onDeleteDayOfSlotsResult(bool success)
+{
+    if (!success)
+    {
+        QMessageBox::critical(nullptr, "Error", "Ошибка при удалении слотов");
+    }
+    else
+    {
+        onDoctorSlotsButtonClicked();
+    }
+}
+
+void RegistratorButtonsHandler::onAddSlotButtonClicked()
+{
+    QVariant doctorIdVariant{ m_ui->ScheduleEditDoctorLastName->currentData() };
+
+    if (doctorIdVariant.isValid()) {
+        int doctorId{ doctorIdVariant.toInt() };
+        QDate date{ m_ui->ScheduleEditDate->date() };
+
+        AddSlotDialog dialog{};
+        if (dialog.exec() == QDialog::Accepted) {
+            QTime startTime{ dialog.selectedTime() };
+            m_client->sendAddSlotRequest(doctorId, date, startTime);
+        }
+    } else {
+        QMessageBox::critical(nullptr, "Error", "Ошибка в получении данных");
+    }
+}
+
+void RegistratorButtonsHandler::onAddSlotResult(bool success)
+{
+    if (!success)
+    {
+        QMessageBox::critical(nullptr, "Error", "Ошибка при добавлении слота");
+    }
+    else
+    {
+        onDoctorSlotsButtonClicked();
+    }
+}
+
+void RegistratorButtonsHandler::onAddDayOfSlotsButtonClicked()
+{
+    QVariant doctorIdVariant{ m_ui->ScheduleEditDoctorLastName->currentData() };
+
+    if (doctorIdVariant.isValid())
+    {
+        int doctorId{ doctorIdVariant.toInt() };
+        QDate date{ m_ui->ScheduleEditDate->date() };
+        m_client->sendAddDayOfSlotsRequest(doctorId, date);
+    }
+    else
+    {
+        QMessageBox::critical(nullptr, "Error", "Ошибка в получении данных");
+    }
+}
+
+void RegistratorButtonsHandler::onAddDayOfSlotsResult(bool success)
+{
+    if (!success)
+    {
+        QMessageBox::critical(nullptr, "Error", "Ошибка при добавлении слотов");
+    }
+    else
+    {
+        onDoctorSlotsButtonClicked();
+    }
+}
+
 void RegistratorButtonsHandler::onClientPageTalonButtonClicked()
 {
     /* QString clientData{}; */
@@ -365,6 +520,43 @@ void RegistratorButtonsHandler::fillTableWithData(const std::vector<PatientBrief
     }
 
     m_ui->FoundClientsTable->hideColumn(0);
+}
+
+void RegistratorButtonsHandler::fillSlotTable(const std::vector<DoctorSlotData>& data)
+{
+    m_ui->ScheduleEditTable->clearContents();
+    m_ui->ScheduleEditTable->setRowCount(data.size());
+    m_ui->ScheduleEditTable->setColumnCount(4);
+
+    m_ui->ScheduleEditTable->setHorizontalHeaderLabels(
+            { "ID", "Начало", "Конец", "Статус" });
+
+    // move this somewhere else?
+    int fontSize{ 14 };
+    QFont font{};
+    font.setPointSize(fontSize);
+
+    for (std::size_t i{ 0 }; i < data.size(); ++i)
+    {
+        // why an auto& here.. god knows
+        const auto& slot = data[i];
+        const QStringList rowData{
+            QString::number(slot.id),
+            slot.startTime.toString("hh:mm"),
+            slot.endTime.toString("hh:mm"),
+            slot.status
+        };
+
+        for (std::size_t j{ 0 }; j < 4; ++j)
+        {
+            QTableWidgetItem* item{ new QTableWidgetItem(rowData[j]) };
+            item->setFlags(item->flags() & ~Qt::ItemIsEditable);
+            item->setFont(font);
+            m_ui->ScheduleEditTable->setItem(i, j, item);
+        }
+    }
+
+    m_ui->ScheduleEditTable->hideColumn(0);
 }
 
 void RegistratorButtonsHandler::onBackFromTalonButtonClicked()

@@ -299,4 +299,142 @@ DatabaseHandler::getDoctorsBySpecialization(const QString& specialization)
 
     return data;
 }
+
+std::vector<DoctorSlotData> DatabaseHandler::getDoctorSlots(int doctorId, const QDate& date)
+{
+    QSqlQuery query{ m_database };
+    query.prepare("SELECT doctor_slot_id, date, start_time, end_time, status "
+            "FROM doctor_slots WHERE doctor_id = :doctor_id AND date = :date");
+    query.bindValue(":doctor_id", doctorId);
+    query.bindValue(":date", date);
+
+    if (!query.exec())
+    {
+        qWarning() << "Error executing query:" << query.lastError().text();
+        return {};
+    }
+
+    std::vector<DoctorSlotData> data{};
+    while (query.next())
+    {
+        DoctorSlotData slot{};
+        slot.id = query.value("doctor_slot_id").toInt();
+        slot.doctorId = doctorId;
+        slot.date = query.value("date").toDate();
+        slot.startTime = query.value("start_time").toTime();
+        slot.endTime = query.value("end_time").toTime();
+        slot.status = query.value("status").toString();
+
+        data.push_back(slot);
+    }
+
+    return data;
+}
+
+bool DatabaseHandler::deleteSlot(int slotId)
+{
+    QSqlQuery query{ m_database };
+    query.prepare("DELETE FROM doctor_slots WHERE doctor_slot_id = :id");
+    query.bindValue(":id", slotId);
+
+    if (!query.exec())
+    {
+        qWarning() << "Error executing query:" << query.lastError().text();
+        return false;
+    }
+
+    return true;
+}
+
+bool DatabaseHandler::deleteDayOfSlots(int doctorId, const QDate& date)
+{
+    QSqlQuery query{ m_database };
+    query.prepare("DELETE FROM doctor_slots WHERE doctor_id = :doctor_id "
+            "AND date = :date");
+    query.bindValue(":doctor_id", doctorId);
+    query.bindValue(":date", date);
+
+    if (!query.exec())
+    {
+        qWarning() << "Error executing query:" << query.lastError().text();
+        return false;
+    }
+
+    return true;
+}
+
+bool DatabaseHandler::addDayOfSlots(int doctorId, const QDate& date)
+{
+    QTime startTime{ 9, 0 };
+    QTime endTime{ 17, 0 };
+    QTime lunchStart{ 12, 0 };
+    QTime lunchEnd{ 13, 0 };
+
+    QSqlQuery checkQuery{ m_database };
+    checkQuery.prepare("SELECT COUNT(*) FROM doctor_slots WHERE doctor_id = :doctor_id AND date = :date AND start_time = :start_time");
+
+    QSqlQuery insertQuery{ m_database };
+    insertQuery.prepare("INSERT INTO doctor_slots "
+                        "(doctor_id, date, start_time, end_time, status) "
+                        "VALUES (:doctor_id, :date, :start_time, :end_time, 'Свободен')");
+
+    while (startTime < endTime)
+    {
+        if (startTime < lunchStart || startTime >= lunchEnd)
+        {
+            checkQuery.bindValue(":doctor_id", doctorId);
+            checkQuery.bindValue(":date", date);
+            checkQuery.bindValue(":start_time", startTime);
+
+            if (checkQuery.exec() && checkQuery.next() && checkQuery.value(0).toInt() == 0)
+            {
+                insertQuery.bindValue(":doctor_id", doctorId);
+                insertQuery.bindValue(":date", date);
+                insertQuery.bindValue(":start_time", startTime);
+                insertQuery.bindValue(":end_time", startTime.addSecs(10 * 60));
+                if (!insertQuery.exec())
+                {
+                    qWarning() << "Error inserting slot:" << insertQuery.lastError().text();
+                    return false;
+                }
+            }
+        }
+        startTime = startTime.addSecs(10 * 60);
+    }
+
+    return true;
+}
+
+bool DatabaseHandler::addSlot(int doctorId, const QDate& date, const QTime& startTime)
+{
+    QSqlQuery checkQuery{ m_database };
+    checkQuery.prepare("SELECT COUNT(*) FROM doctor_slots WHERE doctor_id = :doctor_id AND date = :date AND start_time = :start_time");
+    checkQuery.bindValue(":doctor_id", doctorId);
+    checkQuery.bindValue(":date", date);
+    checkQuery.bindValue(":start_time", startTime);
+
+    if (checkQuery.exec() && checkQuery.next() && checkQuery.value(0).toInt() == 0)
+    {
+        QSqlQuery insertQuery{ m_database };
+        insertQuery.prepare("INSERT INTO doctor_slots (doctor_id, date, start_time, end_time, status) "
+                            "VALUES (:doctor_id, :date, :start_time, :end_time, 'Свободен')");
+        insertQuery.bindValue(":doctor_id", doctorId);
+        insertQuery.bindValue(":date", date);
+        insertQuery.bindValue(":start_time", startTime);
+        insertQuery.bindValue(":end_time", startTime.addSecs(10 * 60));
+
+        if (!insertQuery.exec())
+        {
+            qWarning() << "Error inserting slot:" << insertQuery.lastError().text();
+            return false;
+        }
+
+        return true;
+    }
+    else
+    {
+        qWarning() << "Slot already exists.";
+        return false;
+    }
+}
 }

@@ -10,6 +10,7 @@
 #include "common/data/PatientBriefData.h"
 #include "common/data/PatientSearchData.h"
 #include "common/data/DoctorScheduleData.h"
+#include "common/data/DoctorSlotData.h"
 
 namespace polyclinic
 {
@@ -29,6 +30,11 @@ public:
     void sendGetPatientInfoRequest(int id);
     void sendUpdatePatientInfoRequest(const PatientData& data, int id);
     void sendGetDoctorsBySpecializationRequest(const QString& specialization);
+    void sendGetDoctorSlotsRequest(int doctorId, const QDate& date);
+    void sendDeleteSlotRequest(int slotId);
+    void sendDeleteDayOfSlotsRequest(int doctorId, const QDate& date);
+    void sendAddSlotRequest(int doctorId, const QDate& date, const QTime& startTime);
+    void sendAddDayOfSlotsRequest(int doctorId, const QDate& date);
 
 signals:
     void loginResult(UserType userType);
@@ -38,6 +44,11 @@ signals:
     void getPatientInfoResult(const PatientData& data);
     void updatePatientInfoResult(bool success);
     void getDoctorsBySpecializationResult(const std::vector<DoctorScheduleData>& data);
+    void getDoctorSlotsResult(const std::vector<DoctorSlotData>& data);
+    void deleteSlotResult(bool success);
+    void deleteDayOfSlotsResult(bool success);
+    void addSlotResult(bool success);
+    void addDayOfSlotsResult(bool success);
 
 private slots:
     void onReadyRead();
@@ -51,6 +62,11 @@ private:
     void processGetPatientInfoResult(const QJsonObject& response);
     void processUpdatePatientInfoResult(const QJsonObject& response);
     void processGetDoctorsBySpecializationResult(const QJsonObject& response);
+    void processGetDoctorSlotsResult(const QJsonObject& response);
+    void processDeleteSlotResult(const QJsonObject& response);
+    void processDeleteDayOfSlotsResult(const QJsonObject& response);
+    void processAddSlotResult(const QJsonObject& response);
+    void processAddDayOfSlotsResult(const QJsonObject& response);
 
 private:
     QTcpSocket* m_socket{};

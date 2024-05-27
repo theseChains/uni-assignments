@@ -62,6 +62,7 @@ void ClientHandler::onReadyRead()
     QJsonObject request{ document.object() };
 
     QString command{ request["command"].toString() };
+    // put this into an unordered_map please
     if (command == "login")
     {
         processLoginRequest(request);
@@ -89,6 +90,26 @@ void ClientHandler::onReadyRead()
     else if (command == "getDoctorsBySpecialization")
     {
         processGetDoctorsBySpecializationRequest(request);
+    }
+    else if (command == "getDoctorSlots")
+    {
+        processGetDoctorSlotsRequest(request);
+    }
+    else if (command == "deleteSlot")
+    {
+        processDeleteSlotRequest(request);
+    }
+    else if (command == "deleteDayOfSlots")
+    {
+        processDeleteDayOfSlotsRequest(request);
+    }
+    else if (command == "addSlot")
+    {
+        processAddSlotRequest(request);
+    }
+    else if (command == "addDayOfSlots")
+    {
+        processAddDayOfSlotsRequest(request);
     }
 }
 
@@ -201,6 +222,82 @@ void ClientHandler::processGetDoctorsBySpecializationRequest(const QJsonObject& 
     QJsonObject response{};
     response["command"] = "doctorsBySpecializationResult";
     response["doctors"] = jsonArray;
+
+    QJsonDocument document{ response };
+    m_socket->write(document.toJson());
+}
+
+void ClientHandler::processGetDoctorSlotsRequest(const QJsonObject& request)
+{
+    int id{ request["doctorId"].toInt() };
+    QDate date{ QDate::fromString(request["slotDate"].toString(), "yyyy-MM-dd") };
+    std::vector<DoctorSlotData> data{ m_databaseHandler.getDoctorSlots(id, date) };
+
+    QJsonArray jsonArray{};
+    for (const auto& slot : data)
+    {
+        jsonArray.append(Reflect::toJson(slot));
+    }
+
+    QJsonObject response{};
+    response["command"] = "doctorSlotsResult";
+    response["slots"] = jsonArray;
+
+    QJsonDocument document{ response };
+    m_socket->write(document.toJson());
+}
+
+void ClientHandler::processDeleteSlotRequest(const QJsonObject& request)
+{
+    int id{ request["slotId"].toInt() };
+    bool success{ m_databaseHandler.deleteSlot(id) };
+
+    QJsonObject response{};
+    response["command"] = "deleteSlotResult";
+    response["success"] = success;
+
+    QJsonDocument document{ response };
+    m_socket->write(document.toJson());
+}
+
+void ClientHandler::processDeleteDayOfSlotsRequest(const QJsonObject& request)
+{
+    int doctorId{ request["doctorId"].toInt() };
+    QDate date{ QDate::fromString(request["date"].toString(), "yyyy-MM-dd") };
+    bool success{ m_databaseHandler.deleteDayOfSlots(doctorId, date) };
+
+    QJsonObject response{};
+    response["command"] = "deleteDayOfSlotsResult";
+    response["success"] = success;
+
+    QJsonDocument document{ response };
+    m_socket->write(document.toJson());
+}
+
+void ClientHandler::processAddSlotRequest(const QJsonObject& request)
+{
+    int doctorId{ request["doctorId"].toInt() };
+    QDate date{ QDate::fromString(request["date"].toString(), "yyyy-MM-dd") };
+    QTime startTime{ QTime::fromString(request["startTime"].toString(), "hh:mm") };
+    bool success{ m_databaseHandler.addSlot(doctorId, date, startTime) };
+
+    QJsonObject response{};
+    response["command"] = "addSlotResult";
+    response["success"] = success;
+
+    QJsonDocument document{ response };
+    m_socket->write(document.toJson());
+}
+
+void ClientHandler::processAddDayOfSlotsRequest(const QJsonObject& request)
+{
+    int doctorId{ request["doctorId"].toInt() };
+    QDate date{ QDate::fromString(request["date"].toString(), "yyyy-MM-dd") };
+    bool success{ m_databaseHandler.addDayOfSlots(doctorId, date) };
+
+    QJsonObject response{};
+    response["command"] = "addDayOfSlotsResult";
+    response["success"] = success;
 
     QJsonDocument document{ response };
     m_socket->write(document.toJson());

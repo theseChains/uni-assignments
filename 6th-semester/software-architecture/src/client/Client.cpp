@@ -96,6 +96,61 @@ void Client::sendGetDoctorsBySpecializationRequest(const QString& specialization
     m_socket->write(document.toJson());
 }
 
+void Client::sendGetDoctorSlotsRequest(int doctorId, const QDate& date)
+{
+    QJsonObject request{};
+    request["command"] = "getDoctorSlots";
+    request["doctorId"] = doctorId;
+    request["slotDate"] = date.toString("yyyy-MM-dd");
+
+    QJsonDocument document{ request };
+    m_socket->write(document.toJson());
+}
+
+void Client::sendDeleteSlotRequest(int slotId)
+{
+    QJsonObject request{};
+    request["command"] = "deleteSlot";
+    request["slotId"] = slotId;
+
+    QJsonDocument document{ request };
+    m_socket->write(document.toJson());
+}
+
+void Client::sendDeleteDayOfSlotsRequest(int doctorId, const QDate& date)
+{
+    QJsonObject request{};
+    request["command"] = "deleteDayOfSlots";
+    request["doctorId"] = doctorId;
+    request["date"] = date.toString("yyyy-MM-dd");
+
+    QJsonDocument document{ request };
+    m_socket->write(document.toJson());
+}
+
+void Client::sendAddSlotRequest(int doctorId, const QDate& date, const QTime& startTime)
+{
+    QJsonObject request{};
+    request["command"] = "addSlot";
+    request["doctorId"] = doctorId;
+    request["date"] = date.toString("yyyy-MM-dd");
+    request["startTime"] = startTime.toString("hh:mm");
+
+    QJsonDocument document{ request };
+    m_socket->write(document.toJson());
+}
+
+void Client::sendAddDayOfSlotsRequest(int doctorId, const QDate& date)
+{
+    QJsonObject request{};
+    request["command"] = "addDayOfSlots";
+    request["doctorId"] = doctorId;
+    request["date"] = date.toString("yyyy-MM-dd");
+
+    QJsonDocument document{ request };
+    m_socket->write(document.toJson());
+}
+
 void Client::onReadyRead()
 {
     QByteArray data{ m_socket->readAll() };
@@ -130,6 +185,26 @@ void Client::onReadyRead()
     else if (command == "doctorsBySpecializationResult")
     {
         processGetDoctorsBySpecializationResult(response);
+    }
+    else if (command == "doctorSlotsResult")
+    {
+        processGetDoctorSlotsResult(response);
+    }
+    else if (command == "deleteSlotResult")
+    {
+        processDeleteSlotResult(response);
+    }
+    else if (command == "deleteDayOfSlotsResult")
+    {
+        processDeleteDayOfSlotsResult(response);
+    }
+    else if (command == "addSlotResult")
+    {
+        processAddSlotResult(response);
+    }
+    else if (command == "addDayOfSlotsResult")
+    {
+        processAddDayOfSlotsResult(response);
     }
 }
 
@@ -223,6 +298,52 @@ void Client::processGetDoctorsBySpecializationResult(const QJsonObject& response
     }
 
     emit getDoctorsBySpecializationResult(data);
+}
+
+void Client::processGetDoctorSlotsResult(const QJsonObject& response)
+{
+    std::vector<DoctorSlotData> data{};
+
+    // put this in a function man
+    if (response.contains("slots") && response["slots"].isArray())
+    {
+        QJsonArray jsonArray = response["slots"].toArray();
+        for (const auto& jsonValue : jsonArray)
+        {
+            if (jsonValue.isObject())
+            {
+                DoctorSlotData doctor{};
+                Reflect::fromJson(jsonValue.toObject(), doctor);
+                data.push_back(doctor);
+            }
+        }
+    }
+
+    emit getDoctorSlotsResult(data);
+}
+
+void Client::processDeleteSlotResult(const QJsonObject& response)
+{
+    bool success{ response["success"].toBool() };
+    emit deleteSlotResult(success);
+}
+
+void Client::processDeleteDayOfSlotsResult(const QJsonObject& response)
+{
+    bool success{ response["success"].toBool() };
+    emit deleteDayOfSlotsResult(success);
+}
+
+void Client::processAddSlotResult(const QJsonObject& response)
+{
+    bool success{ response["success"].toBool() };
+    emit addSlotResult(success);
+}
+
+void Client::processAddDayOfSlotsResult(const QJsonObject& response)
+{
+    bool success{ response["success"].toBool() };
+    emit addDayOfSlotsResult(success);
 }
 
 void Client::onDisconnected()

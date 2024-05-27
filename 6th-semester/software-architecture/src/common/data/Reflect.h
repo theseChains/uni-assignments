@@ -40,6 +40,8 @@ struct Reflect {
     static QJsonValue toJsonValue(const T& value) {
         if constexpr (std::is_same_v<T, QDate>) {
             return value.toString(Qt::ISODate);
+        } else if constexpr (std::is_same_v<T, QTime>) {
+            return value.toString(Qt::ISODate);
         } else {
             return QJsonValue::fromVariant(QVariant::fromValue(value));
         }
@@ -74,6 +76,8 @@ struct Reflect {
     static T fromJsonValue(const QJsonValue& value) {
         if constexpr (std::is_same_v<T, QDate>) {
             return QDate::fromString(value.toString(), Qt::ISODate);
+        } else if constexpr (std::is_same_v<T, QTime>) {
+            return QTime::fromString(value.toString(), Qt::ISODate);
         } else {
             return value.toVariant().value<T>();
         }

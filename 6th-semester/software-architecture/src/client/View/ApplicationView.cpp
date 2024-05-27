@@ -22,6 +22,7 @@ ApplicationView::ApplicationView(QWidget* parent)
     m_ui->setupUi(this);
     m_registratorButtonsHandler.setUi(m_ui);
     m_registratorButtonsHandler.connectButtonsToSlots();
+    m_ui->ScheduleEditDate->setDate(QDate::currentDate());
 
     m_validatorSetup.setupValidators(*m_ui);
 
@@ -35,6 +36,8 @@ ApplicationView::ApplicationView(QWidget* parent)
         QStringList{} << "Фамилия" << "Имя" << "Отчество" << "Дата рождения");
     m_ui->FoundClientsTable->setSelectionMode(QAbstractItemView::SingleSelection);
     m_ui->FoundClientsTable->setSelectionBehavior(QAbstractItemView::SelectRows);
+    m_ui->ScheduleEditTable->setSelectionMode(QAbstractItemView::SingleSelection);
+    m_ui->ScheduleEditTable->setSelectionBehavior(QAbstractItemView::SelectRows);
 
     StackedWidgetNavigator::navigateToPage(*m_ui->UserStackedWidget, constants::kLoginPage);
 

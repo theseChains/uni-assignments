@@ -71,7 +71,7 @@
      <widget class="QTabWidget" name="RegistratorTabs">
       <property name="geometry">
        <rect>
-        <x>1</x>
+        <x>4</x>
         <y>0</y>
         <width>1273</width>
         <height>685</height>
@@ -2891,7 +2891,7 @@
             </spacer>
            </item>
            <item>
-            <widget class="QPushButton" name="pushButton_12">
+            <widget class="QPushButton" name="ScheduleEditDoctorSlotsButton">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
                <horstretch>0</horstretch>
@@ -2927,7 +2927,7 @@
           </layout>
          </item>
          <item>
-          <widget class="QTableWidget" name="TalonPageScheduleTable_5">
+          <widget class="QTableWidget" name="ScheduleEditTable">
            <property name="horizontalScrollBarPolicy">
             <enum>Qt::ScrollBarAlwaysOff</enum>
            </property>
@@ -2936,6 +2936,9 @@
            </property>
            <attribute name="horizontalHeaderDefaultSectionSize">
             <number>180</number>
+           </attribute>
+           <attribute name="verticalHeaderVisible">
+            <bool>false</bool>
            </attribute>
            <column/>
            <column/>
@@ -2947,28 +2950,15 @@
        <widget class="QWidget" name="horizontalLayoutWidget_33">
         <property name="geometry">
          <rect>
-          <x>360</x>
-          <y>550</y>
-          <width>551</width>
+          <x>50</x>
+          <y>560</y>
+          <width>1171</width>
           <height>51</height>
          </rect>
         </property>
-        <layout class="QHBoxLayout" name="horizontalLayout_113" stretch="2,3,2">
+        <layout class="QHBoxLayout" name="horizontalLayout_113" stretch="3,2,3,2,3,2,3">
          <item>
-          <spacer name="horizontalSpacer_47">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>40</width>
-             <height>20</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-         <item>
-          <widget class="QPushButton" name="TalonPageEditScheduleButton_4">
+          <widget class="QPushButton" name="ScheduleEditDeleteChosenButton">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
              <horstretch>0</horstretch>
@@ -2984,7 +2974,75 @@
             <string notr="true">border-radius: 25px;</string>
            </property>
            <property name="text">
-            <string>Сохранить</string>
+            <string>Удалить выбранный</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer_47">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QPushButton" name="ScheduleEditDeleteDayButton">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="font">
+            <font>
+             <pointsize>12</pointsize>
+            </font>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">border-radius: 25px;</string>
+           </property>
+           <property name="text">
+            <string>Удалить весь день</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer_3">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QPushButton" name="ScheduleEditAddDayButton">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="font">
+            <font>
+             <pointsize>12</pointsize>
+            </font>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">border-radius: 25px;</string>
+           </property>
+           <property name="text">
+            <string>Добавить весь день</string>
            </property>
           </widget>
          </item>
@@ -3000,6 +3058,27 @@
             </size>
            </property>
           </spacer>
+         </item>
+         <item>
+          <widget class="QPushButton" name="ScheduleEditAddSlotButton">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="font">
+            <font>
+             <pointsize>12</pointsize>
+            </font>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">border-radius: 25px;</string>
+           </property>
+           <property name="text">
+            <string>Добавить новый слот</string>
+           </property>
+          </widget>
          </item>
         </layout>
        </widget>

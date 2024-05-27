@@ -13,6 +13,7 @@
 #include "common/data/PatientBriefData.h"
 #include "common/data/PatientSearchData.h"
 #include "common/data/DoctorScheduleData.h"
+#include "common/data/DoctorSlotData.h"
 
 namespace polyclinic
 {
@@ -31,6 +32,11 @@ public:
     PatientData getPatientInfo(int id);
     bool setPatientInfo(const PatientData& data, int id);
     std::vector<DoctorScheduleData> getDoctorsBySpecialization(const QString& specialization);
+    std::vector<DoctorSlotData> getDoctorSlots(int doctorId, const QDate& date);
+    bool deleteSlot(int slotId);
+    bool deleteDayOfSlots(int doctorId, const QDate& date);
+    bool addDayOfSlots(int doctorId, const QDate& date);
+    bool addSlot(int doctorId, const QDate& date, const QTime& startTime);
 
 private:
     QSqlDatabase m_database{};

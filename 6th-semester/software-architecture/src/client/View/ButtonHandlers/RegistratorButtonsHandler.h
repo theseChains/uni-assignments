@@ -10,6 +10,7 @@
 #include "common/data/PatientSearchData.h"
 #include "common/data/PatientData.h"
 #include "common/data/DoctorScheduleData.h"
+#include "common/data/DoctorSlotData.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class ApplicationViewUi; }
@@ -49,6 +50,21 @@ private slots:
     void onSpecializationChanged();
     void onGetDoctorsBySpecializationResult(const std::vector<DoctorScheduleData>& data);
 
+    void onDoctorSlotsButtonClicked();
+    void onGetDoctorSlotsResult(const std::vector<DoctorSlotData>& data);
+
+    void onDeleteSlotButtonClicked();
+    void onDeleteSlotResult(bool success);
+    
+    void onDeleteDayOfSlotsButtonClicked();
+    void onDeleteDayOfSlotsResult(bool success);
+
+    void onAddSlotButtonClicked();
+    void onAddSlotResult(bool success);
+    
+    void onAddDayOfSlotsButtonClicked();
+    void onAddDayOfSlotsResult(bool success);
+
     void onClientPageTalonButtonClicked();
     void onClientTableTalonButtonClicked();
     void onBackFromTalonButtonClicked();
@@ -59,6 +75,7 @@ private slots:
 
 private:
     void fillTableWithData(const std::vector<PatientBriefData>& data);
+    void fillSlotTable(const std::vector<DoctorSlotData>& data);
 
 private:
     Ui::ApplicationViewUi* m_ui{};

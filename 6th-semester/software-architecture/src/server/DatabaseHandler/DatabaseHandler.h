@@ -5,6 +5,7 @@
 #include <QString>
 
 #include <array>
+#include <tuple>
 #include <vector>
 
 #include "common/UserType.h"
@@ -25,7 +26,7 @@ public:
 
     bool connectToTheDatabase();
 
-    UserType authenticateUser(const LoginInputData& loginData);
+    std::pair<UserType, int> authenticateUser(const LoginInputData& loginData);
     bool registerPatient(const PatientData& data);
     std::vector<PatientBriefData> getAllPatientsBriefData();
     std::vector<PatientBriefData> getPatientBriefData(const PatientSearchData& data);

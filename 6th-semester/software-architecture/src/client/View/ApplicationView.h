@@ -30,7 +30,7 @@ public:
 private slots:
     void onLoginButtonClicked();
     void onOpenOutpatientCardButtonClicked();
-    void onAuthentication(UserType userType);
+    void onAuthentication(std::pair<UserType, int> data);
 
     void displayErrorMessage(const QString& message);
 

@@ -117,11 +117,12 @@ void ClientHandler::processLoginRequest(const QJsonObject& request)
 {
     LoginInputData inputData{};
     Reflect::fromJson(request, inputData);
-    UserType userType{ m_databaseHandler.authenticateUser(inputData) };
+    auto [userType, id]{ m_databaseHandler.authenticateUser(inputData) };
 
     QJsonObject response{};
     response["command"] = "loginResult";
     response["userType"] = static_cast<int>(userType);
+    response["id"] = id;
 
     QJsonDocument document{ response };
     m_socket->write(document.toJson());

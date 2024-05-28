@@ -11,6 +11,7 @@ struct DoctorScheduleData
 {
     int id{};
     QString lastName{};
+    QString specialization{};
 };
 
 template <>
@@ -20,7 +21,8 @@ struct ReflectTraits<DoctorScheduleData>
     {
         return std::make_tuple(
             std::make_pair("id", &DoctorScheduleData::id),
-            std::make_pair("lastName", &DoctorScheduleData::lastName)
+            std::make_pair("lastName", &DoctorScheduleData::lastName),
+            std::make_pair("specialization", &DoctorScheduleData::specialization)
         );
     }
 };

@@ -23,6 +23,8 @@ ApplicationView::ApplicationView(QWidget* parent)
     m_registratorButtonsHandler.setUi(m_ui);
     m_registratorButtonsHandler.connectButtonsToSlots();
     m_ui->ScheduleEditDate->setDate(QDate::currentDate());
+    m_ui->PatientTalonAppointmentDate->setDate(QDate::currentDate());
+    m_ui->ListOfAppointmentsDate->setDate(QDate::currentDate());
 
     m_validatorSetup.setupValidators(*m_ui);
 
@@ -32,22 +34,22 @@ ApplicationView::ApplicationView(QWidget* parent)
     m_ui->DoctorStackedWidget->setCurrentIndex(0);
     m_ui->TalonPageTabs->setCurrentIndex(0);
 
-    m_ui->FoundClientsTable->setHorizontalHeaderLabels(
-        QStringList{} << "Фамилия" << "Имя" << "Отчество" << "Дата рождения");
     m_ui->FoundClientsTable->setSelectionMode(QAbstractItemView::SingleSelection);
     m_ui->FoundClientsTable->setSelectionBehavior(QAbstractItemView::SelectRows);
     m_ui->ScheduleEditTable->setSelectionMode(QAbstractItemView::SingleSelection);
     m_ui->ScheduleEditTable->setSelectionBehavior(QAbstractItemView::SelectRows);
+    m_ui->PatientTalonScheduleTable->setSelectionMode(QAbstractItemView::SingleSelection);
+    m_ui->PatientTalonScheduleTable->setSelectionBehavior(QAbstractItemView::SelectRows);
 
     StackedWidgetNavigator::navigateToPage(*m_ui->UserStackedWidget, constants::kLoginPage);
 
-    // qobject here or not?
-    QObject::connect(m_ui->LogInButton, &QPushButton::clicked,
+    connect(m_ui->LogInButton, &QPushButton::clicked,
                      this, &ApplicationView::onLoginButtonClicked);
-    QObject::connect(m_ui->OpenOutpatientCardButton, &QPushButton::clicked,
+    connect(m_ui->OpenOutpatientCardButton, &QPushButton::clicked,
                      this, &ApplicationView::onOpenOutpatientCardButtonClicked);
 
-    connect(&m_registratorButtonsHandler, &RegistratorButtonsHandler::errorOccurred,
+    connect(&m_registratorButtonsHandler,
+            &RegistratorButtonsHandler::errorOccurred,
             this, &ApplicationView::displayErrorMessage);
 
     m_client->connectToServer();
@@ -64,19 +66,20 @@ void ApplicationView::onLoginButtonClicked()
     m_client->sendLoginRequest(inputData);
 }
 
-void ApplicationView::onAuthentication(UserType userType)
+void ApplicationView::onAuthentication(std::pair<UserType, int> data)
 {
-    if (userType == UserType::kAdministrator)
+    if (data.first == UserType::kAdministrator)
     {
         StackedWidgetNavigator::navigateToPage(*m_ui->UserStackedWidget, constants::kAdministratorPage);
     }
-    else if (userType == UserType::kDoctor)
+    else if (data.first == UserType::kDoctor)
     {
         StackedWidgetNavigator::navigateToPage(*m_ui->UserStackedWidget, constants::kDoctorPage);
     }
-    else if (userType == UserType::kRegistrator)
+    else if (data.first == UserType::kRegistrator)
     {
         StackedWidgetNavigator::navigateToPage(*m_ui->UserStackedWidget, constants::kRegistratorPage);
+        m_registratorButtonsHandler.setUserId(data.second);
     }
     else
     {

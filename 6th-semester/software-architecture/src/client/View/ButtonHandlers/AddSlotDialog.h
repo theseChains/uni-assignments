@@ -5,6 +5,7 @@
 #include <QTimeEdit>
 #include <QVBoxLayout>
 #include <QPushButton>
+#include <QLabel>
 
 namespace polyclinic
 {
@@ -20,8 +21,9 @@ private slots:
     void validateTime();
 
 private:
-    QTimeEdit* timeEdit{};
-    QPushButton* okButton{};
+    QTimeEdit* m_timeEdit{};
+    QPushButton* m_okButton{};
+    QLabel* m_instructionLabel{};
 };
 }
 

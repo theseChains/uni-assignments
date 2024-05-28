@@ -37,7 +37,7 @@ public:
     void sendAddDayOfSlotsRequest(int doctorId, const QDate& date);
 
 signals:
-    void loginResult(UserType userType);
+    void loginResult(std::pair<UserType, int> data);
     void patientRegistrationResult(bool success);
     void getAllPatientsBriefDataResult(const std::vector<PatientBriefData>& data);
     void getPatientBriefDataResult(const std::vector<PatientBriefData>& data);

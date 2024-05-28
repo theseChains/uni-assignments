@@ -3,6 +3,9 @@
 
 #include <QObject>
 #include <QString>
+#include <QComboBox>
+#include <QVector>
+#include <QTableWidget>
 
 #include <optional>
 
@@ -11,6 +14,7 @@
 #include "common/data/PatientData.h"
 #include "common/data/DoctorScheduleData.h"
 #include "common/data/DoctorSlotData.h"
+#include "common/data/AppointmentData.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class ApplicationViewUi; }
@@ -26,6 +30,8 @@ public:
     explicit RegistratorButtonsHandler(Client* client, QObject* parent = nullptr);
 
     void setUi(Ui::ApplicationViewUi* ui);
+    void setUserId(int id);
+
     void connectButtonsToSlots();
 
 signals:
@@ -50,32 +56,38 @@ private slots:
     void onSpecializationChanged();
     void onGetDoctorsBySpecializationResult(const std::vector<DoctorScheduleData>& data);
 
-    void onDoctorSlotsButtonClicked();
-    void onGetDoctorSlotsResult(const std::vector<DoctorSlotData>& data);
+    void onDoctorOrDateChangedScheduleEdit();
+    void onGetDoctorSlotsResultScheduleEdit(const std::vector<DoctorSlotData>& data);
+
+    void onDoctorOrDateChangedTalon();
+    void onGetDoctorSlotsResultTalon(const std::vector<DoctorSlotData>& data);
 
     void onDeleteSlotButtonClicked();
     void onDeleteSlotResult(bool success);
-    
+
     void onDeleteDayOfSlotsButtonClicked();
     void onDeleteDayOfSlotsResult(bool success);
 
     void onAddSlotButtonClicked();
     void onAddSlotResult(bool success);
-    
+
     void onAddDayOfSlotsButtonClicked();
     void onAddDayOfSlotsResult(bool success);
 
+    void onPatientTalonSaveButtonClicked();
+
     void onClientPageTalonButtonClicked();
     void onClientTableTalonButtonClicked();
+
     void onBackFromTalonButtonClicked();
-    void onTalonPageEditScheduleButtonClicked();
 
     void onBackToSearchButtonClicked();
     void onBackToClientTableButtonClicked();
 
 private:
     void fillTableWithData(const std::vector<PatientBriefData>& data);
-    void fillSlotTable(const std::vector<DoctorSlotData>& data);
+    void fillSlotTable(QTableWidget* table, const std::vector<DoctorSlotData>& data);
+    void updateDoctorComboBox(QComboBox* specializationComboBox);
 
 private:
     Ui::ApplicationViewUi* m_ui{};
@@ -84,6 +96,11 @@ private:
     int m_currentPatientId{};
     std::optional<PatientSearchData> m_lastSearchCriteria{};
     bool m_isSpecificSearch{};
+    QVector<QComboBox*> m_specializationComboBoxes{};
+    QMap<QComboBox*, QVector<QComboBox*>> m_specializationToDoctorMap{};
+    QComboBox* m_lastUpdatedSpecializationComboBox{};
+
+    int m_registratorId{};
 };
 }
 

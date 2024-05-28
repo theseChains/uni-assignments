@@ -28,8 +28,11 @@ RegistratorButtonsHandler::RegistratorButtonsHandler(Client* client, QObject* pa
             this, &RegistratorButtonsHandler::onUpdatePatientInfoResult);
     connect(m_client, &Client::getDoctorsBySpecializationResult,
             this, &RegistratorButtonsHandler::onGetDoctorsBySpecializationResult);
+    // this aint it i feel like..
     connect(m_client, &Client::getDoctorSlotsResult,
-            this, &RegistratorButtonsHandler::onGetDoctorSlotsResult);
+            this, &RegistratorButtonsHandler::onGetDoctorSlotsResultScheduleEdit);
+    connect(m_client, &Client::getDoctorSlotsResult,
+            this, &RegistratorButtonsHandler::onGetDoctorSlotsResultTalon);
 
     connect(m_client, &Client::deleteSlotResult,
             this, &RegistratorButtonsHandler::onDeleteSlotResult);
@@ -44,6 +47,25 @@ RegistratorButtonsHandler::RegistratorButtonsHandler(Client* client, QObject* pa
 void RegistratorButtonsHandler::setUi(Ui::ApplicationViewUi* ui)
 {
     m_ui = ui;
+
+    m_specializationComboBoxes.append(m_ui->ScheduleEditDoctorSpecialization);
+    m_specializationComboBoxes.append(m_ui->PatientTalonDoctorSpecialization);
+
+    for (QComboBox* comboBox : m_specializationComboBoxes)
+    {
+        connect(comboBox, &QComboBox::currentTextChanged,
+                this, &RegistratorButtonsHandler::onSpecializationChanged);
+    }
+
+    m_specializationToDoctorMap[m_ui->ScheduleEditDoctorSpecialization]
+        .append(m_ui->ScheduleEditDoctorLastName);
+    m_specializationToDoctorMap[m_ui->PatientTalonDoctorSpecialization]
+        .append(m_ui->PatientTalonDoctorLastName);
+}
+
+void RegistratorButtonsHandler::setUserId(int id)
+{
+    m_registratorId = id;
 }
 
 void RegistratorButtonsHandler::connectButtonsToSlots()
@@ -61,11 +83,17 @@ void RegistratorButtonsHandler::connectButtonsToSlots()
     connect(m_ui->UpdatePatientInfoButton, &QPushButton::clicked,
             this, &RegistratorButtonsHandler::onUpdatePatientInfoButtonClicked);
 
-    connect(m_ui->ScheduleEditDoctorSpecialization,
+    connect(m_ui->ScheduleEditDoctorLastName,
             QOverload<int>::of(&QComboBox::currentIndexChanged),
-            this, &RegistratorButtonsHandler::onSpecializationChanged);
-    connect(m_ui->ScheduleEditDoctorSlotsButton, &QPushButton::clicked,
-            this, &RegistratorButtonsHandler::onDoctorSlotsButtonClicked);
+            this, &RegistratorButtonsHandler::onDoctorOrDateChangedScheduleEdit);
+    connect(m_ui->ScheduleEditDate, &QDateEdit::dateChanged,
+            this, &RegistratorButtonsHandler::onDoctorOrDateChangedScheduleEdit);
+
+    connect(m_ui->PatientTalonDoctorLastName,
+            QOverload<int>::of(&QComboBox::currentIndexChanged),
+            this, &RegistratorButtonsHandler::onDoctorOrDateChangedTalon);
+    connect(m_ui->PatientTalonAppointmentDate, &QDateEdit::dateChanged,
+            this, &RegistratorButtonsHandler::onDoctorOrDateChangedTalon);
 
     connect(m_ui->ScheduleEditDeleteChosenButton, &QPushButton::clicked,
             this, &RegistratorButtonsHandler::onDeleteSlotButtonClicked);
@@ -75,6 +103,9 @@ void RegistratorButtonsHandler::connectButtonsToSlots()
             this, &RegistratorButtonsHandler::onAddDayOfSlotsButtonClicked);
     connect(m_ui->ScheduleEditAddSlotButton, &QPushButton::clicked,
             this, &RegistratorButtonsHandler::onAddSlotButtonClicked);
+
+    connect(m_ui->PatientTalonSaveButton, &QPushButton::clicked,
+            this, &RegistratorButtonsHandler::onPatientTalonSaveButtonClicked);
 
     connect(m_ui->PatientPageTalonButton, &QPushButton::clicked,
             this, &RegistratorButtonsHandler::onClientPageTalonButtonClicked);
@@ -87,8 +118,6 @@ void RegistratorButtonsHandler::connectButtonsToSlots()
             this, &RegistratorButtonsHandler::onClientTableTalonButtonClicked);
     QObject::connect(m_ui->BackFromTalonButton, &QPushButton::clicked,
             this, &RegistratorButtonsHandler::onBackFromTalonButtonClicked);
-    QObject::connect(m_ui->TalonPageEditScheduleButton, &QPushButton::clicked,
-            this, &RegistratorButtonsHandler::onTalonPageEditScheduleButtonClicked);
 }
 
 void RegistratorButtonsHandler::onRegisterPatientButtonClicked()
@@ -123,8 +152,6 @@ void RegistratorButtonsHandler::onRegisterPatientButtonClicked()
 void RegistratorButtonsHandler::onPatientRegistration(bool success)
 {
     if (success) {
-        // kinda sucks for nullptr stuff here but alright
-        // fix if you have time
         QMessageBox::information(nullptr, "Success", "Пациент успешно зарегистрирован.");
     } else {
         QMessageBox::critical(nullptr, "Error", "Не удалось добавить пациента в базу данных.");
@@ -307,20 +334,42 @@ void RegistratorButtonsHandler::onBackToClientTableButtonClicked()
 
 void RegistratorButtonsHandler::onSpecializationChanged()
 {
-    QString specialization{ m_ui->ScheduleEditDoctorSpecialization->currentText() };
-    m_client->sendGetDoctorsBySpecializationRequest(specialization);
+    QComboBox* senderComboBox{ qobject_cast<QComboBox*>(sender()) };
+    if (senderComboBox)
+    {
+        m_lastUpdatedSpecializationComboBox = senderComboBox;
+        QString specialization{ senderComboBox->currentText() };
+        m_client->sendGetDoctorsBySpecializationRequest(specialization);
+    }
 }
 
 void RegistratorButtonsHandler::onGetDoctorsBySpecializationResult(const std::vector<DoctorScheduleData>& data)
 {
-    m_ui->ScheduleEditDoctorLastName->clear();
-    for (const auto& doctor : data)
+
+    if (!m_lastUpdatedSpecializationComboBox)
     {
-        m_ui->ScheduleEditDoctorLastName->addItem(doctor.lastName, doctor.id);
+        return;
     }
+
+    QVector<QComboBox*> relatedDoctorComboBoxes = m_specializationToDoctorMap.value(m_lastUpdatedSpecializationComboBox);
+    if (relatedDoctorComboBoxes.isEmpty())
+    {
+        return;
+    }
+
+    for (QComboBox* doctorComboBox : relatedDoctorComboBoxes)
+    {
+        doctorComboBox->clear();
+        for (const auto& doctor : data)
+        {
+            doctorComboBox->addItem(doctor.lastName, doctor.id);
+        }
+    }
+
+    m_lastUpdatedSpecializationComboBox = nullptr;
 }
 
-void RegistratorButtonsHandler::onDoctorSlotsButtonClicked()
+void RegistratorButtonsHandler::onDoctorOrDateChangedScheduleEdit()
 {
     QVariant doctorIdVariant{ m_ui->ScheduleEditDoctorLastName->currentData() };
 
@@ -330,15 +379,29 @@ void RegistratorButtonsHandler::onDoctorSlotsButtonClicked()
         QDate date{ m_ui->ScheduleEditDate->date() };
         m_client->sendGetDoctorSlotsRequest(doctorId, date);
     }
-    else
+}
+
+void RegistratorButtonsHandler::onGetDoctorSlotsResultScheduleEdit(const std::vector<DoctorSlotData>& data)
+{
+    fillSlotTable(m_ui->ScheduleEditTable, data);
+}
+
+// could refactor those
+void RegistratorButtonsHandler::onDoctorOrDateChangedTalon()
+{
+    QVariant doctorIdVariant{ m_ui->PatientTalonDoctorLastName->currentData() };
+
+    if (doctorIdVariant.isValid())
     {
-        QMessageBox::critical(nullptr, "Error", "Ошибка в получении данных");
+        int doctorId{ doctorIdVariant.toInt() };
+        QDate date{ m_ui->PatientTalonAppointmentDate->date() };
+        m_client->sendGetDoctorSlotsRequest(doctorId, date);
     }
 }
 
-void RegistratorButtonsHandler::onGetDoctorSlotsResult(const std::vector<DoctorSlotData>& data)
+void RegistratorButtonsHandler::onGetDoctorSlotsResultTalon(const std::vector<DoctorSlotData>& data)
 {
-    fillSlotTable(data);
+    fillSlotTable(m_ui->PatientTalonScheduleTable, data);
 }
 
 void RegistratorButtonsHandler::onDeleteSlotButtonClicked()
@@ -360,7 +423,7 @@ void RegistratorButtonsHandler::onDeleteSlotResult(bool success)
     }
     else
     {
-        onDoctorSlotsButtonClicked();
+        onDoctorOrDateChangedScheduleEdit();
     }
 }
 
@@ -388,7 +451,7 @@ void RegistratorButtonsHandler::onDeleteDayOfSlotsResult(bool success)
     }
     else
     {
-        onDoctorSlotsButtonClicked();
+        onDoctorOrDateChangedScheduleEdit();
     }
 }
 
@@ -418,7 +481,7 @@ void RegistratorButtonsHandler::onAddSlotResult(bool success)
     }
     else
     {
-        onDoctorSlotsButtonClicked();
+        onDoctorOrDateChangedScheduleEdit();
     }
 }
 
@@ -446,8 +509,24 @@ void RegistratorButtonsHandler::onAddDayOfSlotsResult(bool success)
     }
     else
     {
-        onDoctorSlotsButtonClicked();
+        onDoctorOrDateChangedScheduleEdit();
     }
+}
+
+void RegistratorButtonsHandler::onPatientTalonSaveButtonClicked()
+{
+    // no error handling..
+    AppointmentData data{};
+    data.firstDiagnosis = m_ui->PatientTalonDiagnosis->text();
+    int selectedRow{ m_ui->PatientTalonScheduleTable->currentRow() };
+    data.slotId = m_ui->PatientTalonScheduleTable->item(selectedRow, 0)->text().toInt();
+    QVariant doctorIdVariant{ m_ui->PatientTalonDoctorLastName->currentData() };
+    data.doctorId = doctorIdVariant.toInt();
+    data.patientId = m_currentPatientId;
+    // wip
+    data.registratorId = m_registratorId;
+
+    // send request
 }
 
 void RegistratorButtonsHandler::onClientPageTalonButtonClicked()
@@ -471,7 +550,8 @@ void RegistratorButtonsHandler::onClientTableTalonButtonClicked()
 {
     int selectedRow{ m_ui->FoundClientsTable->currentRow() };
     QString clientData{};
-    for (int col{ 0 }; col < m_ui->FoundClientsTable->columnCount(); ++col)
+    m_currentPatientId = m_ui->FoundClientsTable->item(selectedRow, 0)->text().toInt();
+    for (int col{ 1 }; col < m_ui->FoundClientsTable->columnCount(); ++col)
     {
         QTableWidgetItem *item{ m_ui->FoundClientsTable->item(selectedRow, col) };
         clientData.append(item->text());
@@ -522,13 +602,13 @@ void RegistratorButtonsHandler::fillTableWithData(const std::vector<PatientBrief
     m_ui->FoundClientsTable->hideColumn(0);
 }
 
-void RegistratorButtonsHandler::fillSlotTable(const std::vector<DoctorSlotData>& data)
+void RegistratorButtonsHandler::fillSlotTable(QTableWidget* table, const std::vector<DoctorSlotData>& data)
 {
-    m_ui->ScheduleEditTable->clearContents();
-    m_ui->ScheduleEditTable->setRowCount(data.size());
-    m_ui->ScheduleEditTable->setColumnCount(4);
+    table->clearContents();
+    table->setRowCount(data.size());
+    table->setColumnCount(4);
 
-    m_ui->ScheduleEditTable->setHorizontalHeaderLabels(
+    table->setHorizontalHeaderLabels(
             { "ID", "Начало", "Конец", "Статус" });
 
     // move this somewhere else?
@@ -552,21 +632,21 @@ void RegistratorButtonsHandler::fillSlotTable(const std::vector<DoctorSlotData>&
             QTableWidgetItem* item{ new QTableWidgetItem(rowData[j]) };
             item->setFlags(item->flags() & ~Qt::ItemIsEditable);
             item->setFont(font);
-            m_ui->ScheduleEditTable->setItem(i, j, item);
+            table->setItem(i, j, item);
         }
     }
 
-    m_ui->ScheduleEditTable->hideColumn(0);
+    table->hideColumn(0);
+}
+
+void RegistratorButtonsHandler::updateDoctorComboBox(QComboBox* specializationComboBox)
+{
+    QString specialization{ specializationComboBox->currentText() };
+    m_client->sendGetDoctorsBySpecializationRequest(specialization);
 }
 
 void RegistratorButtonsHandler::onBackFromTalonButtonClicked()
 {
     m_ui->ClientSearchStackedWidget->setCurrentIndex(m_lastClientStackedWidgetIndex);
-}
-
-void RegistratorButtonsHandler::onTalonPageEditScheduleButtonClicked()
-{
-    // hmm
-    m_ui->RegistratorTabs->setCurrentIndex(2);
 }
 }

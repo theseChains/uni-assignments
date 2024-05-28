@@ -88,6 +88,7 @@ void Client::sendUpdatePatientInfoRequest(const PatientData& data, int id)
 
 void Client::sendGetDoctorsBySpecializationRequest(const QString& specialization)
 {
+    std::cerr << "sending get doctor by spec request\n";
     QJsonObject request{};
     request["command"] = "getDoctorsBySpecialization";
     request["specialization"] = specialization;
@@ -211,7 +212,9 @@ void Client::onReadyRead()
 void Client::processLoginResult(const QJsonObject& response)
 {
     UserType userType{ static_cast<UserType>(response["userType"].toInt()) };
-    emit loginResult(userType);
+    int userId{ response["id"].toInt() };
+
+    emit loginResult({ userType, userId });
 }
 
 void Client::processPatientRegistrationResult(const QJsonObject& response)
@@ -296,6 +299,8 @@ void Client::processGetDoctorsBySpecializationResult(const QJsonObject& response
             }
         }
     }
+
+    qDebug() << "Emitting getDoctorsBySpecializationResult signal";
 
     emit getDoctorsBySpecializationResult(data);
 }

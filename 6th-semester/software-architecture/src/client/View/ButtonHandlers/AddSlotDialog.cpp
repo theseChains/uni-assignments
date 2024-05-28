@@ -6,29 +6,32 @@ namespace polyclinic
 {
 AddSlotDialog::AddSlotDialog(QWidget* parent) : QDialog{ parent } {
     setWindowTitle("Add Slot");
-    setFixedSize({ 125, 75 });
+    setFixedSize({ 140, 95 });
 
     QVBoxLayout* layout{ new QVBoxLayout{ this } };
 
-    timeEdit = new QTimeEdit{ this };
-    timeEdit->setDisplayFormat("HH:mm");
-    timeEdit->setTimeRange(QTime{ 9, 0 }, QTime{ 17, 0 });
-    timeEdit->setTime(QTime{ 9, 0 });
-    layout->addWidget(timeEdit);
+    m_instructionLabel = new QLabel{ "Время начала:", this };
+    layout->addWidget(m_instructionLabel);
 
-    okButton = new QPushButton{ "OK", this };
-    connect(okButton, &QPushButton::clicked, this, &AddSlotDialog::validateTime);
-    layout->addWidget(okButton);
+    m_timeEdit = new QTimeEdit{ this };
+    m_timeEdit->setDisplayFormat("HH:mm");
+    m_timeEdit->setTimeRange(QTime{ 9, 0 }, QTime{ 17, 0 });
+    m_timeEdit->setTime(QTime{ 9, 0 });
+    layout->addWidget(m_timeEdit);
+
+    m_okButton = new QPushButton{ "OK", this };
+    connect(m_okButton, &QPushButton::clicked, this, &AddSlotDialog::validateTime);
+    layout->addWidget(m_okButton);
 
     setLayout(layout);
 }
 
 QTime AddSlotDialog::selectedTime() const {
-    return timeEdit->time();
+    return m_timeEdit->time();
 }
 
 void AddSlotDialog::validateTime() {
-    QTime time{ timeEdit->time() };
+    QTime time{ m_timeEdit->time() };
     int minutes{ time.minute() };
 
     if (((time >= QTime{ 9, 0 } &&

@@ -49,7 +49,7 @@ bool DatabaseHandler::connectToTheDatabase()
     return true;
 }
 
-UserType DatabaseHandler::authenticateUser(const LoginInputData& loginData)
+std::pair<UserType, int> DatabaseHandler::authenticateUser(const LoginInputData& loginData)
 {
     QSqlQuery query{ m_database };
     query.prepare("SELECT r.registrator_id, a.administrator_id, d.doctor_id "
@@ -63,10 +63,11 @@ UserType DatabaseHandler::authenticateUser(const LoginInputData& loginData)
 
     if (!query.exec()) {
         qWarning() << "Database query error: " << query.lastError().text();
-        return UserType::kNone;
+        return { UserType::kNone, -1 };
     }
 
     UserType userType{ UserType::kNone };
+    int userId{ -1 };
     if (query.next()) {
         bool isRegistrator{ !query.value(0).isNull() };
         bool isAdministrator{ !query.value(1).isNull() };
@@ -74,14 +75,17 @@ UserType DatabaseHandler::authenticateUser(const LoginInputData& loginData)
 
         if (isRegistrator) {
             userType = UserType::kRegistrator;
+            userId = query.value(0).toInt();
         } else if (isAdministrator) {
             userType = UserType::kAdministrator;
+            userId = query.value(1).toInt();
         } else if (isDoctor) {
             userType = UserType::kDoctor;
+            userId = query.value(2).toInt();
         }
     }
 
-    return userType;
+    return { userType, userId };
 }
 
 bool DatabaseHandler::registerPatient(const PatientData& data)
@@ -293,6 +297,7 @@ DatabaseHandler::getDoctorsBySpecialization(const QString& specialization)
         DoctorScheduleData doctor{};
         doctor.id = query.value("doctor_id").toInt();
         doctor.lastName = query.value("last_name").toString();
+        doctor.specialization = specialization;
 
         data.push_back(doctor);
     }

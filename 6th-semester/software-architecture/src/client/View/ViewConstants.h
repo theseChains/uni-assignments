@@ -18,6 +18,7 @@ inline const QString kClientInfoPage{ "ClientInfoPage" };
 inline const QString kTalonPage{ "TalonPage" };
 inline const QString kListOfAppointedClientsPage{ "ListOfAppointedClientsPage" };
 inline const QString kOutpatientCardPage{ "OutpatientCardPage" };
+inline const QString kMedicalRecordPage{ "MedicalRecordPage" };
 
 inline constexpr int kNumberOfClientsTableColumns{ 5 };
 }

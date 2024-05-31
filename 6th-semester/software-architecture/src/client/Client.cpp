@@ -152,6 +152,53 @@ void Client::sendAddDayOfSlotsRequest(int doctorId, const QDate& date)
     m_socket->write(document.toJson());
 }
 
+void Client::sendAddAppointmentRequest(const AppointmentData& data)
+{
+    QJsonObject request{ Reflect::toJson(data) };
+    request["command"] = "addAppointment";
+
+    QJsonDocument document{ request };
+    m_socket->write(document.toJson());
+}
+
+void Client::sendAddRegistratorRequest(const RegistratorData& data)
+{
+    QJsonObject request{ Reflect::toJson(data) };
+    request["command"] = "addRegistrator";
+
+    QJsonDocument document{ request };
+    m_socket->write(document.toJson());
+}
+
+void Client::sendAddDoctorRequest(const DoctorData& data)
+{
+    QJsonObject request{ Reflect::toJson(data) };
+    request["command"] = "addDoctor";
+
+    QJsonDocument document{ request };
+    m_socket->write(document.toJson());
+}
+
+void Client::sendGetDoctorAppointmentsRequest(const QDate& date, int doctorId)
+{
+    QJsonObject request{};
+    request["command"] = "getDoctorAppointments";
+    request["date"] = date.toString("yyyy-MM-dd");
+    request["doctorId"] = doctorId;
+
+    QJsonDocument document{ request };
+    m_socket->write(document.toJson());
+}
+
+void Client::sendAddMedicalRecordRequest(const MedicalRecordData& data)
+{
+    QJsonObject request{ Reflect::toJson(data) };
+    request["command"] = "addMedicalRecord";
+
+    QJsonDocument document{ request };
+    m_socket->write(document.toJson());
+}
+
 void Client::onReadyRead()
 {
     QByteArray data{ m_socket->readAll() };
@@ -206,6 +253,26 @@ void Client::onReadyRead()
     else if (command == "addDayOfSlotsResult")
     {
         processAddDayOfSlotsResult(response);
+    }
+    else if (command == "addAppointmentResult")
+    {
+        processAddAppointmentResult(response);
+    }
+    else if (command == "addRegistratorResult")
+    {
+        processAddRegistratorResult(response);
+    }
+    else if (command == "addDoctorResult")
+    {
+        processAddDoctorResult(response);
+    }
+    else if (command == "getDoctorAppointmentsResult")
+    {
+        processGetDoctorAppointmentsResult(response);
+    }
+    else if (command == "addMedicalRecordResult")
+    {
+        processAddMedicalRecordResult(response);
     }
 }
 
@@ -349,6 +416,52 @@ void Client::processAddDayOfSlotsResult(const QJsonObject& response)
 {
     bool success{ response["success"].toBool() };
     emit addDayOfSlotsResult(success);
+}
+
+void Client::processAddAppointmentResult(const QJsonObject& response)
+{
+    bool success{ response["success"].toBool() };
+    emit addAppointmentResult(success);
+}
+
+void Client::processAddRegistratorResult(const QJsonObject& response)
+{
+    bool success{ response["success"].toBool() };
+    emit addRegistratorResult(success);
+}
+
+void Client::processAddDoctorResult(const QJsonObject& response)
+{
+    bool success{ response["success"].toBool() };
+    emit addAppointmentResult(success);
+}
+
+void Client::processGetDoctorAppointmentsResult(const QJsonObject& response)
+{
+    std::vector<AppointmentFullData> data{};
+
+    // put this in a function man
+    if (response.contains("appointments") && response["appointments"].isArray())
+    {
+        QJsonArray jsonArray = response["appointments"].toArray();
+        for (const auto& jsonValue : jsonArray)
+        {
+            if (jsonValue.isObject())
+            {
+                AppointmentFullData appointment{};
+                Reflect::fromJson(jsonValue.toObject(), appointment);
+                data.push_back(appointment);
+            }
+        }
+    }
+
+    emit getDoctorAppointmentsResult(data);
+}
+
+void Client::processAddMedicalRecordResult(const QJsonObject& response)
+{
+    bool success{ response["success"].toBool() };
+    emit addMedicalRecordResult(success);
 }
 
 void Client::onDisconnected()

@@ -11,6 +11,11 @@
 #include "common/data/PatientSearchData.h"
 #include "common/data/DoctorScheduleData.h"
 #include "common/data/DoctorSlotData.h"
+#include "common/data/AppointmentData.h"
+#include "common/data/RegistratorData.h"
+#include "common/data/DoctorData.h"
+#include "common/data/AppointmentFullData.h"
+#include "common/data/MedicalRecordData.h"
 
 namespace polyclinic
 {
@@ -35,6 +40,11 @@ public:
     void sendDeleteDayOfSlotsRequest(int doctorId, const QDate& date);
     void sendAddSlotRequest(int doctorId, const QDate& date, const QTime& startTime);
     void sendAddDayOfSlotsRequest(int doctorId, const QDate& date);
+    void sendAddAppointmentRequest(const AppointmentData& data);
+    void sendAddRegistratorRequest(const RegistratorData& data);
+    void sendAddDoctorRequest(const DoctorData& data);
+    void sendGetDoctorAppointmentsRequest(const QDate& date, int doctorId);
+    void sendAddMedicalRecordRequest(const MedicalRecordData& data);
 
 signals:
     void loginResult(std::pair<UserType, int> data);
@@ -49,6 +59,11 @@ signals:
     void deleteDayOfSlotsResult(bool success);
     void addSlotResult(bool success);
     void addDayOfSlotsResult(bool success);
+    void addAppointmentResult(bool success);
+    void addRegistratorResult(bool success);
+    void addDoctorResult(bool success);
+    void getDoctorAppointmentsResult(const std::vector<AppointmentFullData>& data);
+    void addMedicalRecordResult(bool success);
 
 private slots:
     void onReadyRead();
@@ -67,6 +82,11 @@ private:
     void processDeleteDayOfSlotsResult(const QJsonObject& response);
     void processAddSlotResult(const QJsonObject& response);
     void processAddDayOfSlotsResult(const QJsonObject& response);
+    void processAddAppointmentResult(const QJsonObject& response);
+    void processAddRegistratorResult(const QJsonObject& response);
+    void processAddDoctorResult(const QJsonObject& response);
+    void processGetDoctorAppointmentsResult(const QJsonObject& response);
+    void processAddMedicalRecordResult(const QJsonObject& response);
 
 private:
     QTcpSocket* m_socket{};

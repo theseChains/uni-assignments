@@ -8,6 +8,7 @@
 #include <QStackedWidget>
 
 #include "client/View/ButtonHandlers/RegistratorButtonsHandler.h"
+#include "client/View/ButtonHandlers/AdministratorButtonsHandler.h"
 #include "client/View/ValidatorSetup.h"
 #include "common/UserType.h"
 #include "client/Client.h"
@@ -39,6 +40,7 @@ private:
     Client* m_client{};
 
     RegistratorButtonsHandler m_registratorButtonsHandler;
+    AdministratorButtonsHandler m_adminButtonsHandler;
 
     ValidatorSetup m_validatorSetup;
 };

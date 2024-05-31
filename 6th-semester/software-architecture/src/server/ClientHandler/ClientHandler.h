@@ -39,6 +39,11 @@ private:
     void processDeleteDayOfSlotsRequest(const QJsonObject& request);
     void processAddSlotRequest(const QJsonObject& request);
     void processAddDayOfSlotsRequest(const QJsonObject& request);
+    void processAddAppointmentRequest(const QJsonObject& request);
+    void processAddRegistratorRequest(const QJsonObject& request);
+    void processAddDoctorRequest(const QJsonObject& request);
+    void processGetDoctorAppointmentsRequest(const QJsonObject& request);
+    void processAddMedicalRecordRequest(const QJsonObject& request);
 
 private:
     qintptr m_socketDescriptor{};

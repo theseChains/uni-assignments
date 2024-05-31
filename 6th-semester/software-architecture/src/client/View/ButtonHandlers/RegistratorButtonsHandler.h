@@ -75,6 +75,9 @@ private slots:
     void onAddDayOfSlotsResult(bool success);
 
     void onPatientTalonSaveButtonClicked();
+    void onGetAppointmentResult(bool success);
+
+    void onRegShowAppointmentsButtonClicked();
 
     void onClientPageTalonButtonClicked();
     void onClientTableTalonButtonClicked();

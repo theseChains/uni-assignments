@@ -14,14 +14,17 @@ namespace polyclinic
 {
 ApplicationView::ApplicationView(QWidget* parent)
     : QMainWindow{ parent },
-      m_ui{ new Ui::ApplicationViewUi },
+      m_ui{ new Ui::ApplicationViewUi{} },
       m_client{ new Client{ this } },
       m_registratorButtonsHandler{ m_client },
+      m_adminButtonsHandler{ m_client },
       m_validatorSetup{ this }
 {
     m_ui->setupUi(this);
     m_registratorButtonsHandler.setUi(m_ui);
     m_registratorButtonsHandler.connectButtonsToSlots();
+    m_adminButtonsHandler.setUi(m_ui);
+    m_adminButtonsHandler.connectButtonsToSlots();
     m_ui->ScheduleEditDate->setDate(QDate::currentDate());
     m_ui->PatientTalonAppointmentDate->setDate(QDate::currentDate());
     m_ui->ListOfAppointmentsDate->setDate(QDate::currentDate());
@@ -45,8 +48,8 @@ ApplicationView::ApplicationView(QWidget* parent)
 
     connect(m_ui->LogInButton, &QPushButton::clicked,
                      this, &ApplicationView::onLoginButtonClicked);
-    connect(m_ui->OpenOutpatientCardButton, &QPushButton::clicked,
-                     this, &ApplicationView::onOpenOutpatientCardButtonClicked);
+    /* connect(m_ui->OpenOutpatientCardButton, &QPushButton::clicked, */
+    /*                  this, &ApplicationView::onOpenOutpatientCardButtonClicked); */
 
     connect(&m_registratorButtonsHandler,
             &RegistratorButtonsHandler::errorOccurred,

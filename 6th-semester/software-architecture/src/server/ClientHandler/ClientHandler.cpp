@@ -10,6 +10,10 @@
 #include "common/data/Reflect.h"
 #include "common/data/PatientSearchData.h"
 #include "common/data/DoctorScheduleData.h"
+#include "common/data/RegistratorData.h"
+#include "common/data/DoctorData.h"
+#include "common/data/AppointmentFullData.h"
+#include "common/data/MedicalRecordData.h"
 
 namespace polyclinic
 {
@@ -110,6 +114,26 @@ void ClientHandler::onReadyRead()
     else if (command == "addDayOfSlots")
     {
         processAddDayOfSlotsRequest(request);
+    }
+    else if (command == "addAppointment")
+    {
+        processAddAppointmentRequest(request);
+    }
+    else if (command == "addRegistrator")
+    {
+        processAddRegistratorRequest(request);
+    }
+    else if (command == "addDoctor")
+    {
+        processAddDoctorRequest(request);
+    }
+    else if (command == "getDoctorAppointments")
+    {
+        processGetDoctorAppointmentsRequest(request);
+    }
+    else if (command == "addMedicalRecord")
+    {
+        processAddMedicalRecordRequest(request);
     }
 }
 
@@ -298,6 +322,84 @@ void ClientHandler::processAddDayOfSlotsRequest(const QJsonObject& request)
 
     QJsonObject response{};
     response["command"] = "addDayOfSlotsResult";
+    response["success"] = success;
+
+    QJsonDocument document{ response };
+    m_socket->write(document.toJson());
+}
+
+void ClientHandler::processAddAppointmentRequest(const QJsonObject& request)
+{
+    AppointmentData data{};
+    Reflect::fromJson(request, data);
+    bool success{ m_databaseHandler.addAppointment(data) };
+
+    QJsonObject response{};
+    response["command"] = "addAppointmentResult";
+    response["success"] = success;
+
+    QJsonDocument document{ response };
+    m_socket->write(document.toJson());
+}
+
+void ClientHandler::processAddRegistratorRequest(const QJsonObject& request)
+{
+    std::cerr << "processing add registrator request\n";
+    RegistratorData data{};
+    Reflect::fromJson(request, data);
+    bool success{ m_databaseHandler.addRegistrator(data) };
+
+    QJsonObject response{};
+    response["command"] = "addRegistratorResult";
+    response["success"] = success;
+
+    QJsonDocument document{ response };
+    m_socket->write(document.toJson());
+}
+
+void ClientHandler::processAddDoctorRequest(const QJsonObject& request)
+{
+    RegistratorData data{};
+    Reflect::fromJson(request, data);
+    bool success{ m_databaseHandler.addRegistrator(data) };
+
+    QJsonObject response{};
+    response["command"] = "addDoctorResult";
+    response["success"] = success;
+
+    QJsonDocument document{ response };
+    m_socket->write(document.toJson());
+}
+
+void ClientHandler::processGetDoctorAppointmentsRequest(const QJsonObject& request)
+{
+    QDate date{ QDate::fromString(request["date"].toString(), "yyyy-MM-dd") };
+    int doctorId{ request["doctorId"].toInt() };
+    std::vector<AppointmentFullData> data{
+            m_databaseHandler.getAppointmentsForDoctor(date, doctorId) };
+
+    QJsonArray jsonArray{};
+    for (const auto& slot : data)
+    {
+        jsonArray.append(Reflect::toJson(slot));
+    }
+
+    QJsonObject response{};
+    response["command"] = "getDoctorAppointmentsResult";
+    response["appointments"] = jsonArray;
+
+    QJsonDocument document{ response };
+    m_socket->write(document.toJson());
+}
+
+void ClientHandler::processAddMedicalRecordRequest(const QJsonObject& request)
+{
+    MedicalRecordData data{};
+    Reflect::fromJson(request, data);
+    bool success{ m_databaseHandler.addNewMedicalRecord(data) };
+
+    QJsonObject response{};
+    response["command"] = "addMedicalRecordResult";
     response["success"] = success;
 
     QJsonDocument document{ response };

@@ -42,6 +42,8 @@ RegistratorButtonsHandler::RegistratorButtonsHandler(Client* client, QObject* pa
             this, &RegistratorButtonsHandler::onAddSlotResult);
     connect(m_client, &Client::addDayOfSlotsResult,
             this, &RegistratorButtonsHandler::onAddDayOfSlotsResult);
+    connect(m_client, &Client::addAppointmentResult,
+            this, &RegistratorButtonsHandler::onGetAppointmentResult);
 }
 
 void RegistratorButtonsHandler::setUi(Ui::ApplicationViewUi* ui)
@@ -109,6 +111,9 @@ void RegistratorButtonsHandler::connectButtonsToSlots()
 
     connect(m_ui->PatientPageTalonButton, &QPushButton::clicked,
             this, &RegistratorButtonsHandler::onClientPageTalonButtonClicked);
+
+    /* connect(m_ui->RegShowAppointmentsButton, &QPushButton::clicked, this, */
+    /*         &RegistratorButtonsHandler::onRegShowAppointmentsButtonClicked); */
 
     QObject::connect(m_ui->BackToSearchButton, &QPushButton::clicked,
             this, &RegistratorButtonsHandler::onBackToSearchButtonClicked);
@@ -523,10 +528,21 @@ void RegistratorButtonsHandler::onPatientTalonSaveButtonClicked()
     QVariant doctorIdVariant{ m_ui->PatientTalonDoctorLastName->currentData() };
     data.doctorId = doctorIdVariant.toInt();
     data.patientId = m_currentPatientId;
-    // wip
     data.registratorId = m_registratorId;
 
-    // send request
+    m_client->sendAddAppointmentRequest(data);
+}
+
+void RegistratorButtonsHandler::onGetAppointmentResult(bool success)
+{
+    if (!success)
+    {
+        QMessageBox::critical(nullptr, "Error", "Ошибка при добавлении записи");
+    }
+}
+
+void RegistratorButtonsHandler::onRegShowAppointmentsButtonClicked()
+{
 }
 
 void RegistratorButtonsHandler::onClientPageTalonButtonClicked()
@@ -553,7 +569,7 @@ void RegistratorButtonsHandler::onClientTableTalonButtonClicked()
     m_currentPatientId = m_ui->FoundClientsTable->item(selectedRow, 0)->text().toInt();
     for (int col{ 1 }; col < m_ui->FoundClientsTable->columnCount(); ++col)
     {
-        QTableWidgetItem *item{ m_ui->FoundClientsTable->item(selectedRow, col) };
+        QTableWidgetItem* item{ m_ui->FoundClientsTable->item(selectedRow, col) };
         clientData.append(item->text());
         clientData.append(" ");
     }

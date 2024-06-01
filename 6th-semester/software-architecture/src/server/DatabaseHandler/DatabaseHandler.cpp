@@ -468,28 +468,28 @@ bool DatabaseHandler::addAppointment(const AppointmentData& appointmentData)
 
     QSqlQuery query{ m_database };
     query.prepare("INSERT INTO appointments "
-                  "(slot_id, doctor_id, patient_id, registrator_id, card_id) "
+                  "(slot_id, outpatient_card_id, patient_id, doctor_id, registrator_id) "
                   "VALUES "
-                  "(:slot_id, :doctor_id, :patient_id, :registrator_id, :card_id)");
+                  "(:slot_id, :card_id, :patient_id, :doctor_id, :registrator_id)");
 
     query.bindValue(":slot_id", appointmentData.slotId);
-    query.bindValue(":doctor_id", appointmentData.doctorId);
-    query.bindValue(":patient_id", appointmentData.patientId);
-    query.bindValue(":registrator_id", appointmentData.registratorId);
     query.bindValue(":card_id", outpatientCardId);
+    query.bindValue(":patient_id", appointmentData.patientId);
+    query.bindValue(":doctor_id", appointmentData.doctorId);
+    query.bindValue(":registrator_id", appointmentData.registratorId);
 
     if (!query.exec()) {
-        qWarning() << "Error executing query:" << query.lastError().text();
+        qWarning() << "Error executing first query:" << query.lastError().text();
         return false;
     }
 
     QSqlQuery slotUpdateQuery{ m_database };
-    slotUpdateQuery.prepare("UPDATE doctor_slots SET status = 'Занят' WHERE slot_id = :slot_id");
+    slotUpdateQuery.prepare("UPDATE doctor_slots SET status = 'Занят' WHERE doctor_slot_id = :slot_id");
     
     slotUpdateQuery.bindValue(":slot_id", appointmentData.slotId);
 
     if (!slotUpdateQuery.exec()) {
-        qWarning() << "Error executing query:" << slotUpdateQuery.lastError().text();
+        qWarning() << "Error executing second query:" << slotUpdateQuery.lastError().text();
         return false;
     }
 
@@ -589,7 +589,7 @@ std::vector<AppointmentFullData> DatabaseHandler::getAppointmentsForDoctor(const
             r.last_name AS registrator_last_name,
             p.patient_id
         FROM
-            appointment a
+            appointments a
         JOIN
             doctor_slots ds ON a.slot_id = ds.doctor_slot_id
         JOIN
@@ -609,7 +609,7 @@ std::vector<AppointmentFullData> DatabaseHandler::getAppointmentsForDoctor(const
     }
 
     while (query.next()) {
-        AppointmentFullData appointment;
+        AppointmentFullData appointment{};
         appointment.startTime = query.value("start_time").toTime();
         appointment.endTime = query.value("end_time").toTime();
         appointment.date = query.value("date").toDate();
@@ -631,10 +631,12 @@ bool DatabaseHandler::addNewMedicalRecord(const MedicalRecordData& data)
     int outpatientCardId{ getOutpatientCardId(data.patientId) };
 
     QSqlQuery query{ m_database };
-    query.prepare("INSERT INTO medical_history_records "
-                  "(outpatient_card_id, date_of_entry, patient_complaints, diagnosis, treatment, medical_tests, doctor_notes) "
-                  "VALUES "
-                  "(:outpatient_card_id, :date_of_entry, :patient_complaints, :diagnosis, :treatment, :medical_tests, :doctor_notes)");
+    query.prepare(R"(
+        INSERT INTO medical_history_records 
+        (outpatient_card_id, date_of_entry, patient_complaints, diagnosis, treatment, medical_tests, doctors_notes) 
+        VALUES 
+        (:outpatient_card_id, :date_of_entry, :patient_complaints, :diagnosis, :treatment, :medical_tests, :doctors_notes)
+    )");
 
     query.bindValue(":outpatient_card_id", outpatientCardId);
     query.bindValue(":date_of_entry", QDate::currentDate());
@@ -642,14 +644,162 @@ bool DatabaseHandler::addNewMedicalRecord(const MedicalRecordData& data)
     query.bindValue(":diagnosis", data.diagnosis);
     query.bindValue(":treatment", data.treatment);
     query.bindValue(":medical_tests", data.tests);
-    query.bindValue(":doctor_notes", data.notes);
+    query.bindValue(":doctors_notes", data.notes);
 
     if (!query.exec()) {
+
         qWarning() << "Database query error: " << query.lastError().text();
         return false;
     }
 
     return true;
+}
+
+std::vector<OutpatientCardData> DatabaseHandler::getOutpatientCards(const PatientBriefData& data)
+{
+    std::vector<OutpatientCardData> outpatientCards;
+
+    QSqlQuery query{ m_database };
+    QString queryString = R"(
+        SELECT patient_id, last_name, first_name, middle_name, date_of_birth
+        FROM patients
+        WHERE last_name = :lastName
+    )";
+
+    if (!data.firstName.isEmpty()) {
+        queryString += " AND first_name = :firstName";
+    }
+
+    if (!data.middleName.isEmpty()) {
+        queryString += " AND middle_name = :middleName";
+    }
+
+    query.prepare(queryString);
+    query.bindValue(":lastName", data.lastName);
+
+    if (!data.firstName.isEmpty()) {
+        query.bindValue(":firstName", data.firstName);
+    }
+
+    if (!data.middleName.isEmpty()) {
+        query.bindValue(":middleName", data.middleName);
+    }
+
+    if (!query.exec()) {
+        qWarning() << "Error executing patient query:" << query.lastError().text();
+        return outpatientCards;
+    }
+
+    std::vector<int> patientIds;
+    while (query.next()) {
+        int patientId = query.value(0).toInt();
+        QString lastName = query.value(1).toString();
+        QString firstName = query.value(2).toString();
+        QString middleName = query.value(3).toString();
+        QDate dateOfBirth = query.value(4).toDate();
+
+        // Create a temporary OutpatientCardData to store patient details
+        OutpatientCardData patientData;
+        patientData.patientId = patientId;
+        patientData.patientLastName = lastName;
+        patientData.patientFirstName = firstName;
+        patientData.patientMiddleName = middleName;
+        patientData.patientDateOfBirth = dateOfBirth;
+
+        patientIds.push_back(patientId);
+        outpatientCards.push_back(patientData);
+    }
+
+    if (patientIds.empty()) {
+        return outpatientCards;
+    }
+
+    queryString = R"(
+        SELECT patient_id, date_of_creation
+        FROM outpatient_cards
+        WHERE patient_id IN (
+    )";
+
+    for (size_t i = 0; i < patientIds.size(); ++i) {
+        queryString += QString::number(patientIds[i]);
+        if (i < patientIds.size() - 1) {
+            queryString += ", ";
+        }
+    }
+    queryString += ")";
+
+    query.prepare(queryString);
+
+    if (!query.exec()) {
+        qWarning() << "Error executing outpatient card query:" << query.lastError().text();
+        return outpatientCards;
+    }
+
+    while (query.next()) {
+        int patientId = query.value(0).toInt();
+        QDate dateOfCreation = query.value(1).toDate();
+
+        for (auto& card : outpatientCards) {
+            if (card.patientId == patientId) {
+                card.dateOfCreation = dateOfCreation;
+                break;
+            }
+        }
+    }
+
+    return outpatientCards;
+}
+
+std::vector<MedicalRecordData> DatabaseHandler::getMedicalRecords(int patientId)
+{
+    std::vector<MedicalRecordData> medicalRecords;
+
+    QSqlQuery query{ m_database };
+    // i already have this down there!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    query.prepare(R"(
+        SELECT outpatient_card_id
+        FROM outpatient_cards
+        WHERE patient_id = :patientId
+    )");
+    query.bindValue(":patientId", patientId);
+
+    if (!query.exec()) {
+        qWarning() << "Error executing query to find outpatient_card_id:" << query.lastError().text();
+        return medicalRecords;
+    }
+
+    if (!query.next()) {
+        qWarning() << "No outpatient card found for patient_id:" << patientId;
+        return medicalRecords;
+    }
+
+    int outpatientCardId = query.value(0).toInt();
+
+    query.prepare(R"(
+        SELECT date_of_entry, patient_complaints, diagnosis, treatment, medical_tests, doctors_notes
+        FROM medical_history_records
+        WHERE outpatient_card_id = :outpatientCardId
+    )");
+    query.bindValue(":outpatientCardId", outpatientCardId);
+
+    if (!query.exec()) {
+        qWarning() << "Error executing query to retrieve medical history records:" << query.lastError().text();
+        return medicalRecords;
+    }
+
+    while (query.next()) {
+        MedicalRecordData recordData;
+        recordData.patientId = patientId;
+        recordData.complaints = query.value(1).toString();
+        recordData.diagnosis = query.value(2).toString();
+        recordData.treatment = query.value(3).toString();
+        recordData.tests = query.value(4).toString();
+        recordData.notes = query.value(5).toString();
+
+        medicalRecords.push_back(recordData);
+    }
+
+    return medicalRecords;
 }
 
 int DatabaseHandler::getOutpatientCardId(int patientId)
@@ -659,7 +809,7 @@ int DatabaseHandler::getOutpatientCardId(int patientId)
     query.bindValue(":patient_id", patientId);
 
     if (!query.exec()) {
-        qWarning() << "Error executing query:" << query.lastError().text();
+        qWarning() << "Error executing get outpatient card id query:" << query.lastError().text();
         return -1;
     }
 

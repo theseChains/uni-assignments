@@ -9,6 +9,7 @@
 
 #include "client/View/ButtonHandlers/RegistratorButtonsHandler.h"
 #include "client/View/ButtonHandlers/AdministratorButtonsHandler.h"
+#include "client/View/ButtonHandlers/DoctorButtonsHandler.h"
 #include "client/View/ValidatorSetup.h"
 #include "common/UserType.h"
 #include "client/Client.h"
@@ -41,6 +42,7 @@ private:
 
     RegistratorButtonsHandler m_registratorButtonsHandler;
     AdministratorButtonsHandler m_adminButtonsHandler;
+    DoctorButtonsHandler m_doctorButtonsHandler;
 
     ValidatorSetup m_validatorSetup;
 };

@@ -34,8 +34,16 @@ private slots:
     void onSaveMedRecordButtonClicked();
     void onAddMedicalRecordResult(bool success);
 
+    void onSearchOutpatientCardsButtonClicked();
+    void onGetOutpatientCardsResult(const std::vector<OutpatientCardData>& data);
+
+    void onOpenOutpatientCardButtonClicked();
+    void onGetMedicalRecordsResult(const std::vector<MedicalRecordData>& data);
+
 private:
     void fillAppointmentsTable(const std::vector<AppointmentFullData>& data);
+    void fillOutpatientCardsTable(const std::vector<OutpatientCardData>& data);
+    void fillMedicalRecordsTable(const std::vector<MedicalRecordData>& data);
 
 private:
     Ui::ApplicationViewUi* m_ui{};

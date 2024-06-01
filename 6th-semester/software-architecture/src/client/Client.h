@@ -16,6 +16,7 @@
 #include "common/data/DoctorData.h"
 #include "common/data/AppointmentFullData.h"
 #include "common/data/MedicalRecordData.h"
+#include "common/data/OutpatientCardData.h"
 
 namespace polyclinic
 {
@@ -45,6 +46,8 @@ public:
     void sendAddDoctorRequest(const DoctorData& data);
     void sendGetDoctorAppointmentsRequest(const QDate& date, int doctorId);
     void sendAddMedicalRecordRequest(const MedicalRecordData& data);
+    void sendGetOutpatientCardsRequest(const PatientBriefData& data);
+    void sendGetMedicalRecordsRequest(int patientId);
 
 signals:
     void loginResult(std::pair<UserType, int> data);
@@ -64,6 +67,8 @@ signals:
     void addDoctorResult(bool success);
     void getDoctorAppointmentsResult(const std::vector<AppointmentFullData>& data);
     void addMedicalRecordResult(bool success);
+    void getOutpatientCardsResult(const std::vector<OutpatientCardData>& data);
+    void getMedicalRecordsResult(const std::vector<MedicalRecordData>& data);
 
 private slots:
     void onReadyRead();
@@ -87,6 +92,8 @@ private:
     void processAddDoctorResult(const QJsonObject& response);
     void processGetDoctorAppointmentsResult(const QJsonObject& response);
     void processAddMedicalRecordResult(const QJsonObject& response);
+    void processGetOutpatientCardsResult(const QJsonObject& response);
+    void processGetMedicalRecordsResult(const QJsonObject& response);
 
 private:
     QTcpSocket* m_socket{};

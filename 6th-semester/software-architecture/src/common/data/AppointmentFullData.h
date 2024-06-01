@@ -33,6 +33,8 @@ struct ReflectTraits<AppointmentFullData> {
                            &AppointmentFullData::patientFirstName),
             std::make_pair("patientMiddleName",
                            &AppointmentFullData::patientMiddleName),
+            std::make_pair("patientId",
+                           &AppointmentFullData::patientId),
             std::make_pair("dateOfBirth", &AppointmentFullData::dateOfBirth),
             std::make_pair("registratorLastName",
                            &AppointmentFullData::registratorLastName)

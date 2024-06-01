@@ -18,16 +18,22 @@ ApplicationView::ApplicationView(QWidget* parent)
       m_client{ new Client{ this } },
       m_registratorButtonsHandler{ m_client },
       m_adminButtonsHandler{ m_client },
+      m_doctorButtonsHandler{ m_client },
       m_validatorSetup{ this }
 {
     m_ui->setupUi(this);
+
     m_registratorButtonsHandler.setUi(m_ui);
     m_registratorButtonsHandler.connectButtonsToSlots();
     m_adminButtonsHandler.setUi(m_ui);
     m_adminButtonsHandler.connectButtonsToSlots();
+    m_doctorButtonsHandler.setUi(m_ui);
+    m_doctorButtonsHandler.connectButtonsToSlots();
+
     m_ui->ScheduleEditDate->setDate(QDate::currentDate());
     m_ui->PatientTalonAppointmentDate->setDate(QDate::currentDate());
     m_ui->ListOfAppointmentsDate->setDate(QDate::currentDate());
+    m_ui->AppointmentDate->setDate(QDate::currentDate());
 
     m_validatorSetup.setupValidators(*m_ui);
 
@@ -36,6 +42,8 @@ ApplicationView::ApplicationView(QWidget* parent)
     m_ui->ClientSearchStackedWidget->setCurrentIndex(0);
     m_ui->DoctorStackedWidget->setCurrentIndex(0);
     m_ui->TalonPageTabs->setCurrentIndex(0);
+    m_ui->DoctorTabWidget->setCurrentIndex(0);
+    m_ui->OutpatientCardsStackedWidget->setCurrentIndex(0);
 
     m_ui->FoundClientsTable->setSelectionMode(QAbstractItemView::SingleSelection);
     m_ui->FoundClientsTable->setSelectionBehavior(QAbstractItemView::SelectRows);
@@ -78,6 +86,7 @@ void ApplicationView::onAuthentication(std::pair<UserType, int> data)
     else if (data.first == UserType::kDoctor)
     {
         StackedWidgetNavigator::navigateToPage(*m_ui->UserStackedWidget, constants::kDoctorPage);
+        m_doctorButtonsHandler.setUserId(data.second);
     }
     else if (data.first == UserType::kRegistrator)
     {

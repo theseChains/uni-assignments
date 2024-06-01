@@ -20,6 +20,7 @@
 #include "common/data/DoctorData.h"
 #include "common/data/AppointmentFullData.h"
 #include "common/data/MedicalRecordData.h"
+#include "common/data/OutpatientCardData.h"
 
 namespace polyclinic
 {
@@ -48,6 +49,8 @@ public:
     bool addDoctor(const DoctorData& data);
     std::vector<AppointmentFullData> getAppointmentsForDoctor(const QDate& date, int doctorId);
     bool addNewMedicalRecord(const MedicalRecordData& data);
+    std::vector<OutpatientCardData> getOutpatientCards(const PatientBriefData& data);
+    std::vector<MedicalRecordData> getMedicalRecords(int patientId);
 
 private:
     int getOutpatientCardId(int patientId);

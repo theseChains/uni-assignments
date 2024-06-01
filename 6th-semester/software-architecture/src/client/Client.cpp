@@ -194,6 +194,26 @@ void Client::sendAddMedicalRecordRequest(const MedicalRecordData& data)
 {
     QJsonObject request{ Reflect::toJson(data) };
     request["command"] = "addMedicalRecord";
+    std::cerr << "seding req to add med record\n";
+
+    QJsonDocument document{ request };
+    m_socket->write(document.toJson());
+}
+
+void Client::sendGetOutpatientCardsRequest(const PatientBriefData& data)
+{
+    QJsonObject request{ Reflect::toJson(data) };
+    request["command"] = "getOutpatientCards";
+
+    QJsonDocument document{ request };
+    m_socket->write(document.toJson());
+}
+
+void Client::sendGetMedicalRecordsRequest(int patientId)
+{
+    QJsonObject request{};
+    request["command"] = "getMedicalRecords";
+    request["patientId"] = patientId;
 
     QJsonDocument document{ request };
     m_socket->write(document.toJson());
@@ -273,6 +293,14 @@ void Client::onReadyRead()
     else if (command == "addMedicalRecordResult")
     {
         processAddMedicalRecordResult(response);
+    }
+    else if (command == "getOutpatientCardsResult")
+    {
+        processGetOutpatientCardsResult(response);
+    }
+    else if (command == "getMedicalRecordsResult")
+    {
+        processGetMedicalRecordsResult(response);
     }
 }
 
@@ -461,7 +489,52 @@ void Client::processGetDoctorAppointmentsResult(const QJsonObject& response)
 void Client::processAddMedicalRecordResult(const QJsonObject& response)
 {
     bool success{ response["success"].toBool() };
+    std::cerr << "medical record result: " << success << '\n';
     emit addMedicalRecordResult(success);
+}
+
+void Client::processGetOutpatientCardsResult(const QJsonObject& response)
+{
+    std::vector<OutpatientCardData> data{};
+
+    // put this in a function man
+    if (response.contains("cards") && response["cards"].isArray())
+    {
+        QJsonArray jsonArray = response["cards"].toArray();
+        for (const auto& jsonValue : jsonArray)
+        {
+            if (jsonValue.isObject())
+            {
+                OutpatientCardData card{};
+                Reflect::fromJson(jsonValue.toObject(), card);
+                data.push_back(card);
+            }
+        }
+    }
+
+    emit getOutpatientCardsResult(data);
+}
+
+void Client::processGetMedicalRecordsResult(const QJsonObject& response)
+{
+    std::vector<MedicalRecordData> data{};
+
+    // put this in a function man
+    if (response.contains("medicalRecords") && response["medicalRecords"].isArray())
+    {
+        QJsonArray jsonArray = response["medicalRecords"].toArray();
+        for (const auto& jsonValue : jsonArray)
+        {
+            if (jsonValue.isObject())
+            {
+                MedicalRecordData record{};
+                Reflect::fromJson(jsonValue.toObject(), record);
+                data.push_back(record);
+            }
+        }
+    }
+
+    emit getMedicalRecordsResult(data);
 }
 
 void Client::onDisconnected()

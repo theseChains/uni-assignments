@@ -14,6 +14,7 @@
 #include "common/data/DoctorData.h"
 #include "common/data/AppointmentFullData.h"
 #include "common/data/MedicalRecordData.h"
+#include "common/data/OutpatientCardData.h"
 
 namespace polyclinic
 {
@@ -134,6 +135,14 @@ void ClientHandler::onReadyRead()
     else if (command == "addMedicalRecord")
     {
         processAddMedicalRecordRequest(request);
+    }
+    else if (command == "getOutpatientCards")
+    {
+        processGetOutpatientCardsRequest(request);
+    }
+    else if (command == "getMedicalRecords")
+    {
+        processGetMedicalRecordsRequest(request);
     }
 }
 
@@ -397,10 +406,50 @@ void ClientHandler::processAddMedicalRecordRequest(const QJsonObject& request)
     MedicalRecordData data{};
     Reflect::fromJson(request, data);
     bool success{ m_databaseHandler.addNewMedicalRecord(data) };
+    std::cerr << "cliehandl success: " << success << '\n';
 
     QJsonObject response{};
     response["command"] = "addMedicalRecordResult";
     response["success"] = success;
+
+    QJsonDocument document{ response };
+    m_socket->write(document.toJson());
+}
+
+void ClientHandler::processGetOutpatientCardsRequest(const QJsonObject& request)
+{
+    PatientBriefData data{};
+    Reflect::fromJson(request, data);
+    std::vector<OutpatientCardData> cards{ m_databaseHandler.getOutpatientCards(data) };
+
+    QJsonArray jsonArray{};
+    for (const auto& card : cards)
+    {
+        jsonArray.append(Reflect::toJson(card));
+    }
+
+    QJsonObject response{};
+    response["command"] = "getOutpatientCardsResult";
+    response["cards"] = jsonArray;
+
+    QJsonDocument document{ response };
+    m_socket->write(document.toJson());
+}
+
+void ClientHandler::processGetMedicalRecordsRequest(const QJsonObject& request)
+{
+    int patientId{ request["patientId"].toInt() };
+    std::vector<MedicalRecordData> data{ m_databaseHandler.getMedicalRecords(patientId) };
+
+    QJsonArray jsonArray{};
+    for (const auto& record : data)
+    {
+        jsonArray.append(Reflect::toJson(record));
+    }
+
+    QJsonObject response{};
+    response["command"] = "getMedicalRecordsResult";
+    response["medicalRecords"] = jsonArray;
 
     QJsonDocument document{ response };
     m_socket->write(document.toJson());

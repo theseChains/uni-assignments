@@ -51,6 +51,10 @@ public:
     void sendGetMedicalRecordDataRequest(int recordId);
     void sendUpdateMedicalRecordRequest(const MedicalRecordData& data);
     void sendAddRecipeRequest(int recordId, const QString& recipe);
+    void sendGetRegistratorsRequest(const RegistratorData& data);
+    void sendGetDoctorsRequest(const DoctorData& data);
+    void sendDeleteRegistratorRequest(int registratorId);
+    void sendDeleteDoctorRequest(int doctorId);
 
 signals:
     void loginResult(std::pair<UserType, int> data);
@@ -75,6 +79,10 @@ signals:
     void getMedicalRecordDataResult(const MedicalRecordData& data);
     void updateMedicalRecordResult(bool success);
     void addRecipeResult(bool success);
+    void getRegistratorsResult(const std::vector<RegistratorData>& data);
+    void getDoctorsResult(const std::vector<DoctorData>& data);
+    void deleteRegistratorResult(bool success);
+    void deleteDoctorResult(bool success);
 
 private slots:
     void onReadyRead();
@@ -103,6 +111,10 @@ private:
     void processGetMedicalRecordDataResult(const QJsonObject& response);
     void processUpdateMedicalRecordResult(const QJsonObject& response);
     void processAddRecipeResult(const QJsonObject& response);
+    void processGetRegistratorsResult(const QJsonObject& response);
+    void processGetDoctorsResult(const QJsonObject& response);
+    void processDeleteRegistratorResult(const QJsonObject& response);
+    void processDeleteDoctorResult(const QJsonObject& response);
 
 private:
     QTcpSocket* m_socket{};

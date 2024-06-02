@@ -551,10 +551,11 @@ bool DatabaseHandler::addDoctor(const DoctorData& data)
     int loginDataId{ query.lastInsertId().toInt() };
 
     QSqlQuery registratorQuery{ m_database };
-    registratorQuery.prepare("INSERT INTO registrators "
+    registratorQuery.prepare("INSERT INTO doctors "
                   "(login_data_id, last_name, first_name, middle_name, phone_number, specialization, cabinet_number) "
                   "VALUES "
                   "(:login_data_id, :last_name, :first_name, :middle_name, :phone_number, :specialization, :cabinet_number)");
+    std::cerr << "inserted doctor\n";
 
     registratorQuery.bindValue(":login_data_id", loginDataId);
     registratorQuery.bindValue(":last_name", data.lastName);
@@ -890,6 +891,132 @@ bool DatabaseHandler::addRecipe(int recordId, const QString& data)
 
     if (!query.exec()) {
         qWarning() << "Database query error: " << query.lastError().text();
+        return false;
+    }
+
+    return true;
+}
+
+std::vector<RegistratorData> DatabaseHandler::getRegistrators(const RegistratorData& data)
+{
+    std::vector<RegistratorData> registrators{};
+
+    QSqlQuery query{ m_database };
+    QString queryString = R"(
+        SELECT registrator_id, last_name, first_name, middle_name
+        FROM registrators
+        WHERE last_name = :lastName
+    )";
+
+    if (!data.firstName.isEmpty()) {
+        queryString += " AND first_name = :firstName";
+    }
+
+    if (!data.middleName.isEmpty()) {
+        queryString += " AND middle_name = :middleName";
+    }
+
+    query.prepare(queryString);
+    query.bindValue(":lastName", data.lastName);
+
+    if (!data.firstName.isEmpty()) {
+        query.bindValue(":firstName", data.firstName);
+    }
+
+    if (!data.middleName.isEmpty()) {
+        query.bindValue(":middleName", data.middleName);
+    }
+
+    if (!query.exec()) {
+        qWarning() << "Error executing patient query:" << query.lastError().text();
+        return registrators;
+    }
+
+    while (query.next()) {
+        RegistratorData registrator{};
+        registrator.id = query.value("registrator_id").toInt();
+        registrator.lastName = query.value("last_name").toString();
+        registrator.firstName = query.value("first_name").toString();
+        registrator.middleName = query.value("middle_name").toString();
+
+        registrators.push_back(registrator);
+    }
+
+    return registrators;
+}
+
+std::vector<DoctorData> DatabaseHandler::getDoctors(const DoctorData& data)
+{
+    std::vector<DoctorData> doctors{};
+
+    QSqlQuery query{ m_database };
+    QString queryString = R"(
+        SELECT doctor_id, last_name, first_name, middle_name
+        FROM doctors 
+        WHERE last_name = :lastName
+    )";
+
+    if (!data.firstName.isEmpty()) {
+        queryString += " AND first_name = :firstName";
+    }
+
+    if (!data.middleName.isEmpty()) {
+        queryString += " AND middle_name = :middleName";
+    }
+
+    query.prepare(queryString);
+    query.bindValue(":lastName", data.lastName);
+
+    if (!data.firstName.isEmpty()) {
+        query.bindValue(":firstName", data.firstName);
+    }
+
+    if (!data.middleName.isEmpty()) {
+        query.bindValue(":middleName", data.middleName);
+    }
+
+    if (!query.exec()) {
+        qWarning() << "Error executing patient query:" << query.lastError().text();
+        return doctors;
+    }
+
+    while (query.next()) {
+        DoctorData doctor{};
+        doctor.id = query.value("doctor_id").toInt();
+        doctor.lastName = query.value("last_name").toString();
+        doctor.firstName = query.value("first_name").toString();
+        doctor.middleName = query.value("middle_name").toString();
+
+        doctors.push_back(doctor);
+    }
+
+    return doctors;
+}
+
+bool DatabaseHandler::deleteRegistrator(int registratorId)
+{
+    QSqlQuery query{ m_database };
+    query.prepare("DELETE FROM registrators WHERE registrator_id = :id");
+
+    query.bindValue(":id", registratorId);
+
+    if (!query.exec()) {
+        qWarning() << "Error executing patient query:" << query.lastError().text();
+        return false;
+    }
+
+    return true;
+}
+
+bool DatabaseHandler::deleteDoctor(int doctorId)
+{
+    QSqlQuery query{ m_database };
+    query.prepare("DELETE FROM doctors WHERE doctor_id = :id");
+
+    query.bindValue(":id", doctorId);
+
+    if (!query.exec()) {
+        qWarning() << "Error executing patient query:" << query.lastError().text();
         return false;
     }
 

@@ -29,6 +29,22 @@ private slots:
     void onRegisterDoctorButtonClicked();
     void onDoctorRegistrationResult(bool success);
 
+    void onSearchRegistratorsButtonClicked();
+    void onGetRegistratorsResult(const std::vector<RegistratorData>& data);
+
+    void onSearchDoctorsButtonClicked();
+    void onGetDoctorsResult(const std::vector<DoctorData>& data);
+
+    void onDeleteRegistratorButtonClicked();
+    void onDeleteRegistratorResult(bool success);
+
+    void onDeleteDoctorButtonClicked();
+    void onDeleteDoctorResult(bool success);
+
+private:
+    void fillRegistratorsTable();
+    void fillDoctorsTable();
+
 private:
     Ui::ApplicationViewUi* m_ui{};
     Client* m_client{};

@@ -249,6 +249,44 @@ void Client::sendAddRecipeRequest(int recordId, const QString& recipe)
     m_socket->write(document.toJson());
 }
 
+void Client::sendGetRegistratorsRequest(const RegistratorData& data)
+{
+    QJsonObject request{ Reflect::toJson(data) };
+    request["command"] = "getRegistrators";
+
+    QJsonDocument document{ request };
+    m_socket->write(document.toJson());
+}
+
+void Client::sendGetDoctorsRequest(const DoctorData& data)
+{
+    QJsonObject request{ Reflect::toJson(data) };
+    request["command"] = "getDoctors";
+
+    QJsonDocument document{ request };
+    m_socket->write(document.toJson());
+}
+
+void Client::sendDeleteRegistratorRequest(int registratorId)
+{
+    QJsonObject request{};
+    request["command"] = "deleteRegistrator";
+    request["registratorId"] = registratorId;
+
+    QJsonDocument document{ request };
+    m_socket->write(document.toJson());
+}
+
+void Client::sendDeleteDoctorRequest(int doctorId)
+{
+    QJsonObject request{};
+    request["command"] = "deleteDoctor";
+    request["doctorId"] = doctorId;
+
+    QJsonDocument document{ request };
+    m_socket->write(document.toJson());
+}
+
 void Client::onReadyRead()
 {
     QByteArray data{ m_socket->readAll() };
@@ -343,6 +381,22 @@ void Client::onReadyRead()
     else if (command == "addRecipeResult")
     {
         processAddRecipeResult(response);
+    }
+    else if (command == "getRegistratorsResult")
+    {
+        processGetRegistratorsResult(response);
+    }
+    else if (command == "getDoctorsResult")
+    {
+        processGetDoctorsResult(response);
+    }
+    else if (command == "deleteRegistratorResult")
+    {
+        processDeleteRegistratorResult(response);
+    }
+    else if (command == "deleteDoctorResult")
+    {
+        processDeleteDoctorResult(response);
     }
 }
 
@@ -503,7 +557,7 @@ void Client::processAddRegistratorResult(const QJsonObject& response)
 void Client::processAddDoctorResult(const QJsonObject& response)
 {
     bool success{ response["success"].toBool() };
-    emit addAppointmentResult(success);
+    emit addDoctorResult(success);
 }
 
 void Client::processGetDoctorAppointmentsResult(const QJsonObject& response)
@@ -596,6 +650,62 @@ void Client::processAddRecipeResult(const QJsonObject& response)
 {
     bool success{ response["success"].toBool() };
     emit addRecipeResult(success);
+}
+
+void Client::processGetRegistratorsResult(const QJsonObject& response)
+{
+    std::vector<RegistratorData> data{};
+
+    // put this in a function man
+    if (response.contains("registrators") && response["registrators"].isArray())
+    {
+        QJsonArray jsonArray = response["registrators"].toArray();
+        for (const auto& jsonValue : jsonArray)
+        {
+            if (jsonValue.isObject())
+            {
+                RegistratorData registrator{};
+                Reflect::fromJson(jsonValue.toObject(), registrator);
+                data.push_back(registrator);
+            }
+        }
+    }
+
+    emit getRegistratorsResult(data);
+}
+
+void Client::processGetDoctorsResult(const QJsonObject& response)
+{
+    std::vector<DoctorData> data{};
+
+    // put this in a function man
+    if (response.contains("doctors") && response["doctors"].isArray())
+    {
+        QJsonArray jsonArray = response["doctors"].toArray();
+        for (const auto& jsonValue : jsonArray)
+        {
+            if (jsonValue.isObject())
+            {
+                DoctorData doctor{};
+                Reflect::fromJson(jsonValue.toObject(), doctor);
+                data.push_back(doctor);
+            }
+        }
+    }
+
+    emit getDoctorsResult(data);
+}
+
+void Client::processDeleteRegistratorResult(const QJsonObject& response)
+{
+    bool success{ response["success"].toBool() };
+    emit deleteRegistratorResult(success);
+}
+
+void Client::processDeleteDoctorResult(const QJsonObject& response)
+{
+    bool success{ response["success"].toBool() };
+    emit deleteDoctorResult(success);
 }
 
 void Client::onDisconnected()

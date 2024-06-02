@@ -71,14 +71,14 @@
      <widget class="QTabWidget" name="RegistratorTabs">
       <property name="geometry">
        <rect>
-        <x>2</x>
+        <x>6</x>
         <y>0</y>
         <width>1273</width>
         <height>685</height>
        </rect>
       </property>
       <property name="currentIndex">
-       <number>1</number>
+       <number>2</number>
       </property>
       <widget class="QWidget" name="ClientRegistration">
        <attribute name="title">
@@ -2616,7 +2616,7 @@
      <widget class="QTabWidget" name="AdministratorTabs">
       <property name="geometry">
        <rect>
-        <x>0</x>
+        <x>1</x>
         <y>0</y>
         <width>1271</width>
         <height>691</height>
@@ -3172,7 +3172,7 @@
           </spacer>
          </item>
          <item>
-          <widget class="QPushButton" name="OpenOutpatientCardButton_2">
+          <widget class="QPushButton" name="DeleteRegistratorButton">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
              <horstretch>0</horstretch>
@@ -3234,28 +3234,28 @@
           </spacer>
          </item>
          <item>
-          <widget class="QLineEdit" name="OutpatientSearchLastName_2">
+          <widget class="QLineEdit" name="RegistratorSearchLastName">
            <property name="placeholderText">
             <string>Фамилия</string>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="QLineEdit" name="OutpatientSearchFirstName_2">
+          <widget class="QLineEdit" name="RegistratorSearchFirstName">
            <property name="placeholderText">
             <string>Имя</string>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="QLineEdit" name="OutpatientSearchMiddleName_2">
+          <widget class="QLineEdit" name="RegistratorSearchMiddleName">
            <property name="placeholderText">
             <string>Отчество</string>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="QPushButton" name="SearchOutpatientCardsButton_2">
+          <widget class="QPushButton" name="SearchRegistratorsButton">
            <property name="text">
             <string>Поиск</string>
            </property>
@@ -3300,7 +3300,7 @@
           </spacer>
          </item>
          <item>
-          <widget class="QTableWidget" name="OutpatientCardsTable_2">
+          <widget class="QTableWidget" name="RegistratorsTable">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
              <horstretch>0</horstretch>
@@ -3435,28 +3435,28 @@
           </spacer>
          </item>
          <item>
-          <widget class="QLineEdit" name="OutpatientSearchLastName_3">
+          <widget class="QLineEdit" name="DoctorSearchLastName">
            <property name="placeholderText">
             <string>Фамилия</string>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="QLineEdit" name="OutpatientSearchFirstName_3">
+          <widget class="QLineEdit" name="DoctorSearchFirstName">
            <property name="placeholderText">
             <string>Имя</string>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="QLineEdit" name="OutpatientSearchMiddleName_3">
+          <widget class="QLineEdit" name="DoctorSearchMiddleName">
            <property name="placeholderText">
             <string>Отчество</string>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="QPushButton" name="SearchOutpatientCardsButton_3">
+          <widget class="QPushButton" name="SearchDoctorsButton">
            <property name="text">
             <string>Поиск</string>
            </property>
@@ -3501,7 +3501,7 @@
           </spacer>
          </item>
          <item>
-          <widget class="QTableWidget" name="OutpatientCardsTable_3">
+          <widget class="QTableWidget" name="DoctorsTable">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
              <horstretch>0</horstretch>
@@ -3628,7 +3628,7 @@
           </spacer>
          </item>
          <item>
-          <widget class="QPushButton" name="OpenOutpatientCardButton_3">
+          <widget class="QPushButton" name="DeleteDoctorButton">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
              <horstretch>0</horstretch>
@@ -3668,6 +3668,296 @@
        <attribute name="title">
         <string>Расписание врачей</string>
        </attribute>
+       <widget class="QWidget" name="horizontalLayoutWidget_54">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>0</y>
+          <width>1271</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <layout class="QHBoxLayout" name="horizontalLayout_122">
+         <item>
+          <spacer name="horizontalSpacer_116">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QLabel" name="label_156">
+           <property name="text">
+            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:16pt; font-weight:600;&quot;&gt;Редактирование расписания врачей&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer_117">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QWidget" name="verticalLayoutWidget_13">
+        <property name="geometry">
+         <rect>
+          <x>360</x>
+          <y>50</y>
+          <width>551</width>
+          <height>491</height>
+         </rect>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout_52" stretch="1,1,1,6">
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_117" stretch="3,5">
+           <property name="spacing">
+            <number>6</number>
+           </property>
+           <item>
+            <widget class="QLabel" name="label_150">
+             <property name="text">
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;Специальность врача&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QComboBox" name="ScheduleEditDoctorSpecialization_2">
+             <item>
+              <property name="text">
+               <string>терапевт</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>лаборант</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>кардиолог</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>офтальмолог</string>
+              </property>
+             </item>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_119" stretch="3,5">
+           <property name="spacing">
+            <number>6</number>
+           </property>
+           <item>
+            <widget class="QLabel" name="label_151">
+             <property name="text">
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;Фамилия врача&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QComboBox" name="ScheduleEditDoctorLastName_2"/>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_120" stretch="3,2">
+           <property name="spacing">
+            <number>6</number>
+           </property>
+           <item>
+            <widget class="QLabel" name="label_155">
+             <property name="text">
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;Дата&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QDateEdit" name="ScheduleEditDate_2">
+             <property name="displayFormat">
+              <string>dd/MM/yyyy</string>
+             </property>
+             <property name="calendarPopup">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <widget class="QTableWidget" name="ScheduleEditTable_2">
+           <property name="horizontalScrollBarPolicy">
+            <enum>Qt::ScrollBarAlwaysOff</enum>
+           </property>
+           <property name="columnCount">
+            <number>3</number>
+           </property>
+           <attribute name="horizontalHeaderDefaultSectionSize">
+            <number>180</number>
+           </attribute>
+           <attribute name="verticalHeaderVisible">
+            <bool>false</bool>
+           </attribute>
+           <column/>
+           <column/>
+           <column/>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QWidget" name="horizontalLayoutWidget_53">
+        <property name="geometry">
+         <rect>
+          <x>50</x>
+          <y>560</y>
+          <width>1171</width>
+          <height>51</height>
+         </rect>
+        </property>
+        <layout class="QHBoxLayout" name="horizontalLayout_121" stretch="3,2,3,2,3,2,3">
+         <item>
+          <widget class="QPushButton" name="ScheduleEditDeleteChosenButton_2">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="font">
+            <font>
+             <pointsize>12</pointsize>
+            </font>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">border-radius: 25px;</string>
+           </property>
+           <property name="text">
+            <string>Удалить выбранный</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer_113">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QPushButton" name="ScheduleEditDeleteDayButton_2">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="font">
+            <font>
+             <pointsize>12</pointsize>
+            </font>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">border-radius: 25px;</string>
+           </property>
+           <property name="text">
+            <string>Удалить весь день</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer_114">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QPushButton" name="ScheduleEditAddDayButton_2">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="font">
+            <font>
+             <pointsize>12</pointsize>
+            </font>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">border-radius: 25px;</string>
+           </property>
+           <property name="text">
+            <string>Добавить весь день</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer_115">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QPushButton" name="ScheduleEditAddSlotButton_2">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="font">
+            <font>
+             <pointsize>12</pointsize>
+            </font>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">border-radius: 25px;</string>
+           </property>
+           <property name="text">
+            <string>Добавить новый слот</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
       </widget>
      </widget>
     </widget>
@@ -3682,7 +3972,7 @@
        </rect>
       </property>
       <property name="currentIndex">
-       <number>1</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="tab_5">
        <attribute name="title">
@@ -3691,14 +3981,14 @@
        <widget class="QStackedWidget" name="DoctorStackedWidget">
         <property name="geometry">
          <rect>
-          <x>2</x>
+          <x>3</x>
           <y>0</y>
           <width>1271</width>
           <height>661</height>
          </rect>
         </property>
         <property name="currentIndex">
-         <number>1</number>
+         <number>0</number>
         </property>
         <widget class="QWidget" name="ListOfAppointedClientsPage">
          <widget class="QWidget" name="horizontalLayoutWidget_36">

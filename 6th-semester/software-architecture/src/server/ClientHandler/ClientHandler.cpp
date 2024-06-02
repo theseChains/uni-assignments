@@ -156,6 +156,22 @@ void ClientHandler::onReadyRead()
     {
         processAddRecipeRequest(request);
     }
+    else if (command == "getRegistrators")
+    {
+        processGetRegistratorsRequest(request);
+    }
+    else if (command == "getDoctors")
+    {
+        processGetDoctorsRequest(request);
+    }
+    else if (command == "deleteRegistrator")
+    {
+        processDeleteRegistratorRequest(request);
+    }
+    else if (command == "deleteDoctor")
+    {
+        processDeleteDoctorRequest(request);
+    }
 }
 
 void ClientHandler::processLoginRequest(const QJsonObject& request)
@@ -380,9 +396,9 @@ void ClientHandler::processAddRegistratorRequest(const QJsonObject& request)
 
 void ClientHandler::processAddDoctorRequest(const QJsonObject& request)
 {
-    RegistratorData data{};
+    DoctorData data{};
     Reflect::fromJson(request, data);
-    bool success{ m_databaseHandler.addRegistrator(data) };
+    bool success{ m_databaseHandler.addDoctor(data) };
 
     QJsonObject response{};
     response["command"] = "addDoctorResult";
@@ -501,6 +517,72 @@ void ClientHandler::processAddRecipeRequest(const QJsonObject& request)
 
     QJsonObject response{};
     response["command"] = "addRecipeResult";
+    response["success"] = success;
+
+    QJsonDocument document{ response };
+    m_socket->write(document.toJson());
+}
+
+void ClientHandler::processGetRegistratorsRequest(const QJsonObject& request)
+{
+    RegistratorData data{};
+    Reflect::fromJson(request, data);
+    std::vector<RegistratorData> registrators{ m_databaseHandler.getRegistrators(data) };
+
+    QJsonArray jsonArray{};
+    for (const auto& registrator : registrators)
+    {
+        jsonArray.append(Reflect::toJson(registrator));
+    }
+
+    QJsonObject response{};
+    response["command"] = "getRegistratorsResult";
+    response["registrators"] = jsonArray;
+
+    QJsonDocument document{ response };
+    m_socket->write(document.toJson());
+}
+
+void ClientHandler::processGetDoctorsRequest(const QJsonObject& request)
+{
+    DoctorData data{};
+    Reflect::fromJson(request, data);
+    std::vector<DoctorData> doctors{ m_databaseHandler.getDoctors(data) };
+
+    QJsonArray jsonArray{};
+    for (const auto& doctor : doctors)
+    {
+        jsonArray.append(Reflect::toJson(doctor));
+    }
+
+    QJsonObject response{};
+    response["command"] = "getDoctorsResult";
+    response["doctors"] = jsonArray;
+
+    QJsonDocument document{ response };
+    m_socket->write(document.toJson());
+}
+
+void ClientHandler::processDeleteRegistratorRequest(const QJsonObject& request)
+{
+    int registratorId{ request["registratorId"].toInt() };
+    bool success{ m_databaseHandler.deleteRegistrator(registratorId) };
+
+    QJsonObject response{};
+    response["command"] = "deleteRegistratorResult";
+    response["success"] = success;
+
+    QJsonDocument document{ response };
+    m_socket->write(document.toJson());
+}
+
+void ClientHandler::processDeleteDoctorRequest(const QJsonObject& request)
+{
+    int doctorId{ request["doctorId"].toInt() };
+    bool success{ m_databaseHandler.deleteDoctor(doctorId) };
+
+    QJsonObject response{};
+    response["command"] = "deleteDoctorResult";
     response["success"] = success;
 
     QJsonDocument document{ response };

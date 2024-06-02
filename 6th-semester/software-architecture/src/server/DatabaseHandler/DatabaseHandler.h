@@ -54,6 +54,10 @@ public:
     MedicalRecordData getMedicalRecordData(int recordId);
     bool updateMedicalRecord(const MedicalRecordData& data);
     bool addRecipe(int recordId, const QString& data);
+    std::vector<RegistratorData> getRegistrators(const RegistratorData& data);
+    std::vector<DoctorData> getDoctors(const DoctorData& data);
+    bool deleteRegistrator(int registratorId);
+    bool deleteDoctor(int doctorId);
 
 private:
     int getOutpatientCardId(int patientId);

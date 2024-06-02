@@ -9,6 +9,7 @@ namespace polyclinic
 {
 struct DoctorData
 {
+    int id{};
     QString login{};
     QString password{};
     QString lastName{};
@@ -23,6 +24,8 @@ template <>
 struct ReflectTraits<DoctorData> {
     static constexpr auto fields() {
         return std::make_tuple(
+            std::make_pair("id",
+                           &DoctorData::id),
             std::make_pair("login",
                            &DoctorData::login),
             std::make_pair("password",

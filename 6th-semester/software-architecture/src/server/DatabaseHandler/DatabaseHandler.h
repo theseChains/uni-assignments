@@ -51,6 +51,8 @@ public:
     bool addNewMedicalRecord(const MedicalRecordData& data);
     std::vector<OutpatientCardData> getOutpatientCards(const PatientBriefData& data);
     std::vector<MedicalRecordData> getMedicalRecords(int patientId);
+    MedicalRecordData getMedicalRecordData(int recordId);
+    bool updateMedicalRecord(const MedicalRecordData& data);
 
 private:
     int getOutpatientCardId(int patientId);

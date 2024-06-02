@@ -144,6 +144,14 @@ void ClientHandler::onReadyRead()
     {
         processGetMedicalRecordsRequest(request);
     }
+    else if (command == "getMedicalRecordData")
+    {
+        processGetMedicalRecordDataRequest(request);
+    }
+    else if (command == "updateMedicalRecord")
+    {
+        processUpdateMedicalRecordRequest(request);
+    }
 }
 
 void ClientHandler::processLoginRequest(const QJsonObject& request)
@@ -450,6 +458,32 @@ void ClientHandler::processGetMedicalRecordsRequest(const QJsonObject& request)
     QJsonObject response{};
     response["command"] = "getMedicalRecordsResult";
     response["medicalRecords"] = jsonArray;
+
+    QJsonDocument document{ response };
+    m_socket->write(document.toJson());
+}
+
+void ClientHandler::processGetMedicalRecordDataRequest(const QJsonObject& request)
+{
+    int recordId{ request["recordId"].toInt() };
+    MedicalRecordData data{ m_databaseHandler.getMedicalRecordData(recordId) };
+
+    QJsonObject response{ Reflect::toJson(data) };
+    response["command"] = "getMedicalRecordDataResult";
+
+    QJsonDocument document{ response };
+    m_socket->write(document.toJson());
+}
+
+void ClientHandler::processUpdateMedicalRecordRequest(const QJsonObject& request)
+{
+    MedicalRecordData data{};
+    Reflect::fromJson(request, data);
+    bool success{ m_databaseHandler.updateMedicalRecord(data) };
+
+    QJsonObject response{};
+    response["command"] = "updateMeicalRecordResult";
+    response["success"] = success;
 
     QJsonDocument document{ response };
     m_socket->write(document.toJson());

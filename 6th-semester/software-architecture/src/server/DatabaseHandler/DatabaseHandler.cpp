@@ -776,7 +776,7 @@ std::vector<MedicalRecordData> DatabaseHandler::getMedicalRecords(int patientId)
     int outpatientCardId = query.value(0).toInt();
 
     query.prepare(R"(
-        SELECT date_of_entry, patient_complaints, diagnosis, treatment, medical_tests, doctors_notes
+        SELECT record_id, date_of_entry, patient_complaints, diagnosis, treatment, medical_tests, doctors_notes
         FROM medical_history_records
         WHERE outpatient_card_id = :outpatientCardId
     )");
@@ -790,16 +790,79 @@ std::vector<MedicalRecordData> DatabaseHandler::getMedicalRecords(int patientId)
     while (query.next()) {
         MedicalRecordData recordData;
         recordData.patientId = patientId;
-        recordData.complaints = query.value(1).toString();
-        recordData.diagnosis = query.value(2).toString();
-        recordData.treatment = query.value(3).toString();
-        recordData.tests = query.value(4).toString();
-        recordData.notes = query.value(5).toString();
+        recordData.recordId = query.value(0).toInt();
+        recordData.dateOfEntry = query.value(1).toDate();
+        recordData.complaints = query.value(2).toString();
+        recordData.diagnosis = query.value(3).toString();
+        recordData.treatment = query.value(4).toString();
+        recordData.tests = query.value(5).toString();
+        recordData.notes = query.value(6).toString();
 
         medicalRecords.push_back(recordData);
     }
 
     return medicalRecords;
+}
+
+MedicalRecordData DatabaseHandler::getMedicalRecordData(int recordId)
+{
+    QSqlQuery query{ m_database };
+    query.prepare(R"(
+        SELECT record_id, date_of_entry, patient_complaints, diagnosis, treatment, medical_tests, doctors_notes, recipe
+        FROM medical_history_records
+        WHERE record_id = :record_id
+    )");
+
+    query.bindValue(":record_id", recordId);
+
+    if (!query.exec()) {
+        qWarning() << "Error executing query to retrieve medical history records:" << query.lastError().text();
+        return {};
+    }
+
+    MedicalRecordData recordData{};
+    if (query.next()) {
+        recordData.recordId = query.value(0).toInt();
+        recordData.dateOfEntry = query.value(1).toDate();
+        recordData.complaints = query.value(2).toString();
+        recordData.diagnosis = query.value(3).toString();
+        recordData.treatment = query.value(4).toString();
+        recordData.tests = query.value(5).toString();
+        recordData.notes = query.value(6).toString();
+        recordData.recipe = query.value(6).toString();
+    }
+
+    return recordData;
+}
+
+bool DatabaseHandler::updateMedicalRecord(const MedicalRecordData& data)
+{
+    QSqlQuery query{ m_database };
+    query.prepare(R"(
+        UPDATE medical_history_records
+        SET patient_complaints = :patient_complaints,
+            diagnosis = :diagnosis,
+            treatment = :treatment,
+            medical_tests = :medical_tests,
+            doctors_notes = :doctors_notes,
+            recipe = :recipe
+        WHERE record_id = :record_id
+    )");
+
+    query.bindValue(":patient_complaints", data.complaints);
+    query.bindValue(":diagnosis", data.diagnosis);
+    query.bindValue(":treatment", data.treatment);
+    query.bindValue(":medical_tests", data.tests);
+    query.bindValue(":doctors_notes", data.notes);
+    query.bindValue(":recipe", data.recipe);
+    query.bindValue(":record_id", data.recordId);
+
+    if (!query.exec()) {
+        qWarning() << "Database query error: " << query.lastError().text();
+        return false;
+    }
+
+    return true;
 }
 
 int DatabaseHandler::getOutpatientCardId(int patientId)

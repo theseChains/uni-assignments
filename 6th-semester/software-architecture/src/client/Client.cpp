@@ -219,6 +219,25 @@ void Client::sendGetMedicalRecordsRequest(int patientId)
     m_socket->write(document.toJson());
 }
 
+void Client::sendGetMedicalRecordDataRequest(int recordId)
+{
+    QJsonObject request{};
+    request["command"] = "getMedicalRecordData";
+    request["recordId"] = recordId;
+
+    QJsonDocument document{ request };
+    m_socket->write(document.toJson());
+}
+
+void Client::sendUpdateMedicalRecordRequest(const MedicalRecordData& data)
+{
+    QJsonObject request{ Reflect::toJson(data) };
+    request["command"] = "updateMedicalRecord";
+
+    QJsonDocument document{ request };
+    m_socket->write(document.toJson());
+}
+
 void Client::onReadyRead()
 {
     QByteArray data{ m_socket->readAll() };
@@ -301,6 +320,14 @@ void Client::onReadyRead()
     else if (command == "getMedicalRecordsResult")
     {
         processGetMedicalRecordsResult(response);
+    }
+    else if (command == "getMedicalRecordDataResult")
+    {
+        processGetMedicalRecordDataResult(response);
+    }
+    else if (command == "updateMedicalRecordResult")
+    {
+        processUpdateMedicalRecordResult(response);
     }
 }
 
@@ -535,6 +562,19 @@ void Client::processGetMedicalRecordsResult(const QJsonObject& response)
     }
 
     emit getMedicalRecordsResult(data);
+}
+
+void Client::processGetMedicalRecordDataResult(const QJsonObject& response)
+{
+    MedicalRecordData data{};
+    Reflect::fromJson(response, data);
+    emit getMedicalRecordDataResult(data);
+}
+
+void Client::processUpdateMedicalRecordResult(const QJsonObject& response)
+{
+    bool success{ response["success"].toBool() };
+    emit updateMedicalRecordResult(success);
 }
 
 void Client::onDisconnected()

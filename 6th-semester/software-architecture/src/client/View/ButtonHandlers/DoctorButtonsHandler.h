@@ -40,6 +40,15 @@ private slots:
     void onOpenOutpatientCardButtonClicked();
     void onGetMedicalRecordsResult(const std::vector<MedicalRecordData>& data);
 
+    void onOpenMedicalRecordButtonClicked();
+    void onGetMedicalRecordDataResult(const MedicalRecordData& data);
+
+    void onEditMedRecordButtonClicked();
+    void onUpdateMedicalRecordResult(bool success);
+
+    void onBackToOutpatientCardsListButtonClicked();
+    void onBackToListOfMedRecordsButtonClicked();
+
 private:
     void fillAppointmentsTable(const std::vector<AppointmentFullData>& data);
     void fillOutpatientCardsTable(const std::vector<OutpatientCardData>& data);
@@ -50,6 +59,7 @@ private:
     Client* m_client{};
 
     int m_currentPatientId{};
+    int m_currentMedRecordId{};
     int m_doctorId{};
 };
 }

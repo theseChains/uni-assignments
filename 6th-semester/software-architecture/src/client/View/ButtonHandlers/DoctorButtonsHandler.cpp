@@ -19,6 +19,10 @@ DoctorButtonsHandler::DoctorButtonsHandler(Client* client, QObject* parent)
             this, &DoctorButtonsHandler::onGetOutpatientCardsResult);
     connect(m_client, &Client::getMedicalRecordsResult,
             this, &DoctorButtonsHandler::onGetMedicalRecordsResult);
+    connect(m_client, &Client::getMedicalRecordDataResult,
+            this, &DoctorButtonsHandler::onGetMedicalRecordDataResult);
+    connect(m_client, &Client::updateMedicalRecordResult,
+            this, &DoctorButtonsHandler::onUpdateMedicalRecordResult);
 }
 
 void DoctorButtonsHandler::setUi(Ui::ApplicationViewUi* ui)
@@ -45,6 +49,10 @@ void DoctorButtonsHandler::connectButtonsToSlots()
             this, &DoctorButtonsHandler::onOpenOutpatientCardButtonClicked);
     connect(m_ui->SaveMedRecordButton, &QPushButton::clicked,
             this, &DoctorButtonsHandler::onSaveMedRecordButtonClicked);
+    connect(m_ui->BackToOutpatientCardsListButton, &QPushButton::clicked,
+            this, &DoctorButtonsHandler::onBackToOutpatientCardsListButtonClicked);
+    connect(m_ui->EditMedRecordButton, &QPushButton::clicked,
+            this, &DoctorButtonsHandler::onEditMedRecordButtonClicked);
 }
 
 void DoctorButtonsHandler::onShowAppointedPatientsButtonClicked()
@@ -100,7 +108,6 @@ void DoctorButtonsHandler::fillAppointmentsTable(const std::vector<AppointmentFu
 
 void DoctorButtonsHandler::onOpenNewMedicalRecordButtonClicked()
 {
-    std::cerr << "opening new med record\n";
     int selectedRow{ m_ui->AppointedPatientsTable->currentRow() };
     QString patientData{};
     for (int col{ 1 }; col < 3; ++col)
@@ -114,7 +121,6 @@ void DoctorButtonsHandler::onOpenNewMedicalRecordButtonClicked()
 
     m_currentPatientId =
             m_ui->AppointedPatientsTable->item(selectedRow, 0)->text().toInt();
-    std::cerr << "curr patient id: " << m_currentPatientId << '\n';
 
     StackedWidgetNavigator::navigateToPage(*m_ui->DoctorStackedWidget,
             constants::kMedicalRecordPage);
@@ -213,12 +219,14 @@ void DoctorButtonsHandler::onOpenOutpatientCardButtonClicked()
 
     m_ui->OutpatientCardPagePatientInfo->setText(patientData);
 
-    m_currentPatientId =
+    /* m_currentPatientId = */
+    /*         m_ui->OutpatientCardsTable->item(selectedRow, 0)->text().toInt(); */
+    int patientId =
             m_ui->OutpatientCardsTable->item(selectedRow, 0)->text().toInt();
     StackedWidgetNavigator::navigateToPage(*m_ui->OutpatientCardsStackedWidget,
             "MedicalRecordTablePage");
 
-    m_client->sendGetMedicalRecordsRequest(m_currentPatientId);
+    m_client->sendGetMedicalRecordsRequest(patientId);
 }
 
 void DoctorButtonsHandler::onGetMedicalRecordsResult(const std::vector<MedicalRecordData>& data)
@@ -231,10 +239,10 @@ void DoctorButtonsHandler::fillMedicalRecordsTable(const std::vector<MedicalReco
 {
     m_ui->MedicalRecordsTable->clearContents();
     m_ui->MedicalRecordsTable->setRowCount(data.size());
-    m_ui->MedicalRecordsTable->setColumnCount(6);
+    m_ui->MedicalRecordsTable->setColumnCount(4);
 
     m_ui->MedicalRecordsTable->setHorizontalHeaderLabels(
-            { "ID", "Жалобы", "Диагноз", "Лечение", "Анализы", "Заметки" });
+            { "ID", "Дата обращения", "Жалобы", "Диагноз" });
 
     int fontSize{ 14 };
     QFont font{};
@@ -242,15 +250,12 @@ void DoctorButtonsHandler::fillMedicalRecordsTable(const std::vector<MedicalReco
 
     for (std::size_t i{ 0 }; i < data.size(); ++i)
     {
-        // why an auto& here.. god knows
         const auto& record = data[i];
         const QStringList rowData{
-            QString::number(record.patientId),
+            QString::number(record.recordId),
+            record.dateOfEntry.toString("dd-MM-yyyy"),
             record.complaints,
-            record.diagnosis,
-            record.treatment,
-            record.tests,
-            record.notes
+            record.diagnosis
         };
 
         for (std::size_t j{ 0 }; j < 4; ++j)
@@ -263,5 +268,69 @@ void DoctorButtonsHandler::fillMedicalRecordsTable(const std::vector<MedicalReco
     }
 
     m_ui->MedicalRecordsTable->hideColumn(0);
+}
+
+void DoctorButtonsHandler::onOpenMedicalRecordButtonClicked()
+{
+    int selectedRow{ m_ui->MedicalRecordsTable->currentRow() };
+    int recordId =
+            m_ui->MedicalRecordsTable->item(selectedRow, 0)->text().toInt();
+
+    m_client->sendGetMedicalRecordDataRequest(recordId);
+
+    StackedWidgetNavigator::navigateToPage(*m_ui->OutpatientCardsStackedWidget,
+            "MedicalRecordEditPage");
+}
+
+void DoctorButtonsHandler::onGetMedicalRecordDataResult(const MedicalRecordData& data)
+{
+    m_ui->MedRecordEditPatientInfo->setText(m_ui->OutpatientCardPagePatientInfo->text());
+
+    m_ui->MedRecordEditComplaints->setText(data.complaints);
+    m_ui->MedRecordEditDiagnosis->setText(data.diagnosis);
+    m_ui->MedRecordEditTreatment->setText(data.treatment);
+    m_ui->MedRecordEditTests->setText(data.tests);
+    m_ui->MedRecordEditDoctorNotes->setText(data.notes);
+    m_ui->MedRecordEditRecipes->setText(data.recipe);
+
+    m_currentMedRecordId = data.recordId;
+}
+
+void DoctorButtonsHandler::onEditMedRecordButtonClicked()
+{
+    MedicalRecordData data{};
+    data.recordId = m_currentMedRecordId;
+    data.complaints = m_ui->MedRecordEditComplaints->text();
+    data.diagnosis = m_ui->MedRecordEditDiagnosis->text();
+    data.treatment = m_ui->MedRecordEditTreatment->text();
+    data.tests = m_ui->MedRecordEditTests->text();
+    data.notes = m_ui->MedRecordEditDoctorNotes->text();
+    data.recipe = m_ui->MedRecordEditRecipes->text();
+
+    m_client->sendUpdateMedicalRecordRequest(data);
+}
+
+void DoctorButtonsHandler::onUpdateMedicalRecordResult(bool success)
+{
+    if (!success)
+    {
+        QMessageBox::critical(nullptr, "Error", "Ошибка при обновлении записи");
+    }
+    else
+    {
+        QMessageBox::information(nullptr, "Success", "Запись обновлена");
+    }
+}
+
+void DoctorButtonsHandler::onBackToOutpatientCardsListButtonClicked()
+{
+    StackedWidgetNavigator::navigateToPage(*m_ui->OutpatientCardsStackedWidget,
+            "OutpatientCardsListPage");
+}
+
+void DoctorButtonsHandler::onBackToListOfMedRecordsButtonClicked()
+{
+    StackedWidgetNavigator::navigateToPage(*m_ui->OutpatientCardsStackedWidget,
+            "MedicalRecordTablePage");
 }
 }

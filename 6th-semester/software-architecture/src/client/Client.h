@@ -48,6 +48,8 @@ public:
     void sendAddMedicalRecordRequest(const MedicalRecordData& data);
     void sendGetOutpatientCardsRequest(const PatientBriefData& data);
     void sendGetMedicalRecordsRequest(int patientId);
+    void sendGetMedicalRecordDataRequest(int recordId);
+    void sendUpdateMedicalRecordRequest(const MedicalRecordData& data);
 
 signals:
     void loginResult(std::pair<UserType, int> data);
@@ -69,6 +71,8 @@ signals:
     void addMedicalRecordResult(bool success);
     void getOutpatientCardsResult(const std::vector<OutpatientCardData>& data);
     void getMedicalRecordsResult(const std::vector<MedicalRecordData>& data);
+    void getMedicalRecordDataResult(const MedicalRecordData& data);
+    void updateMedicalRecordResult(bool success);
 
 private slots:
     void onReadyRead();
@@ -94,6 +98,8 @@ private:
     void processAddMedicalRecordResult(const QJsonObject& response);
     void processGetOutpatientCardsResult(const QJsonObject& response);
     void processGetMedicalRecordsResult(const QJsonObject& response);
+    void processGetMedicalRecordDataResult(const QJsonObject& response);
+    void processUpdateMedicalRecordResult(const QJsonObject& response);
 
 private:
     QTcpSocket* m_socket{};

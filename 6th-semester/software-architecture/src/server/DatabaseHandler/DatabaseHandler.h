@@ -53,6 +53,7 @@ public:
     std::vector<MedicalRecordData> getMedicalRecords(int patientId);
     MedicalRecordData getMedicalRecordData(int recordId);
     bool updateMedicalRecord(const MedicalRecordData& data);
+    bool addRecipe(int recordId, const QString& data);
 
 private:
     int getOutpatientCardId(int patientId);

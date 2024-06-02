@@ -9,6 +9,7 @@ namespace polyclinic
 {
 struct MedicalRecordData
 {
+    int appointmentId{};
     int patientId{};
     int recordId{};
     QDate dateOfEntry{};
@@ -26,6 +27,7 @@ struct ReflectTraits<MedicalRecordData>
     static constexpr auto fields()
     {
         return std::make_tuple(
+            std::make_pair("appointmentId", &MedicalRecordData::appointmentId),
             std::make_pair("patientId", &MedicalRecordData::patientId),
             std::make_pair("recordId", &MedicalRecordData::recordId),
             std::make_pair("dateOfEntry", &MedicalRecordData::dateOfEntry),

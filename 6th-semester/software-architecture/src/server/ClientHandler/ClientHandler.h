@@ -48,6 +48,7 @@ private:
     void processGetMedicalRecordsRequest(const QJsonObject& request);
     void processGetMedicalRecordDataRequest(const QJsonObject& request);
     void processUpdateMedicalRecordRequest(const QJsonObject& request);
+    void processAddRecipeRequest(const QJsonObject& request);
 
 private:
     qintptr m_socketDescriptor{};

@@ -23,6 +23,8 @@ DoctorButtonsHandler::DoctorButtonsHandler(Client* client, QObject* parent)
             this, &DoctorButtonsHandler::onGetMedicalRecordDataResult);
     connect(m_client, &Client::updateMedicalRecordResult,
             this, &DoctorButtonsHandler::onUpdateMedicalRecordResult);
+    connect(m_client, &Client::addRecipeResult,
+            this, &DoctorButtonsHandler::onAddRecipeResult);
 }
 
 void DoctorButtonsHandler::setUi(Ui::ApplicationViewUi* ui)
@@ -53,6 +55,16 @@ void DoctorButtonsHandler::connectButtonsToSlots()
             this, &DoctorButtonsHandler::onBackToOutpatientCardsListButtonClicked);
     connect(m_ui->EditMedRecordButton, &QPushButton::clicked,
             this, &DoctorButtonsHandler::onEditMedRecordButtonClicked);
+    connect(m_ui->OpenMedicalRecordButton, &QPushButton::clicked,
+            this, &DoctorButtonsHandler::onOpenMedicalRecordButtonClicked);
+    connect(m_ui->BackToListOfMedRecordsButton, &QPushButton::clicked,
+            this, &DoctorButtonsHandler::onBackToListOfMedRecordsButtonClicked);
+    connect(m_ui->NewRecipeButton, &QPushButton::clicked,
+            this, &DoctorButtonsHandler::onNewRecipeButtonClicked);
+    connect(m_ui->SaveRecipeButton, &QPushButton::clicked,
+            this, &DoctorButtonsHandler::onSaveRecipeButtonClicked);
+    connect(m_ui->BackFromRecipeButton, &QPushButton::clicked,
+            this, &DoctorButtonsHandler::onBackFromRecipeButtonClicked);
 }
 
 void DoctorButtonsHandler::onShowAppointedPatientsButtonClicked()
@@ -70,10 +82,10 @@ void DoctorButtonsHandler::fillAppointmentsTable(const std::vector<AppointmentFu
 {
     m_ui->AppointedPatientsTable->clearContents();
     m_ui->AppointedPatientsTable->setRowCount(data.size());
-    m_ui->AppointedPatientsTable->setColumnCount(5);
+    m_ui->AppointedPatientsTable->setColumnCount(6);
 
     m_ui->AppointedPatientsTable->setHorizontalHeaderLabels(
-            { "ID", "Время", "ФИО", "Дата рождения", "Направил" });
+            { "PatID", "AppId", "Время", "ФИО", "Дата рождения", "Направил" });
 
     int fontSize{ 14 };
     QFont font{};
@@ -85,6 +97,7 @@ void DoctorButtonsHandler::fillAppointmentsTable(const std::vector<AppointmentFu
         const auto& appointment = data[i];
         const QStringList rowData{
             QString::number(appointment.patientId),
+            QString::number(appointment.appointmentId),
             appointment.startTime.toString("hh:mm") + " " +
                 appointment.endTime.toString("hh:mm"),
             appointment.patientLastName + " " +
@@ -94,7 +107,7 @@ void DoctorButtonsHandler::fillAppointmentsTable(const std::vector<AppointmentFu
             appointment.registratorLastName
         };
 
-        for (std::size_t j{ 0 }; j < 4; ++j)
+        for (std::size_t j{ 0 }; j < 6; ++j)
         {
             QTableWidgetItem* item{ new QTableWidgetItem(rowData[j]) };
             item->setFlags(item->flags() & ~Qt::ItemIsEditable);
@@ -104,6 +117,7 @@ void DoctorButtonsHandler::fillAppointmentsTable(const std::vector<AppointmentFu
     }
 
     m_ui->AppointedPatientsTable->hideColumn(0);
+    m_ui->AppointedPatientsTable->hideColumn(1);
 }
 
 void DoctorButtonsHandler::onOpenNewMedicalRecordButtonClicked()
@@ -121,6 +135,8 @@ void DoctorButtonsHandler::onOpenNewMedicalRecordButtonClicked()
 
     m_currentPatientId =
             m_ui->AppointedPatientsTable->item(selectedRow, 0)->text().toInt();
+    m_currentAppointmentId =
+            m_ui->AppointedPatientsTable->item(selectedRow, 1)->text().toInt();
 
     StackedWidgetNavigator::navigateToPage(*m_ui->DoctorStackedWidget,
             constants::kMedicalRecordPage);
@@ -135,6 +151,7 @@ void DoctorButtonsHandler::onBackToAppointedClientsButtonClicked()
 void DoctorButtonsHandler::onSaveMedRecordButtonClicked()
 {
     MedicalRecordData data{};
+    data.appointmentId = m_currentAppointmentId;
     data.patientId = m_currentPatientId;
     data.complaints = m_ui->ComplaintsLineEdit->text();
     data.diagnosis = m_ui->DiagnosisLineEdit->text();
@@ -276,10 +293,10 @@ void DoctorButtonsHandler::onOpenMedicalRecordButtonClicked()
     int recordId =
             m_ui->MedicalRecordsTable->item(selectedRow, 0)->text().toInt();
 
-    m_client->sendGetMedicalRecordDataRequest(recordId);
-
     StackedWidgetNavigator::navigateToPage(*m_ui->OutpatientCardsStackedWidget,
             "MedicalRecordEditPage");
+
+    m_client->sendGetMedicalRecordDataRequest(recordId);
 }
 
 void DoctorButtonsHandler::onGetMedicalRecordDataResult(const MedicalRecordData& data)
@@ -312,13 +329,50 @@ void DoctorButtonsHandler::onEditMedRecordButtonClicked()
 
 void DoctorButtonsHandler::onUpdateMedicalRecordResult(bool success)
 {
-    if (!success)
+    if (success)
     {
-        QMessageBox::critical(nullptr, "Error", "Ошибка при обновлении записи");
+        QMessageBox::information(nullptr, "Success", "Запись обновлена");
     }
     else
     {
-        QMessageBox::information(nullptr, "Success", "Запись обновлена");
+        QMessageBox::critical(nullptr, "Error", "Ошибка при обновлении записи");
+    }
+}
+
+void DoctorButtonsHandler::onNewRecipeButtonClicked()
+{
+    int selectedRow{ m_ui->MedicalRecordsTable->currentRow() };
+    int recordId =
+            m_ui->MedicalRecordsTable->item(selectedRow, 0)->text().toInt();
+    std::cerr << "chosen med record id: " << recordId << '\n';
+    m_currentMedRecordId = recordId;
+
+    m_ui->RecipeEditPatientInfo->setText(m_ui->OutpatientCardPagePatientInfo->text());
+
+    StackedWidgetNavigator::navigateToPage(*m_ui->OutpatientCardsStackedWidget, "NewRecipePage");
+}
+
+void DoctorButtonsHandler::onSaveRecipeButtonClicked()
+{
+    QString recipeInfo{"Средство: "};
+    recipeInfo += m_ui->RecipeEditMedicine->text();
+    recipeInfo += " Дозировка: ";
+    recipeInfo += m_ui->RecipeEditDosage->text();
+    recipeInfo += " Количество: ";
+    recipeInfo += m_ui->RecipeEditAmount->text();
+
+    m_client->sendAddRecipeRequest(m_currentMedRecordId, recipeInfo);
+}
+
+void DoctorButtonsHandler::onAddRecipeResult(bool success)
+{
+    if (success)
+    {
+        QMessageBox::information(nullptr, "Success", "Рецепт добавлен");
+    }
+    else
+    {
+        QMessageBox::critical(nullptr, "Error", "Ошибка при добавлении рецепта");
     }
 }
 
@@ -329,6 +383,12 @@ void DoctorButtonsHandler::onBackToOutpatientCardsListButtonClicked()
 }
 
 void DoctorButtonsHandler::onBackToListOfMedRecordsButtonClicked()
+{
+    StackedWidgetNavigator::navigateToPage(*m_ui->OutpatientCardsStackedWidget,
+            "MedicalRecordTablePage");
+}
+
+void DoctorButtonsHandler::onBackFromRecipeButtonClicked()
 {
     StackedWidgetNavigator::navigateToPage(*m_ui->OutpatientCardsStackedWidget,
             "MedicalRecordTablePage");

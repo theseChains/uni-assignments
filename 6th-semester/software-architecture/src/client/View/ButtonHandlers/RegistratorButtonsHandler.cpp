@@ -520,9 +520,7 @@ void RegistratorButtonsHandler::onAddDayOfSlotsResult(bool success)
 
 void RegistratorButtonsHandler::onPatientTalonSaveButtonClicked()
 {
-    // no error handling..
     AppointmentData data{};
-    data.firstDiagnosis = m_ui->PatientTalonDiagnosis->text();
     int selectedRow{ m_ui->PatientTalonScheduleTable->currentRow() };
     data.slotId = m_ui->PatientTalonScheduleTable->item(selectedRow, 0)->text().toInt();
     QVariant doctorIdVariant{ m_ui->PatientTalonDoctorLastName->currentData() };
@@ -547,19 +545,6 @@ void RegistratorButtonsHandler::onRegShowAppointmentsButtonClicked()
 
 void RegistratorButtonsHandler::onClientPageTalonButtonClicked()
 {
-    /* QString clientData{}; */
-
-    /* clientData.append(m_ui->ClientPageLastName->text() + " "); */
-    /* clientData.append(m_ui->ClientPageFirstName->text() + " "); */
-    /* clientData.append(m_ui->ClientPageMiddleName->text() + " "); */
-    /* QDate date{ m_ui->ClientPageDateOfBirth->date() }; */
-    /* clientData.append(date.toString("dd.MM.yyyy")); */
-
-    /* m_ui->TalonPageClientInfo->setText(clientData); */
-
-    /* m_lastClientStackedWidgetIndex = m_ui->ClientSearchStackedWidget->currentIndex(); */
-
-    /* StackedWidgetNavigator::navigateToPage(*m_ui->ClientSearchStackedWidget, constants::kTalonPage); */
 }
 
 void RegistratorButtonsHandler::onClientTableTalonButtonClicked()

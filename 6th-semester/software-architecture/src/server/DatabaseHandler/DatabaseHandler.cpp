@@ -579,6 +579,7 @@ std::vector<AppointmentFullData> DatabaseHandler::getAppointmentsForDoctor(const
     QSqlQuery query{ m_database };
     query.prepare(R"(
         SELECT
+            a.appointment_id,
             ds.start_time,
             ds.end_time,
             ds.date,
@@ -610,6 +611,7 @@ std::vector<AppointmentFullData> DatabaseHandler::getAppointmentsForDoctor(const
 
     while (query.next()) {
         AppointmentFullData appointment{};
+        appointment.appointmentId = query.value("appointment_id").toInt();
         appointment.startTime = query.value("start_time").toTime();
         appointment.endTime = query.value("end_time").toTime();
         appointment.date = query.value("date").toDate();
@@ -633,9 +635,9 @@ bool DatabaseHandler::addNewMedicalRecord(const MedicalRecordData& data)
     QSqlQuery query{ m_database };
     query.prepare(R"(
         INSERT INTO medical_history_records 
-        (outpatient_card_id, date_of_entry, patient_complaints, diagnosis, treatment, medical_tests, doctors_notes) 
+        (outpatient_card_id, date_of_entry, patient_complaints, diagnosis, treatment, medical_tests, doctors_notes, recipe) 
         VALUES 
-        (:outpatient_card_id, :date_of_entry, :patient_complaints, :diagnosis, :treatment, :medical_tests, :doctors_notes)
+        (:outpatient_card_id, :date_of_entry, :patient_complaints, :diagnosis, :treatment, :medical_tests, :doctors_notes, '')
     )");
 
     query.bindValue(":outpatient_card_id", outpatientCardId);
@@ -645,6 +647,16 @@ bool DatabaseHandler::addNewMedicalRecord(const MedicalRecordData& data)
     query.bindValue(":treatment", data.treatment);
     query.bindValue(":medical_tests", data.tests);
     query.bindValue(":doctors_notes", data.notes);
+
+    if (!query.exec()) {
+
+        qWarning() << "Database query error: " << query.lastError().text();
+        return false;
+    }
+
+    query.prepare("DELETE FROM appointments WHERE appointment_id = :id");
+    
+    query.bindValue(":id", data.appointmentId);
 
     if (!query.exec()) {
 
@@ -829,7 +841,7 @@ MedicalRecordData DatabaseHandler::getMedicalRecordData(int recordId)
         recordData.treatment = query.value(4).toString();
         recordData.tests = query.value(5).toString();
         recordData.notes = query.value(6).toString();
-        recordData.recipe = query.value(6).toString();
+        recordData.recipe = query.value(7).toString();
     }
 
     return recordData;
@@ -856,6 +868,25 @@ bool DatabaseHandler::updateMedicalRecord(const MedicalRecordData& data)
     query.bindValue(":doctors_notes", data.notes);
     query.bindValue(":recipe", data.recipe);
     query.bindValue(":record_id", data.recordId);
+
+    if (!query.exec()) {
+        qWarning() << "Database query error: " << query.lastError().text();
+        return false;
+    }
+
+    return true;
+}
+
+bool DatabaseHandler::addRecipe(int recordId, const QString& data)
+{
+    QSqlQuery query{ m_database };
+    query.prepare("UPDATE medical_history_records SET recipe = :recipe "
+                  "WHERE record_id = :record_id");
+
+    query.bindValue(":recipe", data);
+    query.bindValue(":record_id", recordId);
+    std::cerr << "updated recipe with stuff: " << data.toStdString() << '\n';
+    std::cerr << "for record id: " << recordId << '\n';
 
     if (!query.exec()) {
         qWarning() << "Database query error: " << query.lastError().text();

@@ -152,6 +152,10 @@ void ClientHandler::onReadyRead()
     {
         processUpdateMedicalRecordRequest(request);
     }
+    else if (command == "addRecipe")
+    {
+        processAddRecipeRequest(request);
+    }
 }
 
 void ClientHandler::processLoginRequest(const QJsonObject& request)
@@ -482,7 +486,21 @@ void ClientHandler::processUpdateMedicalRecordRequest(const QJsonObject& request
     bool success{ m_databaseHandler.updateMedicalRecord(data) };
 
     QJsonObject response{};
-    response["command"] = "updateMeicalRecordResult";
+    response["command"] = "updateMedicalRecordResult";
+    response["success"] = success;
+
+    QJsonDocument document{ response };
+    m_socket->write(document.toJson());
+}
+
+void ClientHandler::processAddRecipeRequest(const QJsonObject& request)
+{
+    QString recipe{ request["recipe"].toString() };
+    int recordId{ request["recordId"].toInt() };
+    bool success{ m_databaseHandler.addRecipe(recordId, recipe) };
+
+    QJsonObject response{};
+    response["command"] = "addRecipeResult";
     response["success"] = success;
 
     QJsonDocument document{ response };

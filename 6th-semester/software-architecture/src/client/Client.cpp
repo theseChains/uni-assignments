@@ -238,6 +238,17 @@ void Client::sendUpdateMedicalRecordRequest(const MedicalRecordData& data)
     m_socket->write(document.toJson());
 }
 
+void Client::sendAddRecipeRequest(int recordId, const QString& recipe)
+{
+    QJsonObject request{};
+    request["command"] = "addRecipe";
+    request["recipe"] = recipe;
+    request["recordId"] = recordId;
+
+    QJsonDocument document{ request };
+    m_socket->write(document.toJson());
+}
+
 void Client::onReadyRead()
 {
     QByteArray data{ m_socket->readAll() };
@@ -328,6 +339,10 @@ void Client::onReadyRead()
     else if (command == "updateMedicalRecordResult")
     {
         processUpdateMedicalRecordResult(response);
+    }
+    else if (command == "addRecipeResult")
+    {
+        processAddRecipeResult(response);
     }
 }
 
@@ -575,6 +590,12 @@ void Client::processUpdateMedicalRecordResult(const QJsonObject& response)
 {
     bool success{ response["success"].toBool() };
     emit updateMedicalRecordResult(success);
+}
+
+void Client::processAddRecipeResult(const QJsonObject& response)
+{
+    bool success{ response["success"].toBool() };
+    emit addRecipeResult(success);
 }
 
 void Client::onDisconnected()

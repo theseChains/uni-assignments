@@ -46,8 +46,13 @@ private slots:
     void onEditMedRecordButtonClicked();
     void onUpdateMedicalRecordResult(bool success);
 
+    void onNewRecipeButtonClicked();
+    void onSaveRecipeButtonClicked();
+    void onAddRecipeResult(bool success);
+
     void onBackToOutpatientCardsListButtonClicked();
     void onBackToListOfMedRecordsButtonClicked();
+    void onBackFromRecipeButtonClicked();
 
 private:
     void fillAppointmentsTable(const std::vector<AppointmentFullData>& data);
@@ -60,6 +65,7 @@ private:
 
     int m_currentPatientId{};
     int m_currentMedRecordId{};
+    int m_currentAppointmentId{};
     int m_doctorId{};
 };
 }

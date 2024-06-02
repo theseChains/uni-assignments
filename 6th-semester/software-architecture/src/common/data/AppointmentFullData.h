@@ -9,6 +9,7 @@ namespace polyclinic
 {
 struct AppointmentFullData
 {
+    int appointmentId{};
     QTime startTime{};
     QTime endTime{};
     QDate date{};
@@ -24,6 +25,7 @@ template <>
 struct ReflectTraits<AppointmentFullData> {
     static constexpr auto fields() {
         return std::make_tuple(
+            std::make_pair("appointmentId", &AppointmentFullData::appointmentId),
             std::make_pair("startTime", &AppointmentFullData::startTime),
             std::make_pair("endTime", &AppointmentFullData::endTime),
             std::make_pair("date", &AppointmentFullData::date),

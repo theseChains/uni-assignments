@@ -50,6 +50,9 @@ private slots:
     void onSaveRecipeButtonClicked();
     void onAddRecipeResult(bool success);
 
+    void onAdditionalAppointmentDocSpecializationChanged();
+    void onGetDoctorsBySpecializationResult(const std::vector<DoctorScheduleData>& data);
+
     void onBackToOutpatientCardsListButtonClicked();
     void onBackToListOfMedRecordsButtonClicked();
     void onBackFromRecipeButtonClicked();

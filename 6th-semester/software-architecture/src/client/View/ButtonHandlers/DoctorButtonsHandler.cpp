@@ -25,6 +25,8 @@ DoctorButtonsHandler::DoctorButtonsHandler(Client* client, QObject* parent)
             this, &DoctorButtonsHandler::onUpdateMedicalRecordResult);
     connect(m_client, &Client::addRecipeResult,
             this, &DoctorButtonsHandler::onAddRecipeResult);
+    connect(m_client, &Client::getDoctorsBySpecializationResult,
+            this, &DoctorButtonsHandler::onGetDoctorsBySpecializationResult);
 }
 
 void DoctorButtonsHandler::setUi(Ui::ApplicationViewUi* ui)
@@ -65,6 +67,10 @@ void DoctorButtonsHandler::connectButtonsToSlots()
             this, &DoctorButtonsHandler::onSaveRecipeButtonClicked);
     connect(m_ui->BackFromRecipeButton, &QPushButton::clicked,
             this, &DoctorButtonsHandler::onBackFromRecipeButtonClicked);
+
+    connect(m_ui->AdditionalAppointmentDocSpecialization,
+            QOverload<int>::of(&QComboBox::currentIndexChanged),
+            this, &DoctorButtonsHandler::onAdditionalAppointmentDocSpecializationChanged);
 }
 
 void DoctorButtonsHandler::onShowAppointedPatientsButtonClicked()
@@ -124,7 +130,7 @@ void DoctorButtonsHandler::onOpenNewMedicalRecordButtonClicked()
 {
     int selectedRow{ m_ui->AppointedPatientsTable->currentRow() };
     QString patientData{};
-    for (int col{ 1 }; col < 3; ++col)
+    for (int col{ 3 }; col < 5; ++col)
     {
         QTableWidgetItem* item{ m_ui->AppointedPatientsTable->item(selectedRow, col) };
         patientData.append(item->text());
@@ -373,6 +379,21 @@ void DoctorButtonsHandler::onAddRecipeResult(bool success)
     else
     {
         QMessageBox::critical(nullptr, "Error", "Ошибка при добавлении рецепта");
+    }
+}
+
+void DoctorButtonsHandler::onAdditionalAppointmentDocSpecializationChanged()
+{
+    QString specialization{
+            m_ui->AdditionalAppointmentDocSpecialization->currentText() };
+    m_client->sendGetDoctorsBySpecializationRequest(specialization);
+}
+
+void DoctorButtonsHandler::onGetDoctorsBySpecializationResult(const std::vector<DoctorScheduleData>& data)
+{
+    for (const auto& doctor : data)
+    {
+        m_ui->AdditionalAppointmentDocLastName->addItem(doctor.lastName);
     }
 }
 

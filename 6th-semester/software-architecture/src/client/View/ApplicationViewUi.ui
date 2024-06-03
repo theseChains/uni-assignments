@@ -17,7 +17,7 @@
    <widget class="QStackedWidget" name="UserStackedWidget">
     <property name="geometry">
      <rect>
-      <x>1</x>
+      <x>0</x>
       <y>0</y>
       <width>1280</width>
       <height>720</height>
@@ -52,6 +52,9 @@
        </item>
        <item>
         <widget class="QLineEdit" name="PasswordInput">
+         <property name="echoMode">
+          <enum>QLineEdit::Password</enum>
+         </property>
          <property name="placeholderText">
           <string>Password</string>
          </property>
@@ -66,19 +69,64 @@
        </item>
       </layout>
      </widget>
+     <widget class="QWidget" name="horizontalLayoutWidget_8">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>70</y>
+        <width>1281</width>
+        <height>80</height>
+       </rect>
+      </property>
+      <layout class="QHBoxLayout" name="horizontalLayout_23">
+       <item>
+        <spacer name="horizontalSpacer_36">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_19">
+         <property name="text">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:16pt; font-weight:600;&quot;&gt;Поликлиника+&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer_37">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </widget>
     </widget>
     <widget class="QWidget" name="RegistratorPage">
      <widget class="QTabWidget" name="RegistratorTabs">
       <property name="geometry">
        <rect>
-        <x>6</x>
+        <x>1</x>
         <y>0</y>
         <width>1273</width>
-        <height>685</height>
+        <height>711</height>
        </rect>
       </property>
       <property name="currentIndex">
-       <number>2</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="ClientRegistration">
        <attribute name="title">
@@ -630,14 +678,14 @@
        <widget class="QStackedWidget" name="ClientSearchStackedWidget">
         <property name="geometry">
          <rect>
-          <x>3</x>
+          <x>0</x>
           <y>0</y>
           <width>1271</width>
           <height>651</height>
          </rect>
         </property>
         <property name="currentIndex">
-         <number>3</number>
+         <number>2</number>
         </property>
         <widget class="QWidget" name="SearchClientsPage">
          <widget class="QWidget" name="horizontalLayoutWidget_10">
@@ -1746,7 +1794,7 @@
             <height>51</height>
            </rect>
           </property>
-          <layout class="QHBoxLayout" name="horizontalLayout_64" stretch="1,2,1,2,1">
+          <layout class="QHBoxLayout" name="horizontalLayout_64" stretch="1,2,1">
            <item>
             <widget class="QPushButton" name="BackToClientTableButton">
              <property name="sizePolicy">
@@ -1802,40 +1850,6 @@
              </property>
             </widget>
            </item>
-           <item>
-            <spacer name="horizontalSpacer_16">
-             <property name="orientation">
-              <enum>Qt::Horizontal</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>40</width>
-               <height>20</height>
-              </size>
-             </property>
-            </spacer>
-           </item>
-           <item>
-            <widget class="QPushButton" name="PatientPageTalonButton">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="font">
-              <font>
-               <pointsize>12</pointsize>
-              </font>
-             </property>
-             <property name="styleSheet">
-              <string notr="true">border-radius: 25px;</string>
-             </property>
-             <property name="text">
-              <string>Талоны</string>
-             </property>
-            </widget>
-           </item>
           </layout>
          </widget>
          <widget class="QWidget" name="horizontalLayoutWidget_18">
@@ -1888,10 +1902,10 @@
          <widget class="QTabWidget" name="TalonPageTabs">
           <property name="geometry">
            <rect>
-            <x>-10</x>
+            <x>0</x>
             <y>0</y>
             <width>1261</width>
-            <height>651</height>
+            <height>671</height>
            </rect>
           </property>
           <property name="currentIndex">
@@ -2139,173 +2153,6 @@
                <property name="text">
                 <string>Печать</string>
                </property>
-              </widget>
-             </item>
-            </layout>
-           </widget>
-          </widget>
-          <widget class="QWidget" name="tab_2">
-           <attribute name="title">
-            <string>Список записанных пациентов</string>
-           </attribute>
-           <widget class="QWidget" name="verticalLayoutWidget_10">
-            <property name="geometry">
-             <rect>
-              <x>160</x>
-              <y>20</y>
-              <width>911</width>
-              <height>541</height>
-             </rect>
-            </property>
-            <layout class="QVBoxLayout" name="verticalLayout_23" stretch="1,1,1,1,6">
-             <item>
-              <layout class="QHBoxLayout" name="horizontalLayout_100" stretch="3,5">
-               <property name="spacing">
-                <number>6</number>
-               </property>
-               <item>
-                <widget class="QLabel" name="label_88">
-                 <property name="text">
-                  <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;Специальность врача&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QComboBox" name="comboBox_12">
-                 <item>
-                  <property name="text">
-                   <string>терапевт</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>лаборант</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>кардиолог</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>офтальмолог</string>
-                  </property>
-                 </item>
-                </widget>
-               </item>
-              </layout>
-             </item>
-             <item>
-              <layout class="QHBoxLayout" name="horizontalLayout_101" stretch="3,5">
-               <property name="spacing">
-                <number>6</number>
-               </property>
-               <item>
-                <widget class="QLabel" name="label_89">
-                 <property name="text">
-                  <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;Фамилия врача&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QComboBox" name="RegAppointmentsDoctorLastName"/>
-               </item>
-              </layout>
-             </item>
-             <item>
-              <layout class="QHBoxLayout" name="horizontalLayout_102" stretch="8,3">
-               <property name="spacing">
-                <number>6</number>
-               </property>
-               <item>
-                <widget class="QLabel" name="label_81">
-                 <property name="text">
-                  <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;Дата&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QDateEdit" name="ListOfAppointmentsDate">
-                 <property name="displayFormat">
-                  <string>dd/MM/yyyy</string>
-                 </property>
-                 <property name="calendarPopup">
-                  <bool>true</bool>
-                 </property>
-                </widget>
-               </item>
-              </layout>
-             </item>
-             <item>
-              <layout class="QHBoxLayout" name="horizontalLayout_103" stretch="3,4,3">
-               <property name="spacing">
-                <number>6</number>
-               </property>
-               <item>
-                <spacer name="horizontalSpacer_36">
-                 <property name="orientation">
-                  <enum>Qt::Horizontal</enum>
-                 </property>
-                 <property name="sizeHint" stdset="0">
-                  <size>
-                   <width>40</width>
-                   <height>20</height>
-                  </size>
-                 </property>
-                </spacer>
-               </item>
-               <item>
-                <widget class="QPushButton" name="pushButton_9">
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
-                 <property name="font">
-                  <font>
-                   <pointsize>12</pointsize>
-                  </font>
-                 </property>
-                 <property name="styleSheet">
-                  <string notr="true">border-radius: 22px;</string>
-                 </property>
-                 <property name="text">
-                  <string>Вывести список записанных</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <spacer name="horizontalSpacer_37">
-                 <property name="orientation">
-                  <enum>Qt::Horizontal</enum>
-                 </property>
-                 <property name="sizeHint" stdset="0">
-                  <size>
-                   <width>40</width>
-                   <height>20</height>
-                  </size>
-                 </property>
-                </spacer>
-               </item>
-              </layout>
-             </item>
-             <item>
-              <widget class="QTableWidget" name="TalonPageScheduleTable_2">
-               <property name="horizontalScrollBarPolicy">
-                <enum>Qt::ScrollBarAlwaysOff</enum>
-               </property>
-               <property name="columnCount">
-                <number>4</number>
-               </property>
-               <attribute name="horizontalHeaderDefaultSectionSize">
-                <number>227</number>
-               </attribute>
-               <column/>
-               <column/>
-               <column/>
-               <column/>
               </widget>
              </item>
             </layout>
@@ -2616,14 +2463,14 @@
      <widget class="QTabWidget" name="AdministratorTabs">
       <property name="geometry">
        <rect>
-        <x>1</x>
+        <x>2</x>
         <y>0</y>
         <width>1271</width>
-        <height>691</height>
+        <height>711</height>
        </rect>
       </property>
       <property name="currentIndex">
-       <number>3</number>
+       <number>4</number>
       </property>
       <widget class="QWidget" name="tab_3">
        <attribute name="title">
@@ -3736,7 +3583,7 @@
             </widget>
            </item>
            <item>
-            <widget class="QComboBox" name="ScheduleEditDoctorSpecialization_2">
+            <widget class="QComboBox" name="AdminScheduleEditSpecialization">
              <item>
               <property name="text">
                <string>терапевт</string>
@@ -3774,7 +3621,7 @@
             </widget>
            </item>
            <item>
-            <widget class="QComboBox" name="ScheduleEditDoctorLastName_2"/>
+            <widget class="QComboBox" name="AdminScheduleEditLastName"/>
            </item>
           </layout>
          </item>
@@ -3791,7 +3638,7 @@
             </widget>
            </item>
            <item>
-            <widget class="QDateEdit" name="ScheduleEditDate_2">
+            <widget class="QDateEdit" name="AdminScheduleEditDate">
              <property name="displayFormat">
               <string>dd/MM/yyyy</string>
              </property>
@@ -3803,7 +3650,7 @@
           </layout>
          </item>
          <item>
-          <widget class="QTableWidget" name="ScheduleEditTable_2">
+          <widget class="QTableWidget" name="AdminScheduleEditTable">
            <property name="horizontalScrollBarPolicy">
             <enum>Qt::ScrollBarAlwaysOff</enum>
            </property>
@@ -3834,7 +3681,7 @@
         </property>
         <layout class="QHBoxLayout" name="horizontalLayout_121" stretch="3,2,3,2,3,2,3">
          <item>
-          <widget class="QPushButton" name="ScheduleEditDeleteChosenButton_2">
+          <widget class="QPushButton" name="AdminScheduleEditDeleteChosen">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
              <horstretch>0</horstretch>
@@ -3868,7 +3715,7 @@
           </spacer>
          </item>
          <item>
-          <widget class="QPushButton" name="ScheduleEditDeleteDayButton_2">
+          <widget class="QPushButton" name="AdminScheduleEditDeleteDay">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
              <horstretch>0</horstretch>
@@ -3902,7 +3749,7 @@
           </spacer>
          </item>
          <item>
-          <widget class="QPushButton" name="ScheduleEditAddDayButton_2">
+          <widget class="QPushButton" name="AdminScheduleEditAddDay">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
              <horstretch>0</horstretch>
@@ -3936,7 +3783,7 @@
           </spacer>
          </item>
          <item>
-          <widget class="QPushButton" name="ScheduleEditAddSlotButton_2">
+          <widget class="QPushButton" name="AdminScheduleEditAddSlot">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
              <horstretch>0</horstretch>
@@ -3965,14 +3812,14 @@
      <widget class="QTabWidget" name="DoctorTabWidget">
       <property name="geometry">
        <rect>
-        <x>1</x>
+        <x>6</x>
         <y>0</y>
         <width>1271</width>
         <height>691</height>
        </rect>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>2</number>
       </property>
       <widget class="QWidget" name="tab_5">
        <attribute name="title">
@@ -3981,14 +3828,14 @@
        <widget class="QStackedWidget" name="DoctorStackedWidget">
         <property name="geometry">
          <rect>
-          <x>3</x>
+          <x>4</x>
           <y>0</y>
           <width>1271</width>
           <height>661</height>
          </rect>
         </property>
         <property name="currentIndex">
-         <number>0</number>
+         <number>1</number>
         </property>
         <widget class="QWidget" name="ListOfAppointedClientsPage">
          <widget class="QWidget" name="horizontalLayoutWidget_36">
@@ -4107,7 +3954,7 @@
               <string notr="true">border-radius: 25px;</string>
              </property>
              <property name="text">
-              <string>Открыть мед. карту</string>
+              <string>Открыть мед. запись</string>
              </property>
             </widget>
            </item>
@@ -4421,7 +4268,7 @@
             <height>51</height>
            </rect>
           </property>
-          <layout class="QHBoxLayout" name="horizontalLayout_95" stretch="3,2,3,2,3">
+          <layout class="QHBoxLayout" name="horizontalLayout_95" stretch="3,2,3">
            <item>
             <widget class="QPushButton" name="BackToAppointedClientsButton">
              <property name="sizePolicy">
@@ -4477,40 +4324,6 @@
              </property>
             </widget>
            </item>
-           <item>
-            <spacer name="horizontalSpacer_35">
-             <property name="orientation">
-              <enum>Qt::Horizontal</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>40</width>
-               <height>20</height>
-              </size>
-             </property>
-            </spacer>
-           </item>
-           <item>
-            <widget class="QPushButton" name="pushButton_10">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="font">
-              <font>
-               <pointsize>12</pointsize>
-              </font>
-             </property>
-             <property name="styleSheet">
-              <string notr="true">border-radius: 25px;</string>
-             </property>
-             <property name="text">
-              <string>Печать</string>
-             </property>
-            </widget>
-           </item>
           </layout>
          </widget>
         </widget>
@@ -4530,7 +4343,7 @@
          </rect>
         </property>
         <property name="currentIndex">
-         <number>0</number>
+         <number>2</number>
         </property>
         <widget class="QWidget" name="OutpatientCardsListPage">
          <widget class="QWidget" name="horizontalLayoutWidget_22">
@@ -5345,7 +5158,7 @@
             <height>51</height>
            </rect>
           </property>
-          <layout class="QHBoxLayout" name="horizontalLayout_97" stretch="3,2,3,2,3">
+          <layout class="QHBoxLayout" name="horizontalLayout_97" stretch="3,2,3">
            <item>
             <widget class="QPushButton" name="BackToListOfMedRecordsButton">
              <property name="sizePolicy">
@@ -5398,40 +5211,6 @@
              </property>
              <property name="text">
               <string>Изменить</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <spacer name="horizontalSpacer_61">
-             <property name="orientation">
-              <enum>Qt::Horizontal</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>40</width>
-               <height>20</height>
-              </size>
-             </property>
-            </spacer>
-           </item>
-           <item>
-            <widget class="QPushButton" name="pushButton_12">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="font">
-              <font>
-               <pointsize>12</pointsize>
-              </font>
-             </property>
-             <property name="styleSheet">
-              <string notr="true">border-radius: 25px;</string>
-             </property>
-             <property name="text">
-              <string>Печать</string>
              </property>
             </widget>
            </item>
@@ -5712,7 +5491,7 @@
             </widget>
            </item>
            <item>
-            <widget class="QComboBox" name="PatientTalonDoctorSpecialization_2">
+            <widget class="QComboBox" name="AdditionalAppointmentDocSpecialization">
              <item>
               <property name="text">
                <string>терапевт</string>
@@ -5750,7 +5529,7 @@
             </widget>
            </item>
            <item>
-            <widget class="QComboBox" name="PatientTalonDoctorLastName_2"/>
+            <widget class="QComboBox" name="AdditionalAppointmentDocLastName"/>
            </item>
           </layout>
          </item>
@@ -5765,7 +5544,7 @@
           <height>80</height>
          </rect>
         </property>
-        <layout class="QVBoxLayout" name="verticalLayout_20">
+        <layout class="QVBoxLayout" name="verticalLayout_20" stretch="1,1">
          <item>
           <widget class="QLabel" name="label_70">
            <property name="text">
@@ -5774,11 +5553,7 @@
           </widget>
          </item>
          <item>
-          <widget class="QLabel" name="label_16">
-           <property name="text">
-            <string/>
-           </property>
-          </widget>
+          <widget class="QLineEdit" name="lineEdit"/>
          </item>
         </layout>
        </widget>
@@ -5845,22 +5620,6 @@
      </widget>
     </widget>
    </widget>
-  </widget>
-  <widget class="QMenuBar" name="menuBar">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>1280</width>
-     <height>21</height>
-    </rect>
-   </property>
-   <widget class="QMenu" name="menu_2">
-    <property name="title">
-     <string>Выход</string>
-    </property>
-   </widget>
-   <addaction name="menu_2"/>
   </widget>
  </widget>
  <resources/>

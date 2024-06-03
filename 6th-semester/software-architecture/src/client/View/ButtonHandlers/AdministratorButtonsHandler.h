@@ -41,9 +41,23 @@ private slots:
     void onDeleteDoctorButtonClicked();
     void onDeleteDoctorResult(bool success);
 
-private:
-    void fillRegistratorsTable();
-    void fillDoctorsTable();
+    void onSpecializationChanged();
+    void onGetDoctorsBySpecializationResult(const std::vector<DoctorScheduleData>& data);
+
+    void onDoctorOrDateChangedScheduleEdit();
+    void onGetDoctorSlotsResultScheduleEdit(const std::vector<DoctorSlotData>& data);
+
+    void onDeleteSlotButtonClicked();
+    void onDeleteSlotResult(bool success);
+
+    void onDeleteDayOfSlotsButtonClicked();
+    void onDeleteDayOfSlotsResult(bool success);
+
+    void onAddSlotButtonClicked();
+    void onAddSlotResult(bool success);
+
+    void onAddDayOfSlotsButtonClicked();
+    void onAddDayOfSlotsResult(bool success);
 
 private:
     Ui::ApplicationViewUi* m_ui{};

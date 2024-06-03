@@ -109,19 +109,13 @@ void RegistratorButtonsHandler::connectButtonsToSlots()
     connect(m_ui->PatientTalonSaveButton, &QPushButton::clicked,
             this, &RegistratorButtonsHandler::onPatientTalonSaveButtonClicked);
 
-    connect(m_ui->PatientPageTalonButton, &QPushButton::clicked,
-            this, &RegistratorButtonsHandler::onClientPageTalonButtonClicked);
-
-    /* connect(m_ui->RegShowAppointmentsButton, &QPushButton::clicked, this, */
-    /*         &RegistratorButtonsHandler::onRegShowAppointmentsButtonClicked); */
-
-    QObject::connect(m_ui->BackToSearchButton, &QPushButton::clicked,
+    connect(m_ui->BackToSearchButton, &QPushButton::clicked,
             this, &RegistratorButtonsHandler::onBackToSearchButtonClicked);
-    QObject::connect(m_ui->BackToClientTableButton, &QPushButton::clicked,
+    connect(m_ui->BackToClientTableButton, &QPushButton::clicked,
             this, &RegistratorButtonsHandler::onBackToClientTableButtonClicked);
-    QObject::connect(m_ui->ClientTableTalonButton, &QPushButton::clicked,
+    connect(m_ui->ClientTableTalonButton, &QPushButton::clicked,
             this, &RegistratorButtonsHandler::onClientTableTalonButtonClicked);
-    QObject::connect(m_ui->BackFromTalonButton, &QPushButton::clicked,
+    connect(m_ui->BackFromTalonButton, &QPushButton::clicked,
             this, &RegistratorButtonsHandler::onBackFromTalonButtonClicked);
 }
 
@@ -537,14 +531,6 @@ void RegistratorButtonsHandler::onGetAppointmentResult(bool success)
     {
         QMessageBox::critical(nullptr, "Error", "Ошибка при добавлении записи");
     }
-}
-
-void RegistratorButtonsHandler::onRegShowAppointmentsButtonClicked()
-{
-}
-
-void RegistratorButtonsHandler::onClientPageTalonButtonClicked()
-{
 }
 
 void RegistratorButtonsHandler::onClientTableTalonButtonClicked()

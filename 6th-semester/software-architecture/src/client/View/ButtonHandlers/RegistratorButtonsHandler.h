@@ -77,13 +77,9 @@ private slots:
     void onPatientTalonSaveButtonClicked();
     void onGetAppointmentResult(bool success);
 
-    void onRegShowAppointmentsButtonClicked();
-
-    void onClientPageTalonButtonClicked();
     void onClientTableTalonButtonClicked();
 
     void onBackFromTalonButtonClicked();
-
     void onBackToSearchButtonClicked();
     void onBackToClientTableButtonClicked();
 

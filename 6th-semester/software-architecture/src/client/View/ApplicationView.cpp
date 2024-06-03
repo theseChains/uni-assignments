@@ -32,8 +32,8 @@ ApplicationView::ApplicationView(QWidget* parent)
 
     m_ui->ScheduleEditDate->setDate(QDate::currentDate());
     m_ui->PatientTalonAppointmentDate->setDate(QDate::currentDate());
-    m_ui->ListOfAppointmentsDate->setDate(QDate::currentDate());
     m_ui->AppointmentDate->setDate(QDate::currentDate());
+    m_ui->AdminScheduleEditDate->setDate(QDate::currentDate());
 
     m_validatorSetup.setupValidators(*m_ui);
 

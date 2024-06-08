@@ -48,8 +48,6 @@ CREATE TABLE registrators
     FOREIGN KEY (login_data_id) REFERENCES login_data(login_data_id)
 );
 
-SELECT * FROM patients;
-
 CREATE TABLE patients
 (
     patient_id SERIAL PRIMARY KEY,
@@ -80,16 +78,24 @@ CREATE TABLE outpatient_cards
 (
     outpatient_card_id SERIAL PRIMARY KEY,
     patient_id INTEGER NOT NULL,
-    date_of_creation DATE,
-    medical_history TEXT,
+    date_of_creation DATE NOT NULL,
+
+    FOREIGN KEY (patient_id) REFERENCES patients(patient_id)
+);
+
+CREATE TABLE medical_history_records
+(
+    record_id SERIAL PRIMARY KEY,
+    outpatient_card_id INTEGER NOT NULL,
+    date_of_entry DATE NOT NULL,
     patient_complaints VARCHAR(255),
     diagnosis VARCHAR(255),
     treatment VARCHAR(255),
-    medical_procedures VARCHAR(255),
     medical_tests VARCHAR(255),
     doctors_notes VARCHAR(255),
+    recipe VARCHAR(255),
 
-    FOREIGN KEY (patient_id) REFERENCES patients(patient_id)
+    FOREIGN KEY (outpatient_card_id) REFERENCES outpatient_cards(outpatient_card_id)
 );
 
 CREATE TABLE doctor_slots
@@ -104,7 +110,7 @@ CREATE TABLE doctor_slots
     FOREIGN KEY (doctor_id) REFERENCES doctors(doctor_id)
 );
 
-CREATE TABLE appointment
+CREATE TABLE appointments
 (
     appointment_id SERIAL PRIMARY KEY,
     slot_id INTEGER NOT NULL,
@@ -119,10 +125,6 @@ CREATE TABLE appointment
     FOREIGN KEY (doctor_id) REFERENCES doctors(doctor_id),
     FOREIGN KEY (registrator_id) REFERENCES registrators(registrator_id)
 );
-
-DROP TABLE appointment;
-DROP TABLE outpatient_cards;
-DROP TABLE patients;
 
 CREATE OR REPLACE FUNCTION check_unique_login_data_id() RETURNS TRIGGER AS $$
 BEGIN

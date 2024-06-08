@@ -18,6 +18,7 @@ class Balls extends Frame implements Observer, ActionListener, ItemListener {
     private Choice cColor, cShape, cFigs, cSpeed;
     private TextField tfNumFigs, tfSpeed, tfFigNumber;
     private HashMap<String, Ball> figMap = new HashMap<>();
+    private HashSet<Integer> usedFigureNumbers = new HashSet<>();
     private HashMap<String, Integer> figSpeeds = new HashMap<>();
     
     Balls(){
@@ -42,14 +43,17 @@ class Balls extends Frame implements Observer, ActionListener, ItemListener {
         cColor.addItem("Чёрный");
         cColor.addItem("Жёлтый");
         f.add(cColor);
-        
+
         Label lShape = new Label("Тип ФиО:");
         f.add(lShape);
         cShape = new Choice();
         cShape.addItem("Круг");
         cShape.addItem("Квадрат");
+        cShape.addItem("Треугольник");
+        cShape.addItem("Овал");
+        cShape.addItem("Прямоугольник");
         f.add(cShape);
-        
+
         Label lSpeed = new Label("Начальная скорость:");
         f.add(lSpeed);
         tfSpeed = new TextField();
@@ -92,18 +96,32 @@ class Balls extends Frame implements Observer, ActionListener, ItemListener {
     
     public void update(Observable o, Object arg) {
         Ball ball = (Ball)arg;
-        System.out.println ("x= " + ball.thr.getName() + ball.x);
         repaint();
     }
-    
+
     public void paint(Graphics g) {
         for (Ball ball : LL) {
             g.setColor(ball.col);
-            if (ball.shape.equals("Круг"))
-                g.drawOval(ball.x, ball.y, 20, 20);
-            else if (ball.shape.equals("Квадрат"))
-                g.drawRect(ball.x, ball.y, 20, 20);
-            g.drawString(String.valueOf(ball.number), ball.x + 25, ball.y + 10);
+            switch (ball.shape) {
+                case "Круг":
+                    g.drawOval((int)ball.x, (int)ball.y, 20, 20);
+                    break;
+                case "Квадрат":
+                    g.drawRect((int)ball.x, (int)ball.y, 20, 20);
+                    break;
+                case "Треугольник":
+                    int[] xPoints = {(int)ball.x, (int)ball.x + 10, (int)ball.x + 20};
+                    int[] yPoints = {(int)ball.y + 20, (int)ball.y, (int)ball.y + 20};
+                    g.drawPolygon(xPoints, yPoints, 3);
+                    break;
+                case "Овал":
+                    g.drawOval((int)ball.x, (int)ball.y, 30, 20);
+                    break;
+                case "Прямоугольник":
+                    g.drawRect((int)ball.x, (int)ball.y, 30, 20);
+                    break;
+            }
+            g.drawString(String.valueOf(ball.number), (int)ball.x + 25, (int)ball.y + 10);
         }
     }
 
@@ -135,12 +153,18 @@ class Balls extends Frame implements Observer, ActionListener, ItemListener {
             int speed = Integer.parseInt(tfSpeed.getText());
             int figNumber = Integer.parseInt(tfFigNumber.getText());
             for (int i = 0; i < numFigs; i++) {
+                while (usedFigureNumbers.contains(figNumber)) {
+                    figNumber++;
+                }
+
+                usedFigureNumbers.add(figNumber);
+
                 Ball ball = new Ball(col, shape, speed, figNumber);
                 LL.add(ball);
                 ball.addObserver(this);
                 figMap.put(ball.toString(), ball);
-                cFigs.add(ball.toString());
                 figSpeeds.put(ball.toString(), speed);
+                cFigs.add(ball.toString());
             }
         } else if (str.equals("Change Speed")){
             String selectedFig = cFigs.getSelectedItem();
@@ -157,18 +181,23 @@ class Balls extends Frame implements Observer, ActionListener, ItemListener {
 
 class Ball extends Observable implements Runnable {
     Thread thr;
-    private boolean xplus;
-    private boolean yplus;
-    int x;
-    int y;
+    double x, y;
     Color col;
     String shape;
     int speed;
     int sleepTime;
     int number;
+    double xChange;
+    double yChange;
+    private static final int X_MIN = 0, Y_MIN = 29;
+    private static int X_MAX = 475, Y_MAX = 175;
 
     public Ball(Color col, String shape, int speed, int number) {
-        xplus = true; yplus = true;
+        Random rand = new Random();
+        double angle = rand.nextDouble() * 2 * Math.PI;
+        xChange = Math.cos(angle);
+        yChange = Math.sin(angle);
+
         x = 0; y = 30;
         this.col = col;
         this.shape = shape;
@@ -197,16 +226,19 @@ class Ball extends Observable implements Runnable {
     }
 
     public void run() {
-        Random rand = new Random();
         while (true) {
-            int xChange = rand.nextInt(3) - 1;
-            int yChange = rand.nextInt(3) - 1;
             x += xChange;
             y += yChange;
-            if (x >= 475) x = 475;
-            if (x <= 0) x = 0;
-            if (y >= 175) y = 175;
-            if (y <= 29) y = 29;
+
+            if (x <= X_MIN || x >= X_MAX) {
+                xChange = -xChange;
+                x = Math.max(X_MIN, Math.min(X_MAX, x));
+            }
+            if (y <= Y_MIN || y >= Y_MAX) {
+                yChange = -yChange;
+                y = Math.max(Y_MIN, Math.min(Y_MAX, y));
+            }
+
             setChanged();
             notifyObservers(this);
             try {
@@ -219,7 +251,7 @@ class Ball extends Observable implements Runnable {
 
     @Override
     public String toString() {
-        return thr.getName();
+        return shape + number;
     }
 }
 

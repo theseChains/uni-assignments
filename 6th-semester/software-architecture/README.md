@@ -20,23 +20,23 @@
 
 ## Скриншоты
 ### Окно логина (в приложении 3 типа пользователей: администратор, врач и регистратор)
-<img src="software-architecture/screenshots/login-window.png" alt="Login window" width="600" />
+<img src="screenshots/login-window.png" alt="Login window" width="600" />
 
 ### Регистрация пациента (интерфейс регистратора)
-<img src="software-architecture/screenshots/patient-registration.png" alt="Patient registration" width="600" />
+<img src="screenshots/patient-registration.png" alt="Patient registration" width="600" />
 
 ### Список всех пациентов (интерфейс регистратора)
-<img src="software-architecture/screenshots/patient-list.png" alt="Patient list" width="600" />
+<img src="screenshots/patient-list.png" alt="Patient list" width="600" />
 
 ### Запись пациента к врачу и выдача талона (интерфейс регистратора)
-<img src="software-architecture/screenshots/appointment.png" alt="Appointment" width="600" />
+<img src="screenshots/appointment.png" alt="Appointment" width="600" />
 
 ### Список записанных пациентов (интерфейс врача)
-<img src="software-architecture/screenshots/appointed-list.png" alt="Appointed list" width="600" />
+<img src="screenshots/appointed-list.png" alt="Appointed list" width="600" />
 
 ### Создание новой записи в амбулаторной карте (интерфейс врача)
-<img src="software-architecture/screenshots/medical-record.png" alt="Medical record" width="600" />
+<img src="screenshots/medical-record.png" alt="Medical record" width="600" />
 
 ### Просмотр истории посещений пациента (интерфейс врача)
-<img src="software-architecture/screenshots/patient-history.png" alt="Patient history" width="600" />
+<img src="screenshots/patient-history.png" alt="Patient history" width="600" />
 

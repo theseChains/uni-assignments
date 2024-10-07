@@ -2,8 +2,10 @@
 #define SYSTEMS_PROGRAMMING_TABLE_MANAGER_H_
 
 #include <QTableWidget>
+#include <QString>
 
-#include <string_view>
+#include "AssemblyOperation.h"
+#include "OperationCode.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui
@@ -28,6 +30,9 @@ public:
                              const QString& third, const QString& fourth = "");
     void addRowToCodeOperationTable(const QString& name, const QString& code,
                                     const QString& size);
+
+    std::vector<AssemblyOperation> getAssemblySourceCode() const;
+    std::vector<OperationCode> getOperationCodes() const;
 
 private:
     Ui::ApplicationUi* m_ui;

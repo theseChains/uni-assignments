@@ -74,4 +74,44 @@ void TableManager::addRowToCodeOperationTable(const QString& name,
     table->setItem(row, 1, new QTableWidgetItem{ code });
     table->setItem(row, 2, new QTableWidgetItem{ size });
 }
+
+std::vector<AssemblyOperation> TableManager::getAssemblySourceCode() const
+{
+    const auto* table = m_ui->sourceCodeTable;
+    std::vector<AssemblyOperation> sourceCode{};
+
+    for (int row{ 0 }; row < table->rowCount(); ++row)
+    {
+        QString labelText{ table->item(row, 0)->text() };
+        auto label{ labelText.isEmpty()
+                    ? std::make_optional(labelText)
+                    : std::nullopt };
+        QString operation{ table->item(row, 1)->text() };
+        QString firstOperand{ table->item(row, 2)->text() };
+        QString secondOperandText{ table->item(row, 3)->text() };
+        auto secondOperand{ secondOperandText.isEmpty()
+                            ? std::make_optional(secondOperandText)
+                            : std::nullopt };
+
+        sourceCode.emplace_back(label, operation, firstOperand, secondOperand);
+    }
+
+    return sourceCode;
+}
+
+std::vector<OperationCode> TableManager::getOperationCodes() const
+{
+    const auto* table = m_ui->codeOperationTable;
+    std::vector<OperationCode> operationCodes{};
+
+    for (int row{ 0 }; row < table->rowCount(); ++row)
+    {
+        QString label{ table->item(row, 0)->text() };
+        QString code{ table->item(row, 1)->text() };
+        // maybe throw an exception here in the future
+        int size{ table->item(row, 2)->text().toInt() };
+
+        operationCodes.emplace_back(label, code, size);
+    }
+}
 }

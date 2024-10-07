@@ -15,6 +15,8 @@ find_package(Qt5 COMPONENTS Core Widgets REQUIRED)
 
 set(SOURCES
     src/main.cpp
+    src/TableManager.h
+    src/TableManager.cpp
     src/ApplicationWindow.cpp
     src/ApplicationWindow.h
     src/ApplicationUi.ui

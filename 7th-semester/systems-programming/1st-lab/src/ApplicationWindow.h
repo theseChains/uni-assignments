@@ -3,6 +3,8 @@
 
 #include <QMainWindow>
 
+#include "TableManager.h"
+
 QT_BEGIN_NAMESPACE
 namespace Ui
 {
@@ -14,12 +16,22 @@ namespace systems_programming
 {
 class ApplicationWindow : public QMainWindow
 {
+    Q_OBJECT
+
 public:
-    ApplicationWindow(QWidget* parent = nullptr);
+    explicit ApplicationWindow(QWidget* parent = nullptr);
     ~ApplicationWindow();
+
+    void connectButtonSlots();
+
+private slots:
+    void performFirstPass();
+    void performSecondPass();
 
 private:
     Ui::ApplicationUi* m_ui{};
+
+    TableManager m_tableManager;
 };
 }
 

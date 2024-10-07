@@ -164,7 +164,27 @@
         </widget>
        </item>
        <item>
-        <widget class="QTableWidget" name="helperTable"/>
+        <widget class="QTableWidget" name="helperTable">
+         <property name="verticalScrollBarPolicy">
+          <enum>Qt::ScrollBarAlwaysOff</enum>
+         </property>
+         <property name="horizontalScrollBarPolicy">
+          <enum>Qt::ScrollBarAlwaysOff</enum>
+         </property>
+         <property name="columnCount">
+          <number>4</number>
+         </property>
+         <attribute name="horizontalHeaderVisible">
+          <bool>false</bool>
+         </attribute>
+         <attribute name="verticalHeaderVisible">
+          <bool>false</bool>
+         </attribute>
+         <column/>
+         <column/>
+         <column/>
+         <column/>
+        </widget>
        </item>
        <item>
         <spacer name="verticalSpacer_2">
@@ -187,7 +207,25 @@
         </widget>
        </item>
        <item>
-        <widget class="QTableWidget" name="symbolicNamesTable"/>
+        <widget class="QTableWidget" name="symbolicNamesTable">
+         <property name="verticalScrollBarPolicy">
+          <enum>Qt::ScrollBarAlwaysOff</enum>
+         </property>
+         <property name="horizontalScrollBarPolicy">
+          <enum>Qt::ScrollBarAlwaysOff</enum>
+         </property>
+         <property name="columnCount">
+          <number>2</number>
+         </property>
+         <attribute name="horizontalHeaderVisible">
+          <bool>false</bool>
+         </attribute>
+         <attribute name="verticalHeaderVisible">
+          <bool>false</bool>
+         </attribute>
+         <column/>
+         <column/>
+        </widget>
        </item>
        <item>
         <spacer name="verticalSpacer_4">

@@ -10,7 +10,7 @@ namespace systems_programming
 struct AssemblyOperation
 {
     std::optional<QString> label;
-    QString operation;
+    QString mnemonic;
     QString firstOperand;
     std::optional<QString> secondOperand;
 };

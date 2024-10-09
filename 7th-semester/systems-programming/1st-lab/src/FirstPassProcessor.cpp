@@ -162,13 +162,31 @@ void FirstPassProcessor::processDirectiveLabeledLine(const AssemblyOperation& li
                 // for now
                 size = 6;
             }
+            else
+            {
+                // this is for number.. temporary
+                size = 1;
+            }
             QString address{ padWithZeroes(m_addressCounter) };
             TableManager::addRowToTable(helperTable, { address, directive, value });
             m_addressCounter += (directive == "WORD" ? 3 : size);
         }
         else if (isReservingDirective(directive))
         {
-            /* m_addressCounter += di */
+            int reservationSize{ line.firstOperand.toInt() };
+
+            // put this into function as well i guess
+            QString address{ padWithZeroes(m_addressCounter) };
+            TableManager::addRowToTable(helperTable, { address, directive, line.firstOperand });
+
+            if (directive == "RESB")
+            {
+                m_addressCounter += reservationSize;
+            }
+            else if (directive == "RESW")
+            {
+                m_addressCounter += reservationSize * 3;
+            }
         }
     }
 }

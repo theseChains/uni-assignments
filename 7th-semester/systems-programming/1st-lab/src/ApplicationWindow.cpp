@@ -16,6 +16,10 @@ ApplicationWindow::ApplicationWindow(QWidget* parent)
     m_tableManager.loadAssemblyToSourceTable();
     m_tableManager.loadCodeOperationTable();
 
+    m_firstPass.setup(m_tableManager.getAssemblySourceCode(),
+                      m_tableManager.getOperationCodes(),
+                      m_ui);
+
     connectButtonSlots();
 }
 
@@ -34,7 +38,7 @@ void ApplicationWindow::connectButtonSlots()
 
 void ApplicationWindow::performFirstPass()
 {
-    std::cerr << "yo\n";
+    m_firstPass.performFirstPass();
 }
 
 void ApplicationWindow::performSecondPass()

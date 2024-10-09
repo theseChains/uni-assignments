@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 
+#include "FirstPassProcessor.h"
 #include "TableManager.h"
 
 QT_BEGIN_NAMESPACE
@@ -32,6 +33,7 @@ private:
     Ui::ApplicationUi* m_ui{};
 
     TableManager m_tableManager;
+    FirstPassProcessor m_firstPass;
 };
 }
 

@@ -17,6 +17,10 @@ set(SOURCES
     src/main.cpp
     src/TableManager.h
     src/TableManager.cpp
+    src/OperationCode.h
+    src/AssemblyOperation.h
+    src/FirstPassProcessor.h
+    src/FirstPassProcessor.cpp
     src/ApplicationWindow.cpp
     src/ApplicationWindow.h
     src/ApplicationUi.ui

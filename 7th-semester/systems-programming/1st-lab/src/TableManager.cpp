@@ -3,6 +3,7 @@
 #include "ui_ApplicationUi.h"
 
 #include <QTableWidgetItem>
+#include <QDebug>
 
 namespace systems_programming
 {
@@ -13,66 +14,56 @@ void TableManager::setUi(Ui::ApplicationUi* ui)
 
 void TableManager::loadAssemblyToSourceTable()
 {
-    addRowToSourceTable("PROG", "START", "100");
-    addRowToSourceTable("", "JMP", "L1");
-    addRowToSourceTable("A1", "RESB", "10");
-    addRowToSourceTable("A2", "RESW", "20");
-    addRowToSourceTable("B1", "WORD", "40");
-    addRowToSourceTable("B2", "BYTE", R"(X"2F4C008A")");
-    addRowToSourceTable("B3", "BYTE", R"(C"Hello!")");
-    addRowToSourceTable("B4", "BYTE", "12");
-    addRowToSourceTable("L1", "LOADR1", "B1");
-    addRowToSourceTable("", "LOADR2", "B4");
-    addRowToSourceTable("", "ADD", "R1", "R2");
-    addRowToSourceTable("", "SAVER1", "B1");
-    addRowToSourceTable("", "INT", "200");
-    addRowToSourceTable("", "END", "100");
-    addRowToSourceTable("", "", "");
-    addRowToSourceTable("", "", "");
-    addRowToSourceTable("", "", "");
-    addRowToSourceTable("", "", "");
-    addRowToSourceTable("", "", "");
+    auto* table = m_ui->sourceCodeTable;
+
+    addRowToTable(table, { "PROG", "START", "100" });
+    addRowToTable(table, { "", "JMP", "L1" });
+    addRowToTable(table, { "A1", "RESB", "10" });
+    addRowToTable(table, { "A2", "RESW", "20" });
+    addRowToTable(table, { "B1", "WORD", "40" });
+    addRowToTable(table, { "B2", "BYTE", R"(X"2F4C008A")" });
+    addRowToTable(table, { "B3", "BYTE", R"(C"Hello!")" });
+    addRowToTable(table, { "B4", "BYTE", "12" });
+    addRowToTable(table, { "L1", "LOADR1", "B1" });
+    addRowToTable(table, { "", "LOADR2", "B4" });
+    addRowToTable(table, { "", "ADD", "R1", "R2" });
+    addRowToTable(table, { "", "SAVER1", "B1" });
+    addRowToTable(table, { "", "INT", "200" });
+    addRowToTable(table, { "", "END", "100" });
+    addRowToTable(table, { "", "", "" });
+    addRowToTable(table, { "", "", "" });
 }
 
 void TableManager::loadCodeOperationTable()
 {
-    addRowToCodeOperationTable("JMP", "01", "4");
-    addRowToCodeOperationTable("LOADR1", "02", "4");
-    addRowToCodeOperationTable("LOADR2", "03", "4");
-    addRowToCodeOperationTable("ADD", "04", "4");
-    addRowToCodeOperationTable("SAVER1", "05", "4");
-    addRowToCodeOperationTable("INT", "06", "2");
-    addRowToCodeOperationTable("", "", "");
-    addRowToCodeOperationTable("", "", "");
-    addRowToCodeOperationTable("", "", "");
-    addRowToCodeOperationTable("", "", "");
-}
-
-// this kinda sucks already
-void TableManager::addRowToSourceTable(const QString& first,
-                                       const QString& second,
-                                       const QString& third,
-                                       const QString& fourth)
-{
-    auto* table = m_ui->sourceCodeTable;
-    int row = table->rowCount();
-    table->insertRow(row);
-    table->setItem(row, 0, new QTableWidgetItem{ first });
-    table->setItem(row, 1, new QTableWidgetItem{ second });
-    table->setItem(row, 2, new QTableWidgetItem{ third });
-    table->setItem(row, 3, new QTableWidgetItem{ fourth });
-}
-
-void TableManager::addRowToCodeOperationTable(const QString& name,
-                                              const QString& code,
-                                              const QString& size)
-{
     auto* table = m_ui->codeOperationTable;
+
+    addRowToTable(table, { "JMP", "01", "4" });
+    addRowToTable(table, { "LOADR1", "02", "4" });
+    addRowToTable(table, { "LOADR2", "03", "4" });
+    addRowToTable(table, { "ADD", "04", "2" });
+    addRowToTable(table, { "SAVER1", "05", "4" });
+    addRowToTable(table, { "INT", "06", "2" });
+    addRowToTable(table, { "", "", "" });
+}
+
+void TableManager::addRowToTable(QTableWidget* table,
+                                 const std::vector<QString>& values)
+{
     int row = table->rowCount();
     table->insertRow(row);
-    table->setItem(row, 0, new QTableWidgetItem{ name });
-    table->setItem(row, 1, new QTableWidgetItem{ code });
-    table->setItem(row, 2, new QTableWidgetItem{ size });
+
+    for (int column{ 0 }; column < table->columnCount(); ++column)
+    {
+        if (column >= static_cast<int>(values.size()))
+        {
+            table->setItem(row, column, new QTableWidgetItem{ "" });
+        }
+        else
+        {
+            table->setItem(row, column, new QTableWidgetItem{ values.at(column) });
+        }
+    }
 }
 
 std::vector<AssemblyOperation> TableManager::getAssemblySourceCode() const
@@ -83,13 +74,13 @@ std::vector<AssemblyOperation> TableManager::getAssemblySourceCode() const
     for (int row{ 0 }; row < table->rowCount(); ++row)
     {
         QString labelText{ table->item(row, 0)->text() };
-        auto label{ labelText.isEmpty()
+        auto label{ !labelText.isEmpty()
                     ? std::make_optional(labelText)
                     : std::nullopt };
         QString operation{ table->item(row, 1)->text() };
         QString firstOperand{ table->item(row, 2)->text() };
         QString secondOperandText{ table->item(row, 3)->text() };
-        auto secondOperand{ secondOperandText.isEmpty()
+        auto secondOperand{ !secondOperandText.isEmpty()
                             ? std::make_optional(secondOperandText)
                             : std::nullopt };
 
@@ -99,10 +90,10 @@ std::vector<AssemblyOperation> TableManager::getAssemblySourceCode() const
     return sourceCode;
 }
 
-std::vector<OperationCode> TableManager::getOperationCodes() const
+QMap<QString, OperationInfo> TableManager::getOperationCodes() const
 {
     const auto* table = m_ui->codeOperationTable;
-    std::vector<OperationCode> operationCodes{};
+    QMap<QString, OperationInfo> operationCodes{};
 
     for (int row{ 0 }; row < table->rowCount(); ++row)
     {
@@ -111,7 +102,9 @@ std::vector<OperationCode> TableManager::getOperationCodes() const
         // maybe throw an exception here in the future
         int size{ table->item(row, 2)->text().toInt() };
 
-        operationCodes.emplace_back(label, code, size);
+        operationCodes[label] = { code, size };
     }
+
+    return operationCodes;
 }
 }

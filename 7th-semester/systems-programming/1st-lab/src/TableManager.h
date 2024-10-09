@@ -3,6 +3,9 @@
 
 #include <QTableWidget>
 #include <QString>
+#include <QMap>
+
+#include <vector>
 
 #include "AssemblyOperation.h"
 #include "OperationCode.h"
@@ -26,13 +29,11 @@ public:
     void loadAssemblyToSourceTable();
     void loadCodeOperationTable();
 
-    void addRowToSourceTable(const QString& first, const QString& second,
-                             const QString& third, const QString& fourth = "");
-    void addRowToCodeOperationTable(const QString& name, const QString& code,
-                                    const QString& size);
+    static void addRowToTable(QTableWidget* table,
+                              const std::vector<QString>& values);
 
     std::vector<AssemblyOperation> getAssemblySourceCode() const;
-    std::vector<OperationCode> getOperationCodes() const;
+    QMap<QString, OperationInfo> getOperationCodes() const;
 
 private:
     Ui::ApplicationUi* m_ui;

@@ -1,15 +1,14 @@
 #ifndef SYSTEMS_PROGRAMMING_OPERATION_CODE_H_
 #define SYSTEMS_PROGRAMMING_OPERATION_CODE_H_
 
-#include <string>
+#include <QString>
 
 namespace systems_programming
 {
-struct OperationCode
+struct OperationInfo
 {
-    std::string label;
-    std::string code;
-    int size;
+    QString code{};
+    int size{};
 };
 }
 

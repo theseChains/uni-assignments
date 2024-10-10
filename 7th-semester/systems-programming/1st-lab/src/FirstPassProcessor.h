@@ -40,6 +40,13 @@ private:
     void processDirectiveNonLabeledLine(const AssemblyOperation& line);
     void processCommandNonLabeledLine(const AssemblyOperation& line);
 
+    void processCommand(const AssemblyOperation& line);
+    void processDefiningDirective(const AssemblyOperation& line);
+    void processReservingDirective(const AssemblyOperation& line);
+
+    bool labelAlreadyInSymbolicTable(const QString& label);
+    bool mnemonicNotInOperationCodes(const QString& mnemonic);
+
 private:
     std::vector<AssemblyOperation> m_sourceCode;
     QMap<QString, OperationInfo> m_operationCodes;

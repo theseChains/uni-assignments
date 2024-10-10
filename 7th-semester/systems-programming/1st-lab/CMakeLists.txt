@@ -18,6 +18,8 @@ set(SOURCES
     src/TableManager.h
     src/TableManager.cpp
     src/OperationCode.h
+    src/Tools.h
+    src/Tools.cpp
     src/AssemblyOperation.h
     src/FirstPassProcessor.h
     src/FirstPassProcessor.cpp

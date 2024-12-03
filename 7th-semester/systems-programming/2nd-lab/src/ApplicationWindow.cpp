@@ -18,6 +18,8 @@ ApplicationWindow::ApplicationWindow(QWidget* parent)
 
     connectButtonSlots();
 
+    m_ui->secondPassButton->setEnabled(false);
+
     m_ui->sourceCodeTable->setEditTriggers(QAbstractItemView::SelectedClicked);
 
     connect(m_ui->sourceCodeTable, &QTableWidget::cellClicked, this, [this](int row, int column) {
@@ -48,6 +50,24 @@ void ApplicationWindow::connectButtonSlots()
     connect(m_ui->secondPassButton, &QPushButton::clicked,
             this, &ApplicationWindow::performSecondPass);
 
+    connect(m_ui->sourceCodeTable, &QTableWidget::cellClicked,
+            m_ui->helperTable, &QTableWidget::clear);
+    connect(m_ui->sourceCodeTable, &QTableWidget::cellClicked,
+            m_ui->binaryCode, &QTableWidget::clear);
+    connect(m_ui->sourceCodeTable, &QTableWidget::cellClicked,
+            m_ui->symbolicNamesTable, &QTableWidget::clear);
+    connect(m_ui->sourceCodeTable, &QTableWidget::cellClicked,
+            m_ui->setupTable, &QTableWidget::clear);
+
+    connect(m_ui->codeOperationTable, &QTableWidget::cellClicked,
+            m_ui->helperTable, &QTableWidget::clear);
+    connect(m_ui->codeOperationTable, &QTableWidget::cellClicked,
+            m_ui->binaryCode, &QTableWidget::clear);
+    connect(m_ui->codeOperationTable, &QTableWidget::cellClicked,
+            m_ui->symbolicNamesTable, &QTableWidget::clear);
+    connect(m_ui->codeOperationTable, &QTableWidget::cellClicked,
+            m_ui->setupTable, &QTableWidget::clear);
+
     connect(m_ui->sourceCodeTable, &QTableWidget::cellChanged,
             m_ui->helperTable, &QTableWidget::clear);
     connect(m_ui->sourceCodeTable, &QTableWidget::cellChanged,
@@ -69,6 +89,8 @@ void ApplicationWindow::performFirstPass()
                       m_tableManager.getOperationCodes(),
                       m_ui);
     m_lastProgramAddress = m_firstPass.performFirstPass();
+
+    m_ui->secondPassButton->setEnabled(true);
 }
 
 void ApplicationWindow::performSecondPass()
@@ -77,6 +99,8 @@ void ApplicationWindow::performSecondPass()
                        m_lastProgramAddress,
                        m_ui);
     m_secondPass.performSecondPass();
+
+    m_ui->secondPassButton->setEnabled(false);
 }
 
 void ApplicationWindow::clearHelperTable()

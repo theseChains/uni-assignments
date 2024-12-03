@@ -289,7 +289,31 @@
       </layout>
      </item>
      <item>
-      <layout class="QVBoxLayout" name="verticalLayout_3" stretch="1,15,1,8">
+      <layout class="QVBoxLayout" name="verticalLayout_3" stretch="0,0,0,15,1,8">
+       <item>
+        <widget class="QLabel" name="label_7">
+         <property name="text">
+          <string>Таблица настройки</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QTableWidget" name="setupTable">
+         <property name="editTriggers">
+          <set>QAbstractItemView::NoEditTriggers</set>
+         </property>
+         <property name="columnCount">
+          <number>1</number>
+         </property>
+         <attribute name="horizontalHeaderVisible">
+          <bool>false</bool>
+         </attribute>
+         <attribute name="verticalHeaderVisible">
+          <bool>false</bool>
+         </attribute>
+         <column/>
+        </widget>
+       </item>
        <item>
         <widget class="QLabel" name="label_6">
          <property name="text">

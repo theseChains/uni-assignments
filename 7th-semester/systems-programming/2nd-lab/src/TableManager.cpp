@@ -18,8 +18,8 @@ void TableManager::loadAssemblyToSourceTable()
 {
     auto* table = m_ui->sourceCodeTable;
 
-    addRowToTable(table, { "PROG", "START", "100" });
-    addRowToTable(table, { "", "JMP", "L1" });
+    addRowToTable(table, { "PROG", "START", "0" });
+    addRowToTable(table, { "", "JMP", "[L1]" });
     addRowToTable(table, { "A1", "RESB", "10" });
     addRowToTable(table, { "A2", "RESW", "20" });
     addRowToTable(table, { "B1", "WORD", "40" });
@@ -30,7 +30,7 @@ void TableManager::loadAssemblyToSourceTable()
     addRowToTable(table, { "", "LOADR2", "B4" });
     addRowToTable(table, { "", "ADD", "R1", "R2" });
     addRowToTable(table, { "", "SAVER1", "B1" });
-    addRowToTable(table, { "", "END", "100" });
+    addRowToTable(table, { "", "END", "10" });
     addRowToTable(table, { "", "", "" });
     addRowToTable(table, { "", "", "" });
     addRowToTable(table, { "", "", "" });

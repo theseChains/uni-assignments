@@ -93,7 +93,7 @@ int FirstPassProcessor::performFirstPass()
             break;
         }
 
-        if (line.firstOperand.isEmpty() && line.mnemonic != "END")
+        if (line.firstOperand.isEmpty() && line.mnemonic != "END" && line.mnemonic != "START")
         {
             clear();
             m_ui->firstPassageErrors->setText(getLineInfo() + "Поле операнда не может быть пустым");
@@ -214,13 +214,6 @@ void FirstPassProcessor::processDirectiveLabeledLine(const AssemblyOperation& li
             return;
         }
 
-        if (line.firstOperand.isEmpty())
-        {
-            m_metError = true;
-            m_ui->firstPassageErrors->setText(getLineInfo() + "Адрес загрузки не задан");
-            return;
-        }
-
         if (line.label.value().length() > 10)
         {
             m_metError = true;
@@ -232,13 +225,13 @@ void FirstPassProcessor::processDirectiveLabeledLine(const AssemblyOperation& li
                 { line.label.value(),
                   line.mnemonic,
                   line.firstOperand.rightJustified(6, '0') });
-        m_addressCounter = line.firstOperand.toInt(nullptr, 16);
+        m_addressCounter = 0;
         m_startAddress = line.firstOperand.toInt(nullptr, 16);
 
-        if (m_addressCounter == 0)
+        if (m_addressCounter != 0)
         {
             m_metError = true;
-            m_ui->firstPassageErrors->setText(getLineInfo() + "Адрес загрузки не может быть 0");
+            m_ui->firstPassageErrors->setText(getLineInfo() + "Адрес загрузки должен быть 0");
             return;
         }
 
@@ -362,6 +355,12 @@ void FirstPassProcessor::processCommand(const AssemblyOperation& line)
     int commandSize{ m_operationCodes[mnemonic].size };
     int addresationType{ commandSize > 2 ? 1 : 0 };
     int commandCode{ m_operationCodes[mnemonic].code.toInt(nullptr, 16) };
+
+    if (line.firstOperand.startsWith('[') && line.firstOperand.endsWith(']') && commandSize > 2)
+    {
+        addresationType = 2;
+    }
+
     int realBinaryCode{ 4 * commandCode + addresationType };
 
     QString address{ formatters::padWithZeroesToHex(m_addressCounter, 6) };
